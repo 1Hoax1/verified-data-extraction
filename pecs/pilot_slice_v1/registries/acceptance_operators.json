@@ -1,0 +1,30 @@
+{
+  "pack_version": "1.0",
+  "schema_version": "1.1",
+  "release_scope": "PILOT_SLICE_V1",
+  "values": [
+    "exists",
+    "absent",
+    "readable",
+    "checksum_equals",
+    "type_equals",
+    "set_equals",
+    "set_contains",
+    "sequence_equals",
+    "equals",
+    "not_equals",
+    "in_set",
+    "not_in_set",
+    "between_inclusive",
+    "min_value",
+    "max_value",
+    "exact_count",
+    "min_count",
+    "max_count",
+    "min_ratio",
+    "max_ratio",
+    "all_non_null",
+    "unique",
+    "matches_format"
+  ]
+}

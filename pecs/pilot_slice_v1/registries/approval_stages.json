@@ -1,0 +1,10 @@
+{
+  "pack_version": "1.0",
+  "schema_version": "1.1",
+  "release_scope": "PILOT_SLICE_V1",
+  "values": [
+    "BRIEF_PENDING",
+    "TRANSFORMATION_PENDING",
+    "COMPLETE"
+  ]
+}

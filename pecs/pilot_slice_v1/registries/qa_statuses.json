@@ -1,0 +1,25 @@
+{
+  "pack_version": "1.0",
+  "schema_version": "1.1",
+  "release_scope": "PILOT_SLICE_V1",
+  "report_overall_statuses": [
+    "PASS",
+    "PASS_WITH_WARNINGS",
+    "FAIL"
+  ],
+  "check_statuses": [
+    "PASS",
+    "WARN",
+    "FAIL",
+    "SKIPPED"
+  ],
+  "severities": [
+    "BLOCKER",
+    "ERROR",
+    "WARNING",
+    "INFO"
+  ],
+  "llm_review_statuses": [
+    "NOT_APPLICABLE"
+  ]
+}

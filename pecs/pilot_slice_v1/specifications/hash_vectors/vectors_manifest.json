@@ -1,0 +1,17 @@
+{
+  "schema_version": "1.1",
+  "algorithm": "SHA-256",
+  "canonicalization": "RFC 8785 JCS after Unicode NFC",
+  "vectors": [
+    {
+      "id": "brief_vector_01",
+      "input": "brief_vector_01.input.json",
+      "expected_sha256": "b3a4f682887e99a8b0cd61c11dd95447e7f71ed4e7722c2efee89c976282a20e"
+    },
+    {
+      "id": "transformation_vector_01",
+      "input": "transformation_vector_01.input.json",
+      "expected_sha256": "198539c2451d08807992ef99ae0ee99d4beb03e8b29c7b525499def53f3b3252"
+    }
+  ]
+}
