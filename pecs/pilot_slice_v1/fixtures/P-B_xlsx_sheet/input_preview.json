@@ -1,0 +1,61 @@
+{
+  "schema_version": "1.1",
+  "asset_id": "asset-pb-xlsx",
+  "source_type": "LOCAL_XLSX",
+  "selected_sheet": "Orders",
+  "columns": [
+    "Order ID",
+    "Product",
+    "Quantity",
+    "Unit Price",
+    "Order Date",
+    "Line Total"
+  ],
+  "first_rows": [
+    [
+      "O-003",
+      "  WIDGET C  ",
+      3,
+      15.5,
+      "15.02.2026",
+      46.5
+    ],
+    [
+      "O-001",
+      "widget a",
+      2,
+      10.0,
+      "2026-02-01",
+      20.0
+    ],
+    [
+      "O-002",
+      "WIDGET B",
+      1,
+      20.0,
+      "05/02/2026",
+      20.0
+    ],
+    [
+      "O-002",
+      "Widget B duplicate",
+      1,
+      20.0,
+      "05/02/2026",
+      20.0
+    ]
+  ],
+  "warnings": [
+    {
+      "code": "XLSX_FORMULA_PRESENT",
+      "severity": "WARNING",
+      "affected_count": 4,
+      "sample_cells": [
+        "F2",
+        "F3",
+        "F4",
+        "F5"
+      ]
+    }
+  ]
+}

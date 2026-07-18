@@ -1,0 +1,26 @@
+{
+  "expected_errors": [
+    {
+      "case": "missing selected sheet",
+      "code": "INPUT_UNREADABLE"
+    },
+    {
+      "case": "selected sheet schema mismatch",
+      "code": "SCHEMA_MISMATCH"
+    },
+    {
+      "case": "duplicate remains",
+      "code": "QA_BLOCKER"
+    },
+    {
+      "case": "formula cells have cached values",
+      "code": "XLSX_FORMULA_PRESENT",
+      "severity": "WARNING"
+    },
+    {
+      "case": "formula cell cache is absent",
+      "code": "XLSX_FORMULA_CACHE_MISSING",
+      "severity": "ERROR"
+    }
+  ]
+}

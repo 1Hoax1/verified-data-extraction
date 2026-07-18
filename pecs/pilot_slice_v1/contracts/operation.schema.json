@@ -1,0 +1,43 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://verified-data-extraction.local/schemas/pilot/v1.0/operation.schema.json",
+  "title": "Pilot operation union",
+  "oneOf": [
+    {
+      "$ref": "https://verified-data-extraction.local/schemas/pilot/v1.0/operations/select_columns.schema.json"
+    },
+    {
+      "$ref": "https://verified-data-extraction.local/schemas/pilot/v1.0/operations/drop_columns.schema.json"
+    },
+    {
+      "$ref": "https://verified-data-extraction.local/schemas/pilot/v1.0/operations/rename.schema.json"
+    },
+    {
+      "$ref": "https://verified-data-extraction.local/schemas/pilot/v1.0/operations/trim.schema.json"
+    },
+    {
+      "$ref": "https://verified-data-extraction.local/schemas/pilot/v1.0/operations/change_case.schema.json"
+    },
+    {
+      "$ref": "https://verified-data-extraction.local/schemas/pilot/v1.0/operations/replace.schema.json"
+    },
+    {
+      "$ref": "https://verified-data-extraction.local/schemas/pilot/v1.0/operations/parse_date.schema.json"
+    },
+    {
+      "$ref": "https://verified-data-extraction.local/schemas/pilot/v1.0/operations/parse_number.schema.json"
+    },
+    {
+      "$ref": "https://verified-data-extraction.local/schemas/pilot/v1.0/operations/fill_missing.schema.json"
+    },
+    {
+      "$ref": "https://verified-data-extraction.local/schemas/pilot/v1.0/operations/drop_missing.schema.json"
+    },
+    {
+      "$ref": "https://verified-data-extraction.local/schemas/pilot/v1.0/operations/sort.schema.json"
+    },
+    {
+      "$ref": "https://verified-data-extraction.local/schemas/pilot/v1.0/operations/deduplicate.schema.json"
+    }
+  ]
+}

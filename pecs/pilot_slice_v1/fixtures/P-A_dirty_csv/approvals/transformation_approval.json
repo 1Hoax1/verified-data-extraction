@@ -1,0 +1,12 @@
+{
+  "schema_version": "1.1",
+  "id": "approval-order-pa-spec",
+  "order_id": "order-pa",
+  "target_type": "TRANSFORMATION_SPEC",
+  "target_version_id": "transform-pa-v1",
+  "target_content_hash": "490e68c8a918daee12f4f9dec02a5652f7b67d1f57e1f1c46bcce85a0a5429f8",
+  "context_brief_version_id": "brief-pa-v1",
+  "context_brief_content_hash": "695088adceedcb49d1d494b352f2ee332da98dd953a7b997b42b36b76147854d",
+  "approved_by": "local_user",
+  "approved_at": "2026-07-12T12:11:00Z"
+}

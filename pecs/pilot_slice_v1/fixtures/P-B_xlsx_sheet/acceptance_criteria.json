@@ -1,0 +1,168 @@
+[
+  {
+    "schema_version": "1.1",
+    "criterion_id": "PB-AC-001",
+    "name": "Readable XLSX",
+    "description": "Result XLSX is readable.",
+    "category": "output",
+    "check_mode": "DETERMINISTIC",
+    "severity": "BLOCKER",
+    "target": {
+      "scope": "ARTIFACT",
+      "dataset_id": null,
+      "column": null,
+      "columns": null,
+      "artifact_type": "RESULT_XLSX",
+      "metric": null
+    },
+    "operator": "readable",
+    "expected": true,
+    "tolerance": null,
+    "source": "client_answer",
+    "requirement_status": "CONFIRMED"
+  },
+  {
+    "schema_version": "1.1",
+    "criterion_id": "PB-AC-002",
+    "name": "Exact columns",
+    "description": "Exact ordered columns.",
+    "category": "schema",
+    "check_mode": "DETERMINISTIC",
+    "severity": "BLOCKER",
+    "target": {
+      "scope": "COLUMNS",
+      "dataset_id": "result",
+      "column": null,
+      "columns": [
+        "order_id",
+        "product",
+        "quantity",
+        "unit_price",
+        "order_date"
+      ],
+      "artifact_type": null,
+      "metric": null
+    },
+    "operator": "sequence_equals",
+    "expected": [
+      "order_id",
+      "product",
+      "quantity",
+      "unit_price",
+      "order_date"
+    ],
+    "tolerance": null,
+    "source": "client_answer",
+    "requirement_status": "CONFIRMED"
+  },
+  {
+    "schema_version": "1.1",
+    "criterion_id": "PB-AC-003",
+    "name": "Exact rows",
+    "description": "Three unique orders.",
+    "category": "volume",
+    "check_mode": "DETERMINISTIC",
+    "severity": "ERROR",
+    "target": {
+      "scope": "METRIC",
+      "dataset_id": "result",
+      "column": null,
+      "columns": null,
+      "artifact_type": null,
+      "metric": "row_count"
+    },
+    "operator": "exact_count",
+    "expected": 3,
+    "tolerance": null,
+    "source": "client_answer",
+    "requirement_status": "CONFIRMED"
+  },
+  {
+    "schema_version": "1.1",
+    "criterion_id": "PB-AC-004",
+    "name": "Unique order IDs",
+    "description": "order_id is unique.",
+    "category": "uniqueness",
+    "check_mode": "DETERMINISTIC",
+    "severity": "BLOCKER",
+    "target": {
+      "scope": "COLUMN",
+      "dataset_id": "result",
+      "column": "order_id",
+      "columns": null,
+      "artifact_type": null,
+      "metric": null
+    },
+    "operator": "unique",
+    "expected": true,
+    "tolerance": null,
+    "source": "client_answer",
+    "requirement_status": "CONFIRMED"
+  },
+  {
+    "schema_version": "1.1",
+    "criterion_id": "PB-AC-005",
+    "name": "Date format",
+    "description": "Date is YYYY-MM-DD.",
+    "category": "format",
+    "check_mode": "DETERMINISTIC",
+    "severity": "ERROR",
+    "target": {
+      "scope": "COLUMN",
+      "dataset_id": "result",
+      "column": "order_date",
+      "columns": null,
+      "artifact_type": null,
+      "metric": null
+    },
+    "operator": "matches_format",
+    "expected": "YYYY-MM-DD",
+    "tolerance": null,
+    "source": "client_answer",
+    "requirement_status": "CONFIRMED"
+  },
+  {
+    "schema_version": "1.1",
+    "criterion_id": "PB-AC-006",
+    "name": "Positive quantity",
+    "description": "Quantity at least one.",
+    "category": "range",
+    "check_mode": "DETERMINISTIC",
+    "severity": "ERROR",
+    "target": {
+      "scope": "COLUMN",
+      "dataset_id": "result",
+      "column": "quantity",
+      "columns": null,
+      "artifact_type": null,
+      "metric": null
+    },
+    "operator": "min_value",
+    "expected": 1,
+    "tolerance": null,
+    "source": "client_answer",
+    "requirement_status": "CONFIRMED"
+  },
+  {
+    "schema_version": "1.1",
+    "criterion_id": "PB-AC-007",
+    "name": "Non-negative line total",
+    "description": "Cached line_total is at least zero.",
+    "category": "range",
+    "check_mode": "DETERMINISTIC",
+    "severity": "ERROR",
+    "target": {
+      "scope": "COLUMN",
+      "dataset_id": "result",
+      "column": "line_total",
+      "columns": null,
+      "artifact_type": null,
+      "metric": null
+    },
+    "operator": "min_value",
+    "expected": 0,
+    "tolerance": null,
+    "source": "client_answer",
+    "requirement_status": "CONFIRMED"
+  }
+]

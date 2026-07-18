@@ -1,0 +1,109 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://verified-data-extraction.local/schemas/pilot/v1.0/operations/rename.schema.json",
+  "title": "Pilot operation: rename",
+  "description": "",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "operation_id",
+    "type",
+    "input_dataset",
+    "output_dataset",
+    "params"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "1.1"
+    },
+    "operation_id": {
+      "type": "string",
+      "minLength": 3,
+      "maxLength": 128,
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{2,127}$"
+    },
+    "type": {
+      "const": "rename"
+    },
+    "input_dataset": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 128
+    },
+    "output_dataset": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 128
+    },
+    "params": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "mapping"
+      ],
+      "properties": {
+        "mapping": {
+          "type": "object",
+          "minProperties": 1,
+          "maxProperties": 200,
+          "patternProperties": {
+            "^.{1,256}$": {
+              "type": "string",
+              "pattern": "^[A-Za-z_][A-Za-z0-9_]{0,127}$"
+            }
+          },
+          "additionalProperties": false
+        }
+      }
+    }
+  },
+  "x-semantics": {
+    "row_count": "UNCHANGED",
+    "column_count": "UNCHANGED",
+    "error_policy": "FAIL; no automatic collision handling",
+    "errors": [
+      "COLUMN_NOT_FOUND",
+      "COLUMN_COLLISION",
+      "INVALID_PARAMETER"
+    ]
+  },
+  "x-valid-examples": [
+    {
+      "schema_version": "1.1",
+      "operation_id": "op-rename",
+      "type": "rename",
+      "input_dataset": "raw",
+      "output_dataset": "result",
+      "params": {
+        "mapping": {
+          "Old Name": "new_name"
+        }
+      }
+    }
+  ],
+  "x-invalid-examples": [
+    {
+      "schema_version": "1.1",
+      "operation_id": "op-rename",
+      "type": "rename",
+      "input_dataset": "raw",
+      "output_dataset": "result",
+      "params": {
+        "mapping": {}
+      }
+    },
+    {
+      "schema_version": "1.1",
+      "operation_id": "op-rename",
+      "type": "rename",
+      "input_dataset": "raw",
+      "output_dataset": "result",
+      "params": {
+        "mapping": {
+          "Old Name": "bad name"
+        }
+      }
+    }
+  ]
+}

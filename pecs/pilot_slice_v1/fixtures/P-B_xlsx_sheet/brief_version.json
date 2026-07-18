@@ -1,0 +1,331 @@
+{
+  "schema_version": "1.1",
+  "version_id": "brief-pb-v1",
+  "order_id": "order-pb",
+  "version_number": 1,
+  "created_at": "2026-07-12T10:00:00Z",
+  "source_refs": [
+    "asset-pb-xlsx"
+  ],
+  "content_hash": "9b7c2b0111360714dfbc9cbdbc755b693b11e067f32771cb226126fdcd1ffb49",
+  "objective": "Produce a values-only XLSX from the Orders sheet, reading source formulas only through stored cached values.",
+  "record_definition": "One row represents one unique order identified by order_id.",
+  "scope": {
+    "included": [
+      "Sheet Orders from input_orders.xlsx, including cached values of formula cells"
+    ],
+    "excluded": [
+      "Sheet Notes",
+      "Duplicate order_id after first occurrence"
+    ],
+    "geography": null,
+    "time_range": null
+  },
+  "inputs_expected": [
+    {
+      "asset_id": "asset-pb-xlsx",
+      "input_type": "LOCAL_XLSX",
+      "sheet_name": "Orders"
+    }
+  ],
+  "output_contract": {
+    "format": "XLSX",
+    "file_name": "orders_clean.xlsx",
+    "sheet_name": "Data",
+    "encoding": null,
+    "delimiter": null,
+    "include_header": true,
+    "column_order": [
+      "order_id",
+      "product",
+      "quantity",
+      "unit_price",
+      "order_date",
+      "line_total"
+    ]
+  },
+  "fields": [
+    {
+      "name": "order_id",
+      "output_name": "Номер заказа",
+      "label": "Order ID",
+      "data_type": "string",
+      "required": true,
+      "nullable": false,
+      "format": null,
+      "allowed_values": null,
+      "min_value": null,
+      "max_value": null,
+      "unique": true,
+      "description": "Unique order ID."
+    },
+    {
+      "name": "product",
+      "output_name": "Товар",
+      "label": "Product",
+      "data_type": "string",
+      "required": true,
+      "nullable": false,
+      "format": null,
+      "allowed_values": null,
+      "min_value": null,
+      "max_value": null,
+      "unique": false,
+      "description": "Normalized title."
+    },
+    {
+      "name": "quantity",
+      "output_name": "Количество",
+      "label": "Quantity",
+      "data_type": "integer",
+      "required": true,
+      "nullable": false,
+      "format": "INTEGER",
+      "allowed_values": null,
+      "min_value": 1,
+      "max_value": null,
+      "unique": false,
+      "description": "Positive quantity."
+    },
+    {
+      "name": "unit_price",
+      "output_name": "Цена за единицу",
+      "label": "Unit price",
+      "data_type": "decimal",
+      "required": true,
+      "nullable": false,
+      "format": "DECIMAL_DOT",
+      "allowed_values": null,
+      "min_value": 0,
+      "max_value": null,
+      "unique": false,
+      "description": "Unit price."
+    },
+    {
+      "name": "order_date",
+      "output_name": "Дата заказа",
+      "label": "Order date",
+      "data_type": "date",
+      "required": true,
+      "nullable": false,
+      "format": "YYYY-MM-DD",
+      "allowed_values": null,
+      "min_value": null,
+      "max_value": null,
+      "unique": false,
+      "description": "ISO date."
+    },
+    {
+      "name": "line_total",
+      "output_name": "Сумма строки",
+      "label": "Line total",
+      "data_type": "decimal",
+      "required": true,
+      "nullable": false,
+      "format": "DECIMAL_DOT",
+      "allowed_values": null,
+      "min_value": 0,
+      "max_value": null,
+      "unique": false,
+      "description": "Cached value of the source XLSX formula; no formula is exported."
+    }
+  ],
+  "volume_expectation": {
+    "mode": "EXACT",
+    "exact_count": 3,
+    "min_count": null,
+    "max_count": null
+  },
+  "data_quality_expectations": {
+    "empty_result_allowed": false,
+    "unexpected_columns_allowed": false,
+    "column_order_required": true,
+    "duplicate_key": [
+      "order_id"
+    ]
+  },
+  "acceptance_criteria": [
+    {
+      "schema_version": "1.1",
+      "criterion_id": "PB-AC-001",
+      "name": "Readable XLSX",
+      "description": "Result XLSX is readable.",
+      "category": "output",
+      "check_mode": "DETERMINISTIC",
+      "severity": "BLOCKER",
+      "target": {
+        "scope": "ARTIFACT",
+        "dataset_id": null,
+        "column": null,
+        "columns": null,
+        "artifact_type": "RESULT_XLSX",
+        "metric": null
+      },
+      "operator": "readable",
+      "expected": true,
+      "tolerance": null,
+      "source": "client_answer",
+      "requirement_status": "CONFIRMED"
+    },
+    {
+      "schema_version": "1.1",
+      "criterion_id": "PB-AC-002",
+      "name": "Exact columns",
+      "description": "Exact ordered columns.",
+      "category": "schema",
+      "check_mode": "DETERMINISTIC",
+      "severity": "BLOCKER",
+      "target": {
+        "scope": "COLUMNS",
+        "dataset_id": "result",
+        "column": null,
+        "columns": [
+          "order_id",
+          "product",
+          "quantity",
+          "unit_price",
+          "order_date"
+        ],
+        "artifact_type": null,
+        "metric": null
+      },
+      "operator": "sequence_equals",
+      "expected": [
+        "order_id",
+        "product",
+        "quantity",
+        "unit_price",
+        "order_date"
+      ],
+      "tolerance": null,
+      "source": "client_answer",
+      "requirement_status": "CONFIRMED"
+    },
+    {
+      "schema_version": "1.1",
+      "criterion_id": "PB-AC-003",
+      "name": "Exact rows",
+      "description": "Three unique orders.",
+      "category": "volume",
+      "check_mode": "DETERMINISTIC",
+      "severity": "ERROR",
+      "target": {
+        "scope": "METRIC",
+        "dataset_id": "result",
+        "column": null,
+        "columns": null,
+        "artifact_type": null,
+        "metric": "row_count"
+      },
+      "operator": "exact_count",
+      "expected": 3,
+      "tolerance": null,
+      "source": "client_answer",
+      "requirement_status": "CONFIRMED"
+    },
+    {
+      "schema_version": "1.1",
+      "criterion_id": "PB-AC-004",
+      "name": "Unique order IDs",
+      "description": "order_id is unique.",
+      "category": "uniqueness",
+      "check_mode": "DETERMINISTIC",
+      "severity": "BLOCKER",
+      "target": {
+        "scope": "COLUMN",
+        "dataset_id": "result",
+        "column": "order_id",
+        "columns": null,
+        "artifact_type": null,
+        "metric": null
+      },
+      "operator": "unique",
+      "expected": true,
+      "tolerance": null,
+      "source": "client_answer",
+      "requirement_status": "CONFIRMED"
+    },
+    {
+      "schema_version": "1.1",
+      "criterion_id": "PB-AC-005",
+      "name": "Date format",
+      "description": "Date is YYYY-MM-DD.",
+      "category": "format",
+      "check_mode": "DETERMINISTIC",
+      "severity": "ERROR",
+      "target": {
+        "scope": "COLUMN",
+        "dataset_id": "result",
+        "column": "order_date",
+        "columns": null,
+        "artifact_type": null,
+        "metric": null
+      },
+      "operator": "matches_format",
+      "expected": "YYYY-MM-DD",
+      "tolerance": null,
+      "source": "client_answer",
+      "requirement_status": "CONFIRMED"
+    },
+    {
+      "schema_version": "1.1",
+      "criterion_id": "PB-AC-006",
+      "name": "Positive quantity",
+      "description": "Quantity at least one.",
+      "category": "range",
+      "check_mode": "DETERMINISTIC",
+      "severity": "ERROR",
+      "target": {
+        "scope": "COLUMN",
+        "dataset_id": "result",
+        "column": "quantity",
+        "columns": null,
+        "artifact_type": null,
+        "metric": null
+      },
+      "operator": "min_value",
+      "expected": 1,
+      "tolerance": null,
+      "source": "client_answer",
+      "requirement_status": "CONFIRMED"
+    },
+    {
+      "schema_version": "1.1",
+      "criterion_id": "PB-AC-007",
+      "name": "Non-negative line total",
+      "description": "Cached line_total is at least zero.",
+      "category": "range",
+      "check_mode": "DETERMINISTIC",
+      "severity": "ERROR",
+      "target": {
+        "scope": "COLUMN",
+        "dataset_id": "result",
+        "column": "line_total",
+        "columns": null,
+        "artifact_type": null,
+        "metric": null
+      },
+      "operator": "min_value",
+      "expected": 0,
+      "tolerance": null,
+      "source": "client_answer",
+      "requirement_status": "CONFIRMED"
+    }
+  ],
+  "assumptions": [
+    {
+      "assumption_id": "pb-assumption-1",
+      "text": "Keep first duplicate order_id in source order.",
+      "status": "ASSUMED"
+    }
+  ],
+  "open_questions": [],
+  "risks": [
+    {
+      "risk_id": "pb-risk-1",
+      "category": "TECHNICAL",
+      "severity": "MEDIUM",
+      "description": "Formula cells require cached values; formulas are not recalculated by Pilot."
+    }
+  ]
+}

@@ -1,0 +1,177 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://verified-data-extraction.local/schemas/pilot/v1.0/operations/parse_number.schema.json",
+  "title": "Pilot operation: parse_number",
+  "description": "",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "operation_id",
+    "type",
+    "input_dataset",
+    "output_dataset",
+    "params"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "1.1"
+    },
+    "operation_id": {
+      "type": "string",
+      "minLength": 3,
+      "maxLength": 128,
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{2,127}$"
+    },
+    "type": {
+      "const": "parse_number"
+    },
+    "input_dataset": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 128
+    },
+    "output_dataset": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 128
+    },
+    "params": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "column",
+        "decimal_separator",
+        "thousands_separator",
+        "target_type",
+        "errors"
+      ],
+      "properties": {
+        "column": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "decimal_separator": {
+          "enum": [
+            ".",
+            ","
+          ]
+        },
+        "thousands_separator": {
+          "enum": [
+            null,
+            ",",
+            ".",
+            " ",
+            " "
+          ]
+        },
+        "target_type": {
+          "enum": [
+            "integer",
+            "decimal"
+          ]
+        },
+        "errors": {
+          "enum": [
+            "FAIL",
+            "SET_NULL"
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "not": {
+            "anyOf": [
+              {
+                "properties": {
+                  "decimal_separator": {
+                    "const": "."
+                  },
+                  "thousands_separator": {
+                    "const": "."
+                  }
+                },
+                "required": [
+                  "decimal_separator",
+                  "thousands_separator"
+                ]
+              },
+              {
+                "properties": {
+                  "decimal_separator": {
+                    "const": ","
+                  },
+                  "thousands_separator": {
+                    "const": ","
+                  }
+                },
+                "required": [
+                  "decimal_separator",
+                  "thousands_separator"
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    }
+  },
+  "x-semantics": {
+    "row_count": "UNCHANGED",
+    "column_count": "UNCHANGED",
+    "error_policy": "FAIL or SET_NULL",
+    "errors": [
+      "COLUMN_NOT_FOUND",
+      "PARSE_FAILED",
+      "INVALID_PARAMETER"
+    ]
+  },
+  "x-valid-examples": [
+    {
+      "schema_version": "1.1",
+      "operation_id": "op-parse_number",
+      "type": "parse_number",
+      "input_dataset": "raw",
+      "output_dataset": "result",
+      "params": {
+        "column": "amount",
+        "decimal_separator": ".",
+        "thousands_separator": null,
+        "target_type": "decimal",
+        "errors": "FAIL"
+      }
+    }
+  ],
+  "x-invalid-examples": [
+    {
+      "schema_version": "1.1",
+      "operation_id": "op-parse_number",
+      "type": "parse_number",
+      "input_dataset": "raw",
+      "output_dataset": "result",
+      "params": {
+        "column": "amount",
+        "decimal_separator": ".",
+        "thousands_separator": ".",
+        "target_type": "decimal",
+        "errors": "FAIL"
+      }
+    },
+    {
+      "schema_version": "1.1",
+      "operation_id": "op-parse_number",
+      "type": "parse_number",
+      "input_dataset": "raw",
+      "output_dataset": "result",
+      "params": {
+        "column": "amount",
+        "decimal_separator": ".",
+        "thousands_separator": null,
+        "target_type": "float",
+        "errors": "FAIL"
+      }
+    }
+  ]
+}

@@ -1,0 +1,137 @@
+[
+  {
+    "schema_version": "1.1",
+    "criterion_id": "PD-AC-001",
+    "name": "Readable CSV",
+    "description": "Result is readable.",
+    "category": "output",
+    "check_mode": "DETERMINISTIC",
+    "severity": "BLOCKER",
+    "target": {
+      "scope": "ARTIFACT",
+      "dataset_id": null,
+      "column": null,
+      "columns": null,
+      "artifact_type": "RESULT_CSV",
+      "metric": null
+    },
+    "operator": "readable",
+    "expected": true,
+    "tolerance": null,
+    "source": "client_answer",
+    "requirement_status": "CONFIRMED"
+  },
+  {
+    "schema_version": "1.1",
+    "criterion_id": "PD-AC-002",
+    "name": "Required name",
+    "description": "No missing name.",
+    "category": "completeness",
+    "check_mode": "DETERMINISTIC",
+    "severity": "BLOCKER",
+    "target": {
+      "scope": "COLUMN",
+      "dataset_id": "result",
+      "column": "name",
+      "columns": null,
+      "artifact_type": null,
+      "metric": null
+    },
+    "operator": "all_non_null",
+    "expected": true,
+    "tolerance": null,
+    "source": "client_answer",
+    "requirement_status": "CONFIRMED"
+  },
+  {
+    "schema_version": "1.1",
+    "criterion_id": "PD-AC-003",
+    "name": "Unique id",
+    "description": "ID is unique.",
+    "category": "uniqueness",
+    "check_mode": "DETERMINISTIC",
+    "severity": "BLOCKER",
+    "target": {
+      "scope": "COLUMN",
+      "dataset_id": "result",
+      "column": "id",
+      "columns": null,
+      "artifact_type": null,
+      "metric": null
+    },
+    "operator": "unique",
+    "expected": true,
+    "tolerance": null,
+    "source": "client_answer",
+    "requirement_status": "CONFIRMED"
+  },
+  {
+    "schema_version": "1.1",
+    "criterion_id": "PD-AC-004",
+    "name": "Valid dates",
+    "description": "Non-null dates use YYYY-MM-DD.",
+    "category": "format",
+    "check_mode": "DETERMINISTIC",
+    "severity": "ERROR",
+    "target": {
+      "scope": "COLUMN",
+      "dataset_id": "result",
+      "column": "event_date",
+      "columns": null,
+      "artifact_type": null,
+      "metric": null
+    },
+    "operator": "matches_format",
+    "expected": "YYYY-MM-DD",
+    "tolerance": null,
+    "source": "client_answer",
+    "requirement_status": "CONFIRMED"
+  },
+  {
+    "schema_version": "1.1",
+    "criterion_id": "PD-AC-005",
+    "name": "No parse nulls",
+    "description": "Date and amount have no nulls.",
+    "category": "completeness",
+    "check_mode": "DETERMINISTIC",
+    "severity": "ERROR",
+    "target": {
+      "scope": "COLUMNS",
+      "dataset_id": "result",
+      "column": null,
+      "columns": [
+        "event_date",
+        "amount"
+      ],
+      "artifact_type": null,
+      "metric": null
+    },
+    "operator": "all_non_null",
+    "expected": true,
+    "tolerance": null,
+    "source": "client_answer",
+    "requirement_status": "CONFIRMED"
+  },
+  {
+    "schema_version": "1.1",
+    "criterion_id": "PD-AC-006",
+    "name": "Exact rows",
+    "description": "All three rows remain.",
+    "category": "volume",
+    "check_mode": "DETERMINISTIC",
+    "severity": "ERROR",
+    "target": {
+      "scope": "METRIC",
+      "dataset_id": "result",
+      "column": null,
+      "columns": null,
+      "artifact_type": null,
+      "metric": "row_count"
+    },
+    "operator": "exact_count",
+    "expected": 3,
+    "tolerance": null,
+    "source": "client_answer",
+    "requirement_status": "CONFIRMED"
+  }
+]

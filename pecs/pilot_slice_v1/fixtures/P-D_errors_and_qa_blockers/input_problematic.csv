@@ -1,0 +1,4 @@
+id,name,event_date,amount
+1,Alpha,2026-01-10,10.00
+1,Alpha duplicate,bad-date,20.00
+2,,2026-01-12,not-a-number

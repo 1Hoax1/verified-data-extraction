@@ -1,0 +1,116 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://verified-data-extraction.local/schemas/pilot/v1.0/approval.schema.json",
+  "title": "Pilot Approval",
+  "description": "Immutable sole source of approval truth.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "id",
+    "order_id",
+    "target_type",
+    "target_version_id",
+    "target_content_hash",
+    "context_brief_version_id",
+    "context_brief_content_hash",
+    "approved_by",
+    "approved_at"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "1.1"
+    },
+    "id": {
+      "type": "string",
+      "minLength": 3,
+      "maxLength": 128,
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{2,127}$"
+    },
+    "order_id": {
+      "type": "string",
+      "minLength": 3,
+      "maxLength": 128,
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{2,127}$"
+    },
+    "target_type": {
+      "enum": [
+        "BRIEF",
+        "TRANSFORMATION_SPEC"
+      ]
+    },
+    "target_version_id": {
+      "type": "string",
+      "minLength": 3,
+      "maxLength": 128,
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{2,127}$"
+    },
+    "target_content_hash": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "context_brief_version_id": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "minLength": 3,
+      "maxLength": 128
+    },
+    "context_brief_content_hash": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "approved_by": {
+      "const": "local_user"
+    },
+    "approved_at": {
+      "type": "string",
+      "format": "date-time"
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "target_type": {
+            "const": "BRIEF"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "context_brief_version_id": {
+            "const": null
+          },
+          "context_brief_content_hash": {
+            "const": null
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "target_type": {
+            "const": "TRANSFORMATION_SPEC"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "context_brief_version_id": {
+            "type": "string"
+          },
+          "context_brief_content_hash": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$"
+          }
+        }
+      }
+    }
+  ]
+}

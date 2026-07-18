@@ -1,0 +1,195 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://verified-data-extraction.local/schemas/pilot/v1.0/operations/parse_date.schema.json",
+  "title": "Pilot operation: parse_date",
+  "description": "",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "operation_id",
+    "type",
+    "input_dataset",
+    "output_dataset",
+    "params"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "1.1"
+    },
+    "operation_id": {
+      "type": "string",
+      "minLength": 3,
+      "maxLength": 128,
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{2,127}$"
+    },
+    "type": {
+      "const": "parse_date"
+    },
+    "input_dataset": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 128
+    },
+    "output_dataset": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 128
+    },
+    "params": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "column",
+        "formats",
+        "output_format",
+        "errors"
+      ],
+      "properties": {
+        "column": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "formats": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 10,
+          "uniqueItems": true,
+          "items": {
+            "enum": [
+              "YYYY-MM-DD",
+              "DD.MM.YYYY",
+              "DD/MM/YYYY",
+              "MM/DD/YYYY",
+              "YYYY/MM/DD",
+              "YYYY-MM-DD HH:mm:ss",
+              "DD.MM.YYYY HH:mm:ss"
+            ]
+          }
+        },
+        "output_format": {
+          "enum": [
+            "YYYY-MM-DD",
+            "YYYY-MM-DDTHH:mm:ssZ"
+          ]
+        },
+        "errors": {
+          "enum": [
+            "FAIL",
+            "SET_NULL"
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "not": {
+            "allOf": [
+              {
+                "properties": {
+                  "formats": {
+                    "contains": {
+                      "const": "DD/MM/YYYY"
+                    }
+                  }
+                },
+                "required": [
+                  "formats"
+                ]
+              },
+              {
+                "properties": {
+                  "formats": {
+                    "contains": {
+                      "const": "MM/DD/YYYY"
+                    }
+                  }
+                },
+                "required": [
+                  "formats"
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    }
+  },
+  "x-semantics": {
+    "row_count": "UNCHANGED",
+    "column_count": "UNCHANGED",
+    "error_policy": "FAIL or SET_NULL",
+    "errors": [
+      "COLUMN_NOT_FOUND",
+      "PARSE_FAILED",
+      "INVALID_PARAMETER"
+    ],
+    "constraints": "formats is explicit; DD/MM/YYYY and MM/DD/YYYY cannot appear together; automatic day/month guessing is forbidden"
+  },
+  "x-valid-examples": [
+    {
+      "schema_version": "1.1",
+      "operation_id": "op-parse_date",
+      "type": "parse_date",
+      "input_dataset": "raw",
+      "output_dataset": "result",
+      "params": {
+        "column": "date",
+        "formats": [
+          "YYYY-MM-DD",
+          "DD.MM.YYYY"
+        ],
+        "output_format": "YYYY-MM-DD",
+        "errors": "FAIL"
+      }
+    }
+  ],
+  "x-invalid-examples": [
+    {
+      "schema_version": "1.1",
+      "operation_id": "op-parse_date",
+      "type": "parse_date",
+      "input_dataset": "raw",
+      "output_dataset": "result",
+      "params": {
+        "column": "date",
+        "formats": [
+          "%Y-%m-%d"
+        ],
+        "output_format": "YYYY-MM-DD",
+        "errors": "FAIL"
+      }
+    },
+    {
+      "schema_version": "1.1",
+      "operation_id": "op-parse_date",
+      "type": "parse_date",
+      "input_dataset": "raw",
+      "output_dataset": "result",
+      "params": {
+        "column": "date",
+        "formats": [
+          "YYYY-MM-DD"
+        ],
+        "output_format": "YYYY-MM-DD",
+        "errors": "IGNORE"
+      }
+    },
+    {
+      "schema_version": "1.1",
+      "operation_id": "op_parse_date_ambiguous",
+      "type": "parse_date",
+      "input_dataset": "ds_in",
+      "output_dataset": "ds_out",
+      "params": {
+        "column": "date",
+        "formats": [
+          "DD/MM/YYYY",
+          "MM/DD/YYYY"
+        ],
+        "output_format": "YYYY-MM-DD",
+        "errors": "FAIL"
+      }
+    }
+  ]
+}

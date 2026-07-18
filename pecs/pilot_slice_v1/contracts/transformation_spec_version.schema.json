@@ -1,0 +1,510 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://verified-data-extraction.local/schemas/pilot/v1.0/transformation_spec_version.schema.json",
+  "title": "Pilot TransformationSpecVersion",
+  "description": "One local dataset, 12 deterministic operations.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "version_id",
+    "order_id",
+    "version_number",
+    "brief_version_id",
+    "brief_content_hash",
+    "created_at",
+    "content_hash",
+    "inputs",
+    "pipeline",
+    "output",
+    "execution_policy",
+    "provenance_policy",
+    "expected_schema",
+    "acceptance_criteria_ref"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "1.1"
+    },
+    "version_id": {
+      "type": "string",
+      "minLength": 3,
+      "maxLength": 128,
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{2,127}$"
+    },
+    "order_id": {
+      "type": "string",
+      "minLength": 3,
+      "maxLength": 128,
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{2,127}$"
+    },
+    "version_number": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 1000000
+    },
+    "brief_version_id": {
+      "type": "string",
+      "minLength": 3,
+      "maxLength": 128,
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{2,127}$"
+    },
+    "brief_content_hash": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "content_hash": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "inputs": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "dataset_id",
+          "asset_id",
+          "source_type",
+          "sheet_name",
+          "csv_options"
+        ],
+        "properties": {
+          "dataset_id": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128
+          },
+          "asset_id": {
+            "type": "string",
+            "minLength": 3,
+            "maxLength": 128,
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{2,127}$"
+          },
+          "source_type": {
+            "enum": [
+              "LOCAL_CSV",
+              "LOCAL_XLSX"
+            ]
+          },
+          "sheet_name": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "minLength": 1,
+            "maxLength": 128
+          },
+          "csv_options": {
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "encoding",
+                  "delimiter",
+                  "header_row"
+                ],
+                "properties": {
+                  "encoding": {
+                    "enum": [
+                      "UTF-8",
+                      "UTF-8-SIG",
+                      "CP1251"
+                    ]
+                  },
+                  "delimiter": {
+                    "enum": [
+                      ",",
+                      ";",
+                      "\t"
+                    ]
+                  },
+                  "header_row": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 100
+                  }
+                },
+                "description": "Encoding and delimiter are selected explicitly by the user. Automatic detection and fallback are forbidden."
+              }
+            ]
+          }
+        },
+        "allOf": [
+          {
+            "if": {
+              "properties": {
+                "source_type": {
+                  "const": "LOCAL_CSV"
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "sheet_name": {
+                  "const": null
+                },
+                "csv_options": {
+                  "not": {
+                    "type": "null"
+                  }
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "source_type": {
+                  "const": "LOCAL_XLSX"
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "sheet_name": {
+                  "type": "string"
+                },
+                "csv_options": {
+                  "const": null
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "pipeline": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 100,
+      "items": {
+        "$ref": "https://verified-data-extraction.local/schemas/pilot/v1.0/operation.schema.json"
+      }
+    },
+    "output": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "dataset_id",
+        "format",
+        "file_name",
+        "sheet_name",
+        "encoding",
+        "delimiter",
+        "column_order"
+      ],
+      "properties": {
+        "dataset_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "format": {
+          "enum": [
+            "CSV",
+            "XLSX"
+          ]
+        },
+        "file_name": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 255
+        },
+        "sheet_name": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1,
+          "maxLength": 31
+        },
+        "encoding": {
+          "enum": [
+            null,
+            "UTF-8"
+          ]
+        },
+        "delimiter": {
+          "enum": [
+            null,
+            ",",
+            ";",
+            "\t"
+          ]
+        },
+        "column_order": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 200,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "pattern": "^[A-Za-z_][A-Za-z0-9_]{0,127}$"
+          }
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "format": {
+                "const": "CSV"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "sheet_name": {
+                "const": null
+              },
+              "encoding": {
+                "const": "UTF-8"
+              },
+              "delimiter": {
+                "enum": [
+                  ",",
+                  ";",
+                  "\t"
+                ]
+              },
+              "file_name": {
+                "pattern": ".+\\.csv$"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "format": {
+                "const": "XLSX"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "sheet_name": {
+                "type": "string"
+              },
+              "encoding": {
+                "const": null
+              },
+              "delimiter": {
+                "const": null
+              },
+              "file_name": {
+                "pattern": ".+\\.xlsx$"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "execution_policy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "fail_fast",
+        "allow_partial_output",
+        "max_rows",
+        "max_columns"
+      ],
+      "properties": {
+        "fail_fast": {
+          "const": true
+        },
+        "allow_partial_output": {
+          "const": false
+        },
+        "max_rows": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 100000
+        },
+        "max_columns": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 200
+        }
+      }
+    },
+    "provenance_policy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "record_input_checksum",
+        "preserve_source_row_number"
+      ],
+      "properties": {
+        "record_input_checksum": {
+          "const": true
+        },
+        "preserve_source_row_number": {
+          "const": false
+        }
+      }
+    },
+    "expected_schema": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 200,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "name",
+          "output_name",
+          "label",
+          "data_type",
+          "required",
+          "nullable",
+          "format",
+          "allowed_values",
+          "min_value",
+          "max_value",
+          "unique",
+          "description"
+        ],
+        "properties": {
+          "name": {
+            "type": "string",
+            "pattern": "^[A-Za-z_][A-Za-z0-9_]{0,127}$"
+          },
+          "label": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 200
+          },
+          "data_type": {
+            "enum": [
+              "string",
+              "integer",
+              "decimal",
+              "boolean",
+              "date",
+              "datetime",
+              "url"
+            ]
+          },
+          "required": {
+            "type": "boolean"
+          },
+          "nullable": {
+            "type": "boolean"
+          },
+          "format": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "enum": [
+              null,
+              "YYYY-MM-DD",
+              "YYYY-MM-DDTHH:mm:ssZ",
+              "INTEGER",
+              "DECIMAL_DOT",
+              "BOOLEAN_TRUE_FALSE",
+              "URL"
+            ]
+          },
+          "allowed_values": {
+            "type": [
+              "array",
+              "null"
+            ],
+            "minItems": 1,
+            "maxItems": 200,
+            "uniqueItems": true,
+            "items": {
+              "type": [
+                "string",
+                "number",
+                "boolean"
+              ]
+            }
+          },
+          "min_value": {
+            "type": [
+              "number",
+              "string",
+              "null"
+            ],
+            "maxLength": 64
+          },
+          "max_value": {
+            "type": [
+              "number",
+              "string",
+              "null"
+            ],
+            "maxLength": 64
+          },
+          "unique": {
+            "type": "boolean"
+          },
+          "description": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 1000
+          },
+          "output_name": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128,
+            "pattern": "^(?!\\s)(?!.*\\s$)[^\\x00-\\x1F\\x7F-\\x9F]{1,128}$",
+            "description": "Actual CSV/XLSX header. Stored value is trimmed and Unicode NFC; C0/C1 controls, tab and line breaks are forbidden.",
+            "x-normalization": "trim_then_unicode_nfc",
+            "x-default-from": "name"
+          }
+        },
+        "allOf": [
+          {
+            "if": {
+              "properties": {
+                "required": {
+                  "const": true
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "nullable": {
+                  "const": false
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "acceptance_criteria_ref": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 100,
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "minLength": 3,
+        "maxLength": 128,
+        "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{2,127}$"
+      }
+    }
+  },
+  "x-invariants": [
+    "CSV encoding and delimiter are explicit; no automatic detection or hidden fallback.",
+    "After input read, UI shows schema and first-row preview before approval/execution.",
+    "expected_schema output_name rules equal BriefVersion fields output_name rules.",
+    "output.column_order uses internal name identifiers; export replaces them with output_name."
+  ]
+}

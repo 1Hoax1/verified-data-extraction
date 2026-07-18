@@ -1,0 +1,17 @@
+{
+  "schema_version": "1.1",
+  "operation_id": "op-sort",
+  "type": "sort",
+  "input_dataset": "raw",
+  "output_dataset": "result",
+  "params": {
+    "by": [
+      "order_date",
+      "order_id"
+    ],
+    "ascending": [
+      true
+    ],
+    "nulls": "LAST"
+  }
+}

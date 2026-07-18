@@ -1,0 +1,21 @@
+{
+  "items": [
+    {
+      "path": "invalid_examples/xlsx_without_sheet.invalid.json",
+      "schema": "brief_version.schema.json"
+    },
+    {
+      "path": "invalid_examples/xlsx_with_csv_options.invalid.json",
+      "schema": "transformation_spec_version.schema.json"
+    },
+    {
+      "path": "invalid_examples/sort_length_mismatch.semantic_invalid.json",
+      "schema": "operations/sort.schema.json",
+      "semantic_rule": "len(by)==len(ascending)"
+    },
+    {
+      "path": "invalid_examples/output_name_with_tab.invalid.json",
+      "schema": "brief_version.schema.json"
+    }
+  ]
+}

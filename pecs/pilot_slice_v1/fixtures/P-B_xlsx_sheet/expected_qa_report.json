@@ -1,0 +1,520 @@
+{
+  "schema_version": "1.1",
+  "report_id": "qa-order-pb",
+  "run_id": "run-order-pb",
+  "brief_version_id": "brief-pb-v1",
+  "transformation_spec_version_id": "transform-pb-v1",
+  "generated_at": "2026-07-12T12:00:00Z",
+  "overall_status": "PASS_WITH_WARNINGS",
+  "dataset_summary": {
+    "dataset_id": "result",
+    "row_count": 3,
+    "column_count": 6,
+    "columns": [
+      "order_id",
+      "product",
+      "quantity",
+      "unit_price",
+      "order_date",
+      "line_total"
+    ],
+    "file_size_bytes": 3780,
+    "checksum": "52431d5a68c4002c22a26d78b13bdd3846d0cf1e81c89095bc3ff07a8c8e0082",
+    "output_headers": [
+      "Номер заказа",
+      "Товар",
+      "Количество",
+      "Цена за единицу",
+      "Дата заказа",
+      "Сумма строки"
+    ]
+  },
+  "deterministic_checks": [
+    {
+      "schema_version": "1.1",
+      "check_id": "DQ-001",
+      "name": "Selected sheet readable",
+      "status": "PASS",
+      "severity": "BLOCKER",
+      "target": {
+        "artifact": "input_orders.xlsx",
+        "dataset_id": "raw",
+        "column": null,
+        "row_ids": []
+      },
+      "expected": true,
+      "actual": true,
+      "affected_count": 0,
+      "sample_row_ids": [],
+      "message": "Selected sheet readable: PASS",
+      "criterion_id": null
+    },
+    {
+      "schema_version": "1.1",
+      "check_id": "DQ-002",
+      "name": "Input checksum",
+      "status": "PASS",
+      "severity": "BLOCKER",
+      "target": {
+        "artifact": "input_orders.xlsx",
+        "dataset_id": "raw",
+        "column": null,
+        "row_ids": []
+      },
+      "expected": "d275fa7393e73ef1be7815e83b31b1a710b3f345bb7138c72569b03f66edf80d",
+      "actual": "d275fa7393e73ef1be7815e83b31b1a710b3f345bb7138c72569b03f66edf80d",
+      "affected_count": 0,
+      "sample_row_ids": [],
+      "message": "Input checksum: PASS",
+      "criterion_id": null
+    },
+    {
+      "schema_version": "1.1",
+      "check_id": "DQ-003",
+      "name": "Spec integrity",
+      "status": "PASS",
+      "severity": "BLOCKER",
+      "target": {
+        "artifact": null,
+        "dataset_id": "result",
+        "column": null,
+        "row_ids": []
+      },
+      "expected": "matching approvals/hashes",
+      "actual": "matching approvals/hashes",
+      "affected_count": 0,
+      "sample_row_ids": [],
+      "message": "Spec integrity: PASS",
+      "criterion_id": null
+    },
+    {
+      "schema_version": "1.1",
+      "check_id": "DQ-004",
+      "name": "Pipeline validation",
+      "status": "PASS",
+      "severity": "BLOCKER",
+      "target": {
+        "artifact": null,
+        "dataset_id": "result",
+        "column": null,
+        "row_ids": []
+      },
+      "expected": "Pilot whitelist",
+      "actual": "7 approved Pilot steps",
+      "affected_count": 0,
+      "sample_row_ids": [],
+      "message": "Pipeline validation: PASS",
+      "criterion_id": null
+    },
+    {
+      "schema_version": "1.1",
+      "check_id": "DQ-005",
+      "name": "Steps executed",
+      "status": "PASS",
+      "severity": "BLOCKER",
+      "target": {
+        "artifact": null,
+        "dataset_id": "result",
+        "column": null,
+        "row_ids": []
+      },
+      "expected": 7,
+      "actual": 7,
+      "affected_count": 0,
+      "sample_row_ids": [],
+      "message": "Steps executed: PASS",
+      "criterion_id": null
+    },
+    {
+      "schema_version": "1.1",
+      "check_id": "DQ-006",
+      "name": "Output readable",
+      "status": "PASS",
+      "severity": "BLOCKER",
+      "target": {
+        "artifact": "expected_result.xlsx",
+        "dataset_id": "result",
+        "column": null,
+        "row_ids": []
+      },
+      "expected": true,
+      "actual": true,
+      "affected_count": 0,
+      "sample_row_ids": [],
+      "message": "Output readable: PASS",
+      "criterion_id": null
+    },
+    {
+      "schema_version": "1.1",
+      "check_id": "DQ-007",
+      "name": "Output format",
+      "status": "PASS",
+      "severity": "ERROR",
+      "target": {
+        "artifact": null,
+        "dataset_id": "result",
+        "column": null,
+        "row_ids": []
+      },
+      "expected": {
+        "format": "XLSX",
+        "sheet": "Data",
+        "headers": [
+          "Номер заказа",
+          "Товар",
+          "Количество",
+          "Цена за единицу",
+          "Дата заказа",
+          "Сумма строки"
+        ],
+        "formulas": 0
+      },
+      "actual": {
+        "format": "XLSX",
+        "sheet": "Data",
+        "headers": [
+          "Номер заказа",
+          "Товар",
+          "Количество",
+          "Цена за единицу",
+          "Дата заказа",
+          "Сумма строки"
+        ],
+        "formulas": 0
+      },
+      "affected_count": 0,
+      "sample_row_ids": [],
+      "message": "Output format: PASS",
+      "criterion_id": "PB-AC-001"
+    },
+    {
+      "schema_version": "1.1",
+      "check_id": "DQ-008",
+      "name": "Required columns",
+      "status": "PASS",
+      "severity": "BLOCKER",
+      "target": {
+        "artifact": null,
+        "dataset_id": "result",
+        "column": null,
+        "row_ids": []
+      },
+      "expected": [
+        "order_id",
+        "product",
+        "quantity",
+        "unit_price",
+        "order_date",
+        "line_total"
+      ],
+      "actual": [
+        "order_id",
+        "product",
+        "quantity",
+        "unit_price",
+        "order_date",
+        "line_total"
+      ],
+      "affected_count": 0,
+      "sample_row_ids": [],
+      "message": "Required columns: PASS",
+      "criterion_id": "PB-AC-002"
+    },
+    {
+      "schema_version": "1.1",
+      "check_id": "DQ-010",
+      "name": "Column order",
+      "status": "PASS",
+      "severity": "ERROR",
+      "target": {
+        "artifact": null,
+        "dataset_id": "result",
+        "column": null,
+        "row_ids": []
+      },
+      "expected": [
+        "order_id",
+        "product",
+        "quantity",
+        "unit_price",
+        "order_date",
+        "line_total"
+      ],
+      "actual": [
+        "order_id",
+        "product",
+        "quantity",
+        "unit_price",
+        "order_date",
+        "line_total"
+      ],
+      "affected_count": 0,
+      "sample_row_ids": [],
+      "message": "Column order: PASS",
+      "criterion_id": "PB-AC-002"
+    },
+    {
+      "schema_version": "1.1",
+      "check_id": "DQ-011",
+      "name": "Data types",
+      "status": "PASS",
+      "severity": "ERROR",
+      "target": {
+        "artifact": null,
+        "dataset_id": "result",
+        "column": null,
+        "row_ids": []
+      },
+      "expected": "string,string,integer,decimal,date,decimal",
+      "actual": "string,string,integer,decimal,date,decimal",
+      "affected_count": 0,
+      "sample_row_ids": [],
+      "message": "Data types: PASS",
+      "criterion_id": null
+    },
+    {
+      "schema_version": "1.1",
+      "check_id": "DQ-012",
+      "name": "Required values",
+      "status": "PASS",
+      "severity": "BLOCKER",
+      "target": {
+        "artifact": null,
+        "dataset_id": "result",
+        "column": null,
+        "row_ids": []
+      },
+      "expected": 0,
+      "actual": 0,
+      "affected_count": 0,
+      "sample_row_ids": [],
+      "message": "Required values: PASS",
+      "criterion_id": null
+    },
+    {
+      "schema_version": "1.1",
+      "check_id": "DQ-014",
+      "name": "Unique order_id",
+      "status": "PASS",
+      "severity": "BLOCKER",
+      "target": {
+        "artifact": null,
+        "dataset_id": "result",
+        "column": null,
+        "row_ids": []
+      },
+      "expected": 0,
+      "actual": 0,
+      "affected_count": 0,
+      "sample_row_ids": [],
+      "message": "Unique order_id: PASS",
+      "criterion_id": "PB-AC-004"
+    },
+    {
+      "schema_version": "1.1",
+      "check_id": "DQ-015",
+      "name": "Date format",
+      "status": "PASS",
+      "severity": "ERROR",
+      "target": {
+        "artifact": null,
+        "dataset_id": "result",
+        "column": "order_date",
+        "row_ids": []
+      },
+      "expected": "YYYY-MM-DD",
+      "actual": "YYYY-MM-DD",
+      "affected_count": 0,
+      "sample_row_ids": [],
+      "message": "Date format: PASS",
+      "criterion_id": "PB-AC-005"
+    },
+    {
+      "schema_version": "1.1",
+      "check_id": "DQ-016",
+      "name": "Number formats",
+      "status": "PASS",
+      "severity": "ERROR",
+      "target": {
+        "artifact": null,
+        "dataset_id": "result",
+        "column": null,
+        "row_ids": []
+      },
+      "expected": "integer/decimal",
+      "actual": "integer/decimal",
+      "affected_count": 0,
+      "sample_row_ids": [],
+      "message": "Number formats: PASS",
+      "criterion_id": null
+    },
+    {
+      "schema_version": "1.1",
+      "check_id": "DQ-017",
+      "name": "Quantity range",
+      "status": "PASS",
+      "severity": "ERROR",
+      "target": {
+        "artifact": null,
+        "dataset_id": "result",
+        "column": "quantity",
+        "row_ids": []
+      },
+      "expected": 1,
+      "actual": 1,
+      "affected_count": 0,
+      "sample_row_ids": [],
+      "message": "Quantity range: PASS",
+      "criterion_id": "PB-AC-006"
+    },
+    {
+      "schema_version": "1.1",
+      "check_id": "DQ-018",
+      "name": "Row count",
+      "status": "PASS",
+      "severity": "ERROR",
+      "target": {
+        "artifact": null,
+        "dataset_id": "result",
+        "column": null,
+        "row_ids": []
+      },
+      "expected": 3,
+      "actual": 3,
+      "affected_count": 0,
+      "sample_row_ids": [],
+      "message": "Row count: PASS",
+      "criterion_id": "PB-AC-003"
+    },
+    {
+      "schema_version": "1.1",
+      "check_id": "DQ-019",
+      "name": "Non-empty",
+      "status": "PASS",
+      "severity": "BLOCKER",
+      "target": {
+        "artifact": null,
+        "dataset_id": "result",
+        "column": null,
+        "row_ids": []
+      },
+      "expected": ">0",
+      "actual": 3,
+      "affected_count": 0,
+      "sample_row_ids": [],
+      "message": "Non-empty: PASS",
+      "criterion_id": null
+    },
+    {
+      "schema_version": "1.1",
+      "check_id": "DQ-022",
+      "name": "Round-trip",
+      "status": "PASS",
+      "severity": "ERROR",
+      "target": {
+        "artifact": null,
+        "dataset_id": "result",
+        "column": null,
+        "row_ids": []
+      },
+      "expected": {
+        "rows": 3,
+        "columns": 5
+      },
+      "actual": {
+        "rows": 3,
+        "columns": 5
+      },
+      "affected_count": 0,
+      "sample_row_ids": [],
+      "message": "Round-trip: PASS",
+      "criterion_id": null
+    },
+    {
+      "schema_version": "1.1",
+      "check_id": "DQ-023",
+      "name": "XLSX values only",
+      "status": "WARN",
+      "severity": "WARNING",
+      "target": {
+        "artifact": null,
+        "dataset_id": "result",
+        "column": null,
+        "row_ids": []
+      },
+      "expected": "Source formulas may be read only from cached values; exported XLSX has zero formulas.",
+      "actual": "4 source formula cells with cached values; exported XLSX has zero formulas.",
+      "affected_count": 4,
+      "sample_row_ids": [],
+      "message": "XLSX_FORMULA_PRESENT",
+      "criterion_id": null
+    },
+    {
+      "schema_version": "1.1",
+      "check_id": "DQ-025",
+      "name": "Deletion metrics",
+      "status": "PASS",
+      "severity": "ERROR",
+      "target": {
+        "artifact": null,
+        "dataset_id": "result",
+        "column": null,
+        "row_ids": []
+      },
+      "expected": {
+        "deduplicate": 1
+      },
+      "actual": {
+        "deduplicate": 1
+      },
+      "affected_count": 0,
+      "sample_row_ids": [],
+      "message": "Deletion metrics: PASS",
+      "criterion_id": null
+    },
+    {
+      "schema_version": "1.1",
+      "check_id": "DQ-017",
+      "name": "Line total range",
+      "status": "PASS",
+      "severity": "ERROR",
+      "target": {
+        "artifact": null,
+        "dataset_id": "result",
+        "column": "line_total",
+        "row_ids": []
+      },
+      "expected": 0,
+      "actual": 20.0,
+      "affected_count": 0,
+      "sample_row_ids": [],
+      "message": "Minimum line_total is 20.0.",
+      "criterion_id": "PB-AC-007"
+    }
+  ],
+  "llm_review": {
+    "status": "NOT_APPLICABLE",
+    "reason": "PILOT_SLICE_V1_NO_LLM"
+  },
+  "blocking_issues": [],
+  "warnings": [
+    "XLSX_FORMULA_PRESENT"
+  ],
+  "sampling_manifest": null,
+  "known_limitations": [
+    "Pilot Slice V1 validates only one local CSV or one selected XLSX sheet.",
+    "No LLM review is executed."
+  ],
+  "artifacts": [
+    {
+      "artifact_type": "RESULT_XLSX",
+      "path": "expected_result.xlsx",
+      "checksum": "52431d5a68c4002c22a26d78b13bdd3846d0cf1e81c89095bc3ff07a8c8e0082"
+    },
+    {
+      "artifact_type": "RESULT_CSV",
+      "path": "expected_result.csv",
+      "checksum": "1e9449a8ff90f0cac9d62ba94b3d6e812dd565f85e9dd91fb2b48b6cbbf4d3c6"
+    }
+  ]
+}

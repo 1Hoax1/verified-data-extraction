@@ -1,0 +1,178 @@
+{
+  "schema_version": "1.1",
+  "version_id": "brief-pc-v1",
+  "order_id": "order-pc",
+  "version_number": 1,
+  "created_at": "2026-07-12T11:00:00Z",
+  "source_refs": [
+    "asset-pc-csv"
+  ],
+  "content_hash": "b3a4f682887e99a8b0cd61c11dd95447e7f71ed4e7722c2efee89c976282a20e",
+  "objective": "Export two approved records with integer value and unique id.",
+  "record_definition": "One row represents one source record identified by id.",
+  "scope": {
+    "included": [
+      "All rows from input.csv"
+    ],
+    "excluded": [],
+    "geography": null,
+    "time_range": null
+  },
+  "inputs_expected": [
+    {
+      "asset_id": "asset-pc-csv",
+      "input_type": "LOCAL_CSV",
+      "sheet_name": null
+    }
+  ],
+  "output_contract": {
+    "format": "CSV",
+    "file_name": "approval_safe.csv",
+    "sheet_name": null,
+    "encoding": "UTF-8",
+    "delimiter": ",",
+    "include_header": true,
+    "column_order": [
+      "id",
+      "name",
+      "value"
+    ]
+  },
+  "fields": [
+    {
+      "name": "id",
+      "output_name": "ID",
+      "label": "ID",
+      "data_type": "string",
+      "required": true,
+      "nullable": false,
+      "format": null,
+      "allowed_values": null,
+      "min_value": null,
+      "max_value": null,
+      "unique": true,
+      "description": "Identifier."
+    },
+    {
+      "name": "name",
+      "output_name": "Название",
+      "label": "Name",
+      "data_type": "string",
+      "required": true,
+      "nullable": false,
+      "format": null,
+      "allowed_values": null,
+      "min_value": null,
+      "max_value": null,
+      "unique": false,
+      "description": "Name."
+    },
+    {
+      "name": "value",
+      "output_name": "Значение",
+      "label": "Value",
+      "data_type": "integer",
+      "required": true,
+      "nullable": false,
+      "format": "INTEGER",
+      "allowed_values": null,
+      "min_value": 0,
+      "max_value": null,
+      "unique": false,
+      "description": "Integer value."
+    }
+  ],
+  "volume_expectation": {
+    "mode": "EXACT",
+    "exact_count": 2,
+    "min_count": null,
+    "max_count": null
+  },
+  "data_quality_expectations": {
+    "empty_result_allowed": false,
+    "unexpected_columns_allowed": false,
+    "column_order_required": true,
+    "duplicate_key": [
+      "id"
+    ]
+  },
+  "acceptance_criteria": [
+    {
+      "schema_version": "1.1",
+      "criterion_id": "PC-AC-001",
+      "name": "Readable result",
+      "description": "Result is readable.",
+      "category": "output",
+      "check_mode": "DETERMINISTIC",
+      "severity": "BLOCKER",
+      "target": {
+        "scope": "ARTIFACT",
+        "dataset_id": null,
+        "column": null,
+        "columns": null,
+        "artifact_type": "RESULT_CSV",
+        "metric": null
+      },
+      "operator": "readable",
+      "expected": true,
+      "tolerance": null,
+      "source": "client_answer",
+      "requirement_status": "CONFIRMED"
+    },
+    {
+      "schema_version": "1.1",
+      "criterion_id": "PC-AC-002",
+      "name": "Exact rows",
+      "description": "Two rows.",
+      "category": "volume",
+      "check_mode": "DETERMINISTIC",
+      "severity": "ERROR",
+      "target": {
+        "scope": "METRIC",
+        "dataset_id": "result",
+        "column": null,
+        "columns": null,
+        "artifact_type": null,
+        "metric": "row_count"
+      },
+      "operator": "exact_count",
+      "expected": 2,
+      "tolerance": null,
+      "source": "client_answer",
+      "requirement_status": "CONFIRMED"
+    },
+    {
+      "schema_version": "1.1",
+      "criterion_id": "PC-AC-003",
+      "name": "Unique id",
+      "description": "ID is unique.",
+      "category": "uniqueness",
+      "check_mode": "DETERMINISTIC",
+      "severity": "BLOCKER",
+      "target": {
+        "scope": "COLUMN",
+        "dataset_id": "result",
+        "column": "id",
+        "columns": null,
+        "artifact_type": null,
+        "metric": null
+      },
+      "operator": "unique",
+      "expected": true,
+      "tolerance": null,
+      "source": "client_answer",
+      "requirement_status": "CONFIRMED"
+    }
+  ],
+  "assumptions": [],
+  "open_questions": [],
+  "risks": [
+    {
+      "risk_id": "pc-risk-1",
+      "category": "TECHNICAL",
+      "severity": "LOW",
+      "description": "Any semantic mutation must invalidate derived approval."
+    }
+  ],
+  "approved_at": "2026-07-12T11:10:00Z"
+}

@@ -1,0 +1,180 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://verified-data-extraction.local/schemas/pilot/v1.0/operations/replace.schema.json",
+  "title": "Pilot operation: replace",
+  "description": "",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "operation_id",
+    "type",
+    "input_dataset",
+    "output_dataset",
+    "params"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "1.1"
+    },
+    "operation_id": {
+      "type": "string",
+      "minLength": 3,
+      "maxLength": 128,
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{2,127}$"
+    },
+    "type": {
+      "const": "replace"
+    },
+    "input_dataset": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 128
+    },
+    "output_dataset": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 128
+    },
+    "params": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "columns",
+        "regex"
+      ],
+      "properties": {
+        "columns": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 200,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256
+          }
+        },
+        "mapping": {
+          "type": "object",
+          "minProperties": 1,
+          "maxProperties": 500,
+          "patternProperties": {
+            "^.{1,500}$": {
+              "type": "string",
+              "maxLength": 500
+            }
+          },
+          "additionalProperties": false
+        },
+        "old": {
+          "type": "string",
+          "maxLength": 500
+        },
+        "new": {
+          "type": "string",
+          "maxLength": 500
+        },
+        "regex": {
+          "const": false
+        }
+      },
+      "oneOf": [
+        {
+          "required": [
+            "mapping"
+          ],
+          "not": {
+            "anyOf": [
+              {
+                "required": [
+                  "old"
+                ]
+              },
+              {
+                "required": [
+                  "new"
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "required": [
+            "old",
+            "new"
+          ],
+          "not": {
+            "required": [
+              "mapping"
+            ]
+          }
+        }
+      ]
+    }
+  },
+  "x-semantics": {
+    "row_count": "UNCHANGED",
+    "column_count": "UNCHANGED",
+    "error_policy": "FAIL",
+    "errors": [
+      "COLUMN_NOT_FOUND",
+      "SCHEMA_MISMATCH",
+      "INVALID_PARAMETER"
+    ],
+    "constraint": "exact literal only"
+  },
+  "x-valid-examples": [
+    {
+      "schema_version": "1.1",
+      "operation_id": "op-replace",
+      "type": "replace",
+      "input_dataset": "raw",
+      "output_dataset": "result",
+      "params": {
+        "columns": [
+          "status"
+        ],
+        "mapping": {
+          " Active ": "active"
+        },
+        "regex": false
+      }
+    }
+  ],
+  "x-invalid-examples": [
+    {
+      "schema_version": "1.1",
+      "operation_id": "op-replace",
+      "type": "replace",
+      "input_dataset": "raw",
+      "output_dataset": "result",
+      "params": {
+        "columns": [
+          "status"
+        ],
+        "old": "a",
+        "new": "b",
+        "regex": true
+      }
+    },
+    {
+      "schema_version": "1.1",
+      "operation_id": "op-replace",
+      "type": "replace",
+      "input_dataset": "raw",
+      "output_dataset": "result",
+      "params": {
+        "columns": [
+          "status"
+        ],
+        "mapping": {
+          "a": "b"
+        },
+        "old": "a",
+        "new": "b",
+        "regex": false
+      }
+    }
+  ]
+}

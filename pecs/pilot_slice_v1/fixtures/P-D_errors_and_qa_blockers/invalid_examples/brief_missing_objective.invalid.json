@@ -1,0 +1,266 @@
+{
+  "schema_version": "1.1",
+  "version_id": "brief-pd-v1",
+  "order_id": "order-pd",
+  "version_number": 1,
+  "created_at": "2026-07-12T11:30:00Z",
+  "source_refs": [
+    "asset-pd-csv"
+  ],
+  "content_hash": "2550598bb5b649b6af9dbe1a5942a7c0e46122b6536e385a69305b99db4f6ea0",
+  "record_definition": "One row represents one event record identified by id.",
+  "scope": {
+    "included": [
+      "All three input rows"
+    ],
+    "excluded": [],
+    "geography": null,
+    "time_range": null
+  },
+  "inputs_expected": [
+    {
+      "asset_id": "asset-pd-csv",
+      "input_type": "LOCAL_CSV",
+      "sheet_name": null
+    }
+  ],
+  "output_contract": {
+    "format": "CSV",
+    "file_name": "problematic_normalized.csv",
+    "sheet_name": null,
+    "encoding": "UTF-8",
+    "delimiter": ",",
+    "include_header": true,
+    "column_order": [
+      "id",
+      "name",
+      "event_date",
+      "amount"
+    ]
+  },
+  "fields": [
+    {
+      "name": "id",
+      "output_name": "ID",
+      "label": "ID",
+      "data_type": "string",
+      "required": true,
+      "nullable": false,
+      "format": null,
+      "allowed_values": null,
+      "min_value": null,
+      "max_value": null,
+      "unique": true,
+      "description": "Unique ID."
+    },
+    {
+      "name": "name",
+      "output_name": "Название",
+      "label": "Name",
+      "data_type": "string",
+      "required": true,
+      "nullable": false,
+      "format": null,
+      "allowed_values": null,
+      "min_value": null,
+      "max_value": null,
+      "unique": false,
+      "description": "Required name."
+    },
+    {
+      "name": "event_date",
+      "output_name": "Дата события",
+      "label": "Event date",
+      "data_type": "date",
+      "required": true,
+      "nullable": false,
+      "format": "YYYY-MM-DD",
+      "allowed_values": null,
+      "min_value": null,
+      "max_value": null,
+      "unique": false,
+      "description": "Required date."
+    },
+    {
+      "name": "amount",
+      "output_name": "Сумма",
+      "label": "Amount",
+      "data_type": "decimal",
+      "required": true,
+      "nullable": false,
+      "format": "DECIMAL_DOT",
+      "allowed_values": null,
+      "min_value": 0,
+      "max_value": null,
+      "unique": false,
+      "description": "Required amount."
+    }
+  ],
+  "volume_expectation": {
+    "mode": "EXACT",
+    "exact_count": 3,
+    "min_count": null,
+    "max_count": null
+  },
+  "data_quality_expectations": {
+    "empty_result_allowed": false,
+    "unexpected_columns_allowed": false,
+    "column_order_required": true,
+    "duplicate_key": [
+      "id"
+    ]
+  },
+  "acceptance_criteria": [
+    {
+      "schema_version": "1.1",
+      "criterion_id": "PD-AC-001",
+      "name": "Readable CSV",
+      "description": "Result is readable.",
+      "category": "output",
+      "check_mode": "DETERMINISTIC",
+      "severity": "BLOCKER",
+      "target": {
+        "scope": "ARTIFACT",
+        "dataset_id": null,
+        "column": null,
+        "columns": null,
+        "artifact_type": "RESULT_CSV",
+        "metric": null
+      },
+      "operator": "readable",
+      "expected": true,
+      "tolerance": null,
+      "source": "client_answer",
+      "requirement_status": "CONFIRMED"
+    },
+    {
+      "schema_version": "1.1",
+      "criterion_id": "PD-AC-002",
+      "name": "Required name",
+      "description": "No missing name.",
+      "category": "completeness",
+      "check_mode": "DETERMINISTIC",
+      "severity": "BLOCKER",
+      "target": {
+        "scope": "COLUMN",
+        "dataset_id": "result",
+        "column": "name",
+        "columns": null,
+        "artifact_type": null,
+        "metric": null
+      },
+      "operator": "all_non_null",
+      "expected": true,
+      "tolerance": null,
+      "source": "client_answer",
+      "requirement_status": "CONFIRMED"
+    },
+    {
+      "schema_version": "1.1",
+      "criterion_id": "PD-AC-003",
+      "name": "Unique id",
+      "description": "ID is unique.",
+      "category": "uniqueness",
+      "check_mode": "DETERMINISTIC",
+      "severity": "BLOCKER",
+      "target": {
+        "scope": "COLUMN",
+        "dataset_id": "result",
+        "column": "id",
+        "columns": null,
+        "artifact_type": null,
+        "metric": null
+      },
+      "operator": "unique",
+      "expected": true,
+      "tolerance": null,
+      "source": "client_answer",
+      "requirement_status": "CONFIRMED"
+    },
+    {
+      "schema_version": "1.1",
+      "criterion_id": "PD-AC-004",
+      "name": "Valid dates",
+      "description": "Non-null dates use YYYY-MM-DD.",
+      "category": "format",
+      "check_mode": "DETERMINISTIC",
+      "severity": "ERROR",
+      "target": {
+        "scope": "COLUMN",
+        "dataset_id": "result",
+        "column": "event_date",
+        "columns": null,
+        "artifact_type": null,
+        "metric": null
+      },
+      "operator": "matches_format",
+      "expected": "YYYY-MM-DD",
+      "tolerance": null,
+      "source": "client_answer",
+      "requirement_status": "CONFIRMED"
+    },
+    {
+      "schema_version": "1.1",
+      "criterion_id": "PD-AC-005",
+      "name": "No parse nulls",
+      "description": "Date and amount have no nulls.",
+      "category": "completeness",
+      "check_mode": "DETERMINISTIC",
+      "severity": "ERROR",
+      "target": {
+        "scope": "COLUMNS",
+        "dataset_id": "result",
+        "column": null,
+        "columns": [
+          "event_date",
+          "amount"
+        ],
+        "artifact_type": null,
+        "metric": null
+      },
+      "operator": "all_non_null",
+      "expected": true,
+      "tolerance": null,
+      "source": "client_answer",
+      "requirement_status": "CONFIRMED"
+    },
+    {
+      "schema_version": "1.1",
+      "criterion_id": "PD-AC-006",
+      "name": "Exact rows",
+      "description": "All three rows remain.",
+      "category": "volume",
+      "check_mode": "DETERMINISTIC",
+      "severity": "ERROR",
+      "target": {
+        "scope": "METRIC",
+        "dataset_id": "result",
+        "column": null,
+        "columns": null,
+        "artifact_type": null,
+        "metric": "row_count"
+      },
+      "operator": "exact_count",
+      "expected": 3,
+      "tolerance": null,
+      "source": "client_answer",
+      "requirement_status": "CONFIRMED"
+    }
+  ],
+  "assumptions": [
+    {
+      "assumption_id": "pd-assumption-1",
+      "text": "Parse errors become null and are evaluated by QA.",
+      "status": "ASSUMED"
+    }
+  ],
+  "open_questions": [],
+  "risks": [
+    {
+      "risk_id": "pd-risk-1",
+      "category": "QUALITY",
+      "severity": "HIGH",
+      "description": "Input intentionally has duplicates, missing values and parse failures."
+    }
+  ]
+}

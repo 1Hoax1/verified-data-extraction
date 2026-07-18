@@ -1,0 +1,124 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://verified-data-extraction.local/schemas/pilot/v1.0/qa_check_result.schema.json",
+  "title": "Pilot QA check result",
+  "description": "",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "check_id",
+    "name",
+    "status",
+    "severity",
+    "target",
+    "expected",
+    "actual",
+    "affected_count",
+    "sample_row_ids",
+    "message",
+    "criterion_id"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "1.1"
+    },
+    "check_id": {
+      "type": "string",
+      "pattern": "^DQ-[0-9]{3}$"
+    },
+    "name": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 200
+    },
+    "status": {
+      "enum": [
+        "PASS",
+        "WARN",
+        "FAIL",
+        "SKIPPED"
+      ]
+    },
+    "severity": {
+      "enum": [
+        "BLOCKER",
+        "ERROR",
+        "WARNING",
+        "INFO"
+      ]
+    },
+    "target": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "artifact",
+        "dataset_id",
+        "column",
+        "row_ids"
+      ],
+      "properties": {
+        "artifact": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "maxLength": 255
+        },
+        "dataset_id": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "maxLength": 128
+        },
+        "column": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "maxLength": 256
+        },
+        "row_ids": {
+          "type": "array",
+          "maxItems": 100,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128
+          }
+        }
+      }
+    },
+    "expected": {},
+    "actual": {},
+    "affected_count": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "sample_row_ids": {
+      "type": "array",
+      "maxItems": 100,
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 128
+      }
+    },
+    "message": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 2000
+    },
+    "criterion_id": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "minLength": 3,
+      "maxLength": 128
+    }
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "schema_version": "1.1",
+  "id": "approval-pc-wrong",
+  "order_id": "order-pc",
+  "target_type": "TRANSFORMATION_SPEC",
+  "target_version_id": "transform-pc-v1",
+  "target_content_hash": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+  "context_brief_version_id": "brief-pc-v1",
+  "context_brief_content_hash": "dd6ab51577d03a8509081556d0a4174b567b85c92281b294b9f806faeb730026",
+  "approved_by": "local_user",
+  "approved_at": "2026-07-12T12:11:00Z"
+}

@@ -1,0 +1,84 @@
+{
+  "pack": "Pilot_Slice_V1_Contract_Pack_v1.0",
+  "decision_revision": "P0_RESOLVED_2026-07-12",
+  "status": "PASS",
+  "checks": [
+    {
+      "name": "JSON syntax",
+      "status": "PASS",
+      "details": "104 JSON files parsed as UTF-8"
+    },
+    {
+      "name": "JSON Schema meta-validation",
+      "status": "PASS",
+      "details": "20 schemas valid under Draft 2020-12"
+    },
+    {
+      "name": "Closed object schemas",
+      "status": "PASS",
+      "details": "Every instance object schema uses additionalProperties=false"
+    },
+    {
+      "name": "Operation examples and $ref resolution",
+      "status": "PASS",
+      "details": "12 valid and 25 invalid operation examples; all refs resolve"
+    },
+    {
+      "name": "Fixture valid instances, semantic invariants, hashes and approvals",
+      "status": "PASS",
+      "details": "4 fixtures passed"
+    },
+    {
+      "name": "Invalid examples",
+      "status": "PASS",
+      "details": "15 schema-invalid and 3 semantic-invalid fixture examples rejected"
+    },
+    {
+      "name": "CSV ingestion decisions",
+      "status": "PASS",
+      "details": "UTF-8/UTF-8-SIG/CP1251 and comma/semicolon/tab are exact; P-A CP1251 preview verified; AUTO rejected"
+    },
+    {
+      "name": "Date format decisions",
+      "status": "PASS",
+      "details": "Closed seven-format registry exact; DD/MM and MM/DD mutual exclusion validated"
+    },
+    {
+      "name": "XLSX formula decisions",
+      "status": "PASS",
+      "details": "4 cached source formulas verified; warning fixed; missing-cache fatal case fixed; output XLSX contains values only"
+    },
+    {
+      "name": "Exact fixture outputs",
+      "status": "PASS",
+      "details": "All four expected CSV matrices and P-B XLSX values match exact fixtures"
+    },
+    {
+      "name": "Content-hash vectors",
+      "status": "PASS",
+      "details": "2 NFC + RFC 8785 + SHA-256 vectors match"
+    },
+    {
+      "name": "Input preview fixtures",
+      "status": "PASS",
+      "details": "All four fixtures include schema and at most five preview rows"
+    },
+    {
+      "name": "Pilot-only scope and no executable code",
+      "status": "PASS",
+      "details": "One local dataset, 12 operations, no JSON/URL/LLM/multi-dataset/arbitrary code"
+    },
+    {
+      "name": "Operation semantic annotations",
+      "status": "PASS",
+      "details": "All 12 operation contracts define parameters, errors, row/column effects and examples"
+    },
+    {
+      "name": "Required package structure and traceability",
+      "status": "PASS",
+      "details": "21 required paths and new trace rows present"
+    }
+  ],
+  "errors": [],
+  "warnings": []
+}

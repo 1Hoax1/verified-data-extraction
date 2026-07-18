@@ -1,0 +1,174 @@
+{
+  "schema_version": "1.1",
+  "version_id": "transform-pd-v1",
+  "order_id": "order-pd",
+  "version_number": 1,
+  "brief_version_id": "brief-pd-v1",
+  "brief_content_hash": "2550598bb5b649b6af9dbe1a5942a7c0e46122b6536e385a69305b99db4f6ea0",
+  "created_at": "2026-07-12T11:35:00Z",
+  "content_hash": "716e94550cd49972cd9baec5bb131d5733460b13195f6b8976368008cf7c3b08",
+  "inputs": [
+    {
+      "dataset_id": "raw",
+      "asset_id": "asset-pd-csv",
+      "source_type": "LOCAL_CSV",
+      "sheet_name": null,
+      "csv_options": {
+        "encoding": "UTF-8",
+        "delimiter": ",",
+        "header_row": 0
+      }
+    }
+  ],
+  "pipeline": [
+    {
+      "schema_version": "1.1",
+      "operation_id": "pd-op-01",
+      "type": "trim",
+      "input_dataset": "raw",
+      "output_dataset": "s01",
+      "params": {
+        "columns": [
+          "id",
+          "name",
+          "event_date",
+          "amount"
+        ],
+        "mode": "both"
+      }
+    },
+    {
+      "schema_version": "1.1",
+      "operation_id": "pd-op-02",
+      "type": "change_case",
+      "input_dataset": "s01",
+      "output_dataset": "s02",
+      "params": {
+        "columns": [
+          "name"
+        ],
+        "mode": "title"
+      }
+    },
+    {
+      "schema_version": "1.1",
+      "operation_id": "pd-op-03",
+      "type": "parse_date",
+      "input_dataset": "s02",
+      "output_dataset": "s03",
+      "params": {
+        "column": "event_date",
+        "formats": [
+          "YYYY-MM-DD"
+        ],
+        "output_format": "YYYY-MM-DD",
+        "errors": "SET_NULL"
+      }
+    },
+    {
+      "schema_version": "1.1",
+      "operation_id": "pd-op-04",
+      "type": "parse_number",
+      "input_dataset": "s03",
+      "output_dataset": "result",
+      "params": {
+        "column": "amount",
+        "decimal_separator": ".",
+        "thousands_separator": null,
+        "target_type": "decimal",
+        "errors": "SET_NULL"
+      }
+    }
+  ],
+  "output": {
+    "dataset_id": "result",
+    "format": "CSV",
+    "file_name": "problematic_normalized.csv",
+    "sheet_name": null,
+    "encoding": "UTF-8",
+    "delimiter": ",",
+    "column_order": [
+      "id",
+      "name",
+      "event_date",
+      "amount"
+    ]
+  },
+  "execution_policy": {
+    "fail_fast": true,
+    "allow_partial_output": false,
+    "max_rows": 100000,
+    "max_columns": 200
+  },
+  "provenance_policy": {
+    "record_input_checksum": true,
+    "preserve_source_row_number": false
+  },
+  "expected_schema": [
+    {
+      "name": "id",
+      "output_name": "ID",
+      "label": "ID",
+      "data_type": "string",
+      "required": true,
+      "nullable": false,
+      "format": null,
+      "allowed_values": null,
+      "min_value": null,
+      "max_value": null,
+      "unique": true,
+      "description": "Unique ID."
+    },
+    {
+      "name": "name",
+      "output_name": "Название",
+      "label": "Name",
+      "data_type": "string",
+      "required": true,
+      "nullable": false,
+      "format": null,
+      "allowed_values": null,
+      "min_value": null,
+      "max_value": null,
+      "unique": false,
+      "description": "Required name."
+    },
+    {
+      "name": "event_date",
+      "output_name": "Дата события",
+      "label": "Event date",
+      "data_type": "date",
+      "required": true,
+      "nullable": false,
+      "format": "YYYY-MM-DD",
+      "allowed_values": null,
+      "min_value": null,
+      "max_value": null,
+      "unique": false,
+      "description": "Required date."
+    },
+    {
+      "name": "amount",
+      "output_name": "Сумма",
+      "label": "Amount",
+      "data_type": "decimal",
+      "required": true,
+      "nullable": false,
+      "format": "DECIMAL_DOT",
+      "allowed_values": null,
+      "min_value": 0,
+      "max_value": null,
+      "unique": false,
+      "description": "Required amount."
+    }
+  ],
+  "acceptance_criteria_ref": [
+    "PD-AC-001",
+    "PD-AC-002",
+    "PD-AC-003",
+    "PD-AC-004",
+    "PD-AC-005",
+    "PD-AC-006"
+  ],
+  "script": "drop all bad rows"
+}

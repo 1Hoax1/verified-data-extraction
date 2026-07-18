@@ -1,0 +1,34 @@
+{
+  "schema_version": "1.1",
+  "asset_id": "asset-pd-csv",
+  "source_type": "LOCAL_CSV",
+  "selected_encoding": "UTF-8",
+  "selected_delimiter": "comma",
+  "columns": [
+    "id",
+    "name",
+    "event_date",
+    "amount"
+  ],
+  "first_rows": [
+    [
+      "1",
+      "Alpha",
+      "2026-01-10",
+      "10.00"
+    ],
+    [
+      "1",
+      "Alpha duplicate",
+      "bad-date",
+      "20.00"
+    ],
+    [
+      "2",
+      "",
+      "2026-01-12",
+      "not-a-number"
+    ]
+  ],
+  "warnings": []
+}

@@ -1,0 +1,25 @@
+{
+  "schema_version": "1.1",
+  "asset_id": "asset-pc-csv",
+  "source_type": "LOCAL_CSV",
+  "selected_encoding": "UTF-8",
+  "selected_delimiter": "comma",
+  "columns": [
+    "id",
+    "name",
+    "value"
+  ],
+  "first_rows": [
+    [
+      "1",
+      "Alpha",
+      "10"
+    ],
+    [
+      "2",
+      "Beta",
+      "20"
+    ]
+  ],
+  "warnings": []
+}

@@ -1,0 +1,228 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://verified-data-extraction.local/schemas/pilot/v1.0/execution_error.schema.json",
+  "title": "Pilot execution error",
+  "description": "",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "error_id",
+    "code",
+    "category",
+    "severity",
+    "stage",
+    "message",
+    "details",
+    "order_id",
+    "run_id",
+    "source_id",
+    "operation_id",
+    "dataset_id",
+    "column",
+    "row_ids",
+    "retryable",
+    "created_at"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "1.1"
+    },
+    "error_id": {
+      "type": "string",
+      "minLength": 3,
+      "maxLength": 128,
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{2,127}$"
+    },
+    "code": {
+      "enum": [
+        "STATE_INVALID_TRANSITION",
+        "APPROVAL_MISSING",
+        "APPROVAL_HASH_MISMATCH",
+        "VERSION_INCOMPATIBLE",
+        "VALIDATION_BRIEF_SCHEMA",
+        "VALIDATION_TRANSFORMATION_SCHEMA",
+        "VALIDATION_ACCEPTANCE_CRITERION",
+        "INPUT_NOT_FOUND",
+        "INPUT_UNREADABLE",
+        "UNSUPPORTED_FORMAT",
+        "INVALID_OPERATION",
+        "INVALID_PARAMETER",
+        "COLUMN_NOT_FOUND",
+        "COLUMN_COLLISION",
+        "PARSE_FAILED",
+        "SCHEMA_MISMATCH",
+        "EXPORT_FAILED",
+        "ROUNDTRIP_MISMATCH",
+        "QA_BLOCKER",
+        "STORAGE_ERROR",
+        "XLSX_FORMULA_PRESENT",
+        "XLSX_FORMULA_CACHE_MISSING"
+      ]
+    },
+    "category": {
+      "enum": [
+        "STATE",
+        "APPROVAL",
+        "VALIDATION",
+        "INGESTION",
+        "TRANSFORMATION",
+        "EXPORT",
+        "QA",
+        "STORAGE"
+      ]
+    },
+    "severity": {
+      "enum": [
+        "BLOCKER",
+        "ERROR",
+        "WARNING",
+        "INFO"
+      ]
+    },
+    "stage": {
+      "enum": [
+        "ORDER",
+        "BRIEF_VALIDATION",
+        "TRANSFORMATION_VALIDATION",
+        "APPROVAL",
+        "INGESTION",
+        "PREFLIGHT",
+        "TRANSFORMATION",
+        "EXPORT",
+        "ROUNDTRIP",
+        "QA",
+        "STORAGE"
+      ]
+    },
+    "message": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 2000
+    },
+    "details": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "expected": {},
+        "actual": {},
+        "value": {},
+        "parameter": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "maxLength": 128
+        },
+        "path": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "maxLength": 500
+        },
+        "sheet_name": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "maxLength": 128
+        },
+        "reason": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "maxLength": 1000
+        },
+        "validation_errors": {
+          "type": "array",
+          "maxItems": 100,
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 1000
+          }
+        },
+        "expected_hash": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "actual_hash": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      }
+    },
+    "order_id": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "minLength": 3,
+      "maxLength": 128
+    },
+    "run_id": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "minLength": 3,
+      "maxLength": 128
+    },
+    "source_id": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "minLength": 3,
+      "maxLength": 128
+    },
+    "operation_id": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "minLength": 3,
+      "maxLength": 128
+    },
+    "dataset_id": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "minLength": 1,
+      "maxLength": 128
+    },
+    "column": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "minLength": 1,
+      "maxLength": 256
+    },
+    "row_ids": {
+      "type": "array",
+      "maxItems": 100,
+      "items": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 128
+      }
+    },
+    "retryable": {
+      "type": "boolean"
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time"
+    }
+  }
+}

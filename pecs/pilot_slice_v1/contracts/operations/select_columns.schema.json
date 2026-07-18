@@ -1,0 +1,109 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://verified-data-extraction.local/schemas/pilot/v1.0/operations/select_columns.schema.json",
+  "title": "Pilot operation: select_columns",
+  "description": "",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "operation_id",
+    "type",
+    "input_dataset",
+    "output_dataset",
+    "params"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "1.1"
+    },
+    "operation_id": {
+      "type": "string",
+      "minLength": 3,
+      "maxLength": 128,
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{2,127}$"
+    },
+    "type": {
+      "const": "select_columns"
+    },
+    "input_dataset": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 128
+    },
+    "output_dataset": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 128
+    },
+    "params": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "columns"
+      ],
+      "properties": {
+        "columns": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 200,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256
+          }
+        }
+      }
+    }
+  },
+  "x-semantics": {
+    "row_count": "UNCHANGED",
+    "column_count": "EXACTLY len(columns)",
+    "error_policy": "FAIL",
+    "errors": [
+      "COLUMN_NOT_FOUND",
+      "INVALID_PARAMETER"
+    ]
+  },
+  "x-valid-examples": [
+    {
+      "schema_version": "1.1",
+      "operation_id": "op-select_columns",
+      "type": "select_columns",
+      "input_dataset": "raw",
+      "output_dataset": "result",
+      "params": {
+        "columns": [
+          "id",
+          "name"
+        ]
+      }
+    }
+  ],
+  "x-invalid-examples": [
+    {
+      "schema_version": "1.1",
+      "operation_id": "op-select_columns",
+      "type": "select_columns",
+      "input_dataset": "raw",
+      "output_dataset": "result",
+      "params": {
+        "columns": []
+      }
+    },
+    {
+      "schema_version": "1.1",
+      "operation_id": "op-select_columns",
+      "type": "select_columns",
+      "input_dataset": "raw",
+      "output_dataset": "result",
+      "params": {
+        "columns": [
+          "id"
+        ]
+      },
+      "extra": 1
+    }
+  ]
+}

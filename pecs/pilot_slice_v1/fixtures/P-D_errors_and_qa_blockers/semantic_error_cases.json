@@ -1,0 +1,18 @@
+{
+  "cases": [
+    {
+      "path": "invalid_examples/preflight_missing_column.semantic_invalid.json",
+      "expected_error": "COLUMN_NOT_FOUND"
+    },
+    {
+      "path": "invalid_examples/rename_collision.semantic_invalid.json",
+      "expected_error": "COLUMN_COLLISION"
+    },
+    {
+      "path": "invalid_examples/parse_failure_policy_fail.semantic_invalid.json",
+      "expected_error": "PARSE_FAILED",
+      "row_id": "2",
+      "value": "bad-date"
+    }
+  ]
+}

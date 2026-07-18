@@ -1,0 +1,340 @@
+{
+  "schema_version": "1.1",
+  "version_id": "brief-pa-v1",
+  "order_id": "order-pa",
+  "version_number": 1,
+  "created_at": "2026-07-12T09:00:00Z",
+  "source_refs": [
+    "asset-pa-csv"
+  ],
+  "content_hash": "695088adceedcb49d1d494b352f2ee332da98dd953a7b997b42b36b76147854d",
+  "objective": "Produce a clean UTF-8 CSV of unique customers from an explicitly selected CP1251 source file.",
+  "record_definition": "One row represents one unique customer identified by normalized email.",
+  "scope": {
+    "included": [
+      "All rows decoded from input_dirty.csv using explicitly selected CP1251"
+    ],
+    "excluded": [
+      "Rows with missing customer_name"
+    ],
+    "geography": null,
+    "time_range": null
+  },
+  "inputs_expected": [
+    {
+      "asset_id": "asset-pa-csv",
+      "input_type": "LOCAL_CSV",
+      "sheet_name": null
+    }
+  ],
+  "output_contract": {
+    "format": "CSV",
+    "file_name": "customers_clean.csv",
+    "sheet_name": null,
+    "encoding": "UTF-8",
+    "delimiter": ",",
+    "include_header": true,
+    "column_order": [
+      "customer_name",
+      "country",
+      "signup_date",
+      "revenue",
+      "status",
+      "email"
+    ]
+  },
+  "fields": [
+    {
+      "name": "customer_name",
+      "output_name": "Имя клиента",
+      "label": "Customer name",
+      "data_type": "string",
+      "required": true,
+      "nullable": false,
+      "format": null,
+      "allowed_values": null,
+      "min_value": null,
+      "max_value": null,
+      "unique": false,
+      "description": "Normalized customer name."
+    },
+    {
+      "name": "country",
+      "output_name": "Страна",
+      "label": "Country code",
+      "data_type": "string",
+      "required": true,
+      "nullable": false,
+      "format": null,
+      "allowed_values": [
+        "RU",
+        "US",
+        "ES",
+        "DE"
+      ],
+      "min_value": null,
+      "max_value": null,
+      "unique": false,
+      "description": "Uppercase country code."
+    },
+    {
+      "name": "signup_date",
+      "output_name": "Дата регистрации",
+      "label": "Signup date",
+      "data_type": "date",
+      "required": true,
+      "nullable": false,
+      "format": "YYYY-MM-DD",
+      "allowed_values": null,
+      "min_value": null,
+      "max_value": null,
+      "unique": false,
+      "description": "ISO date."
+    },
+    {
+      "name": "revenue",
+      "output_name": "Выручка",
+      "label": "Revenue",
+      "data_type": "decimal",
+      "required": true,
+      "nullable": false,
+      "format": "DECIMAL_DOT",
+      "allowed_values": null,
+      "min_value": 0,
+      "max_value": null,
+      "unique": false,
+      "description": "Non-negative revenue."
+    },
+    {
+      "name": "status",
+      "output_name": "Статус",
+      "label": "Status",
+      "data_type": "string",
+      "required": true,
+      "nullable": false,
+      "format": null,
+      "allowed_values": [
+        "active",
+        "inactive"
+      ],
+      "min_value": null,
+      "max_value": null,
+      "unique": false,
+      "description": "Lowercase status."
+    },
+    {
+      "name": "email",
+      "output_name": "Email",
+      "label": "Email",
+      "data_type": "string",
+      "required": true,
+      "nullable": false,
+      "format": null,
+      "allowed_values": null,
+      "min_value": null,
+      "max_value": null,
+      "unique": true,
+      "description": "Lowercase unique email."
+    }
+  ],
+  "volume_expectation": {
+    "mode": "EXACT",
+    "exact_count": 3,
+    "min_count": null,
+    "max_count": null
+  },
+  "data_quality_expectations": {
+    "empty_result_allowed": false,
+    "unexpected_columns_allowed": false,
+    "column_order_required": true,
+    "duplicate_key": [
+      "email"
+    ]
+  },
+  "acceptance_criteria": [
+    {
+      "schema_version": "1.1",
+      "criterion_id": "PA-AC-001",
+      "name": "Readable CSV",
+      "description": "Result CSV is readable.",
+      "category": "output",
+      "check_mode": "DETERMINISTIC",
+      "severity": "BLOCKER",
+      "target": {
+        "scope": "ARTIFACT",
+        "dataset_id": null,
+        "column": null,
+        "columns": null,
+        "artifact_type": "RESULT_CSV",
+        "metric": null
+      },
+      "operator": "readable",
+      "expected": true,
+      "tolerance": null,
+      "source": "client_answer",
+      "requirement_status": "CONFIRMED"
+    },
+    {
+      "schema_version": "1.1",
+      "criterion_id": "PA-AC-002",
+      "name": "Exact columns",
+      "description": "Internal schema has exactly the agreed ordered technical columns; export headers are the corresponding output_name values.",
+      "category": "schema",
+      "check_mode": "DETERMINISTIC",
+      "severity": "BLOCKER",
+      "target": {
+        "scope": "COLUMNS",
+        "dataset_id": "result",
+        "column": null,
+        "columns": [
+          "customer_name",
+          "country",
+          "signup_date",
+          "revenue",
+          "status",
+          "email"
+        ],
+        "artifact_type": null,
+        "metric": null
+      },
+      "operator": "sequence_equals",
+      "expected": [
+        "customer_name",
+        "country",
+        "signup_date",
+        "revenue",
+        "status",
+        "email"
+      ],
+      "tolerance": null,
+      "source": "client_answer",
+      "requirement_status": "CONFIRMED"
+    },
+    {
+      "schema_version": "1.1",
+      "criterion_id": "PA-AC-003",
+      "name": "Exact rows",
+      "description": "Exactly three rows.",
+      "category": "volume",
+      "check_mode": "DETERMINISTIC",
+      "severity": "ERROR",
+      "target": {
+        "scope": "METRIC",
+        "dataset_id": "result",
+        "column": null,
+        "columns": null,
+        "artifact_type": null,
+        "metric": "row_count"
+      },
+      "operator": "exact_count",
+      "expected": 3,
+      "tolerance": null,
+      "source": "client_answer",
+      "requirement_status": "CONFIRMED"
+    },
+    {
+      "schema_version": "1.1",
+      "criterion_id": "PA-AC-004",
+      "name": "Required names",
+      "description": "No missing customer_name.",
+      "category": "completeness",
+      "check_mode": "DETERMINISTIC",
+      "severity": "BLOCKER",
+      "target": {
+        "scope": "COLUMN",
+        "dataset_id": "result",
+        "column": "customer_name",
+        "columns": null,
+        "artifact_type": null,
+        "metric": null
+      },
+      "operator": "all_non_null",
+      "expected": true,
+      "tolerance": null,
+      "source": "client_answer",
+      "requirement_status": "CONFIRMED"
+    },
+    {
+      "schema_version": "1.1",
+      "criterion_id": "PA-AC-005",
+      "name": "Unique email",
+      "description": "Email is unique.",
+      "category": "uniqueness",
+      "check_mode": "DETERMINISTIC",
+      "severity": "BLOCKER",
+      "target": {
+        "scope": "COLUMN",
+        "dataset_id": "result",
+        "column": "email",
+        "columns": null,
+        "artifact_type": null,
+        "metric": null
+      },
+      "operator": "unique",
+      "expected": true,
+      "tolerance": null,
+      "source": "client_answer",
+      "requirement_status": "CONFIRMED"
+    },
+    {
+      "schema_version": "1.1",
+      "criterion_id": "PA-AC-006",
+      "name": "Date format",
+      "description": "Date is YYYY-MM-DD.",
+      "category": "format",
+      "check_mode": "DETERMINISTIC",
+      "severity": "ERROR",
+      "target": {
+        "scope": "COLUMN",
+        "dataset_id": "result",
+        "column": "signup_date",
+        "columns": null,
+        "artifact_type": null,
+        "metric": null
+      },
+      "operator": "matches_format",
+      "expected": "YYYY-MM-DD",
+      "tolerance": null,
+      "source": "client_answer",
+      "requirement_status": "CONFIRMED"
+    },
+    {
+      "schema_version": "1.1",
+      "criterion_id": "PA-AC-007",
+      "name": "Revenue range",
+      "description": "Revenue is non-negative.",
+      "category": "range",
+      "check_mode": "DETERMINISTIC",
+      "severity": "ERROR",
+      "target": {
+        "scope": "COLUMN",
+        "dataset_id": "result",
+        "column": "revenue",
+        "columns": null,
+        "artifact_type": null,
+        "metric": null
+      },
+      "operator": "min_value",
+      "expected": 0,
+      "tolerance": null,
+      "source": "client_answer",
+      "requirement_status": "CONFIRMED"
+    }
+  ],
+  "assumptions": [
+    {
+      "assumption_id": "pa-assumption-1",
+      "text": "Blank revenue is filled with numeric zero.",
+      "status": "ASSUMED"
+    }
+  ],
+  "open_questions": [],
+  "risks": [
+    {
+      "risk_id": "pa-risk-1",
+      "category": "QUALITY",
+      "severity": "LOW",
+      "description": "Mixed source date and number formats require explicit parsing rules."
+    }
+  ]
+}

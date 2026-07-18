@@ -1,0 +1,20 @@
+{
+  "items": [
+    {
+      "path": "invalid_examples/brief_missing_objective.invalid.json",
+      "schema": "brief_version.schema.json"
+    },
+    {
+      "path": "invalid_examples/spec_with_script.invalid.json",
+      "schema": "transformation_spec_version.schema.json"
+    },
+    {
+      "path": "invalid_examples/unknown_operation.invalid.json",
+      "schema": "operation.schema.json"
+    },
+    {
+      "path": "invalid_examples/output_name_with_tab.invalid.json",
+      "schema": "brief_version.schema.json"
+    }
+  ]
+}

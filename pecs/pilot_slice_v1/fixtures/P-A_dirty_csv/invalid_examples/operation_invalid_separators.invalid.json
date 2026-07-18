@@ -1,0 +1,14 @@
+{
+  "schema_version": "1.1",
+  "operation_id": "op-parse_number",
+  "type": "parse_number",
+  "input_dataset": "raw",
+  "output_dataset": "result",
+  "params": {
+    "column": "revenue",
+    "decimal_separator": ".",
+    "thousands_separator": ".",
+    "target_type": "decimal",
+    "errors": "FAIL"
+  }
+}

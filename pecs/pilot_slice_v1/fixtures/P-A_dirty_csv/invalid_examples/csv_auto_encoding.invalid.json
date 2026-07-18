@@ -1,0 +1,366 @@
+{
+  "schema_version": "1.1",
+  "version_id": "transform-pa-v1",
+  "order_id": "order-pa",
+  "version_number": 1,
+  "brief_version_id": "brief-pa-v1",
+  "brief_content_hash": "73bd0d57b726e8acfe4013958d567e9ef09e15cf9ff59efbfd20ae4574c685fa",
+  "created_at": "2026-07-12T09:10:00Z",
+  "content_hash": "0067ddddd70299b8eac46f52b35732d2d8c3808230487ebee1207fae15b87d09",
+  "inputs": [
+    {
+      "dataset_id": "raw",
+      "asset_id": "asset-pa-csv",
+      "source_type": "LOCAL_CSV",
+      "sheet_name": null,
+      "csv_options": {
+        "encoding": "AUTO",
+        "delimiter": ",",
+        "header_row": 0
+      }
+    }
+  ],
+  "pipeline": [
+    {
+      "schema_version": "1.1",
+      "operation_id": "pa-op-01",
+      "type": "rename",
+      "input_dataset": "raw",
+      "output_dataset": "s01",
+      "params": {
+        "mapping": {
+          "Customer Name": "customer_name",
+          "Country": "country",
+          "Signup Date": "signup_date",
+          "Revenue": "revenue",
+          "Status": "status",
+          "Email": "email"
+        }
+      }
+    },
+    {
+      "schema_version": "1.1",
+      "operation_id": "pa-op-02",
+      "type": "trim",
+      "input_dataset": "s01",
+      "output_dataset": "s02",
+      "params": {
+        "columns": [
+          "customer_name",
+          "country",
+          "revenue",
+          "status",
+          "email"
+        ],
+        "mode": "both"
+      }
+    },
+    {
+      "schema_version": "1.1",
+      "operation_id": "pa-op-03",
+      "type": "change_case",
+      "input_dataset": "s02",
+      "output_dataset": "s03",
+      "params": {
+        "columns": [
+          "customer_name"
+        ],
+        "mode": "title"
+      }
+    },
+    {
+      "schema_version": "1.1",
+      "operation_id": "pa-op-04",
+      "type": "change_case",
+      "input_dataset": "s03",
+      "output_dataset": "s04",
+      "params": {
+        "columns": [
+          "country"
+        ],
+        "mode": "upper"
+      }
+    },
+    {
+      "schema_version": "1.1",
+      "operation_id": "pa-op-05",
+      "type": "change_case",
+      "input_dataset": "s04",
+      "output_dataset": "s05",
+      "params": {
+        "columns": [
+          "status",
+          "email"
+        ],
+        "mode": "lower"
+      }
+    },
+    {
+      "schema_version": "1.1",
+      "operation_id": "pa-op-06",
+      "type": "replace",
+      "input_dataset": "s05",
+      "output_dataset": "s06",
+      "params": {
+        "columns": [
+          "country"
+        ],
+        "mapping": {
+          "UNITED STATES": "US"
+        },
+        "regex": false
+      }
+    },
+    {
+      "schema_version": "1.1",
+      "operation_id": "pa-op-07",
+      "type": "replace",
+      "input_dataset": "s06",
+      "output_dataset": "s07",
+      "params": {
+        "columns": [
+          "revenue"
+        ],
+        "mapping": {
+          "1 234,50": "1234.50",
+          "2,000.00": "2000.00",
+          "900,00": "900.00"
+        },
+        "regex": false
+      }
+    },
+    {
+      "schema_version": "1.1",
+      "operation_id": "pa-op-08",
+      "type": "parse_date",
+      "input_dataset": "s07",
+      "output_dataset": "s08",
+      "params": {
+        "column": "signup_date",
+        "formats": [
+          "DD/MM/YYYY",
+          "YYYY-MM-DD",
+          "DD.MM.YYYY"
+        ],
+        "output_format": "YYYY-MM-DD",
+        "errors": "FAIL"
+      }
+    },
+    {
+      "schema_version": "1.1",
+      "operation_id": "pa-op-09",
+      "type": "parse_number",
+      "input_dataset": "s08",
+      "output_dataset": "s09",
+      "params": {
+        "column": "revenue",
+        "decimal_separator": ".",
+        "thousands_separator": null,
+        "target_type": "decimal",
+        "errors": "FAIL"
+      }
+    },
+    {
+      "schema_version": "1.1",
+      "operation_id": "pa-op-10",
+      "type": "fill_missing",
+      "input_dataset": "s09",
+      "output_dataset": "s10",
+      "params": {
+        "columns": [
+          "revenue"
+        ],
+        "strategy": "constant",
+        "value": 0
+      }
+    },
+    {
+      "schema_version": "1.1",
+      "operation_id": "pa-op-11",
+      "type": "drop_missing",
+      "input_dataset": "s10",
+      "output_dataset": "s11",
+      "params": {
+        "subset": [
+          "customer_name"
+        ],
+        "how": "any"
+      }
+    },
+    {
+      "schema_version": "1.1",
+      "operation_id": "pa-op-12",
+      "type": "deduplicate",
+      "input_dataset": "s11",
+      "output_dataset": "s12",
+      "params": {
+        "subset": [
+          "email"
+        ],
+        "keep": "FIRST"
+      }
+    },
+    {
+      "schema_version": "1.1",
+      "operation_id": "pa-op-13",
+      "type": "sort",
+      "input_dataset": "s12",
+      "output_dataset": "s13",
+      "params": {
+        "by": [
+          "signup_date"
+        ],
+        "ascending": [
+          true
+        ],
+        "nulls": "LAST"
+      }
+    },
+    {
+      "schema_version": "1.1",
+      "operation_id": "pa-op-14",
+      "type": "select_columns",
+      "input_dataset": "s13",
+      "output_dataset": "result",
+      "params": {
+        "columns": [
+          "customer_name",
+          "country",
+          "signup_date",
+          "revenue",
+          "status",
+          "email"
+        ]
+      }
+    }
+  ],
+  "output": {
+    "dataset_id": "result",
+    "format": "CSV",
+    "file_name": "customers_clean.csv",
+    "sheet_name": null,
+    "encoding": "UTF-8",
+    "delimiter": ",",
+    "column_order": [
+      "customer_name",
+      "country",
+      "signup_date",
+      "revenue",
+      "status",
+      "email"
+    ]
+  },
+  "execution_policy": {
+    "fail_fast": true,
+    "allow_partial_output": false,
+    "max_rows": 100000,
+    "max_columns": 200
+  },
+  "provenance_policy": {
+    "record_input_checksum": true,
+    "preserve_source_row_number": false
+  },
+  "expected_schema": [
+    {
+      "name": "customer_name",
+      "output_name": "Имя клиента",
+      "label": "Customer name",
+      "data_type": "string",
+      "required": true,
+      "nullable": false,
+      "format": null,
+      "allowed_values": null,
+      "min_value": null,
+      "max_value": null,
+      "unique": false,
+      "description": "Normalized customer name."
+    },
+    {
+      "name": "country",
+      "output_name": "Страна",
+      "label": "Country code",
+      "data_type": "string",
+      "required": true,
+      "nullable": false,
+      "format": null,
+      "allowed_values": [
+        "RU",
+        "US",
+        "ES",
+        "DE"
+      ],
+      "min_value": null,
+      "max_value": null,
+      "unique": false,
+      "description": "Uppercase country code."
+    },
+    {
+      "name": "signup_date",
+      "output_name": "Дата регистрации",
+      "label": "Signup date",
+      "data_type": "date",
+      "required": true,
+      "nullable": false,
+      "format": "YYYY-MM-DD",
+      "allowed_values": null,
+      "min_value": null,
+      "max_value": null,
+      "unique": false,
+      "description": "ISO date."
+    },
+    {
+      "name": "revenue",
+      "output_name": "Выручка",
+      "label": "Revenue",
+      "data_type": "decimal",
+      "required": true,
+      "nullable": false,
+      "format": "DECIMAL_DOT",
+      "allowed_values": null,
+      "min_value": 0,
+      "max_value": null,
+      "unique": false,
+      "description": "Non-negative revenue."
+    },
+    {
+      "name": "status",
+      "output_name": "Статус",
+      "label": "Status",
+      "data_type": "string",
+      "required": true,
+      "nullable": false,
+      "format": null,
+      "allowed_values": [
+        "active",
+        "inactive"
+      ],
+      "min_value": null,
+      "max_value": null,
+      "unique": false,
+      "description": "Lowercase status."
+    },
+    {
+      "name": "email",
+      "output_name": "Email",
+      "label": "Email",
+      "data_type": "string",
+      "required": true,
+      "nullable": false,
+      "format": null,
+      "allowed_values": null,
+      "min_value": null,
+      "max_value": null,
+      "unique": true,
+      "description": "Lowercase unique email."
+    }
+  ],
+  "acceptance_criteria_ref": [
+    "PA-AC-001",
+    "PA-AC-002",
+    "PA-AC-003",
+    "PA-AC-004",
+    "PA-AC-005",
+    "PA-AC-006",
+    "PA-AC-007"
+  ]
+}

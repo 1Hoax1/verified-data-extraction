@@ -1,0 +1,127 @@
+{
+  "schema_version": "1.1",
+  "version_id": "transform-pc-v1",
+  "order_id": "order-pc",
+  "version_number": 1,
+  "brief_version_id": "brief-pc-v1",
+  "brief_content_hash": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+  "created_at": "2026-07-12T11:05:00Z",
+  "content_hash": "f047632849b6499367b545eac92c587f31aa745c6bc48a6de19a81762a197399",
+  "inputs": [
+    {
+      "dataset_id": "raw",
+      "asset_id": "asset-pc-csv",
+      "source_type": "LOCAL_CSV",
+      "sheet_name": null,
+      "csv_options": {
+        "encoding": "UTF-8",
+        "delimiter": ",",
+        "header_row": 0
+      }
+    }
+  ],
+  "pipeline": [
+    {
+      "schema_version": "1.1",
+      "operation_id": "pc-op-01",
+      "type": "parse_number",
+      "input_dataset": "raw",
+      "output_dataset": "s01",
+      "params": {
+        "column": "value",
+        "decimal_separator": ".",
+        "thousands_separator": null,
+        "target_type": "integer",
+        "errors": "FAIL"
+      }
+    },
+    {
+      "schema_version": "1.1",
+      "operation_id": "pc-op-02",
+      "type": "sort",
+      "input_dataset": "s01",
+      "output_dataset": "result",
+      "params": {
+        "by": [
+          "id"
+        ],
+        "ascending": [
+          true
+        ],
+        "nulls": "LAST"
+      }
+    }
+  ],
+  "output": {
+    "dataset_id": "result",
+    "format": "CSV",
+    "file_name": "approval_safe.csv",
+    "sheet_name": null,
+    "encoding": "UTF-8",
+    "delimiter": ",",
+    "column_order": [
+      "id",
+      "name",
+      "value"
+    ]
+  },
+  "execution_policy": {
+    "fail_fast": true,
+    "allow_partial_output": false,
+    "max_rows": 100000,
+    "max_columns": 200
+  },
+  "provenance_policy": {
+    "record_input_checksum": true,
+    "preserve_source_row_number": false
+  },
+  "expected_schema": [
+    {
+      "name": "id",
+      "output_name": "ID",
+      "label": "ID",
+      "data_type": "string",
+      "required": true,
+      "nullable": false,
+      "format": null,
+      "allowed_values": null,
+      "min_value": null,
+      "max_value": null,
+      "unique": true,
+      "description": "Identifier."
+    },
+    {
+      "name": "name",
+      "output_name": "Название",
+      "label": "Name",
+      "data_type": "string",
+      "required": true,
+      "nullable": false,
+      "format": null,
+      "allowed_values": null,
+      "min_value": null,
+      "max_value": null,
+      "unique": false,
+      "description": "Name."
+    },
+    {
+      "name": "value",
+      "output_name": "Значение",
+      "label": "Value",
+      "data_type": "integer",
+      "required": true,
+      "nullable": false,
+      "format": "INTEGER",
+      "allowed_values": null,
+      "min_value": 0,
+      "max_value": null,
+      "unique": false,
+      "description": "Integer value."
+    }
+  ],
+  "acceptance_criteria_ref": [
+    "PC-AC-001",
+    "PC-AC-002",
+    "PC-AC-003"
+  ]
+}

@@ -1,0 +1,24 @@
+{
+  "expected_errors": [
+    {
+      "case": "missing input column",
+      "code": "COLUMN_NOT_FOUND"
+    },
+    {
+      "case": "rename collision",
+      "code": "COLUMN_COLLISION"
+    },
+    {
+      "case": "parse failure with FAIL",
+      "code": "PARSE_FAILED"
+    },
+    {
+      "case": "extra property/non-Pilot op",
+      "code": "VALIDATION_TRANSFORMATION_SCHEMA"
+    },
+    {
+      "case": "CP1251 decode with wrong explicitly selected encoding",
+      "code": "INPUT_UNREADABLE"
+    }
+  ]
+}

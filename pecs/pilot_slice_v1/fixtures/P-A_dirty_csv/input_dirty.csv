@@ -1,0 +1,6 @@
+Customer Name,Country,Signup Date,Revenue,Status,Email
+  алиса смит  , ru ,31/01/2026,"1 234,50", active ,Alice@Example.com
+BOB JONES,United States,2026-02-05,"2,000.00",ACTIVE,bob@example.com
+ Алиса Смит ,RU,31/01/2026,"1 234,50",active,alice@example.com
+Carla Ruiz,es,15.02.2026,, inactive ,carla@example.com
+   ,DE,2026-02-20,"900,00",active,missingname@example.com

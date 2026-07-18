@@ -1,0 +1,24 @@
+{
+  "items": [
+    {
+      "path": "invalid_examples/brief_with_is_approved.invalid.json",
+      "schema": "brief_version.schema.json"
+    },
+    {
+      "path": "invalid_examples/spec_with_non_pilot_operation.invalid.json",
+      "schema": "transformation_spec_version.schema.json"
+    },
+    {
+      "path": "invalid_examples/operation_invalid_separators.invalid.json",
+      "schema": "operations/parse_number.schema.json"
+    },
+    {
+      "path": "invalid_examples/csv_auto_encoding.invalid.json",
+      "schema": "transformation_spec_version.schema.json"
+    },
+    {
+      "path": "invalid_examples/output_name_with_tab.invalid.json",
+      "schema": "brief_version.schema.json"
+    }
+  ]
+}

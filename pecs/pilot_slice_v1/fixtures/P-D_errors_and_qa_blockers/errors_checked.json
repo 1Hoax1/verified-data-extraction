@@ -1,0 +1,38 @@
+{
+  "expected_errors": [
+    {
+      "case": "missing objective",
+      "code": "VALIDATION_BRIEF_SCHEMA"
+    },
+    {
+      "case": "script property",
+      "code": "VALIDATION_TRANSFORMATION_SCHEMA"
+    },
+    {
+      "case": "filter operation",
+      "code": "INVALID_OPERATION"
+    },
+    {
+      "case": "missing column",
+      "code": "COLUMN_NOT_FOUND"
+    },
+    {
+      "case": "rename collision",
+      "code": "COLUMN_COLLISION"
+    },
+    {
+      "case": "parse FAIL",
+      "code": "PARSE_FAILED"
+    },
+    {
+      "case": "required nulls",
+      "code": "QA_BLOCKER",
+      "check_id": "DQ-012"
+    },
+    {
+      "case": "duplicates",
+      "code": "QA_BLOCKER",
+      "check_id": "DQ-014"
+    }
+  ]
+}
