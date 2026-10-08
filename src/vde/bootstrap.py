@@ -8,7 +8,7 @@ from .workspace import Workspace
 
 @dataclass
 class BootstrapResult:
-    workspace: Workspace
+    workspace: Workspace | None
     recovery: RecoveryReport
 
     @property
@@ -17,12 +17,15 @@ class BootstrapResult:
 
     @property
     def database(self):
+        if self.workspace is None:
+            raise StorageError("Workspace unavailable")
         return self.workspace.path("app.sqlite3")
 
 
 def bootstrap(config=None):
-    workspace = Workspace((config or Config.from_environment()).workspace_root)
+    workspace = None
     try:
+        workspace = Workspace((config or Config.from_environment()).workspace_root)
         workspace.prepare()
         connection = connect(workspace.path("app.sqlite3"))
         try:

@@ -1,6 +1,7 @@
 """Detect only: never change business records or adopt filesystem payloads."""
 from dataclasses import dataclass, field
 import os
+from pathlib import Path
 import sqlite3
 
 from .errors import StorageError
@@ -48,8 +49,10 @@ def recover(database, workspace):
                 def walk_error(exc):
                     raise StorageError("Workspace recovery traversal failed") from exc
                 for directory, directories, files in os.walk(workspace.path(area), followlinks=False, onerror=walk_error):
+                    if area == ".staging" and Path(directory) != workspace.path(area) and not directories and not files:
+                        output.append(Path(directory).relative_to(workspace.root).as_posix())
                     for name in directories + files:
-                        path = workspace.root / directory / name
+                        path = Path(directory) / name
                         relative = path.relative_to(workspace.root).as_posix()
                         checked = workspace.path(relative)
                         if name in files and checked.is_file() and relative not in referenced:

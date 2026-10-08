@@ -52,12 +52,12 @@ def check_integrity(connection):
 
 def statements(sql):
     buffer = ""
-    for line in sql.splitlines(keepends=True):
-        buffer += line
-        if sqlite3.complete_statement(buffer):
+    for character in sql:
+        buffer += character
+        if character == ";" and sqlite3.complete_statement(buffer):
             yield buffer
             buffer = ""
-    if buffer.strip():
+    if buffer.strip() and not all(not line.strip() or line.lstrip().startswith("--") for line in buffer.splitlines()):
         raise StorageError("Incomplete migration definition")
 
 

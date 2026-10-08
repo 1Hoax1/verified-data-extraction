@@ -99,8 +99,11 @@ class OrderRepository(Repository):
         return [self._decode(row) for row in self.uow.connection.execute("SELECT * FROM orders ORDER BY created_at,id")]
 
     @boundary
-    def update(self, record, *, expected_status, expected_updated_at):
+    def update(self, record, *, expected):
         old = self.get(record.id)
+        # Full-record CAS also detects two reruns within the same UTC second.
+        if old != expected:
+            raise StorageError("Stale Order compare-and-set")
         if old.created_at != record.created_at:
             raise StorageError("Order creation time is immutable")
         self._references(record)
@@ -109,7 +112,7 @@ class OrderRepository(Repository):
         del values["id"]
         cursor = self.uow.connection.execute(
             f"UPDATE orders SET {','.join(key+'=?' for key in values)} WHERE id=? AND status=? AND updated_at=?",
-            (*values.values(), record.id, expected_status, expected_updated_at))
+            (*values.values(), record.id, expected.status, expected.updated_at))
         if cursor.rowcount != 1:
             raise StorageError("Stale Order compare-and-set")
         return record

@@ -1,6 +1,6 @@
 """Filesystem-first registration; metadata and audit share exactly one commit."""
 from uuid import uuid4
-from .errors import StorageError, utc_now
+from .errors import utc_now
 from .models import InputAssetRecord, ArtifactRecord, EventRecord
 from .persistence.uow import UnitOfWork
 
@@ -10,6 +10,16 @@ class Storage:
         self.database = database
         self.workspace = workspace
         self.checkpoint = checkpoint or (lambda stage: None)
+
+    def read_input(self, identity):
+        with UnitOfWork(self.database, self.workspace) as uow:
+            record = uow.inputs.get(identity)
+        return self.workspace.read_verified(record.workspace_relpath, record.byte_sha256, record.size_bytes)
+
+    def read_artifact(self, identity):
+        with UnitOfWork(self.database, self.workspace) as uow:
+            record = uow.artifacts.get(identity)
+        return self.workspace.read_verified(record.workspace_relpath, record.checksum)
 
     def register_input(self, *, id, order_id, original_filename, data, media_type=None, created_at=None):
         relpath = f"orders/{self.workspace.identifier(order_id)}/input/{self.workspace.identifier(id)}/payload"

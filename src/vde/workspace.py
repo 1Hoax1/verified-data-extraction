@@ -19,7 +19,10 @@ class PromotedPayload:
 
 class Workspace:
     def __init__(self, root):
-        self.root = Path(root).expanduser().resolve()
+        try:
+            self.root = Path(root).expanduser().resolve()
+        except (OSError, ValueError, TypeError) as exc:
+            raise StorageError("Invalid workspace configuration") from exc
 
     def path(self, relpath):
         if not isinstance(relpath, str) or not relpath or "\x00" in relpath or "\\" in relpath or ":" in relpath:
@@ -47,6 +50,8 @@ class Workspace:
     def _sync_directory(self, directory):
         # Failure is blocking. No overwrite/copy fallback and no claim of fsync
         # support on filesystems that reject this primitive.
+        if not hasattr(os, "O_DIRECTORY"):
+            raise StorageError("Directory durability barrier unsupported on this platform")
         descriptor = os.open(directory, os.O_RDONLY | os.O_DIRECTORY)
         try:
             os.fsync(descriptor)
@@ -100,8 +105,19 @@ class Workspace:
         except OSError as exc:
             raise StorageError("Referenced file missing or unreadable") from exc
 
+    def read_verified(self, relpath, checksum, size_bytes=None):
+        try:
+            data = self.path(relpath).read_bytes()
+            if hashlib.sha256(data).hexdigest() != checksum or (size_bytes is not None and len(data) != size_bytes):
+                raise StorageError("Referenced file size/checksum mismatch")
+            return data
+        except OSError as exc:
+            raise StorageError("Referenced file missing or unreadable") from exc
+
     def promote(self, data, relpath, checkpoint=None):
         checkpoint = checkpoint or (lambda stage: None)
+        if not isinstance(data, bytes):
+            raise StorageError("Payload must be opaque bytes")
         try:
             target = self.path(relpath)
             if not relpath.startswith("orders/"):
