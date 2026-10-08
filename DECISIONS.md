@@ -9,8 +9,9 @@
 - P1 Implementation Pack v1.0 — APPROVED
 - Current release target — Pilot Slice V1
 - Current stage — P1
-- P1 — APPROVED_TO_START
-- P1 implementation start gate — OPEN
+- P1 — VALIDATED
+- P1 completion/release gate — CLOSED (PASS, owner-confirmed 2026-10-08)
+- P2 — NOT_STARTED; planning may begin under a separately approved scope
 
 ## Approved architecture
 
@@ -55,14 +56,15 @@ Evidence:
 - decision_revision: P0_RESOLVED_2026-07-12
 
 ### P1 — Persistence and workspace
-Status: APPROVED_TO_START
+Status: VALIDATED
 
 Approved implementation basis:
 - P1 Implementation Pack v1.0 — APPROVED
 - decision_revision: P1_PACK_APPROVED_2026-10-05
-- implementation start gate: OPEN
-- implementation code has not started at approval time
-- P1 completion/release gate is not yet passed; it requires implemented code, P1-T01..P1-T42, validation evidence and explicit owner closure
+- implementation start gate: OPEN at design approval (historical)
+- implementation code had not started at design approval time
+- P1 completion/release gate: CLOSED (PASS) on 2026-10-08 by explicit owner confirmation
+- decision_revision: P1_VALIDATED_2026-10-08
 
 Scope:
 - application skeleton
@@ -84,4 +86,26 @@ Approved P1 implementation decisions:
 - D7: Approval uniqueness uses partial unique indexes appropriate to nullable Brief context
 - D8: restart only detects stale running ExecutionRun; no automatic resume or business-state mutation
 
-Do not begin P2 until P1 passes its release gate.
+Validation and merge evidence:
+- PR #1: https://github.com/1Hoax1/verified-data-extraction/pull/1 — merged 2026-10-08
+- main merge commit: 258bc593e71dbf7bcafc53486998b318c4265e9f
+- approved design: docs/p1/v1.0/ (unchanged)
+- P1 validation report: docs/p1/validation/P1_VALIDATION_REPORT.md
+- implementation traceability: docs/p1/validation/IMPLEMENTATION_TRACEABILITY.md
+- JUnit test evidence: docs/p1/validation/p1-results.xml
+- test run of implementation b88b0da: P1-T01..P1-T42, 42 PASS, 0 FAIL, 0 errors, 0 skipped, 0 xfail
+- review confirmed that changes after b88b0da and before merge concerned only documentation and validation evidence, not implementation code
+- architecture/release-gate review: PASS; no blocking P1 findings, no scope expansion and no Change Request
+- independent test rerun and GitHub Actions CI were not performed; the recorded Codex/pytest/JUnit evidence was accepted for closure
+
+Known limitations accepted for the P1 gate:
+- Linux/overlayfs process-crash and filesystem durability exercised; physical power loss, Windows and network filesystems not validated
+- local single-user/process design; no adversarial concurrent filesystem-mutation guarantee
+- recovery is detect-only and reports the first blocker; no automatic repair, adoption or execution resume
+- large-file streaming, ingestion, transformations and QA computation are outside P1
+- only baseline migration was implemented; a future upgrade failure was fault-injected
+- standalone wheel/independent cloud-environment distribution was not validated; editable install reads the repository's P0 pack
+- Product Specification PDF and MVP-0 Scope DOCX GitHub paths remain placeholder files; actual source documents were used as provided separately
+
+P1 is closed and VALIDATED. P2 planning can be prepared, but P2 scope, contracts, fixtures, acceptance criteria and implementation start require their own explicit approvals before coding.
+
