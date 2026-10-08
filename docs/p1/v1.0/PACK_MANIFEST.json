@@ -1,0 +1,105 @@
+{
+  "pack": "P1_Implementation_Pack",
+  "pack_version": "1.0",
+  "status": "APPROVED",
+  "release_target": "Pilot Slice V1",
+  "stage": "P1",
+  "basis": [
+    "Product Specification v0.1",
+    "MVP-0 Implementation Scope v1.1",
+    "Pilot Slice V1 Contract Pack v1.0",
+    "DECISIONS.md"
+  ],
+  "basis_decision_revision": "P0_RESOLVED_2026-07-12",
+  "review_input": "P1 Implementation Pack v0.2 candidate final main-chat review: PASS",
+  "review_corrections_applied": [
+    "exact-reference integrity",
+    "authoritative version/report JSON integrity",
+    "filesystem + DB transaction protocol",
+    "strict P0 storage-error contract reuse"
+  ],
+  "implementation_code_included": false,
+  "p2_plus_functionality_included": false,
+  "change_request_required": false,
+  "validation_status": "DESIGN_REVIEW_PASS_IMPLEMENTATION_APPROVED",
+  "files": [
+    {
+      "path": "APPLICATION_SKELETON.md",
+      "size_bytes": 2465,
+      "sha256": "546ff8abb9a8a6af1ed4b260fa8408e3ef3a7fa15aa4b908d4558ffa451bfae8"
+    },
+    {
+      "path": "MIGRATIONS.md",
+      "size_bytes": 2215,
+      "sha256": "8b6814352e5a281afd0c6daf53e8a56851ec2fd19ef180f448549df864f2518b"
+    },
+    {
+      "path": "OPEN_DECISIONS.md",
+      "size_bytes": 1561,
+      "sha256": "4d866c3a81a46028512b82f269d68437bb665e1d9c377633d459ea6d34e156be"
+    },
+    {
+      "path": "P1_RELEASE_GATE.md",
+      "size_bytes": 3485,
+      "sha256": "53991226ce8a65541d4b30a342d68db6638f79b2051d9356aa576cf7ae0a92b1"
+    },
+    {
+      "path": "P1_TEST_PLAN.md",
+      "size_bytes": 6773,
+      "sha256": "2b75ead921223a50ca3d06a9f4f60720a9fd4d63de45b0f0ed317682d26b0698"
+    },
+    {
+      "path": "PERSISTENCE_MODELS.md",
+      "size_bytes": 5376,
+      "sha256": "596966be5f4b88de55ec8c7b57f2a66bf6d87959f1a47ce6eebbe2ef9f3e3582"
+    },
+    {
+      "path": "README.md",
+      "size_bytes": 3722,
+      "sha256": "7c3644d6dcbe10a205613476fa1450d68e7aede91e1bdc0e2fdb6113c0c289f6"
+    },
+    {
+      "path": "REPOSITORIES.md",
+      "size_bytes": 5002,
+      "sha256": "1801053ebb5dd1058f91618d79af3c2e37a3b5162d3367e94906195dbff94bad"
+    },
+    {
+      "path": "RESTART_RECOVERY.md",
+      "size_bytes": 4100,
+      "sha256": "5f3d2328e40aeae5d8330d63204a4292432b0ec43c1ee137577fc7625aa9c289"
+    },
+    {
+      "path": "SCOPE.md",
+      "size_bytes": 2524,
+      "sha256": "1e5309be1c1bfe737c83bc56358002e186db12cc7e930d2759b6225ca0d6b73b"
+    },
+    {
+      "path": "SQLITE_SCHEMA.md",
+      "size_bytes": 11905,
+      "sha256": "7030e93811daaa72365b9f35e21f229b1cb3ed33d9b6fa32ad9bd25bcb488c02"
+    },
+    {
+      "path": "STORAGE_ERRORS.md",
+      "size_bytes": 2485,
+      "sha256": "f721db6d47e975f7a63ab4465d71c65269d775e2792077e71634d7004328868f"
+    },
+    {
+      "path": "TRACEABILITY_MATRIX.md",
+      "size_bytes": 4260,
+      "sha256": "f0ab9a45d09100fcba312835ac0667a5c5cdfb7bd4831b1bd6389c4278bef8ad"
+    },
+    {
+      "path": "TRANSACTIONS.md",
+      "size_bytes": 5025,
+      "sha256": "7b0a53f06af5acb3713ca90adcdf79d113d0eb98f924dfec528fe19f3e264659"
+    },
+    {
+      "path": "WORKSPACE.md",
+      "size_bytes": 2777,
+      "sha256": "25d30e9ff2cc6482c0c7d93b9f5b1f45b6598ec0573a1e7ca56c0f8d5a4f18a1"
+    }
+  ],
+  "approval_revision": "P1_PACK_APPROVED_2026-10-05",
+  "implementation_start_gate": "OPEN",
+  "p1_completion_gate": "NOT_YET_RUN"
+}
