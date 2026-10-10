@@ -12,10 +12,11 @@
 - P1 — VALIDATED
 - P1 completion/release gate — CLOSED (PASS, owner-confirmed 2026-10-08)
 - P2 Implementation Pack v1.0 — APPROVED
-- P2 — APPROVED_TO_START
+- P2 — IN_IMPLEMENTATION (PR #2 draft; Gate B NOT_PASSED)
+- CR-P2-001 — APPROVED (owner-confirmed 2026-10-11)
 - P2 Gate A — CLOSED (PASS, owner-confirmed 2026-10-11)
 - P2 implementation start gate — OPEN
-- P2 Gate B — NOT_PASSED; runtime tests NOT_RUN
+- P2 Gate B — NOT_PASSED; partial tests failed, RSS and P2-T54 NOT_RUN
 
 ## Approved architecture
 
@@ -114,18 +115,18 @@ Known limitations accepted for the P1 gate:
 P1 is closed and VALIDATED. P2 design and implementation start were separately approved on 2026-10-11. P1 constraints stay in force.
 
 ### P2 — Local CSV/XLSX ingestion
-Status: APPROVED_TO_START (NOT_IMPLEMENTED; NOT_VALIDATED)
+Status: IN_IMPLEMENTATION (PR #2 DRAFT; NOT_VALIDATED)
 
 Decision and design basis:
 - P2 Implementation Pack v1.0 — APPROVED; owner confirmation: 2026-10-11.
 - decision_revision: P2_PACK_APPROVED_2026-10-11
 - P2-D01..P2-D13 and P2-Q01..P2-Q05: APPROVED as a single Gate A decision set.
 - Gate A: CLOSED / PASS. P2 implementation start gate: OPEN (only P2 scope).
-- Gate B: NOT_PASSED; P2-T01..P2-T54 NOT_RUN; P1 tests NOT_RERUN for P2; runtime RSS test NOT_RUN.
+- Gate B: NOT_PASSED; draft PR #2 records 49 P2 PASS, 4 FAIL, T54 NOT_RUN; P1 regression 41 PASS, P1-T30 FAIL; runtime RSS test NOT_RUN (2026-10-11 report, tested code 151e25867339785ed0cbe64230c05ec8fa551a78).
 - Reviewed baseline: main 1a51c3605fc69c758d9cabd0eab0246c4c386870.
 - Approved package: P2_Implementation_Pack_v1.0_APPROVED.zip, SHA-256 1fed602bcea695be892150581b9cbcb00807681f0a389f598bd54fac9e504d84.
 - Gate A approval record: docs/p2/v1.0/GATE_A_APPROVAL.md.
-- Complete binary ZIP and fixtures are in the main-chat approved attachment, not yet uploaded into GitHub; Git checkout alone cannot supply all approved P2 fixtures until the ZIP is made available to Codex. Upload the ZIP or provide it directly to Codex before implementation.
+- Complete binary ZIP uploaded to GitHub at docs/p2/v1.0/P2_Implementation_Pack_v1.0_APPROVED.zip; Git blob SHA-1: 62e4e6bdcc20db52f94ff549496bb0ac50799acd, size 308846 bytes (verified before PR #2).
 
 Approved P2 scope:
 - one local CSV or one explicitly selected XLSX sheet; explicit CSV encoding/delimiter and no automatic detection.
@@ -142,3 +143,14 @@ Gate A review and accepted limits:
 
 Gate B closure requires actual 54 P2 tests, all 42 P1 regression tests, P0 golden previews, runtime RSS evidence, validation report and explicit owner closure. Do not begin P3 before Gate B is closed.
 
+### CR-P2-001 — Phase-scoped P1-T30 regression audit
+Status: APPROVED (owner-confirmed 2026-10-11)
+
+- Change Request: docs/change_requests/CR-P2-001.md
+- Reason: validated P1-T30 historically audited all `src/vde/**/*.py` for absence of P2+ imports; approved P2 necessarily introduces `csv` and `openpyxl` in `src/vde/ingestion/`. The current unmodified test fails as designed when P2 is added.
+- Decision: retain P1-T30 and its ID; restrict its historical P1-scope assertions to the explicitly enumerated P1 subsystem/module set, excluding the P2 integration entry point. Maintain all P1 persistence/approval/hash/recovery invariants. Add/strengthen full-application P2 scope audit for forbidden P3+ features, prohibited services/dependencies and unauthorized migrations.
+- Authorization: change test/test-plan boundary only, using a traceable versioned amendment; do NOT alter approved P1 v1.0 pack, P0 contracts, production P1 persistence/runtime, Pilot whitelist, approval semantics or SQLite schema.
+- Scope: corrective work in existing draft PR #2, including zlib error mapping, P2 test harness fixes, full P2 and P1 rerun and RSS measurement.
+- Consequence of no change: P2 Gate B could not simultaneously require P2 readers and 42/42 P1 regression PASS.
+- Validation: P1-T01..P1-T42 42 PASS including phase-scoped P1-T30, P2-T01..P2-T54 54 PASS including new full-app scope audit, P0 golden equality, RSS <= 536870912 incremental bytes, validation report and owner Gate B closure.
+- No Change Request scope enlargement. CR approval is NOT P2 Gate B approval, NOT a merge authorization, and NOT P2 VALIDATED.
