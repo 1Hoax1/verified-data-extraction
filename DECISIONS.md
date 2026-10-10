@@ -8,10 +8,14 @@
 - P0 Formal Contracts and Fixtures — VALIDATED
 - P1 Implementation Pack v1.0 — APPROVED
 - Current release target — Pilot Slice V1
-- Current stage — P1
+- Current stage — P2
 - P1 — VALIDATED
 - P1 completion/release gate — CLOSED (PASS, owner-confirmed 2026-10-08)
-- P2 — NOT_STARTED; planning may begin under a separately approved scope
+- P2 Implementation Pack v1.0 — APPROVED
+- P2 — APPROVED_TO_START
+- P2 Gate A — CLOSED (PASS, owner-confirmed 2026-10-11)
+- P2 implementation start gate — OPEN
+- P2 Gate B — NOT_PASSED; runtime tests NOT_RUN
 
 ## Approved architecture
 
@@ -107,5 +111,34 @@ Known limitations accepted for the P1 gate:
 - standalone wheel/independent cloud-environment distribution was not validated; editable install reads the repository's P0 pack
 - Product Specification PDF and MVP-0 Scope DOCX GitHub paths remain placeholder files; actual source documents were used as provided separately
 
-P1 is closed and VALIDATED. P2 planning can be prepared, but P2 scope, contracts, fixtures, acceptance criteria and implementation start require their own explicit approvals before coding.
+P1 is closed and VALIDATED. P2 design and implementation start were separately approved on 2026-10-11. P1 constraints stay in force.
+
+### P2 — Local CSV/XLSX ingestion
+Status: APPROVED_TO_START (NOT_IMPLEMENTED; NOT_VALIDATED)
+
+Decision and design basis:
+- P2 Implementation Pack v1.0 — APPROVED; owner confirmation: 2026-10-11.
+- decision_revision: P2_PACK_APPROVED_2026-10-11
+- P2-D01..P2-D13 and P2-Q01..P2-Q05: APPROVED as a single Gate A decision set.
+- Gate A: CLOSED / PASS. P2 implementation start gate: OPEN (only P2 scope).
+- Gate B: NOT_PASSED; P2-T01..P2-T54 NOT_RUN; P1 tests NOT_RERUN for P2; runtime RSS test NOT_RUN.
+- Reviewed baseline: main 1a51c3605fc69c758d9cabd0eab0246c4c386870.
+- Approved package: P2_Implementation_Pack_v1.0_APPROVED.zip, SHA-256 1fed602bcea695be892150581b9cbcb00807681f0a389f598bd54fac9e504d84.
+- Gate A approval record: docs/p2/v1.0/GATE_A_APPROVAL.md.
+- Complete binary ZIP and fixtures are in the main-chat approved attachment, not yet uploaded into GitHub; Git checkout alone cannot supply all approved P2 fixtures until the ZIP is made available to Codex. Upload the ZIP or provide it directly to Codex before implementation.
+
+Approved P2 scope:
+- one local CSV or one explicitly selected XLSX sheet; explicit CSV encoding/delimiter and no automatic detection.
+- exact P0 preview, full bounded scan, safe OOXML cached formula handling, source byte hashes via P1 Storage/InputAsset.
+- minimal Streamlit upload/preview for existing P1 Order; no Order creation UI.
+- no SQLite migrations, P0/P1 contract changes, P3 approval workflow, P4/P5 engine/export/QA, URL/API/JSON, LLM, Telegram, marketplace automation or workers.
+- resource limits include 100 MB raw input, ZIP member/ratio caps and measured incremental peak RSS <=512 MiB.
+
+Gate A review and accepted limits:
+- ZIP/manifest checks PASS; 21 deterministic binary XLSX and 12 CSV fixtures; 54 planned P2 test IDs; corrected P2-T53 fixture is preflight-reachable.
+- Stale checksum-catalog SHA in v0.3 report corrected in approved v1.0; no fixture, ingestion policy, P0 or P1 normative changes in the approval revision.
+- Change Request: NOT_REQUIRED.
+- P2 reader, full runtime/QA behavior and memory limits remain untested. P1 Linux/overlayfs limitations remain.
+
+Gate B closure requires actual 54 P2 tests, all 42 P1 regression tests, P0 golden previews, runtime RSS evidence, validation report and explicit owner closure. Do not begin P3 before Gate B is closed.
 
