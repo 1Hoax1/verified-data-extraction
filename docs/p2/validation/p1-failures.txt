@@ -1,0 +1,18 @@
+P1-T30
+env = BootstrapResult(workspace=<vde.workspace.Workspace object at 0x7f148bd84c50>, recovery=RecoveryReport(errors=[], staging=[], orphans=[], stale_runs=[]))
+
+    def test_T30_p1_scope_audit(env):
+        import ast
+        modules = set()
+        forbidden = {"sqlalchemy", "httpx", "requests", "urllib3", "openai", "telegram", "fastapi", "celery", "rq", "pandas", "openpyxl", "csv"}
+        for path in (BASE / "src/vde").rglob("*.py"):
+            modules.add(path.stem)
+            tree = ast.parse(path.read_text())
+            for node in ast.walk(tree):
+                if isinstance(node, ast.Import):
+                    assert not {alias.name.split('.')[0] for alias in node.names} & forbidden
+                if isinstance(node, ast.ImportFrom):
+>                   assert (node.module or '').split('.')[0] not in forbidden
+E                   AssertionError: assert 'openpyxl' not in {'celery', 'csv', 'fastapi', 'httpx', 'openai', 'openpyxl', ...}
+
+tests/p1/test_p1.py:547: AssertionError

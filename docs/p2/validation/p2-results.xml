@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="4" skipped="0" tests="53" time="12.120" timestamp="2026-10-10T22:49:55.923187+00:00" hostname="85258b66b885"><testcase classname="tests.p2.test_p2" name="test_T01_existing_order_ui" time="0.045"><properties><property name="p2_id" value="P2-T01" /></properties></testcase><testcase classname="tests.p2.test_p2" name="test_T02_original_storage" time="0.007"><properties><property name="p2_id" value="P2-T02" /></properties></testcase><testcase classname="tests.p2.test_p2" name="test_T03_pa_golden" time="0.001"><properties><property name="p2_id" value="P2-T03" /></properties></testcase><testcase classname="tests.p2.test_p2" name="test_T04_semicolon" time="0.015"><properties><property name="p2_id" value="P2-T04" /></properties></testcase><testcase classname="tests.p2.test_p2" name="test_T05_bom" time="0.000"><properties><property name="p2_id" value="P2-T05" /></properties></testcase><testcase classname="tests.p2.test_p2" name="test_T06_tab" time="0.000"><properties><property name="p2_id" value="P2-T06" /></properties></testcase><testcase classname="tests.p2.test_p2" name="test_T07_logical_header" time="0.000"><properties><property name="p2_id" value="P2-T07" /></properties></testcase><testcase classname="tests.p2.test_p2" name="test_T08_options_required" time="0.073"><properties><property name="p2_id" value="P2-T08" /></properties></testcase><testcase classname="tests.p2.test_p2" name="test_T09_invalid_options" time="0.001"><properties><property name="p2_id" value="P2-T09" /></properties></testcase><testcase classname="tests.p2.test_p2" name="test_T10_wrong_encoding" time="0.001"><properties><property name="p2_id" value="P2-T10" /></properties></testcase><testcase classname="tests.p2.test_p2" name="test_T11_invalid_utf8_preserved" time="0.009"><properties><property name="p2_id" value="P2-T11" /></properties></testcase><testcase classname="tests.p2.test_p2" name="test_T12_ragged" time="0.000"><properties><property name="p2_id" value="P2-T12" /></properties></testcase><testcase classname="tests.p2.test_p2" name="test_T13_quoted" time="0.000"><properties><property name="p2_id" value="P2-T13" /></properties></testcase><testcase classname="tests.p2.test_p2" name="test_T14_duplicate" time="0.000"><properties><property name="p2_id" value="P2-T14" /></properties></testcase><testcase classname="tests.p2.test_p2" name="test_T15_blank_header" time="0.001"><properties><property name="p2_id" value="P2-T15" /></properties></testcase><testcase classname="tests.p2.test_p2" name="test_T16_empty" time="0.005"><properties><property name="p2_id" value="P2-T16" /></properties></testcase><testcase classname="tests.p2.test_p2" name="test_T17_raw_size" time="0.047"><properties><property name="p2_id" value="P2-T17" /></properties></testcase><testcase classname="tests.p2.test_p2" name="test_T18_first_five" time="0.001"><properties><property name="p2_id" value="P2-T18" /></properties></testcase><testcase classname="tests.p2.test_p2" name="test_T19_late_ragged" time="0.000"><properties><property name="p2_id" value="P2-T19" /></properties></testcase><testcase classname="tests.p2.test_p2" name="test_T20_strings" time="0.000"><properties><property name="p2_id" value="P2-T20" /></properties></testcase><testcase classname="tests.p2.test_p2" name="test_T21_literal_formula" time="0.000"><properties><property name="p2_id" value="P2-T21" /></properties></testcase><testcase classname="tests.p2.test_p2" name="test_T22_one_column" time="0.000"><properties><property name="p2_id" value="P2-T22" /></properties></testcase><testcase classname="tests.p2.test_p2" name="test_T23_sheet_order" time="0.001"><properties><property name="p2_id" value="P2-T23" /></properties></testcase><testcase classname="tests.p2.test_p2" name="test_T24_explicit_sheet" time="0.030"><properties><property name="p2_id" value="P2-T24" /></properties></testcase><testcase classname="tests.p2.test_p2" name="test_T25_pb_golden" time="0.004"><properties><property name="p2_id" value="P2-T25" /></properties></testcase><testcase classname="tests.p2.test_p2" name="test_T26_warning" time="0.003"><properties><property name="p2_id" value="P2-T26" /></properties></testcase><testcase classname="tests.p2.test_p2" name="test_T27_missing_cache" time="0.002"><properties><property name="p2_id" value="P2-T27" /></properties></testcase><testcase classname="tests.p2.test_p2" name="test_T28_unselected_cache" time="0.002"><properties><property name="p2_id" value="P2-T28" /></properties></testcase><testcase classname="tests.p2.test_p2" name="test_T29_corrupt" time="0.004"><properties><property name="p2_id" value="P2-T29" /></properties><failure message="zlib.error: Error -3 while decompressing data: invalid code lengths set">pack = PosixPath('/tmp/pytest-of-agent/pytest-0/approved-pack0/P2_Implementation_Pack_v1.0_APPROVED')
+
+    def test_T29_corrupt(pack):
+        for name in ['not_a_zip.xlsx', 'invalid_workbook_xml.xlsx', 'invalid_selected_sheet_xml.xlsx']:
+            failure(lambda: xlsx(pack, name))
+        raw = (pack / 'fixtures/new_xlsx/cache_numeric.xlsx').read_bytes()
+        bad = bytearray(raw)
+        with zipfile.ZipFile(io.BytesIO(raw)) as z:
+            info = z.getinfo('xl/worksheets/sheet1.xml')
+            offset = info.header_offset + 30 + len(info.filename.encode()) + len(info.extra)
+        bad[offset + 5] ^= 0xFF
+&gt;       failure(lambda: read_xlsx(bytes(bad), asset_id=ASSET, sheet_name='Orders'))
+
+tests/p2/test_p2.py:265: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/p2/test_p2.py:48: in failure
+    action()
+tests/p2/test_p2.py:265: in &lt;lambda&gt;
+    failure(lambda: read_xlsx(bytes(bad), asset_id=ASSET, sheet_name='Orders'))
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/vde/ingestion/xlsx_reader.py:252: in read_xlsx
+    reader.read()
+.venv/lib/python3.12/site-packages/openpyxl/reader/excel.py:303: in read
+    self.read_worksheets()
+.venv/lib/python3.12/site-packages/openpyxl/reader/excel.py:228: in read_worksheets
+    ws = ReadOnlyWorksheet(self.wb, sheet.name, rel.target, self.shared_strings)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/openpyxl/worksheet/_read_only.py:42: in __init__
+    self._get_size()
+.venv/lib/python3.12/site-packages/openpyxl/worksheet/_read_only.py:49: in _get_size
+    dimensions = parser.parse_dimensions()
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/openpyxl/worksheet/_reader.py:178: in parse_dimensions
+    for _event, element in it:
+                           ^^
+/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/xml/etree/ElementTree.py:1238: in iterator
+    data = source.read(16 * 1024)
+           ^^^^^^^^^^^^^^^^^^^^^^
+src/vde/ingestion/xlsx_reader.py:44: in read
+    data = self.stream.read(size)
+           ^^^^^^^^^^^^^^^^^^^^^^
+/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/zipfile/__init__.py:1008: in read
+    data = self._read1(n)
+           ^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;zipfile.ZipExtFile name='xl/worksheets/sheet1.xml' mode='r' compress_type=deflate&gt;
+n = 16384
+
+    def _read1(self, n):
+        # Read up to n compressed bytes with at most one read() system call,
+        # decrypt and decompress them.
+        if self._eof or n &lt;= 0:
+            return b''
+    
+        # Read from file.
+        if self._compress_type == ZIP_DEFLATED:
+            ## Handle unconsumed data.
+            data = self._decompressor.unconsumed_tail
+            if n &gt; len(data):
+                data += self._read2(n - len(data))
+        else:
+            data = self._read2(n)
+    
+        if self._compress_type == ZIP_STORED:
+            self._eof = self._compress_left &lt;= 0
+        elif self._compress_type == ZIP_DEFLATED:
+            n = max(n, self.MIN_READ_SIZE)
+&gt;           data = self._decompressor.decompress(data, n)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           zlib.error: Error -3 while decompressing data: invalid code lengths set
+
+/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/zipfile/__init__.py:1084: error</failure></testcase><testcase classname="tests.p2.test_p2" name="test_T30_preflight" time="0.048"><properties><property name="p2_id" value="P2-T30" /></properties></testcase><testcase classname="tests.p2.test_p2" name="test_T31_unsupported" time="0.005"><properties><property name="p2_id" value="P2-T31" /></properties></testcase><testcase classname="tests.p2.test_p2" name="test_T32_single_sheet" time="0.004"><properties><property name="p2_id" value="P2-T32" /></properties></testcase><testcase classname="tests.p2.test_p2" name="test_T33_cross_order" time="0.007"><properties><property name="p2_id" value="P2-T33" /></properties></testcase><testcase classname="tests.p2.test_p2" name="test_T34_restart" time="0.011"><properties><property name="p2_id" value="P2-T34" /></properties></testcase><testcase classname="tests.p2.test_p2" name="test_T35_rerun_upload" time="0.004"><properties><property name="p2_id" value="P2-T35" /></properties><failure message="TypeError: argument should be a str or an os.PathLike object where __fspath__ returns a str, not 'Mock'">service = &lt;vde.ingestion.local.LocalIngestion object at 0x7f058286d220&gt;
+env = BootstrapResult(workspace=&lt;vde.workspace.Workspace object at 0x7f0581682780&gt;, recovery=RecoveryReport(errors=[], staging=[], orphans=[], stale_runs=[]))
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x7f0581681dc0&gt;
+
+    def test_T35_rerun_upload(service, env, monkeypatch):
+        raw = b'a\nb\n'
+        mock_upload = Mock(size=len(raw), name='local.csv')
+        mock_upload.getvalue.return_value = raw
+&gt;       first = register_upload(service, ORDER, mock_upload)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/p2/test_p2.py:314: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+src/vde/ingestion/ui.py:15: in register_upload
+    source_type(upload.name)
+src/vde/ingestion/local.py:13: in source_type
+    suffix = Path(filename).suffix.lower()
+             ^^^^^^^^^^^^^^
+/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/pathlib.py:1162: in __init__
+    super().__init__(*args)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;[AttributeError("'PosixPath' object has no attribute '_raw_paths'") raised in repr()] PosixPath object at 0x7f05810fa960&gt;
+args = (&lt;Mock name='local.csv.name' id='139661622656800'&gt;,), paths = []
+arg = &lt;Mock name='local.csv.name' id='139661622656800'&gt;
+path = &lt;Mock name='local.csv.name' id='139661622656800'&gt;
+
+    def __init__(self, *args):
+        paths = []
+        for arg in args:
+            if isinstance(arg, PurePath):
+                if arg._flavour is not self._flavour:
+                    # GH-103631: Convert separators for backwards compatibility.
+                    paths.append(arg.as_posix())
+                else:
+                    paths.extend(arg._raw_paths)
+            else:
+                try:
+                    path = os.fspath(arg)
+                except TypeError:
+                    path = arg
+                if not isinstance(path, str):
+&gt;                   raise TypeError(
+                        "argument should be a str or an os.PathLike "
+                        "object where __fspath__ returns a str, "
+                        f"not {type(path).__name__!r}")
+E                   TypeError: argument should be a str or an os.PathLike object where __fspath__ returns a str, not 'Mock'
+
+/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/pathlib.py:373: TypeError</failure></testcase><testcase classname="tests.p2.test_p2" name="test_T36_parse_retry" time="0.009"><properties><property name="p2_id" value="P2-T36" /></properties></testcase><testcase classname="tests.p2.test_p2" name="test_T37_public_diagnostics" time="2.951"><properties><property name="p2_id" value="P2-T37" /></properties></testcase><testcase classname="tests.p2.test_p2" name="test_T38_p1_faults" time="0.011"><properties><property name="p2_id" value="P2-T38" /></properties></testcase><testcase classname="tests.p2.test_p2" name="test_T39_p1_regression" time="5.285"><properties><property name="p2_id" value="P2-T39" /></properties><failure message="AssertionError: .............................F............                               [100%]&#10;  =================================== FAILURES ===================================&#10;  ___________________________ test_T30_p1_scope_audit ____________________________&#10;  &#10;  env = BootstrapResult(workspace=&lt;vde.workspace.Workspace object at 0x7f148bd84c50&gt;, recovery=RecoveryReport(errors=[], staging=[], orphans=[], stale_runs=[]))&#10;  &#10;      def test_T30_p1_scope_audit(env):&#10;          import ast&#10;          modules = set()&#10;          forbidden = {&quot;sqlalchemy&quot;, &quot;httpx&quot;, &quot;requests&quot;, &quot;urllib3&quot;, &quot;openai&quot;, &quot;telegram&quot;, &quot;fastapi&quot;, &quot;celery&quot;, &quot;rq&quot;, &quot;pandas&quot;, &quot;openpyxl&quot;, &quot;csv&quot;}&#10;          for path in (BASE / &quot;src/vde&quot;).rglob(&quot;*.py&quot;):&#10;              modules.add(path.stem)&#10;              tree = ast.parse(path.read_text())&#10;              for node in ast.walk(tree):&#10;                  if isinstance(node, ast.Import):&#10;                      assert not {alias.name.split('.')[0] for alias in node.names} &amp; forbidden&#10;                  if isinstance(node, ast.ImportFrom):&#10;  &gt;                   assert (node.module or '').split('.')[0] not in forbidden&#10;  E                   AssertionError: assert 'openpyxl' not in {'celery', 'csv', 'fastapi', 'httpx', 'openai', 'openpyxl', ...}&#10;  &#10;  tests/p1/test_p1.py:547: AssertionError&#10;  - generated xml file: /workspace/verified-data-extraction/docs/p2/validation/p1-results.xml -&#10;  =========================== short test summary info ============================&#10;  FAILED tests/p1/test_p1.py::test_T30_p1_scope_audit - AssertionError: assert ...&#10;  1 failed, 41 passed in 5.09s&#10;  &#10;assert 1 == 0&#10; +  where 1 = CompletedProcess(args=['/workspace/verified-data-extraction/.venv/bin/python', '-m', 'pytest', 'tests/p1', '-q', '--ju... tests/p1/test_p1.py::test_T30_p1_scope_audit - AssertionError: assert ...\n1 failed, 41 passed in 5.09s\n', stderr='').returncode">tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-0/test_T39_p1_regression0')
+
+    def test_T39_p1_regression(tmp_path):
+        junit = ROOT / 'docs/p2/validation/p1-results.xml'
+        result = subprocess.run([sys.executable, '-m', 'pytest', 'tests/p1', '-q', '--junitxml=' + str(junit)], cwd=ROOT, capture_output=True, text=True)
+&gt;       assert result.returncode == 0, result.stdout + result.stderr
+E       AssertionError: .............................F............                               [100%]
+E         =================================== FAILURES ===================================
+E         ___________________________ test_T30_p1_scope_audit ____________________________
+E         
+E         env = BootstrapResult(workspace=&lt;vde.workspace.Workspace object at 0x7f148bd84c50&gt;, recovery=RecoveryReport(errors=[], staging=[], orphans=[], stale_runs=[]))
+E         
+E             def test_T30_p1_scope_audit(env):
+E                 import ast
+E                 modules = set()
+E                 forbidden = {"sqlalchemy", "httpx", "requests", "urllib3", "openai", "telegram", "fastapi", "celery", "rq", "pandas", "openpyxl", "csv"}
+E                 for path in (BASE / "src/vde").rglob("*.py"):
+E                     modules.add(path.stem)
+E                     tree = ast.parse(path.read_text())
+E                     for node in ast.walk(tree):
+E                         if isinstance(node, ast.Import):
+E                             assert not {alias.name.split('.')[0] for alias in node.names} &amp; forbidden
+E                         if isinstance(node, ast.ImportFrom):
+E         &gt;                   assert (node.module or '').split('.')[0] not in forbidden
+E         E                   AssertionError: assert 'openpyxl' not in {'celery', 'csv', 'fastapi', 'httpx', 'openai', 'openpyxl', ...}
+E         
+E         tests/p1/test_p1.py:547: AssertionError
+E         - generated xml file: /workspace/verified-data-extraction/docs/p2/validation/p1-results.xml -
+E         =========================== short test summary info ============================
+E         FAILED tests/p1/test_p1.py::test_T30_p1_scope_audit - AssertionError: assert ...
+E         1 failed, 41 passed in 5.09s
+E         
+E       assert 1 == 0
+E        +  where 1 = CompletedProcess(args=['/workspace/verified-data-extraction/.venv/bin/python', '-m', 'pytest', 'tests/p1', '-q', '--ju... tests/p1/test_p1.py::test_T30_p1_scope_audit - AssertionError: assert ...\n1 failed, 41 passed in 5.09s\n', stderr='').returncode
+
+tests/p2/test_p2.py:376: AssertionError</failure></testcase><testcase classname="tests.p2.test_p2" name="test_T40_scope_dependencies" time="0.020"><properties><property name="p2_id" value="P2-T40" /></properties></testcase><testcase classname="tests.p2.test_p2" name="test_T41_header_rules" time="0.007"><properties><property name="p2_id" value="P2-T41" /></properties></testcase><testcase classname="tests.p2.test_p2" name="test_T42_empty_cache" time="0.002"><properties><property name="p2_id" value="P2-T42" /></properties></testcase><testcase classname="tests.p2.test_p2" name="test_T43_cache_presence" time="0.004"><properties><property name="p2_id" value="P2-T43" /></properties></testcase><testcase classname="tests.p2.test_p2" name="test_T44_entries" time="0.019"><properties><property name="p2_id" value="P2-T44" /></properties></testcase><testcase classname="tests.p2.test_p2" name="test_T45_member" time="0.001"><properties><property name="p2_id" value="P2-T45" /></properties></testcase><testcase classname="tests.p2.test_p2" name="test_T46_total" time="0.001"><properties><property name="p2_id" value="P2-T46" /></properties></testcase><testcase classname="tests.p2.test_p2" name="test_T47_ratio" time="0.000"><properties><property name="p2_id" value="P2-T47" /></properties></testcase><testcase classname="tests.p2.test_p2" name="test_T48_header_only" time="0.002"><properties><property name="p2_id" value="P2-T48" /></properties></testcase><testcase classname="tests.p2.test_p2" name="test_T49_typed" time="0.002"><properties><property name="p2_id" value="P2-T49" /></properties></testcase><testcase classname="tests.p2.test_p2" name="test_T50_error_cache" time="0.002"><properties><property name="p2_id" value="P2-T50" /></properties></testcase><testcase classname="tests.p2.test_p2" name="test_T51_health" time="0.007"><properties><property name="p2_id" value="P2-T51" /></properties><failure message="FileNotFoundError: [Errno 2] No such file or directory: '/tmp/pytest-of-agent/pytest-0/test_T51_health0/workspace/staging/incomplete'">service = &lt;vde.ingestion.local.LocalIngestion object at 0x7f0580c7cd70&gt;
+env = BootstrapResult(workspace=&lt;vde.workspace.Workspace object at 0x7f0581670a10&gt;, recovery=RecoveryReport(errors=[], staging=[], orphans=[], stale_runs=[]))
+
+    def test_T51_health(service, env):
+        record = upload(service, b'a\nb\n')
+&gt;       env.workspace.path('staging/incomplete').write_bytes(b'incomplete')
+
+tests/p2/test_p2.py:455: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/pathlib.py:1036: in write_bytes
+    with self.open(mode='wb') as f:
+         ^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = PosixPath('/tmp/pytest-of-agent/pytest-0/test_T51_health0/workspace/staging/incomplete')
+mode = 'wb', buffering = -1, encoding = None, errors = None, newline = None
+
+    def open(self, mode='r', buffering=-1, encoding=None,
+             errors=None, newline=None):
+        """
+        Open the file pointed to by this path and return a file object, as
+        the built-in open() function does.
+        """
+        if "b" not in mode:
+            encoding = io.text_encoding(encoding)
+&gt;       return io.open(self, mode, buffering, encoding, errors, newline)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       FileNotFoundError: [Errno 2] No such file or directory: '/tmp/pytest-of-agent/pytest-0/test_T51_health0/workspace/staging/incomplete'
+
+/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/pathlib.py:1013: FileNotFoundError</failure></testcase><testcase classname="tests.p2.test_p2" name="test_T52_scan_caps" time="3.024"><properties><property name="p2_id" value="P2-T52" /></properties></testcase><testcase classname="tests.p2.test_p2" name="test_T53_preview_limits" time="0.112"><properties><property name="p2_id" value="P2-T53" /></properties></testcase></testsuite></testsuites>

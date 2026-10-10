@@ -1,0 +1,195 @@
+P2-T29
+pack = PosixPath('/tmp/pytest-of-agent/pytest-0/approved-pack0/P2_Implementation_Pack_v1.0_APPROVED')
+
+    def test_T29_corrupt(pack):
+        for name in ['not_a_zip.xlsx', 'invalid_workbook_xml.xlsx', 'invalid_selected_sheet_xml.xlsx']:
+            failure(lambda: xlsx(pack, name))
+        raw = (pack / 'fixtures/new_xlsx/cache_numeric.xlsx').read_bytes()
+        bad = bytearray(raw)
+        with zipfile.ZipFile(io.BytesIO(raw)) as z:
+            info = z.getinfo('xl/worksheets/sheet1.xml')
+            offset = info.header_offset + 30 + len(info.filename.encode()) + len(info.extra)
+        bad[offset + 5] ^= 0xFF
+>       failure(lambda: read_xlsx(bytes(bad), asset_id=ASSET, sheet_name='Orders'))
+
+tests/p2/test_p2.py:265: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/p2/test_p2.py:48: in failure
+    action()
+tests/p2/test_p2.py:265: in <lambda>
+    failure(lambda: read_xlsx(bytes(bad), asset_id=ASSET, sheet_name='Orders'))
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/vde/ingestion/xlsx_reader.py:252: in read_xlsx
+    reader.read()
+.venv/lib/python3.12/site-packages/openpyxl/reader/excel.py:303: in read
+    self.read_worksheets()
+.venv/lib/python3.12/site-packages/openpyxl/reader/excel.py:228: in read_worksheets
+    ws = ReadOnlyWorksheet(self.wb, sheet.name, rel.target, self.shared_strings)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/openpyxl/worksheet/_read_only.py:42: in __init__
+    self._get_size()
+.venv/lib/python3.12/site-packages/openpyxl/worksheet/_read_only.py:49: in _get_size
+    dimensions = parser.parse_dimensions()
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/openpyxl/worksheet/_reader.py:178: in parse_dimensions
+    for _event, element in it:
+                           ^^
+/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/xml/etree/ElementTree.py:1238: in iterator
+    data = source.read(16 * 1024)
+           ^^^^^^^^^^^^^^^^^^^^^^
+src/vde/ingestion/xlsx_reader.py:44: in read
+    data = self.stream.read(size)
+           ^^^^^^^^^^^^^^^^^^^^^^
+/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/zipfile/__init__.py:1008: in read
+    data = self._read1(n)
+           ^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <zipfile.ZipExtFile name='xl/worksheets/sheet1.xml' mode='r' compress_type=deflate>
+n = 16384
+
+    def _read1(self, n):
+        # Read up to n compressed bytes with at most one read() system call,
+        # decrypt and decompress them.
+        if self._eof or n <= 0:
+            return b''
+    
+        # Read from file.
+        if self._compress_type == ZIP_DEFLATED:
+            ## Handle unconsumed data.
+            data = self._decompressor.unconsumed_tail
+            if n > len(data):
+                data += self._read2(n - len(data))
+        else:
+            data = self._read2(n)
+    
+        if self._compress_type == ZIP_STORED:
+            self._eof = self._compress_left <= 0
+        elif self._compress_type == ZIP_DEFLATED:
+            n = max(n, self.MIN_READ_SIZE)
+>           data = self._decompressor.decompress(data, n)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           zlib.error: Error -3 while decompressing data: invalid code lengths set
+
+/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/zipfile/__init__.py:1084: error
+
+P2-T35
+service = <vde.ingestion.local.LocalIngestion object at 0x7f058286d220>
+env = BootstrapResult(workspace=<vde.workspace.Workspace object at 0x7f0581682780>, recovery=RecoveryReport(errors=[], staging=[], orphans=[], stale_runs=[]))
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f0581681dc0>
+
+    def test_T35_rerun_upload(service, env, monkeypatch):
+        raw = b'a\nb\n'
+        mock_upload = Mock(size=len(raw), name='local.csv')
+        mock_upload.getvalue.return_value = raw
+>       first = register_upload(service, ORDER, mock_upload)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/p2/test_p2.py:314: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+src/vde/ingestion/ui.py:15: in register_upload
+    source_type(upload.name)
+src/vde/ingestion/local.py:13: in source_type
+    suffix = Path(filename).suffix.lower()
+             ^^^^^^^^^^^^^^
+/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/pathlib.py:1162: in __init__
+    super().__init__(*args)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <[AttributeError("'PosixPath' object has no attribute '_raw_paths'") raised in repr()] PosixPath object at 0x7f05810fa960>
+args = (<Mock name='local.csv.name' id='139661622656800'>,), paths = []
+arg = <Mock name='local.csv.name' id='139661622656800'>
+path = <Mock name='local.csv.name' id='139661622656800'>
+
+    def __init__(self, *args):
+        paths = []
+        for arg in args:
+            if isinstance(arg, PurePath):
+                if arg._flavour is not self._flavour:
+                    # GH-103631: Convert separators for backwards compatibility.
+                    paths.append(arg.as_posix())
+                else:
+                    paths.extend(arg._raw_paths)
+            else:
+                try:
+                    path = os.fspath(arg)
+                except TypeError:
+                    path = arg
+                if not isinstance(path, str):
+>                   raise TypeError(
+                        "argument should be a str or an os.PathLike "
+                        "object where __fspath__ returns a str, "
+                        f"not {type(path).__name__!r}")
+E                   TypeError: argument should be a str or an os.PathLike object where __fspath__ returns a str, not 'Mock'
+
+/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/pathlib.py:373: TypeError
+
+P2-T39
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-0/test_T39_p1_regression0')
+
+    def test_T39_p1_regression(tmp_path):
+        junit = ROOT / 'docs/p2/validation/p1-results.xml'
+        result = subprocess.run([sys.executable, '-m', 'pytest', 'tests/p1', '-q', '--junitxml=' + str(junit)], cwd=ROOT, capture_output=True, text=True)
+>       assert result.returncode == 0, result.stdout + result.stderr
+E       AssertionError: .............................F............                               [100%]
+E         =================================== FAILURES ===================================
+E         ___________________________ test_T30_p1_scope_audit ____________________________
+E         
+E         env = BootstrapResult(workspace=<vde.workspace.Workspace object at 0x7f148bd84c50>, recovery=RecoveryReport(errors=[], staging=[], orphans=[], stale_runs=[]))
+E         
+E             def test_T30_p1_scope_audit(env):
+E                 import ast
+E                 modules = set()
+E                 forbidden = {"sqlalchemy", "httpx", "requests", "urllib3", "openai", "telegram", "fastapi", "celery", "rq", "pandas", "openpyxl", "csv"}
+E                 for path in (BASE / "src/vde").rglob("*.py"):
+E                     modules.add(path.stem)
+E                     tree = ast.parse(path.read_text())
+E                     for node in ast.walk(tree):
+E                         if isinstance(node, ast.Import):
+E                             assert not {alias.name.split('.')[0] for alias in node.names} & forbidden
+E                         if isinstance(node, ast.ImportFrom):
+E         >                   assert (node.module or '').split('.')[0] not in forbidden
+E         E                   AssertionError: assert 'openpyxl' not in {'celery', 'csv', 'fastapi', 'httpx', 'openai', 'openpyxl', ...}
+E         
+E         tests/p1/test_p1.py:547: AssertionError
+E         - generated xml file: /workspace/verified-data-extraction/docs/p2/validation/p1-results.xml -
+E         =========================== short test summary info ============================
+E         FAILED tests/p1/test_p1.py::test_T30_p1_scope_audit - AssertionError: assert ...
+E         1 failed, 41 passed in 5.09s
+E         
+E       assert 1 == 0
+E        +  where 1 = CompletedProcess(args=['/workspace/verified-data-extraction/.venv/bin/python', '-m', 'pytest', 'tests/p1', '-q', '--ju... tests/p1/test_p1.py::test_T30_p1_scope_audit - AssertionError: assert ...\n1 failed, 41 passed in 5.09s\n', stderr='').returncode
+
+tests/p2/test_p2.py:376: AssertionError
+
+P2-T51
+service = <vde.ingestion.local.LocalIngestion object at 0x7f0580c7cd70>
+env = BootstrapResult(workspace=<vde.workspace.Workspace object at 0x7f0581670a10>, recovery=RecoveryReport(errors=[], staging=[], orphans=[], stale_runs=[]))
+
+    def test_T51_health(service, env):
+        record = upload(service, b'a\nb\n')
+>       env.workspace.path('staging/incomplete').write_bytes(b'incomplete')
+
+tests/p2/test_p2.py:455: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/pathlib.py:1036: in write_bytes
+    with self.open(mode='wb') as f:
+         ^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = PosixPath('/tmp/pytest-of-agent/pytest-0/test_T51_health0/workspace/staging/incomplete')
+mode = 'wb', buffering = -1, encoding = None, errors = None, newline = None
+
+    def open(self, mode='r', buffering=-1, encoding=None,
+             errors=None, newline=None):
+        """
+        Open the file pointed to by this path and return a file object, as
+        the built-in open() function does.
+        """
+        if "b" not in mode:
+            encoding = io.text_encoding(encoding)
+>       return io.open(self, mode, buffering, encoding, errors, newline)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       FileNotFoundError: [Errno 2] No such file or directory: '/tmp/pytest-of-agent/pytest-0/test_T51_health0/workspace/staging/incomplete'
+
+/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/pathlib.py:1013: FileNotFoundError
