@@ -19,6 +19,6 @@ where = ["src"]
 "vde.persistence" = ["migrations/*.sql"]
 
 [tool.pytest.ini_options]
-testpaths = ["tests/p1"]
-pythonpath = ["src"]
+testpaths = ["tests/p1", "tests/p2"]
+pythonpath = ["src", "tests"]
 addopts = "-ra"

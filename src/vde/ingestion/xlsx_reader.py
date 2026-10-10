@@ -5,6 +5,7 @@ import math
 import posixpath
 import stat
 import zipfile
+import zlib
 from datetime import date, datetime, time
 from xml.etree import ElementTree as ET
 
@@ -12,6 +13,8 @@ from openpyxl.reader.excel import ExcelReader
 from openpyxl.styles.numbers import is_datetime
 from openpyxl.utils.cell import coordinate_to_tuple, range_boundaries
 from openpyxl.cell.cell import ERROR_CODES
+from openpyxl.worksheet._read_only import ReadOnlyWorksheet
+from openpyxl.xml.constants import SHARED_STRINGS, XLSX
 
 from .diagnostics import IngestionError, diagnostic, require
 from .limits import Budget, CHUNK, COLS, ROWS, raw_check
@@ -19,6 +22,35 @@ from .preview import ReadResult, bounded, headers, make_preview_document
 
 NS = '{http://schemas.openxmlformats.org/spreadsheetml/2006/main}'
 REL = '{http://schemas.openxmlformats.org/officeDocument/2006/relationships}id'
+
+
+class CountedInflater:
+    """Count output before ZipExtFile can trim it to a forged declared size."""
+    def __init__(self, decoder, info, archive):
+        self.decoder, self.info, self.archive = decoder, info, archive
+        self.count = 0
+
+    def _count(self, output):
+        self.count += len(output)
+        require(self.count <= self.info.file_size and self.count <= 100_000_000,
+                'ZIP_ACTUAL_MEMBER_LIMIT')
+        self.archive.observe(self.info.filename, self.count)
+        self.archive.budget.check()
+        return output
+
+    def decompress(self, data, max_length):
+        return self._count(self.decoder.decompress(data, max_length))
+
+    def flush(self):
+        return self._count(self.decoder.flush())
+
+    @property
+    def eof(self):
+        return self.decoder.eof
+
+    @property
+    def unconsumed_tail(self):
+        return self.decoder.unconsumed_tail
 
 
 class GuardedStream:
@@ -45,8 +77,9 @@ class GuardedStream:
         self.count += len(data)
         require(self.count <= self.info.file_size and self.count <= 100_000_000,
                 'ZIP_ACTUAL_MEMBER_LIMIT')
-        self.archive.observed[self.info.filename] = max(self.count, self.archive.observed.get(self.info.filename, 0))
-        require(sum(self.archive.observed.values()) <= 250_000_000, 'ZIP_ACTUAL_TOTAL_LIMIT')
+        self.archive.observe(self.info.filename, self.count)
+        if self.info.compress_type == zipfile.ZIP_DEFLATED and self.stream._eof:
+            require(self.stream._decompressor.eof, 'ZIP_TRUNCATED_DEFLATE')
         if self.info.filename.lower().endswith(('.xml', '.rels')):
             # Removing NUL covers UTF-16/32 markup too; tail covers split tokens.
             scan = (self.tail + data.replace(b'\x00', b'')).upper()
@@ -84,8 +117,11 @@ class SafeZip(zipfile.ZipFile):
             require(stat.S_IFMT(mode) in (0, stat.S_IFREG, stat.S_IFDIR), 'ZIP_SPECIAL_FILE')
             require(not member.flag_bits & 1, 'ZIP_ENCRYPTED')
             require(member.compress_type in (zipfile.ZIP_STORED, zipfile.ZIP_DEFLATED), 'ZIP_COMPRESSION')
+            if member.compress_type == zipfile.ZIP_STORED:
+                require(member.compress_size == member.file_size, 'ZIP_INVALID_METADATA')
             require(0 <= member.file_size <= 100_000_000, 'ZIP_MEMBER_LIMIT')
-            require(member.compress_size >= 0 and member.header_offset >= 0, 'ZIP_INVALID_METADATA')
+            require(member.compress_size >= 0 and member.header_offset >= 0
+                    and member.header_offset + 30 + member.compress_size <= self.start_dir, 'ZIP_INVALID_METADATA')
             if norm == 'xl/sharedStrings.xml':
                 require(member.file_size <= 16_000_000, 'ZIP_SHARED_STRINGS_LIMIT')
         require(sum(m.file_size for m in entries) <= 250_000_000, 'ZIP_TOTAL_EXPANDED_LIMIT')
@@ -94,10 +130,17 @@ class SafeZip(zipfile.ZipFile):
                     member.file_size <= 100 * member.compress_size), 'ZIP_RATIO_LIMIT')
         budget.check()
 
+    def observe(self, name, count):
+        self.observed[name] = max(count, self.observed.get(name, 0))
+        require(sum(self.observed.values()) <= 250_000_000, 'ZIP_ACTUAL_TOTAL_LIMIT')
+
     def open(self, name, mode='r', pwd=None, *, force_zip64=False):
         require(mode == 'r', 'ZIP_READ_ONLY')
         info = name if isinstance(name, zipfile.ZipInfo) else self.getinfo(name)
-        return GuardedStream(super().open(info, mode, pwd), info, self)
+        stream = super().open(info, mode, pwd)
+        if info.compress_type == zipfile.ZIP_DEFLATED:
+            stream._decompressor = CountedInflater(stream._decompressor, info, self)
+        return GuardedStream(stream, info, self)
 
     def read(self, name, pwd=None):
         # openpyxl reads small workbook/style parts this way. The checked stream
@@ -164,7 +207,7 @@ def list_sheets(raw, *, budget=None):
             return [name for name, _ in sheet_index(z)]
     except IngestionError:
         raise
-    except (ET.ParseError, KeyError, ValueError, OSError, zipfile.BadZipFile, RuntimeError) as exc:
+    except (ET.ParseError, KeyError, ValueError, TypeError, EOFError, OSError, zipfile.BadZipFile, zlib.error, RuntimeError) as exc:
         raise IngestionError('INVALID_WORKBOOK_XML') from exc
 
 
@@ -235,6 +278,38 @@ def project(cell, meta, epoch):
     return value
 
 
+class SelectedExcelReader(ExcelReader):
+    """Pinned openpyxl adapter: no unselected sheet/chart payload is opened."""
+    def read_manifest(self):
+        super().read_manifest()
+        # P0 P-B uses the approved generic XML content-type fallback.
+        # Reject explicit incompatible workbook types without rejecting it.
+        for part in self.package.Override:
+            if part.PartName == '/xl/workbook.xml':
+                require(part.ContentType == XLSX, 'EXPECTED_XLSX_WORKBOOK')
+        for part in self.package.Override + self.package.Default:
+            require('macroenabled' not in part.ContentType.lower() and
+                    'vbaproject' not in part.ContentType.lower(), 'UNSUPPORTED_MACRO_PACKAGE')
+
+    def read_strings(self):
+        part = self.package.find(SHARED_STRINGS)
+        if part is not None:
+            require(self.archive.getinfo(part.PartName.lstrip('/')).file_size <= 16_000_000,
+                    'ZIP_SHARED_STRINGS_LIMIT')
+        super().read_strings()
+
+    def read_worksheets(self):
+        for sheet, relation in self.parser.find_sheets():
+            if sheet.name == self.selected_sheet:
+                require(relation.Type.endswith('/worksheet') and relation.target == self.selected_path,
+                        'INVALID_SHEET_TARGET')
+                worksheet = ReadOnlyWorksheet(self.wb, sheet.name, relation.target, self.shared_strings)
+                worksheet.sheet_state = sheet.state
+                self.wb._sheets.append(worksheet)
+                return
+        raise IngestionError('SHEET_NOT_FOUND')
+
+
 def read_xlsx(raw, *, asset_id, sheet_name, byte_sha256=None, budget=None):
     require(isinstance(sheet_name, str) and sheet_name, 'SHEET_REQUIRED')
     budget = budget or Budget()
@@ -245,7 +320,8 @@ def read_xlsx(raw, *, asset_id, sheet_name, byte_sha256=None, budget=None):
             require(sheet_name in index, 'SHEET_NOT_FOUND')
             # ExcelReader construction only opens its ZIP directory. Replace the
             # archive before read() so ALL library decompression uses our guards.
-            reader = ExcelReader(io.BytesIO(raw), read_only=True, data_only=True, keep_links=False)
+            reader = SelectedExcelReader(io.BytesIO(raw), read_only=True, data_only=True, keep_links=False)
+            reader.selected_sheet, reader.selected_path = sheet_name, index[sheet_name]
             reader.archive.close()
             reader.archive = z
             reader.valid_files = z.namelist()
@@ -296,8 +372,8 @@ def read_xlsx(raw, *, asset_id, sheet_name, byte_sha256=None, budget=None):
             return result
     except IngestionError:
         raise
-    except (ET.ParseError, KeyError, ValueError, TypeError, IndexError, OSError,
-            zipfile.BadZipFile, RuntimeError, StopIteration, OverflowError) as exc:
+    except (ET.ParseError, KeyError, ValueError, TypeError, AttributeError, EOFError, IndexError, OSError,
+            zipfile.BadZipFile, zlib.error, RuntimeError, StopIteration, OverflowError) as exc:
         raise IngestionError('INVALID_XLSX_CONTENT') from exc
     finally:
         if workbook is not None:

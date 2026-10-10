@@ -537,7 +537,12 @@ def test_T30_p1_scope_audit(env):
     import ast
     modules = set()
     forbidden = {"sqlalchemy", "httpx", "requests", "urllib3", "openai", "telegram", "fastapi", "celery", "rq", "pandas", "openpyxl", "csv"}
-    for path in (BASE / "src/vde").rglob("*.py"):
+    # CR-P2-001: retain the historical checks on the explicit P1-owned
+    # inventory; app.py is now the approved P2 integration entry point.
+    from scope_policy import P1_MODULES
+    for relative_path in P1_MODULES:
+        path = BASE / relative_path
+        assert path.is_file(), relative_path
         modules.add(path.stem)
         tree = ast.parse(path.read_text())
         for node in ast.walk(tree):

@@ -1,4 +1,5 @@
 """Inclusive operational budgets; sampled RSS is not an OS sandbox."""
+import io
 from pathlib import Path
 from .diagnostics import require
 
@@ -32,7 +33,7 @@ def raw_check(raw):
     require(isinstance(raw, bytes) and 0 < len(raw) <= RAW, 'RAW_BYTE_LIMIT')
 
 
-class CheckedBytesIO(__import__('io').BytesIO):
+class CheckedBytesIO(io.BytesIO):
     """CSV decoder's buffered reads also sample RSS per <=1 MiB chunk."""
     def __init__(self, raw, budget):
         super().__init__(raw)

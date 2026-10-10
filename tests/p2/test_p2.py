@@ -239,10 +239,24 @@ def test_T26_warning():
 def test_T27_missing_cache(pack):
     failure(lambda: xlsx(pack, 'cache_missing.xlsx'), 'XLSX_FORMULA_CACHE_MISSING', 'SELECTED_FORMULA_CACHE_ABSENT')
 
+    # Cache checks must reach beyond the retained first five data rows.
+    raw = (pack / 'fixtures/new_xlsx/cache_numeric.xlsx').read_bytes()
+    with zipfile.ZipFile(io.BytesIO(raw)) as z:
+        sheet = z.read('xl/worksheets/sheet1.xml')
+    late = b''.join(f'<row r="{n}"><c r="A{n}" t="str"><v>A</v></c><c r="B{n}" t="n"><f>1+1</f>'.encode() +
+                    (b'' if n == 8 else b'<v>2</v>') + b'</c></row>' for n in range(3, 9))
+    raw = rewrite(raw, 'xl/worksheets/sheet1.xml', sheet.replace(b'</sheetData>', late + b'</sheetData>'))
+    failure(lambda: read_xlsx(raw, asset_id=ASSET, sheet_name='Orders'), 'XLSX_FORMULA_CACHE_MISSING')
+
 
 def test_T28_unselected_cache(pack):
     result = xlsx(pack, 'unselected_cache_missing.xlsx', sheet_name='Clean')
     assert result.first_rows == [['A', 1]] and result.warnings == []
+
+    # The unselected payload is never opened, even for openpyxl dimensions.
+    raw = (pack / 'fixtures/new_xlsx/unselected_cache_missing.xlsx').read_bytes()
+    raw = rewrite(raw, 'xl/worksheets/sheet2.xml', b'<!DOCTYPE bad><invalid')
+    assert read_xlsx(raw, asset_id=ASSET, sheet_name='Clean').first_rows == [['A', 1]]
 
 
 def rewrite(raw, name, data):
@@ -263,6 +277,62 @@ def test_T29_corrupt(pack):
         offset = info.header_offset + 30 + len(info.filename.encode()) + len(info.extra)
     bad[offset + 5] ^= 0xFF
     failure(lambda: read_xlsx(bytes(bad), asset_id=ASSET, sheet_name='Orders'))
+
+    # Unsafe paths/types, encrypted metadata, DTD/entities and forged sizes.
+    import struct
+    import zlib
+    import stat
+    raw = (pack / 'fixtures/new_xlsx/cache_numeric.xlsx').read_bytes()
+    for unsafe in ['../escape.xml', '/absolute.xml', 'xl/./workbook.xml']:
+        out = io.BytesIO()
+        with zipfile.ZipFile(io.BytesIO(raw)) as source, zipfile.ZipFile(out, 'w') as target:
+            for info in source.infolist():
+                target.writestr(info, source.read(info))
+            target.writestr(unsafe, b'unsafe')
+        failure(lambda: read_xlsx(out.getvalue(), asset_id=ASSET, sheet_name='Orders'), reason='ZIP_UNSAFE_PATH')
+    out = io.BytesIO()
+    with zipfile.ZipFile(io.BytesIO(raw)) as source, zipfile.ZipFile(out, 'w') as target:
+        for info in source.infolist():
+            target.writestr(info, source.read(info))
+        link = zipfile.ZipInfo('xl/link.xml')
+        link.external_attr = (stat.S_IFLNK | 0o777) << 16
+        target.writestr(link, b'/tmp/target')
+    failure(lambda: read_xlsx(out.getvalue(), asset_id=ASSET, sheet_name='Orders'), reason='ZIP_SPECIAL_FILE')
+    with zipfile.ZipFile(io.BytesIO(raw)) as z:
+        sheet = z.read('xl/worksheets/sheet1.xml')
+    for encoding in ['utf-8', 'utf-16']:
+        declaration = '<!DOCTYPE worksheet [<!ENTITY x "unsafe">]>'
+        text = sheet.decode().replace('?><worksheet', '?>' + declaration + '<worksheet')
+        if text == sheet.decode():
+            text = declaration + sheet.decode()
+        protected = rewrite(raw, 'xl/worksheets/sheet1.xml', text.encode(encoding))
+        failure(lambda: read_xlsx(protected, asset_id=ASSET, sheet_name='Orders'), reason='UNSAFE_XML_DECLARATION')
+    # Encrypted central-directory flag is rejected without expansion.
+    encrypted = bytearray(raw)
+    directory = encrypted.index(b'PK\x01\x02')
+    flags = struct.unpack_from('<H', encrypted, directory + 8)[0]
+    struct.pack_into('<H', encrypted, directory + 8, flags | 1)
+    failure(lambda: read_xlsx(bytes(encrypted), asset_id=ASSET, sheet_name='Orders'), reason='ZIP_ENCRYPTED')
+    # Forge both local/central size and CRC to match a truncated prefix.
+    # Inflated byte counting must reject BEFORE ZipExtFile trims the output.
+    forged = bytearray(raw)
+    with zipfile.ZipFile(io.BytesIO(raw)) as z:
+        info = z.getinfo('xl/worksheets/sheet1.xml')
+        directory = z.start_dir
+    offset = directory
+    while offset < len(forged) and forged[offset:offset+4] == b'PK\x01\x02':
+        name_length, extra_length, comment_length = struct.unpack_from('<HHH', forged, offset + 28)
+        name = forged[offset+46:offset+46+name_length].decode()
+        if name == info.filename:
+            size = len(sheet) - 1
+            crc = zlib.crc32(sheet[:size])
+            struct.pack_into('<I', forged, offset+16, crc)
+            struct.pack_into('<I', forged, offset+24, size)
+            struct.pack_into('<I', forged, info.header_offset+14, crc)
+            struct.pack_into('<I', forged, info.header_offset+22, size)
+            break
+        offset += 46 + name_length + extra_length + comment_length
+    failure(lambda: read_xlsx(bytes(forged), asset_id=ASSET, sheet_name='Orders'), reason='ZIP_ACTUAL_MEMBER_LIMIT')
 
 
 def guard(pack, name, reason, monkeypatch):
@@ -309,10 +379,18 @@ def test_T34_restart(service, env):
 
 def test_T35_rerun_upload(service, env, monkeypatch):
     raw = b'a\nb\n'
-    mock_upload = Mock(size=len(raw), name='local.csv')
-    mock_upload.getvalue.return_value = raw
+    from streamlit.runtime.uploaded_file_manager import UploadedFile, UploadedFileRec
+    from streamlit.proto.Common_pb2 import FileURLs
+    mock_upload = UploadedFile(UploadedFileRec('upload-test', 'local.csv', 'text/csv', raw), FileURLs())
     first = register_upload(service, ORDER, mock_upload)
     app = ui(env, monkeypatch)
+    app.selectbox[0].select(ORDER).run()
+    app.selectbox[1].select(first.id).run()
+    app.selectbox[2].select('UTF-8').run()
+    app.selectbox[3].select(',').run()
+    app.button[-1].click().run()
+    assert not app.exception
+    assert json.loads(app.json[-1].value)['first_rows'] == [['b']]
     snapshot = counts(env)
     app.run().run()
     assert counts(env) == snapshot
@@ -382,14 +460,74 @@ def test_T39_p1_regression(tmp_path):
     assert result.returncode == 0 and result.stdout == ''
 
 
-def test_T40_scope_dependencies(env):
-    assert not list((ROOT / 'src/vde/persistence/migrations').glob('*p2*'))
-    changed = subprocess.check_output(['git', 'diff', 'origin/main', '--name-only', '--', 'src/vde/persistence', 'src/vde/models.py', 'src/vde/storage.py', 'src/vde/workspace.py'], cwd=ROOT, text=True)
-    assert changed == ''
-    import tomllib
-    deps = tomllib.loads((ROOT / 'pyproject.toml').read_text())['project']['dependencies']
-    old = tomllib.loads(subprocess.check_output(['git', 'show', 'origin/main:pyproject.toml'], cwd=ROOT, text=True))['project']['dependencies']
-    assert set(deps) - set(old) == {'openpyxl==3.1.5'}
+def test_T40_scope_dependencies(env, tmp_path):
+    from scope_policy import audit_application, audit_repository_paths
+    baseline_project = subprocess.check_output(['git', 'show', '129300728c446b82eaeafe1068e27339eb7176dd:pyproject.toml'], cwd=ROOT, text=True)
+    baseline_lock = subprocess.check_output(['git', 'show', '129300728c446b82eaeafe1068e27339eb7176dd:uv.lock'], cwd=ROOT, text=True)
+    audit_application(ROOT, baseline_project, baseline_lock)
+    changed = subprocess.check_output(['git', 'diff', '--name-only', '129300728c446b82eaeafe1068e27339eb7176dd'], cwd=ROOT, text=True).splitlines()
+    untracked = subprocess.check_output(['git', 'ls-files', '--others', '--exclude-standard'], cwd=ROOT, text=True).splitlines()
+    audit_repository_paths(changed + untracked)
+    for path in ['worker.py', 'scripts/network_ingestion.py', 'docs/p1/v1.0/P1_TEST_PLAN.md', 'DECISIONS.md', 'tests/p1/conftest.py']:
+        with pytest.raises(AssertionError, match='Unapproved repository change'):
+            audit_repository_paths([path])
+    old_p1_test = subprocess.check_output(['git', 'show', '129300728c446b82eaeafe1068e27339eb7176dd:tests/p1/test_p1.py'], cwd=ROOT, text=True)
+    new_p1_test = (ROOT / 'tests/p1/test_p1.py').read_text()
+    assert old_p1_test.split('def test_T30_p1_scope_audit')[0] == new_p1_test.split('def test_T30_p1_scope_audit')[0]
+    assert old_p1_test.split('def test_T31_brief_approval_raw_guard')[1] == new_p1_test.split('def test_T31_brief_approval_raw_guard')[1]
+    # Negative probes exercise the same auditor on a copied application tree;
+    # the real source, deps and migrations are never modified by these probes.
+    scratch = tmp_path / 'scope-negative'
+    shutil.copytree(ROOT / 'src', scratch / 'src', ignore=shutil.ignore_patterns('__pycache__', '*.egg-info'))
+    for name in ['pyproject.toml', 'uv.lock']:
+        shutil.copy(ROOT / name, scratch / name)
+    app_path = scratch / 'src/vde/app.py'
+    real_app = app_path.read_text()
+    forbidden_examples = [
+        'import requests', 'import httpx', 'import socket', 'import sqlalchemy',
+        'import openai', 'import telegram', 'import playwright', 'import celery',
+        'import fastapi', 'import pandas', 'from urllib.request import urlopen',
+        'import importlib; importlib.import_module("requests")',
+        '__import__("requests")', 'exec("pass")', 'eval("1+1")',
+        'import subprocess; subprocess.run(["echo", "code"])',
+        'def ingest_json(raw): return raw', 'def approve_order(): return None',
+        'uow.orders.add(record)', 'uow.specs.append(record)', 'uow.approvals.append(record)',
+        'uow.runs.append(record)', 'uow.qa.append(record)', 'workbook.save("output.xlsx")',
+    ]
+    for snippet in forbidden_examples:
+        app_path.write_text(real_app + '\n' + snippet + '\n')
+        with pytest.raises(AssertionError, match='Unapproved'):
+            audit_application(scratch, baseline_project, baseline_lock)
+    app_path.write_text(real_app)
+    for path in ['src/vde/engine.py', 'src/vde/ingestion/url_reader.py', 'src/vde/order_create.py',
+                 'src/vde/persistence/migrations/002_p2.sql']:
+        target = scratch / path
+        target.write_text('# unapproved source' if path.endswith('.py') else 'CREATE TABLE dataset_rows (id INTEGER);')
+        with pytest.raises(AssertionError, match='Unapproved'):
+            audit_application(scratch, baseline_project, baseline_lock)
+        target.unlink()
+    migration = scratch / 'src/vde/persistence/migrations/001_p1_baseline.sql'
+    original = migration.read_text()
+    migration.write_text(original + '\nCREATE TABLE dataset_rows (id INTEGER);\n')
+    with pytest.raises(AssertionError, match='drift'):
+        audit_application(scratch, baseline_project, baseline_lock)
+    migration.write_text(original)
+    project_path = scratch / 'pyproject.toml'
+    original = project_path.read_text()
+    for modified in [original.replace('"openpyxl==3.1.5"', '"openpyxl==3.1.5", "requests==2.32.3"'),
+                     original.replace('"pytest==8.4.2"', '"pytest==8.4.2", "telegram==0.0.1"'),
+                     original.replace('"setuptools>=77"', '"setuptools>=77", "sqlalchemy==2.0.0"')]:
+        project_path.write_text(modified)
+        with pytest.raises(AssertionError, match='Unapproved'):
+            audit_application(scratch, baseline_project, baseline_lock)
+    project_path.write_text(original)
+    lock_path = scratch / 'uv.lock'
+    original = lock_path.read_text()
+    lock_path.write_text(original.replace('name = "openpyxl"\nversion = "3.1.5"', 'name = "openpyxl"\nversion = "3.1.4"'))
+    with pytest.raises(AssertionError, match='Unapproved'):
+        audit_application(scratch, baseline_project, baseline_lock)
+    lock_path.write_text(original)
+    audit_application(scratch, baseline_project, baseline_lock)
     assert all(counts(env)[t] == 0 for t in ['brief_versions', 'transformation_spec_versions', 'execution_runs', 'approvals', 'qa_reports', 'artifacts'])
 
 
@@ -452,7 +590,7 @@ def test_T50_error_cache(pack):
 
 def test_T51_health(service, env):
     record = upload(service, b'a\nb\n')
-    env.workspace.path('staging/incomplete').write_bytes(b'incomplete')
+    env.workspace.path('.staging/incomplete').write_bytes(b'incomplete')
     degraded = bootstrap(Config(env.workspace.root))
     assert degraded.health == 'degraded'
     before = counts(env)
@@ -465,7 +603,7 @@ def test_T51_health(service, env):
         else:
             with pytest.raises(StorageError):
                 reader.preview_csv(ORDER, ASSET, 'UTF-8', ',', 0)
-    assert counts(env) == before and env.workspace.path('staging/incomplete').exists()
+    assert counts(env) == before and env.workspace.path('.staging/incomplete').exists()
     env.workspace.path(record.workspace_relpath).write_bytes(b'damaged')
     blocked = bootstrap(Config(env.workspace.root))
     assert blocked.health == 'blocked'
@@ -500,7 +638,12 @@ def test_T53_preview_limits(pack):
     assert len(json.dumps(make_preview_document(pb())).encode()) < 1_048_576
 
 
-def test_T54_rss_and_fixtures(pack, tmp_path):
+def test_T54_rss_and_fixtures(pack, tmp_path, monkeypatch):
+    # Actual sampled-guard rejection, without a dangerous giant allocation.
+    with monkeypatch.context() as patch:
+        samples = iter([1000, 1000 + RSS + 1])
+        patch.setattr('vde.ingestion.limits.current_rss', lambda: next(samples))
+        failure(lambda: csv(b'a\nb\n'), reason='RUNTIME_RSS_LIMIT')
     # Generator must reproduce binary bytes in a NEW temp directory.
     regenerated = tmp_path / 'regenerated'
     regenerated.mkdir()
@@ -510,6 +653,16 @@ def test_T54_rss_and_fixtures(pack, tmp_path):
     assert len(list((regenerated / 'new_xlsx').glob('*.xlsx'))) == 21
     for original in (pack / 'fixtures/new_xlsx').glob('*.xlsx'):
         assert original.read_bytes() == (regenerated / 'new_xlsx' / original.name).read_bytes()
+    evidence = {
+        'tested_commit': subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=ROOT, text=True).strip(),
+        'archive_sha256': hashlib.sha256((ROOT / 'docs/p2/v1.0/P2_Implementation_Pack_v1.0_APPROVED.zip').read_bytes()).hexdigest(),
+        'manifest_entries_verified': 57, 'csv_fixtures_verified': 12, 'xlsx_regenerated_byte_identical': 21,
+        'generator_command_argv': [sys.executable, str(regenerated / 'build_xlsx_fixtures.py')],
+        'generator_stdout': proc.stdout.strip(),
+        'csv_sha256': {p.name: hashlib.sha256(p.read_bytes()).hexdigest() for p in sorted((pack / 'fixtures/new_csv').glob('*.csv'))},
+        'xlsx_sha256': {p.name: hashlib.sha256(p.read_bytes()).hexdigest() for p in sorted((regenerated / 'new_xlsx').glob('*.xlsx'))},
+    }
+    (ROOT / 'docs/p2/validation/fixture-verification.json').write_text(json.dumps(evidence, indent=2) + '\n')
     for kind in ['csv', 'xlsx']:
         output = ROOT / f'docs/p2/validation/rss-{kind}.json'
         proc = subprocess.run([sys.executable, str(ROOT / 'tests/p2/rss_probe.py'), str(pack), str(tmp_path / kind), kind], capture_output=True, text=True, cwd=ROOT)
@@ -518,3 +671,4 @@ def test_T54_rss_and_fixtures(pack, tmp_path):
         measurements = json.loads(proc.stdout)
         assert measurements['incremental_peak_bytes'] <= RSS
         assert measurements['data_row_count'] == 100000 and measurements['first_rows_count'] == 5
+        assert measurements['upload_buffer_included'] and not measurements['dataset_handle']

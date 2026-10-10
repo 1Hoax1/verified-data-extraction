@@ -8,6 +8,9 @@ import platform
 import resource
 import sys
 import threading
+import subprocess
+import time
+from datetime import datetime, timezone
 import zipfile
 
 from vde.bootstrap import bootstrap
@@ -16,6 +19,9 @@ from vde.models import OrderRecord
 from vde.persistence.uow import UnitOfWork
 from vde.ingestion.local import LocalIngestion
 from vde.ingestion.limits import current_rss
+from vde.ingestion.ui import register_upload
+from streamlit.runtime.uploaded_file_manager import UploadedFile, UploadedFileRec
+from streamlit.proto.Common_pb2 import FileURLs
 
 pack, work, kind = Path(sys.argv[1]), Path(sys.argv[2]), sys.argv[3]
 env = bootstrap(Config(work))
@@ -25,6 +31,8 @@ with UnitOfWork(env.database, env.workspace) as uow:
 service = LocalIngestion(env)
 gc.collect()
 baseline = current_rss()
+started_at = datetime.now(timezone.utc).isoformat()
+started = time.perf_counter()
 peak = [baseline]
 stop = threading.Event()
 
@@ -42,8 +50,9 @@ try:
         header = (','.join('H' + str(n) for n in range(198)) + '\n').encode()
         raw = header + (b'abcd,' * 197 + b'abcd\n') * 100000
         assert len(raw) <= 100_000_000
-        service.register_local_asset('order-stress', 'stress.csv', raw, 'asset-stress')
-        result = service.preview_csv('order-stress', 'asset-stress', 'UTF-8', ',', 0)
+        upload = UploadedFile(UploadedFileRec('stress-upload', 'stress.csv', 'text/csv', raw), FileURLs())
+        record = register_upload(service, 'order-stress', upload)
+        result = service.preview_csv('order-stress', record.id, 'UTF-8', ',', 0)
     else:
         # Reduce the approved over-row fixture to exactly the inclusive 100k cap.
         source = pack / 'fixtures/new_xlsx/rows_over_100000.xlsx'
@@ -55,16 +64,19 @@ try:
                     start = data.index(b'<row r="100002"')
                     end = data.index(b'</row>', start) + len(b'</row>')
                     data = data[:start] + data[end:]
-                target.writestr(info.filename, data)
+                target.writestr(info, data)
         raw = out.getvalue()
         del data, out
-        service.register_local_asset('order-stress', 'stress.xlsx', raw, 'asset-stress')
-        result = service.preview_xlsx('order-stress', 'asset-stress', 'Orders')
+        upload = UploadedFile(UploadedFileRec('stress-upload', 'stress.xlsx', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', raw), FileURLs())
+        record = register_upload(service, 'order-stress', upload)
+        result = service.preview_xlsx('order-stress', record.id, 'Orders')
     peak[0] = max(peak[0], current_rss())
     # Linux ru_maxrss uses KiB and independently catches between-sample peaks.
     kernel_peak = resource.getrusage(resource.RUSAGE_SELF).ru_maxrss * 1024
     observed_peak = max(peak[0], kernel_peak)
-    print(json.dumps({'platform': platform.platform(), 'python': platform.python_version(),
+    print(json.dumps({'tested_commit': subprocess.check_output(['git', 'rev-parse', 'HEAD'], text=True).strip(),
+                      'started_at_utc': started_at, 'duration_seconds': time.perf_counter() - started,
+                      'command_argv': [sys.executable] + sys.argv, 'platform': platform.platform(), 'python': platform.python_version(),
                       'openpyxl': __import__('openpyxl').__version__, 'kind': kind,
                       'measurement': 'Linux VmRSS 5ms samples and ru_maxrss KiB * 1024; fresh process',
                       'baseline_bytes': baseline, 'sampled_peak_bytes': peak[0],
@@ -72,7 +84,7 @@ try:
                       'limit_bytes': 536870912, 'raw_size_bytes': len(raw),
                       'raw_sha256': hashlib.sha256(raw).hexdigest(),
                       'data_row_count': result.data_row_count, 'column_count': result.column_count,
-                      'first_rows_count': len(result.first_rows), 'dataset_handle': hasattr(result, 'dataset')}))
+                      'first_rows_count': len(result.first_rows), 'dataset_handle': hasattr(result, 'dataset'), 'upload_buffer_included': True}))
 finally:
     stop.set()
     thread.join()
