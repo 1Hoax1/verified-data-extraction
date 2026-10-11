@@ -8,15 +8,16 @@
 - P0 Formal Contracts and Fixtures — VALIDATED
 - P1 Implementation Pack v1.0 — APPROVED
 - Current release target — Pilot Slice V1
-- Current stage — P2
+- Current stage — P3 preparation only (NOT_STARTED; no approved implementation pack)
 - P1 — VALIDATED
 - P1 completion/release gate — CLOSED (PASS, owner-confirmed 2026-10-08)
 - P2 Implementation Pack v1.0 — APPROVED
-- P2 — IN_IMPLEMENTATION (PR #2 draft; Gate B NOT_PASSED)
-- CR-P2-001 — APPROVED (owner-confirmed 2026-10-11)
+- P2 — VALIDATED (Gate B CLOSED / PASS, owner-confirmed 2026-10-11)
+- CR-P2-001 — APPROVED and implemented (validated under P2 Gate B)
 - P2 Gate A — CLOSED (PASS, owner-confirmed 2026-10-11)
-- P2 implementation start gate — OPEN
-- P2 Gate B — NOT_PASSED; partial tests failed, RSS and P2-T54 NOT_RUN
+- P2 implementation start gate — historical OPEN at Gate A; implementation merged
+- P2 Gate B — CLOSED (PASS, owner-confirmed 2026-10-11)
+- P3 — NOT_STARTED; design/planning may begin, implementation not authorized
 
 ## Approved architecture
 
@@ -115,14 +116,21 @@ Known limitations accepted for the P1 gate:
 P1 is closed and VALIDATED. P2 design and implementation start were separately approved on 2026-10-11. P1 constraints stay in force.
 
 ### P2 — Local CSV/XLSX ingestion
-Status: IN_IMPLEMENTATION (PR #2 DRAFT; NOT_VALIDATED)
+Status: VALIDATED (Gate B CLOSED / PASS, owner-confirmed 2026-10-11)
 
 Decision and design basis:
 - P2 Implementation Pack v1.0 — APPROVED; owner confirmation: 2026-10-11.
 - decision_revision: P2_PACK_APPROVED_2026-10-11
 - P2-D01..P2-D13 and P2-Q01..P2-Q05: APPROVED as a single Gate A decision set.
 - Gate A: CLOSED / PASS. P2 implementation start gate: OPEN (only P2 scope).
-- Gate B: NOT_PASSED; draft PR #2 records 49 P2 PASS, 4 FAIL, T54 NOT_RUN; P1 regression 41 PASS, P1-T30 FAIL; runtime RSS test NOT_RUN (2026-10-11 report, tested code 151e25867339785ed0cbe64230c05ec8fa551a78).
+- Historical initial draft evidence (retained in docs/p2/validation/history/initial/): 49 P2 PASS / 4 FAIL / T54 NOT_RUN; 41 P1 PASS / 1 FAIL, before approved CR-P2-001 was implemented.
+- Final Gate B evidence: P2-T01..P2-T54 54 PASS, P1-T01..P1-T42 42 PASS, 0 FAIL, 0 ERROR, 0 SKIP; P0 golden previews PASS; P2 fixtures/manifest PASS.
+- Final tested implementation commit: a6c845b552656b42d81850fc3372871df979f6c2; the later PR head and merge changed validation/evidence files only, not executable source or tests.
+- PR #2 merged 2026-10-11T08:13:28Z, head d5277b633d7611a98cc48983898cf681bb8dc590, merge commit e5b2d3cd5a1c26650802c23191046eafdfecef3c.
+- Actual P2 test evidence: docs/p2/validation/p2-results.xml; P1 regression: docs/p2/validation/p1-results.xml; full logs/traceability: docs/p2/validation/.
+- Resource evidence: tests/p2/rss_probe.py; CSV incremental RSS 198189056 bytes, XLSX incremental RSS 150138880 bytes, both below 536870912 bytes in tested Linux environment.
+- CR-P2-001 phase-scoped P1-T30 audit and whole-application P2-T40 scope audit: implemented and passed, original P1 v1.0 pack preserved.
+- P2 release gate closure record: docs/p2/validation/P2_GATE_B_CLOSURE.md; decision_revision: P2_VALIDATED_2026-10-11.
 - Reviewed baseline: main 1a51c3605fc69c758d9cabd0eab0246c4c386870.
 - Approved package: P2_Implementation_Pack_v1.0_APPROVED.zip, SHA-256 1fed602bcea695be892150581b9cbcb00807681f0a389f598bd54fac9e504d84.
 - Gate A approval record: docs/p2/v1.0/GATE_A_APPROVAL.md.
@@ -139,9 +147,10 @@ Gate A review and accepted limits:
 - ZIP/manifest checks PASS; 21 deterministic binary XLSX and 12 CSV fixtures; 54 planned P2 test IDs; corrected P2-T53 fixture is preflight-reachable.
 - Stale checksum-catalog SHA in v0.3 report corrected in approved v1.0; no fixture, ingestion policy, P0 or P1 normative changes in the approval revision.
 - Change Request: NOT_REQUIRED.
-- P2 reader, full runtime/QA behavior and memory limits remain untested. P1 Linux/overlayfs limitations remain.
+- Historical Gate A note: reader/runtime checks were not yet run at design approval; superseded for P2 Gate B by final PASS evidence above.
+- Accepted limitations: Linux/overlayfs Python 3.12.14 / openpyxl 3.1.5 only; Windows/network FS/power-loss unvalidated; RSS sampled (not hard sandbox), source bytes whole-buffered via P1; XLSX formula cache is never recalculated; parser/private-API upgrades require revalidation; browser-native upload chooser and independent-host/CI rerun unvalidated; P1 recovery remains detect-only.
 
-Gate B closure requires actual 54 P2 tests, all 42 P1 regression tests, P0 golden previews, runtime RSS evidence, validation report and explicit owner closure. Do not begin P3 before Gate B is closed.
+Gate B completed on 2026-10-11 after owner confirmation and the recorded tests/review. P2 is VALIDATED; no scope expansion or additional CR. P3 design preparation may begin, but P3 implementation requires its own approved pack, acceptance tests, fixtures and start gate.
 
 ### CR-P2-001 — Phase-scoped P1-T30 regression audit
 Status: APPROVED (owner-confirmed 2026-10-11)
