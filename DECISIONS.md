@@ -8,7 +8,7 @@
 - P0 Formal Contracts and Fixtures — VALIDATED
 - P1 Implementation Pack v1.0 — APPROVED
 - Current release target — Pilot Slice V1
-- Current stage — P3 preparation only (NOT_STARTED; no approved implementation pack)
+- Current stage — P3 DESIGN_APPROVED (implementation NOT_STARTED; separate start authorization pending)
 - P1 — VALIDATED
 - P1 completion/release gate — CLOSED (PASS, owner-confirmed 2026-10-08)
 - P2 Implementation Pack v1.0 — APPROVED
@@ -17,7 +17,13 @@
 - P2 Gate A — CLOSED (PASS, owner-confirmed 2026-10-11)
 - P2 implementation start gate — historical OPEN at Gate A; implementation merged
 - P2 Gate B — CLOSED (PASS, owner-confirmed 2026-10-11)
-- P3 — NOT_STARTED; design/planning may begin, implementation not authorized
+- P3 — DESIGN_APPROVED / APPROVED_TO_PREPARE (implementation NOT_STARTED; start gate PENDING_OWNER_AUTHORIZATION)
+- P3 Implementation Pack v1.0 — APPROVED (owner-confirmed 2026-10-11)
+- P3 Gate A — CLOSED (PASS, owner-confirmed 2026-10-11)
+- P3 implementation start gate — PENDING separate explicit owner authorization
+- P3 Gate B — NOT_RUN / NOT_PASSED
+- CR-P3-001 — DEFERRED (no P0 state graph change)
+- CR-P3-002 — APPROVED (P2-T40 phase-scoped audit amendment, not implemented)
 
 ## Approved architecture
 
@@ -163,3 +169,36 @@ Status: APPROVED (owner-confirmed 2026-10-11)
 - Consequence of no change: P2 Gate B could not simultaneously require P2 readers and 42/42 P1 regression PASS.
 - Validation: P1-T01..P1-T42 42 PASS including phase-scoped P1-T30, P2-T01..P2-T54 54 PASS including new full-app scope audit, P0 golden equality, RSS <= 536870912 incremental bytes, validation report and owner Gate B closure.
 - No Change Request scope enlargement. CR approval is NOT P2 Gate B approval, NOT a merge authorization, and NOT P2 VALIDATED.
+
+
+### P3 — Manual BriefVersion / TransformationSpecVersion / two Approval
+Status: DESIGN_APPROVED (P3 runtime NOT_STARTED; Gate B NOT_RUN)
+
+Design and Gate A approval:
+- P3 Implementation Pack v1.0 — APPROVED on 2026-10-11, based on reviewed P3 v0.3 candidate.
+- decision_revision: P3_PACK_APPROVED_2026-10-11
+- Gate A: CLOSED / PASS, explicit main-chat owner confirmation 2026-10-11.
+- Implementation start gate: PENDING_SEPARATE_OWNER_AUTHORIZATION. User approval covered design pack + CR decisions, not permission to launch Codex or write P3 production code.
+- Gate B: NOT_RUN / NOT_PASSED. P3-T01..P3-T52 planned, not executed; P1/P2 regressions not rerun for P3.
+- Approved release archive: P3_Implementation_Pack_v1.0_APPROVED.zip, SHA-256 8a77848419161a5f784b61e7302a058e5c23e2ff5925e88a643c350e80930bc7, size 146604 bytes, 64 manifest payload files.
+- Archive assembled from owner-reviewed v0.3 candidate; 40 original JSON scenarios, all 52 test-plan IDs, the API/workflow contract and test-only verifier preserved. Approval metadata, Gate A record, CR dispositions and manifest updated; no application/runtime P3 code generated.
+- Authoritative GitHub approval record: docs/p3/v1.0/GATE_A_APPROVAL.md.
+- Binary ZIP is an approved chat artifact pending separate upload into docs/p3/v1.0/ on GitHub; do not assume GitHub currently contains the binary until separately verified.
+- Historical GitHub main snapshot at pack review: a64baf8a1ba666e8ae8f002fc0b5189c3a159b4a.
+
+Approved P3 decisions:
+- P3-D01..P3-D18: APPROVED as the v1.0 design set; subordinate to existing P0/P1/P2 contracts.
+- P3-Q01: APPROVED — retain P0 graph, block immediate edits/reselection at status APPROVED within P3.
+- P3-Q02: APPROVED — drafts stored only in Streamlit session (restart discards unfinished edits).
+- P3-Q03: APPROVED — simple read-only semantic JSON diff.
+- CR-P3-001: DEFERRED (docs/change_requests/CR-P3-001.md). The proposed APPROVED -> READY_FOR_APPROVAL transition is NOT approved or implemented.
+- CR-P3-002: APPROVED (docs/change_requests/CR-P3-002.md) narrowly to phase-scope historical P2-T40 regression without removing the test, together with a full-application P3-T51 audit. NOT IMPLEMENTED until separate P3 implementation start.
+
+Gate A evidence:
+- Candidate ZIP CRC and 62/62 original file size/SHA-256 PASS; approved archive CRC and 64/64 payload size/SHA-256 PASS.
+- Static P3 fixture verifier actually run: 40/40 reachability PASS; F09/F10/F20/F21/F38 five invalid Approval cases and five corrected mutants detected; F07 normalized NFC oracle PASS.
+- No P3 production runtime testing; optional P0 checkout `--repo` verifier check NOT_RUN at Gate A and required in implementation validation.
+- Accepted design constraints: existing Order/InputAsset, manual BriefVersion/SpecVersion, two independent exact Approval facts and atomic final transition to APPROVED/COMPLETE, no P4 execution, no new DB tables or P0 state semantics, no unauthorized third-party integrations.
+- Known limitations: local Linux/P1/P2 contract compatibility and static verifier do not replace P3 integration/SQLite rollback tests; P3 Gate B requires 52 P3, 54 P2 and 42 P1 PASS, fixtures, P0 vectors, atomicity/recovery, scope audit, report and owner closure.
+
+P3 Gate A design is closed. Next action is ensuring the approved ZIP is available in GitHub/Codex; implementation cannot start until separate owner authorization. No approval or closure of P3 Gate B is implied.
