@@ -8,7 +8,7 @@
 - P0 Formal Contracts and Fixtures — VALIDATED
 - P1 Implementation Pack v1.0 — APPROVED
 - Current release target — Pilot Slice V1
-- Current stage — P3 APPROVED_TO_START (implementation start gate OPEN; code NOT_STARTED)
+- Current stage — P4 design preparation only (NOT_STARTED; no approved P4 pack)
 - P1 — VALIDATED
 - P1 completion/release gate — CLOSED (PASS, owner-confirmed 2026-10-08)
 - P2 Implementation Pack v1.0 — APPROVED
@@ -17,13 +17,14 @@
 - P2 Gate A — CLOSED (PASS, owner-confirmed 2026-10-11)
 - P2 implementation start gate — historical OPEN at Gate A; implementation merged
 - P2 Gate B — CLOSED (PASS, owner-confirmed 2026-10-11)
-- P3 — APPROVED_TO_START (implementation authorized 2026-10-11; code NOT_STARTED; Gate B NOT_RUN)
+- P3 — VALIDATED (Gate B CLOSED / PASS, owner-confirmed 2026-10-11)
 - P3 Implementation Pack v1.0 — APPROVED (owner-confirmed 2026-10-11)
 - P3 Gate A — CLOSED (PASS, owner-confirmed 2026-10-11)
-- P3 implementation start gate — OPEN (explicit owner authorization 2026-10-11)
-- P3 Gate B — NOT_RUN / NOT_PASSED
+- P3 implementation start gate — historical OPEN (owner-authorized 2026-10-11; implementation merged)
+- P3 Gate B — CLOSED / PASS (owner-confirmed 2026-10-11)
 - CR-P3-001 — DEFERRED (no P0 state graph change)
-- CR-P3-002 — APPROVED (P2-T40 phase-scoped audit amendment, not implemented)
+- CR-P3-002 — APPROVED / IMPLEMENTED / VALIDATED (P3 Gate B; P2-T40 phase-scoped, P3-T51 full application)
+- P4 — NOT_STARTED (design preparation only; implementation not authorized)
 
 ## Approved architecture
 
@@ -172,14 +173,21 @@ Status: APPROVED (owner-confirmed 2026-10-11)
 
 
 ### P3 — Manual BriefVersion / TransformationSpecVersion / two Approval
-Status: APPROVED_TO_START (implementation authorized; P3 runtime NOT_STARTED; Gate B NOT_RUN)
+Status: VALIDATED (Gate B CLOSED / PASS, owner-confirmed 2026-10-11)
 
 Design and Gate A approval:
 - P3 Implementation Pack v1.0 — APPROVED on 2026-10-11, based on reviewed P3 v0.3 candidate.
 - decision_revision: P3_PACK_APPROVED_2026-10-11
 - Gate A: CLOSED / PASS, explicit main-chat owner confirmation 2026-10-11.
 - Gate A owner approval (historical) covered design pack + CR decisions only; subsequent separate implementation start authorization granted on 2026-10-11. Start gate OPEN; code not yet written. See docs/p3/v1.0/IMPLEMENTATION_START_AUTHORIZATION.md.
-- Gate B: NOT_RUN / NOT_PASSED. P3-T01..P3-T52 planned, not executed; P1/P2 regressions not rerun for P3.
+- Gate B: CLOSED / PASS (2026-10-11), after actual acceptance validation and explicit owner confirmation. P3-T01..P3-T52: 52 PASS; P2-T01..P2-T54: 54 PASS; P1-T01..P1-T42: 42 PASS; 0 FAIL/ERROR/SKIP/XFAIL.
+- PR #3 merged on 2026-10-11T16:46:13Z; head 23e69b8fa65d5193e3462bbf9df155173d6c7e15; main merge commit aa513780594595c3f5fb3cda15060ecd51b9e00f.
+- Exact tested implementation commit: 6a8e67252131c2b6a6a70388aa47ead899c35140. Diff from tested commit through the merge consists only of docs/p3/validation/ evidence; source, tests, dependencies and frozen P0/P1/P2 remain unchanged.
+- P3 Gate B closure: docs/p3/validation/P3_GATE_B_CLOSURE.md; decision_revision: P3_VALIDATED_2026-10-11.
+- Validation: docs/p3/validation/P3_VALIDATION_REPORT.md, p3-results.xml, p2-results.xml, p1-results.xml, TEST_STATUS.md, validation-summary.json, scenario-results.json, crash-restart-results.json and fixture-verifier.log.
+- Actual 40/40 P3 fixture drivers PASS, P0 goldens/hash vectors PASS, verifier --repo PASS, AppTest PASS and four separate-process pre/post commit crash/restart probes PASS.
+- Runtime RSS: incremental CSV 198193152 bytes, XLSX 153718784 bytes; both <= 536870912 bytes (512 MiB); 21 XLSX byte-identical regenerated, 12 CSV fixtures verified.
+- Accepted limits: Linux/Python 3.12.14 only, no independent CI/second-host test rerun, automated AppTest not manual browser sign-off; RSS sampled not hard OS limit; session-only unsaved drafts, no Order creation, no post-APPROVED edit (deferred CR-P3-001), no P4 execution, export or QA.
 - Approved release archive: P3_Implementation_Pack_v1.0_APPROVED.zip, SHA-256 8a77848419161a5f784b61e7302a058e5c23e2ff5925e88a643c350e80930bc7, size 146604 bytes, 64 manifest payload files.
 - Archive assembled from owner-reviewed v0.3 candidate; 40 original JSON scenarios, all 52 test-plan IDs, the API/workflow contract and test-only verifier preserved. Approval metadata, Gate A record, CR dispositions and manifest updated; no application/runtime P3 code generated.
 - Authoritative GitHub approval record: docs/p3/v1.0/GATE_A_APPROVAL.md.
@@ -192,16 +200,16 @@ Approved P3 decisions:
 - P3-Q02: APPROVED — drafts stored only in Streamlit session (restart discards unfinished edits).
 - P3-Q03: APPROVED — simple read-only semantic JSON diff.
 - CR-P3-001: DEFERRED (docs/change_requests/CR-P3-001.md). The proposed APPROVED -> READY_FOR_APPROVAL transition is NOT approved or implemented.
-- CR-P3-002: APPROVED (docs/change_requests/CR-P3-002.md) narrowly to phase-scope historical P2-T40 regression without removing the test, together with a full-application P3-T51 audit. NOT IMPLEMENTED until separate P3 implementation start.
+- CR-P3-002: APPROVED (docs/change_requests/CR-P3-002.md) for the narrowly phase-scoped historical P2-T40 and complete P3-T51 audit; subsequently IMPLEMENTED and VALIDATED under Gate B, with P1/P2 runtime and original packs unchanged.
 
 Gate A evidence:
 - Candidate ZIP CRC and 62/62 original file size/SHA-256 PASS; approved archive CRC and 64/64 payload size/SHA-256 PASS.
 - Static P3 fixture verifier actually run: 40/40 reachability PASS; F09/F10/F20/F21/F38 five invalid Approval cases and five corrected mutants detected; F07 normalized NFC oracle PASS.
-- No P3 production runtime testing; optional P0 checkout `--repo` verifier check NOT_RUN at Gate A and required in implementation validation.
+- Historical Gate A: P3 runtime and verifier `--repo` were NOT_RUN at design approval; subsequently performed and passed for P3 Gate B, see final closure evidence.
 - Accepted design constraints: existing Order/InputAsset, manual BriefVersion/SpecVersion, two independent exact Approval facts and atomic final transition to APPROVED/COMPLETE, no P4 execution, no new DB tables or P0 state semantics, no unauthorized third-party integrations.
-- Known limitations: local Linux/P1/P2 contract compatibility and static verifier do not replace P3 integration/SQLite rollback tests; P3 Gate B requires 52 P3, 54 P2 and 42 P1 PASS, fixtures, P0 vectors, atomicity/recovery, scope audit, report and owner closure.
+- Historical Gate A checklist: P3 Gate B required 52 P3, 54 P2, 42 P1, fixtures, P0 vectors, atomicity/recovery, scope audit, report and explicit owner closure; these passed and were accepted on 2026-10-11.
 
-P3 Gate A design is closed. The approved ZIP is uploaded and verified in GitHub, and the separate owner authorization opened the P3 implementation start gate on 2026-10-11. Codex may implement only approved P3. No approval or closure of P3 Gate B is implied.
+P3 Gate A design is closed; start was separately authorized, P3 implementation merged in PR #3, and P3 Gate B was subsequently CLOSED / PASS by the owner on 2026-10-11. P3 is VALIDATED; only P4 design preparation is the next authorized activity.
 
 
 ### P3 — Implementation start authorization (owner-confirmed 2026-10-11)
@@ -215,4 +223,16 @@ Status: APPROVED_TO_START; implementation start gate OPEN; production code NOT_S
 - CR-P3-002: APPROVED for implementation strictly in its documented bounds; P2-T40 retained with phase-scoped frozen P1/P2 checks and new P3-T51 whole-application audit. CR-P3-001 remains DEFERRED; do not permit immediate post-APPROVED revision.
 - No P0 schema/status change, SQLite migration, P1/P2 production runtime mutation, new source types, P4/P5 engine/QA/export, LLM, Telegram, marketplace automation, external services or workers.
 - Implementation may be prepared in a new feature branch and Draft PR; no automatic merge or Gate B closure.
-- Gate B remains NOT_RUN / NOT_PASSED. Require P3-T01..P3-T52 52/52, P2-T01..P2-T54 54/54, P1-T01..P1-T42 42/42, P0 goldens/hash vectors, 40 fixtures, explicit --repo verifier, SQLite fault atomicity, restart, source/scope tests, actual JUnit/log/RSS evidence as applicable and review of known limits. Separate owner Gate B closure still required.
+- Historical implementation-start checklist: 52 P3, 54 P2, 42 P1, P0 goldens/hash vectors, 40 fixtures, --repo verifier, atomicity/restart and source/scope reviews. All required evidence was later recorded and accepted for the P3 Gate B closure on 2026-10-11; see docs/p3/validation/P3_GATE_B_CLOSURE.md.
+
+### P3 — Formal Gate B closure (owner-confirmed 2026-10-11)
+Status: VALIDATED; Gate B CLOSED / PASS.
+
+- decision_revision: P3_VALIDATED_2026-10-11
+- Gate B closure authority: main managing chat, explicit owner confirmation after post-merge review.
+- Formal closure record: docs/p3/validation/P3_GATE_B_CLOSURE.md.
+- Code/repo tested: 6a8e67252131c2b6a6a70388aa47ead899c35140; PR #3 merged to main aa513780594595c3f5fb3cda15060ecd51b9e00f. Later modifications were evidence only.
+- 148/148 test IDs PASS (P3 52, P2 54, P1 42), no skip/xfail/fail/error; 40 P3 fixture drivers PASS; 4 crash/restart cases PASS; exact approved ZIP and P0 hash/golden checks PASS; CSV and XLSX incremental RSS within 512 MiB.
+- CR-P3-002 implementation VALIDATED; CR-P3-001 remains DEFERRED, so no post-APPROVED revision.
+- Accepted limits and absence of independent CI are recorded in formal closure document. No new architecture, persistence schema, Pilot scope or additional Change Request.
+- Next authorized activity: P4 design/contract/fixtures/acceptance planning only. P4 code implementation requires separate owner approval, and P4 VALIDATED requires future actual tests and explicit Gate B closure.
