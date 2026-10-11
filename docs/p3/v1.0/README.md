@@ -4,6 +4,6 @@
 
 Formal record: [Gate A approval](GATE_A_APPROVAL.md). Authoritative decisions: [DECISIONS.md](../../../DECISIONS.md).
 
-Approved archive file: `P3_Implementation_Pack_v1.0_APPROVED.zip`; SHA-256 `8a77848419161a5f784b61e7302a058e5c23e2ff5925e88a643c350e80930bc7`; 146604 bytes. **Not uploaded to GitHub at the time of this approval commit.** It is available as a verified main-chat artifact and should be uploaded to this directory before work in Codex.
+Approved archive file: `P3_Implementation_Pack_v1.0_APPROVED.zip`; SHA-256 `8a77848419161a5f784b61e7302a058e5c23e2ff5925e88a643c350e80930bc7`; 146604 bytes. **Uploaded to GitHub and byte-identical to the approved main-chat artifact (verified 2026-10-11).** Upload commit: [`03ffc9c`](https://github.com/1Hoax1/verified-data-extraction/commit/03ffc9c5fa61ee345bb6703d77240c2e10dbd0c6); Git blob SHA-1: `496829008c508153a05d2f0ef4021a5b8e2c348f`, size 146604 B. Separate owner authorization is still required before any Codex implementation.
 
 Change Requests: [CR-P3-001 — DEFERRED](../../change_requests/CR-P3-001.md); [CR-P3-002 — APPROVED](../../change_requests/CR-P3-002.md). No runtime/test implementation or changes to normative P0/P1/P2 files in this approval commit.

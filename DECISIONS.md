@@ -183,7 +183,7 @@ Design and Gate A approval:
 - Approved release archive: P3_Implementation_Pack_v1.0_APPROVED.zip, SHA-256 8a77848419161a5f784b61e7302a058e5c23e2ff5925e88a643c350e80930bc7, size 146604 bytes, 64 manifest payload files.
 - Archive assembled from owner-reviewed v0.3 candidate; 40 original JSON scenarios, all 52 test-plan IDs, the API/workflow contract and test-only verifier preserved. Approval metadata, Gate A record, CR dispositions and manifest updated; no application/runtime P3 code generated.
 - Authoritative GitHub approval record: docs/p3/v1.0/GATE_A_APPROVAL.md.
-- Binary ZIP is an approved chat artifact pending separate upload into docs/p3/v1.0/ on GitHub; do not assume GitHub currently contains the binary until separately verified.
+- Approved binary ZIP uploaded and verified in main: docs/p3/v1.0/P3_Implementation_Pack_v1.0_APPROVED.zip; upload commit 03ffc9c5fa61ee345bb6703d77240c2e10dbd0c6, Git blob SHA-1 496829008c508153a05d2f0ef4021a5b8e2c348f, size 146604 B, SHA-256 8a77848419161a5f784b61e7302a058e5c23e2ff5925e88a643c350e80930bc7 (verified against the approved local archive 2026-10-11).
 - Historical GitHub main snapshot at pack review: a64baf8a1ba666e8ae8f002fc0b5189c3a159b4a.
 
 Approved P3 decisions:

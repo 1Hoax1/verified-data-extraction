@@ -38,3 +38,7 @@
 Before starting Codex, the owner must separately authorize P3 implementation. Gate B requires 52 P3 + 54 P2 + 42 P1 actual PASS, P0 golden/hash checks, fault-injected atomicity/recovery, approval immutability, changed-file and whole-app scope audit, full validation report with verified commit SHA and explicit owner closure.
 
 **Approval of Gate A is not a claim of implementation or VALIDATED P3.**
+
+## Post-approval upload verification (2026-10-11)
+
+After Gate A closure, the user uploaded the approved ZIP to `main` at `docs/p3/v1.0/P3_Implementation_Pack_v1.0_APPROVED.zip` (commit `03ffc9c5fa61ee345bb6703d77240c2e10dbd0c6`). Verified Git tree: 146604 bytes, Git blob SHA-1 `496829008c508153a05d2f0ef4021a5b8e2c348f`. Local approved archive has the same Git blob hash, the approved SHA-256 `8a77848419161a5f784b61e7302a058e5c23e2ff5925e88a643c350e80930bc7` and passes ZIP CRC inspection. This resolves the historically pending upload above. Upload changed only the binary ZIP; **P3 implementation start remains PENDING separate owner authorization** and P3 Gate B remains NOT_RUN.
