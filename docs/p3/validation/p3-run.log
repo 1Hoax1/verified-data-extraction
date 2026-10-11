@@ -1,0 +1,5 @@
+COMMAND ["/workspace/verified-data-extraction/.venv/bin/python", "-m", "pytest", "tests/p3", "-q", "--junitxml=/workspace/verified-data-extraction/docs/p3/validation/p3-results.xml"]
+TESTED_COMMIT 6a8e67252131c2b6a6a70388aa47ead899c35140
+....................................................                     [100%]
+- generated xml file: /workspace/verified-data-extraction/docs/p3/validation/p3-results.xml -
+52 passed in 38.49s

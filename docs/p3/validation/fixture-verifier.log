@@ -1,0 +1,17 @@
+COMMAND ["/workspace/verified-data-extraction/.venv/bin/python", "/tmp/pytest-of-agent/pytest-29/p3-approved0/P3_Implementation_Pack_v1.0_APPROVED/tools/verify_p3_fixture_reachability.py", "--repo", "/workspace/verified-data-extraction"]
+{
+  "static_reachability": "PASS",
+  "fixture_count": 40,
+  "approval_driver_layer_checks": "PASS",
+  "approval_wrong_context_order_hash_checks": "PASS_5_OF_5",
+  "corrected_approval_mutants_rejected": [
+    "P3-F09",
+    "P3-F10",
+    "P3-F20",
+    "P3-F21",
+    "P3-F38"
+  ],
+  "f07_non_nfc_and_oracle": "PASS",
+  "p0_checkout_hash_verification": "PASS",
+  "p3_runtime_tests": "NOT_RUN"
+}

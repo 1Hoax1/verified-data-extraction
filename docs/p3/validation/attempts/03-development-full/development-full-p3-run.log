@@ -1,0 +1,82 @@
+.................................................F..                     [100%]
+=================================== FAILURES ===================================
+____________________________ test_T50_p2_regression ____________________________
+
+    def test_T50_p2_regression():
+>       regression('p2', 54)
+
+tests/p3/test_p3.py:473: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+phase = 'p2', count = 54
+
+    def regression(phase, count):
+        output = ROOT / 'docs/p3/validation'
+        historical = ROOT / 'docs/p2/validation'
+        originals = {p: p.read_bytes() for p in historical.iterdir() if p.is_file()}
+        command = [sys.executable, '-m', 'pytest', 'tests/' + phase, '-q', '--junitxml=' + str(output / (phase + '-results.xml'))]
+        try:
+            proc = subprocess.run(command, cwd=ROOT, capture_output=True, text=True)
+            (output / (phase + '-run.log')).write_text('COMMAND ' + json.dumps(command) + '\n' + proc.stdout + proc.stderr)
+            if phase == 'p2':
+                for name in ['fixture-verification.json', 'rss-csv.json', 'rss-xlsx.json']:
+                    shutil.copy(historical / name, output / name)
+        finally:
+            for path, data in originals.items(): path.write_bytes(data)
+            for path in historical.iterdir():
+                if path.is_file() and path not in originals: path.unlink()
+>       assert proc.returncode == 0, proc.stdout + proc.stderr
+E       AssertionError: ..................................F...................                   [100%]
+E         =================================== FAILURES ===================================
+E         ____________________________ test_T35_rerun_upload _____________________________
+E         
+E         service = <vde.ingestion.local.LocalIngestion object at 0x7ff2583088c0>
+E         env = BootstrapResult(workspace=<vde.workspace.Workspace object at 0x7ff25830a6f0>, recovery=RecoveryReport(errors=[], staging=[], orphans=[], stale_runs=[]))
+E         monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7ff25848ef90>
+E         
+E             def test_T35_rerun_upload(service, env, monkeypatch):
+E                 raw = b'a\nb\n'
+E                 from streamlit.runtime.uploaded_file_manager import UploadedFile, UploadedFileRec
+E                 from streamlit.proto.Common_pb2 import FileURLs
+E                 mock_upload = UploadedFile(UploadedFileRec('upload-test', 'local.csv', 'text/csv', raw), FileURLs())
+E                 first = register_upload(service, ORDER, mock_upload)
+E                 app = ui(env, monkeypatch)
+E                 app.selectbox[0].select(ORDER).run()
+E                 app.selectbox[1].select(first.id).run()
+E                 app.selectbox[2].select('UTF-8').run()
+E                 app.selectbox[3].select(',').run()
+E                 app.button[-1].click().run()
+E         >       assert not app.exception
+E         E       assert not ElementList(_list=[Exception(message="'NoneType' object has no attribute 'version_id'", stack_trace=['File "/workspace....py", line 125, in panel\n    command(order_id, review.version_id, order)\n                      ^^^^^^^^^^^^^^^^^'])])
+E         E        +  where ElementList(_list=[Exception(message="'NoneType' object has no attribute 'version_id'", stack_trace=['File "/workspace....py", line 125, in panel\n    command(order_id, review.version_id, order)\n                      ^^^^^^^^^^^^^^^^^'])]) = AppTest(\n    _script_path='/workspace/verified-data-extraction/src/vde/app.py',\n    default_timeout=3,\n    session_sta...SpecialBlock(\n            type='sidebar'\n        ),\n        2: SpecialBlock(\n            type='event'\n        )\n    }\n).exception
+E         
+E         tests/p2/test_p2.py:392: AssertionError
+E         ----------------------------- Captured stderr call -----------------------------
+E         2026-10-11 10:16:39.178 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+E         2026-10-11 10:16:39.233 Uncaught app execution
+E         Traceback (most recent call last):
+E           File "/workspace/verified-data-extraction/.venv/lib/python3.12/site-packages/streamlit/runtime/scriptrunner/exec_code.py", line 128, in exec_func_with_error_handling
+E             result = func()
+E                      ^^^^^^
+E           File "/workspace/verified-data-extraction/.venv/lib/python3.12/site-packages/streamlit/runtime/scriptrunner/script_runner.py", line 669, in code_to_exec
+E             exec(code, module.__dict__)  # noqa: S102
+E             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           File "/workspace/verified-data-extraction/src/vde/app.py", line 23, in <module>
+E             workflow_panel(result)
+E           File "/workspace/verified-data-extraction/src/vde/workflow/ui.py", line 125, in panel
+E             command(order_id, review.version_id, order)
+E                               ^^^^^^^^^^^^^^^^^
+E         AttributeError: 'NoneType' object has no attribute 'version_id'
+E         - generated xml file: /workspace/verified-data-extraction/docs/p3/validation/p2-results.xml -
+E         =========================== short test summary info ============================
+E         FAILED tests/p2/test_p2.py::test_T35_rerun_upload - assert not ElementList(_l...
+E         1 failed, 53 passed in 18.77s
+E         
+E       assert 1 == 0
+E        +  where 1 = CompletedProcess(args=['/workspace/verified-data-extraction/.venv/bin/python', '-m', 'pytest', 'tests/p2', '-q', '--ju...tests/p2/test_p2.py::test_T35_rerun_upload - assert not ElementList(_l...\n1 failed, 53 passed in 18.77s\n', stderr='').returncode
+
+tests/p3/test_p3.py:462: AssertionError
+- generated xml file: /workspace/verified-data-extraction/docs/p3/validation/development-full-p3-results.xml -
+=========================== short test summary info ============================
+FAILED tests/p3/test_p3.py::test_T50_p2_regression - AssertionError: ...........
+1 failed, 51 passed in 40.12s

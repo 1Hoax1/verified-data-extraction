@@ -1,4 +1,4 @@
-"""Persistence health and P2 local input preview for existing Orders."""
+"""Persistence health, local input preview and manual approval for existing Orders."""
 import logging
 import streamlit as st
 from vde.bootstrap import bootstrap
@@ -19,3 +19,5 @@ else:
     st.success("Local persistence is ready.")
 from vde.ingestion.ui import panel
 panel(result)
+from vde.workflow.ui import panel as workflow_panel
+workflow_panel(result)

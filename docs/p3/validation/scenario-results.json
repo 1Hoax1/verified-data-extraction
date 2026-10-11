@@ -1,0 +1,732 @@
+{
+  "P3-F01": {
+    "actions": [
+      "begin_manual_review",
+      "publish_brief",
+      "approve_brief",
+      "publish_spec",
+      "approve_spec_and_finish"
+    ],
+    "driver_layers": [
+      "P3_API",
+      "P3_API",
+      "P3_API",
+      "P3_API",
+      "P3_API"
+    ],
+    "expected": "APPROVED",
+    "initial_profile": "draft",
+    "initial_state_verified": true,
+    "no_execution_artifacts_qa": true,
+    "partial_business_writes_on_rejection": null,
+    "public_errors": [],
+    "result": "PASS"
+  },
+  "P3-F02": {
+    "actions": [
+      "begin_manual_review",
+      "publish_brief",
+      "approve_brief",
+      "publish_spec",
+      "approve_spec_and_finish"
+    ],
+    "driver_layers": [
+      "P3_API",
+      "P3_API",
+      "P3_API",
+      "P3_API",
+      "P3_API"
+    ],
+    "expected": "APPROVED",
+    "initial_profile": "draft",
+    "initial_state_verified": true,
+    "no_execution_artifacts_qa": true,
+    "partial_business_writes_on_rejection": null,
+    "public_errors": [],
+    "result": "PASS"
+  },
+  "P3-F03": {
+    "actions": [
+      "begin_manual_review",
+      "publish_brief"
+    ],
+    "driver_layers": [
+      "P3_API",
+      "P3_API"
+    ],
+    "expected": "VALIDATION_BRIEF_SCHEMA",
+    "initial_profile": "draft",
+    "initial_state_verified": true,
+    "no_execution_artifacts_qa": true,
+    "partial_business_writes_on_rejection": 0,
+    "public_errors": [
+      "VALIDATION_BRIEF_SCHEMA"
+    ],
+    "result": "PASS"
+  },
+  "P3-F04": {
+    "actions": [
+      "begin_manual_review",
+      "publish_brief"
+    ],
+    "driver_layers": [
+      "P3_API",
+      "P3_API"
+    ],
+    "expected": "VALIDATION_BRIEF_SCHEMA",
+    "initial_profile": "draft",
+    "initial_state_verified": true,
+    "no_execution_artifacts_qa": true,
+    "partial_business_writes_on_rejection": 0,
+    "public_errors": [
+      "VALIDATION_BRIEF_SCHEMA"
+    ],
+    "result": "PASS"
+  },
+  "P3-F05": {
+    "actions": [
+      "begin_manual_review",
+      "publish_brief"
+    ],
+    "driver_layers": [
+      "P3_API",
+      "P3_API"
+    ],
+    "expected": "VALIDATION_ACCEPTANCE_CRITERION",
+    "initial_profile": "draft",
+    "initial_state_verified": true,
+    "no_execution_artifacts_qa": true,
+    "partial_business_writes_on_rejection": 0,
+    "public_errors": [
+      "VALIDATION_ACCEPTANCE_CRITERION"
+    ],
+    "result": "PASS"
+  },
+  "P3-F06": {
+    "actions": [
+      "begin_manual_review",
+      "publish_brief"
+    ],
+    "driver_layers": [
+      "P3_API",
+      "P3_API"
+    ],
+    "expected": "VALIDATION_BRIEF_SCHEMA",
+    "initial_profile": "draft",
+    "initial_state_verified": true,
+    "no_execution_artifacts_qa": true,
+    "partial_business_writes_on_rejection": 0,
+    "public_errors": [
+      "VALIDATION_BRIEF_SCHEMA"
+    ],
+    "result": "PASS"
+  },
+  "P3-F07": {
+    "actions": [
+      "begin_manual_review",
+      "publish_brief"
+    ],
+    "driver_layers": [
+      "P3_API",
+      "P3_API"
+    ],
+    "expected": "NFC_NORMALIZED",
+    "initial_profile": "draft",
+    "initial_state_verified": true,
+    "no_execution_artifacts_qa": true,
+    "partial_business_writes_on_rejection": null,
+    "public_errors": [],
+    "result": "PASS"
+  },
+  "P3-F08": {
+    "actions": [
+      "begin_manual_review",
+      "publish_brief"
+    ],
+    "driver_layers": [
+      "P3_API",
+      "P3_API"
+    ],
+    "expected": "INPUT_NOT_FOUND",
+    "initial_profile": "draft",
+    "initial_state_verified": true,
+    "no_execution_artifacts_qa": true,
+    "partial_business_writes_on_rejection": 0,
+    "public_errors": [
+      "INPUT_NOT_FOUND"
+    ],
+    "result": "PASS"
+  },
+  "P3-F09": {
+    "actions": [
+      "validate"
+    ],
+    "driver_layers": [
+      "P0_SCHEMA"
+    ],
+    "expected": "P0_SCHEMA_REJECTED",
+    "initial_profile": "brief_ready",
+    "initial_state_verified": true,
+    "no_execution_artifacts_qa": true,
+    "partial_business_writes_on_rejection": 0,
+    "public_errors": [],
+    "result": "PASS"
+  },
+  "P3-F10": {
+    "actions": [
+      "append"
+    ],
+    "driver_layers": [
+      "P1_REPOSITORY_GUARD"
+    ],
+    "expected": "STORAGE_ERROR",
+    "initial_profile": "brief_ready",
+    "initial_state_verified": true,
+    "no_execution_artifacts_qa": true,
+    "partial_business_writes_on_rejection": 0,
+    "public_errors": [
+      "STORAGE_ERROR"
+    ],
+    "result": "PASS"
+  },
+  "P3-F11": {
+    "actions": [
+      "begin_manual_review",
+      "publish_brief",
+      "publish_spec"
+    ],
+    "driver_layers": [
+      "P3_API",
+      "P3_API",
+      "P3_API"
+    ],
+    "expected": "APPROVAL_MISSING",
+    "initial_profile": "draft",
+    "initial_state_verified": true,
+    "no_execution_artifacts_qa": true,
+    "partial_business_writes_on_rejection": 0,
+    "public_errors": [
+      "APPROVAL_MISSING"
+    ],
+    "result": "PASS"
+  },
+  "P3-F12": {
+    "actions": [
+      "validate_spec"
+    ],
+    "driver_layers": [
+      "P3_API"
+    ],
+    "expected": "VALIDATION_TRANSFORMATION_SCHEMA",
+    "initial_profile": "brief_approved",
+    "initial_state_verified": true,
+    "no_execution_artifacts_qa": true,
+    "partial_business_writes_on_rejection": 0,
+    "public_errors": [
+      "VALIDATION_TRANSFORMATION_SCHEMA"
+    ],
+    "result": "PASS"
+  },
+  "P3-F13": {
+    "actions": [
+      "validate_spec"
+    ],
+    "driver_layers": [
+      "P3_API"
+    ],
+    "expected": "VERSION_INCOMPATIBLE",
+    "initial_profile": "brief_approved",
+    "initial_state_verified": true,
+    "no_execution_artifacts_qa": true,
+    "partial_business_writes_on_rejection": 0,
+    "public_errors": [
+      "VERSION_INCOMPATIBLE"
+    ],
+    "result": "PASS"
+  },
+  "P3-F14": {
+    "actions": [
+      "validate_spec"
+    ],
+    "driver_layers": [
+      "P3_API"
+    ],
+    "expected": "INPUT_NOT_FOUND",
+    "initial_profile": "brief_approved",
+    "initial_state_verified": true,
+    "no_execution_artifacts_qa": true,
+    "partial_business_writes_on_rejection": 0,
+    "public_errors": [
+      "INPUT_NOT_FOUND"
+    ],
+    "result": "PASS"
+  },
+  "P3-F15": {
+    "actions": [
+      "validate_spec"
+    ],
+    "driver_layers": [
+      "P3_API"
+    ],
+    "expected": "VALIDATION_TRANSFORMATION_SCHEMA",
+    "initial_profile": "brief_approved",
+    "initial_state_verified": true,
+    "no_execution_artifacts_qa": true,
+    "partial_business_writes_on_rejection": 0,
+    "public_errors": [
+      "VALIDATION_TRANSFORMATION_SCHEMA"
+    ],
+    "result": "PASS"
+  },
+  "P3-F16": {
+    "actions": [
+      "validate_spec"
+    ],
+    "driver_layers": [
+      "P3_API"
+    ],
+    "expected": "INVALID_OPERATION",
+    "initial_profile": "brief_approved",
+    "initial_state_verified": true,
+    "no_execution_artifacts_qa": true,
+    "partial_business_writes_on_rejection": 0,
+    "public_errors": [
+      "INVALID_OPERATION"
+    ],
+    "result": "PASS"
+  },
+  "P3-F17": {
+    "actions": [
+      "validate_spec"
+    ],
+    "driver_layers": [
+      "P3_API"
+    ],
+    "expected": "INVALID_PARAMETER",
+    "initial_profile": "brief_approved",
+    "initial_state_verified": true,
+    "no_execution_artifacts_qa": true,
+    "partial_business_writes_on_rejection": 0,
+    "public_errors": [
+      "INVALID_PARAMETER"
+    ],
+    "result": "PASS"
+  },
+  "P3-F18": {
+    "actions": [
+      "validate_spec"
+    ],
+    "driver_layers": [
+      "P3_API"
+    ],
+    "expected": "VALIDATION_TRANSFORMATION_SCHEMA",
+    "initial_profile": "brief_approved",
+    "initial_state_verified": true,
+    "no_execution_artifacts_qa": true,
+    "partial_business_writes_on_rejection": 0,
+    "public_errors": [
+      "VALIDATION_TRANSFORMATION_SCHEMA"
+    ],
+    "result": "PASS"
+  },
+  "P3-F19": {
+    "actions": [
+      "validate_spec"
+    ],
+    "driver_layers": [
+      "P3_API"
+    ],
+    "expected": "VALIDATION_TRANSFORMATION_SCHEMA",
+    "initial_profile": "brief_approved",
+    "initial_state_verified": true,
+    "no_execution_artifacts_qa": true,
+    "partial_business_writes_on_rejection": 0,
+    "public_errors": [
+      "VALIDATION_TRANSFORMATION_SCHEMA"
+    ],
+    "result": "PASS"
+  },
+  "P3-F20": {
+    "actions": [
+      "append"
+    ],
+    "driver_layers": [
+      "P1_REPOSITORY_GUARD"
+    ],
+    "expected": "STORAGE_ERROR",
+    "initial_profile": "spec_ready",
+    "initial_state_verified": true,
+    "no_execution_artifacts_qa": true,
+    "partial_business_writes_on_rejection": 0,
+    "public_errors": [
+      "STORAGE_ERROR"
+    ],
+    "result": "PASS"
+  },
+  "P3-F21": {
+    "actions": [
+      "append"
+    ],
+    "driver_layers": [
+      "P1_REPOSITORY_GUARD"
+    ],
+    "expected": "STORAGE_ERROR",
+    "initial_profile": "spec_ready",
+    "initial_state_verified": true,
+    "no_execution_artifacts_qa": true,
+    "partial_business_writes_on_rejection": 0,
+    "public_errors": [
+      "STORAGE_ERROR"
+    ],
+    "result": "PASS"
+  },
+  "P3-F22": {
+    "actions": [
+      "approve_brief",
+      "approve_brief"
+    ],
+    "driver_layers": [
+      "P3_API",
+      "P3_API"
+    ],
+    "expected": "APPROVAL_EXISTS",
+    "initial_profile": "brief_ready",
+    "initial_state_verified": true,
+    "no_execution_artifacts_qa": true,
+    "partial_business_writes_on_rejection": null,
+    "public_errors": [],
+    "result": "PASS"
+  },
+  "P3-F23": {
+    "actions": [
+      "approve_spec_and_finish",
+      "approve_spec_and_finish"
+    ],
+    "driver_layers": [
+      "P3_API",
+      "P3_API"
+    ],
+    "expected": "APPROVAL_EXISTS",
+    "initial_profile": "spec_ready",
+    "initial_state_verified": true,
+    "no_execution_artifacts_qa": true,
+    "partial_business_writes_on_rejection": null,
+    "public_errors": [],
+    "result": "PASS"
+  },
+  "P3-F24": {
+    "actions": [
+      "publish_brief"
+    ],
+    "driver_layers": [
+      "P3_API"
+    ],
+    "expected": "BRIEF_PENDING",
+    "initial_profile": "spec_ready",
+    "initial_state_verified": true,
+    "no_execution_artifacts_qa": true,
+    "partial_business_writes_on_rejection": null,
+    "public_errors": [],
+    "result": "PASS"
+  },
+  "P3-F25": {
+    "actions": [
+      "publish_spec"
+    ],
+    "driver_layers": [
+      "P3_API"
+    ],
+    "expected": "TRANSFORMATION_PENDING",
+    "initial_profile": "spec_ready",
+    "initial_state_verified": true,
+    "no_execution_artifacts_qa": true,
+    "partial_business_writes_on_rejection": null,
+    "public_errors": [],
+    "result": "PASS"
+  },
+  "P3-F26": {
+    "actions": [
+      "publish_brief"
+    ],
+    "driver_layers": [
+      "P3_API"
+    ],
+    "expected": "STATE_INVALID_TRANSITION",
+    "initial_profile": "approved",
+    "initial_state_verified": true,
+    "no_execution_artifacts_qa": true,
+    "partial_business_writes_on_rejection": 0,
+    "public_errors": [
+      "STATE_INVALID_TRANSITION"
+    ],
+    "result": "PASS"
+  },
+  "P3-F27": {
+    "actions": [
+      "publish_brief"
+    ],
+    "driver_layers": [
+      "P3_API"
+    ],
+    "expected": "STATE_INVALID_TRANSITION",
+    "initial_profile": "draft",
+    "initial_state_verified": true,
+    "no_execution_artifacts_qa": true,
+    "partial_business_writes_on_rejection": 0,
+    "public_errors": [
+      "STATE_INVALID_TRANSITION"
+    ],
+    "result": "PASS"
+  },
+  "P3-F28": {
+    "actions": [
+      "inject_event_append_failure",
+      "approve_brief"
+    ],
+    "driver_layers": [
+      "TEST_FAULT",
+      "P3_API"
+    ],
+    "expected": "STORAGE_ERROR",
+    "initial_profile": "brief_ready",
+    "initial_state_verified": true,
+    "no_execution_artifacts_qa": true,
+    "partial_business_writes_on_rejection": 0,
+    "public_errors": [
+      "STORAGE_ERROR"
+    ],
+    "result": "PASS"
+  },
+  "P3-F29": {
+    "actions": [
+      "inject_event_append_failure",
+      "approve_spec_and_finish"
+    ],
+    "driver_layers": [
+      "TEST_FAULT",
+      "P3_API"
+    ],
+    "expected": "STORAGE_ERROR",
+    "initial_profile": "spec_ready",
+    "initial_state_verified": true,
+    "no_execution_artifacts_qa": true,
+    "partial_business_writes_on_rejection": 0,
+    "public_errors": [
+      "STORAGE_ERROR"
+    ],
+    "result": "PASS"
+  },
+  "P3-F30": {
+    "actions": [
+      "inject_stale_expected_order",
+      "approve_spec_and_finish"
+    ],
+    "driver_layers": [
+      "TEST_FAULT",
+      "P3_API"
+    ],
+    "expected": "STORAGE_ERROR",
+    "initial_profile": "spec_ready",
+    "initial_state_verified": true,
+    "no_execution_artifacts_qa": true,
+    "partial_business_writes_on_rejection": 0,
+    "public_errors": [
+      "STORAGE_ERROR"
+    ],
+    "result": "PASS"
+  },
+  "P3-F31": {
+    "actions": [
+      "tamper_input_payload",
+      "approve_spec_and_finish"
+    ],
+    "driver_layers": [
+      "TEST_FAULT",
+      "P3_API"
+    ],
+    "expected": "STORAGE_ERROR",
+    "initial_profile": "spec_ready",
+    "initial_state_verified": true,
+    "no_execution_artifacts_qa": true,
+    "partial_business_writes_on_rejection": 0,
+    "public_errors": [
+      "STORAGE_ERROR"
+    ],
+    "result": "PASS"
+  },
+  "P3-F32": {
+    "actions": [
+      "bootstrap_degraded",
+      "publish_brief"
+    ],
+    "driver_layers": [
+      "TEST_FAULT",
+      "P3_API"
+    ],
+    "expected": "STORAGE_ERROR",
+    "initial_profile": "brief_ready",
+    "initial_state_verified": true,
+    "no_execution_artifacts_qa": true,
+    "partial_business_writes_on_rejection": 0,
+    "public_errors": [
+      "STORAGE_ERROR"
+    ],
+    "result": "PASS"
+  },
+  "P3-F33": {
+    "actions": [
+      "bootstrap_blocked",
+      "approve_brief"
+    ],
+    "driver_layers": [
+      "TEST_FAULT",
+      "P3_API"
+    ],
+    "expected": "STORAGE_ERROR",
+    "initial_profile": "brief_ready",
+    "initial_state_verified": true,
+    "no_execution_artifacts_qa": true,
+    "partial_business_writes_on_rejection": 0,
+    "public_errors": [
+      "STORAGE_ERROR"
+    ],
+    "result": "PASS"
+  },
+  "P3-F34": {
+    "actions": [
+      "corrupt_authoritative_brief_json",
+      "view_current_approvals"
+    ],
+    "driver_layers": [
+      "TEST_FAULT",
+      "P3_API"
+    ],
+    "expected": "STORAGE_ERROR",
+    "initial_profile": "brief_ready",
+    "initial_state_verified": true,
+    "no_execution_artifacts_qa": true,
+    "partial_business_writes_on_rejection": 0,
+    "public_errors": [
+      "STORAGE_ERROR"
+    ],
+    "result": "PASS"
+  },
+  "P3-F35": {
+    "actions": [
+      "begin_manual_review",
+      "publish_brief",
+      "approve_brief",
+      "publish_spec",
+      "approve_spec_and_finish",
+      "process_restart",
+      "view_current_approvals"
+    ],
+    "driver_layers": [
+      "P3_API",
+      "P3_API",
+      "P3_API",
+      "P3_API",
+      "P3_API",
+      "TEST_DRIVER",
+      "P3_API"
+    ],
+    "expected": "APPROVED",
+    "initial_profile": "draft",
+    "initial_state_verified": true,
+    "no_execution_artifacts_qa": true,
+    "partial_business_writes_on_rejection": null,
+    "public_errors": [],
+    "result": "PASS"
+  },
+  "P3-F36": {
+    "actions": [
+      "mount_ui",
+      "passive_rerun"
+    ],
+    "driver_layers": [
+      "UI_DRIVER",
+      "UI_DRIVER"
+    ],
+    "expected": "NO_WRITE",
+    "initial_profile": "draft",
+    "initial_state_verified": true,
+    "no_execution_artifacts_qa": true,
+    "partial_business_writes_on_rejection": null,
+    "public_errors": [],
+    "result": "PASS"
+  },
+  "P3-F37": {
+    "actions": [
+      "p4_handoff"
+    ],
+    "driver_layers": [
+      "P3_API"
+    ],
+    "expected": "APPROVAL_MISSING",
+    "initial_profile": "brief_ready",
+    "initial_state_verified": true,
+    "no_execution_artifacts_qa": true,
+    "partial_business_writes_on_rejection": 0,
+    "public_errors": [
+      "APPROVAL_MISSING"
+    ],
+    "result": "PASS"
+  },
+  "P3-F38": {
+    "actions": [
+      "append"
+    ],
+    "driver_layers": [
+      "P1_REPOSITORY_GUARD"
+    ],
+    "expected": "STORAGE_ERROR",
+    "initial_profile": "spec_ready",
+    "initial_state_verified": true,
+    "no_execution_artifacts_qa": true,
+    "partial_business_writes_on_rejection": 0,
+    "public_errors": [
+      "STORAGE_ERROR"
+    ],
+    "result": "PASS"
+  },
+  "P3-F39": {
+    "actions": [
+      "verify_p0_hash_vectors_and_nfc"
+    ],
+    "driver_layers": [
+      "TEST_DRIVER"
+    ],
+    "expected": "CONTENT_HASH_EQUAL",
+    "initial_profile": "draft",
+    "initial_state_verified": true,
+    "no_execution_artifacts_qa": true,
+    "partial_business_writes_on_rejection": null,
+    "public_errors": [],
+    "result": "PASS"
+  },
+  "P3-F40": {
+    "actions": [
+      "begin_manual_review",
+      "publish_brief",
+      "approve_brief",
+      "publish_spec",
+      "approve_spec_and_finish",
+      "inspect_no_execution"
+    ],
+    "driver_layers": [
+      "P3_API",
+      "P3_API",
+      "P3_API",
+      "P3_API",
+      "P3_API",
+      "UI_DRIVER"
+    ],
+    "expected": "NO_EXECUTION_RUN",
+    "initial_profile": "draft",
+    "initial_state_verified": true,
+    "no_execution_artifacts_qa": true,
+    "partial_business_writes_on_rejection": null,
+    "public_errors": [],
+    "result": "PASS"
+  }
+}

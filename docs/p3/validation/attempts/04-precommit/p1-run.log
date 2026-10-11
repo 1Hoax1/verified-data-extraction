@@ -1,0 +1,4 @@
+COMMAND ["/workspace/verified-data-extraction/.venv/bin/python", "-m", "pytest", "tests/p1", "-q", "--junitxml=/workspace/verified-data-extraction/docs/p3/validation/p1-results.xml"]
+..........................................                               [100%]
+- generated xml file: /workspace/verified-data-extraction/docs/p3/validation/p1-results.xml -
+42 passed in 5.15s
