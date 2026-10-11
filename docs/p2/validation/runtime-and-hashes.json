@@ -1,0 +1,45 @@
+{
+  "tested_commit": "a6c845b552656b42d81850fc3372871df979f6c2",
+  "base_commit": "129300728c446b82eaeafe1068e27339eb7176dd",
+  "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+  "platform": "Linux-6.18.44-x86_64-with-glibc2.41",
+  "dependencies": {
+    "pytest": "8.4.2",
+    "streamlit": "1.50.0",
+    "openpyxl": "3.1.5",
+    "et-xmlfile": "2.0.0",
+    "jsonschema": "4.26.0",
+    "referencing": "0.37.0",
+    "rfc8785": "0.1.4"
+  },
+  "files": {
+    "pecs/pilot_slice_v1/fixtures/P-A_dirty_csv/input_dirty.csv": {
+      "size_bytes": 369,
+      "sha256": "c0e3f84d189e0ed177d5e64a183142fe1b923ddb79c6617ebb26edd139658fcb"
+    },
+    "pecs/pilot_slice_v1/fixtures/P-A_dirty_csv/input_preview.json": {
+      "size_bytes": 966,
+      "sha256": "9401fb95de86d07174ba0396880119fbd11e9564988509d11d0019b32aec2002"
+    },
+    "pecs/pilot_slice_v1/fixtures/P-B_xlsx_sheet/input_orders.xlsx": {
+      "size_bytes": 4338,
+      "sha256": "d275fa7393e73ef1be7815e83b31b1a710b3f345bb7138c72569b03f66edf80d"
+    },
+    "pecs/pilot_slice_v1/fixtures/P-B_xlsx_sheet/input_preview.json": {
+      "size_bytes": 884,
+      "sha256": "6aa88f45f29ddb5f40eeda2fc733dd54346a91679a2787e468c780ab6f88ca61"
+    },
+    "docs/p2/v1.0/P2_Implementation_Pack_v1.0_APPROVED.zip": {
+      "size_bytes": 308846,
+      "sha256": "1fed602bcea695be892150581b9cbcb00807681f0a389f598bd54fac9e504d84"
+    },
+    "tests/p2/scope_allowlist_v1.json": {
+      "size_bytes": 30541,
+      "sha256": "181e5df6648c23d4571169972393c68c4d971f3c27b471a01c3a93b02c2df55a"
+    },
+    "uv.lock": {
+      "size_bytes": 258962,
+      "sha256": "7a4ed597bb53a55189cce5b9c5d32b191f150f6cbc92f55122382cd164b42776"
+    }
+  }
+}

@@ -1,4 +1,4 @@
-"""Minimal P1 shell. No authoring, approval, ingestion, execution or QA UI."""
+"""Persistence health and P2 local input preview for existing Orders."""
 import logging
 import streamlit as st
 from vde.bootstrap import bootstrap
@@ -17,4 +17,5 @@ elif result.health == "degraded":
     st.json({"staging": result.recovery.staging, "orphans": result.recovery.orphans, "stale_runs": result.recovery.stale_runs})
 else:
     st.success("Local persistence is ready.")
-st.caption("P1 — Persistence and workspace. Workflow implementation awaits later stages.")
+from vde.ingestion.ui import panel
+panel(result)
