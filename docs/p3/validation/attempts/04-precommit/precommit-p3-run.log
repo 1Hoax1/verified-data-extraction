@@ -1,0 +1,48 @@
+..........................................F.........                     [100%]
+=================================== FAILURES ===================================
+________________________ test_T43_approved_ui_readonly _________________________
+
+p3_pack = PosixPath('/tmp/pytest-of-agent/pytest-23/p3-approved0/P3_Implementation_Pack_v1.0_APPROVED')
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-23/test_T43_approved_ui_readonly0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f75c3a6b6e0>
+
+    def test_T43_approved_ui_readonly(p3_pack, tmp_path, monkeypatch):
+>       s = scenario(p3_pack, tmp_path, monkeypatch, 26)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/p3/test_p3.py:413: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/p3/test_p3.py:28: in scenario
+    instance = Scenario(pack, tmp / f'f{number:02}', number, patch)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/p3/driver.py:71: in __init__
+    self.assert_state(initial=True)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <p3.driver.Scenario object at 0x7f75c3a6a960>
+
+    def assert_state(self, *, initial=False):
+        expected = self.fixture['initial_state'] if initial else self.fixture['expected']['final_state']
+        with UnitOfWork(self.env.database, self.env.workspace) as uow:
+            order = uow.orders.get(self.refs['order_id'])
+            briefs = uow.briefs.list_for_order(order.id)
+            specs = uow.specs.list_for_order(order.id)
+            approvals = uow.approvals.list_for_order(order.id)
+        if initial:
+            assert {k: getattr(order, k) for k in expected['order']} == expected['order']
+            for actual, key in [(briefs, 'brief_versions'), (specs, 'transformation_spec_versions')]:
+                records = expected['persisted_versions'][key]
+                assert len(actual) == len(records)
+                for record, wanted in zip(actual, records):
+                    assert all(getattr(record, k) == v for k, v in wanted.items() if k != 'source')
+            assert len(approvals) == len(expected['persisted_approvals'])
+            for record, wanted in zip(approvals, expected['persisted_approvals']):
+>               assert all(getattr(record, k) == v for k, v in wanted.items() if k not in {'ref', 'id_binding', 'created_by'})
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E               AssertionError
+
+tests/p3/driver.py:115: AssertionError
+- generated xml file: /workspace/verified-data-extraction/docs/p3/validation/precommit-p3-results.xml -
+=========================== short test summary info ============================
+FAILED tests/p3/test_p3.py::test_T43_approved_ui_readonly - AssertionError
+1 failed, 51 passed in 39.48s

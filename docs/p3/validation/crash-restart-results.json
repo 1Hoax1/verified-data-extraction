@@ -1,0 +1,26 @@
+[
+  {
+    "command": "brief",
+    "phase": "before_commit",
+    "exit_code": 76,
+    "result": "PASS"
+  },
+  {
+    "command": "brief",
+    "phase": "after_commit",
+    "exit_code": 77,
+    "result": "PASS"
+  },
+  {
+    "command": "spec",
+    "phase": "before_commit",
+    "exit_code": 76,
+    "result": "PASS"
+  },
+  {
+    "command": "spec",
+    "phase": "after_commit",
+    "exit_code": 77,
+    "result": "PASS"
+  }
+]

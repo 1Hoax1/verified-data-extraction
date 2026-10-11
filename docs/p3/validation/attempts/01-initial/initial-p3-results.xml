@@ -1,0 +1,1990 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="39" skipped="0" tests="49" time="2.504" timestamp="2026-10-11T10:13:25.930425+00:00" hostname="85258b66b885"><testcase classname="tests.p3.test_p3" name="test_T01_existing_order" time="0.019"><properties><property name="p3_id" value="P3-T01" /></properties></testcase><testcase classname="tests.p3.test_p3" name="test_T02_foreign_asset" time="0.089"><properties><property name="p3_id" value="P3-T02" /></properties></testcase><testcase classname="tests.p3.test_p3" name="test_T03_p2_csv" time="0.008"><properties><property name="p3_id" value="P3-T03" /></properties><failure message="AssertionError: assert {'selected_de...ng': 'CP1251'} == {'csv_options...t_name': None}&#10;  &#10;  Left contains 2 more items:&#10;  {'selected_delimiter': 'comma', 'selected_encoding': 'CP1251'}&#10;  Right contains 2 more items:&#10;  {'csv_options': {'delimiter': ',', 'encoding': 'CP1251', 'header_row': 0},&#10;   'sheet_name': None}&#10;  Use -v to get more diff">p3_pack = PosixPath('/tmp/pytest-of-agent/pytest-15/p3-approved0/P3_Implementation_Pack_v1.0_APPROVED')
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-15/test_T03_p2_csv0')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x7ff6d459e120&gt;
+
+    def test_T03_p2_csv(p3_pack, tmp_path, monkeypatch):
+        s = scenario(p3_pack, tmp_path, monkeypatch, 1, run=False)
+        expected = load(ROOT / 'pecs/pilot_slice_v1/fixtures/P-A_dirty_csv/input_preview.json')
+        assert s.selection.columns == expected['columns'] and s.selection.first_rows == expected['first_rows']
+&gt;       assert s.selection.selection == {'sheet_name': None, 'csv_options': {'encoding': 'CP1251', 'delimiter': ',', 'header_row': 0}}
+E       AssertionError: assert {'selected_de...ng': 'CP1251'} == {'csv_options...t_name': None}
+E         
+E         Left contains 2 more items:
+E         {'selected_delimiter': 'comma', 'selected_encoding': 'CP1251'}
+E         Right contains 2 more items:
+E         {'csv_options': {'delimiter': ',', 'encoding': 'CP1251', 'header_row': 0},
+E          'sheet_name': None}
+E         Use -v to get more diff
+
+tests/p3/test_p3.py:49: AssertionError</failure></testcase><testcase classname="tests.p3.test_p3" name="test_T04_manual_transition" time="0.018"><properties><property name="p3_id" value="P3-T04" /></properties></testcase><testcase classname="tests.p3.test_p3" name="test_T05_brief_golden" time="0.014"><properties><property name="p3_id" value="P3-T05" /></properties></testcase><testcase classname="tests.p3.test_p3" name="test_T06_missing_objective" time="0.013"><properties><property name="p3_id" value="P3-T06" /></properties></testcase><testcase classname="tests.p3.test_p3" name="test_T07_forbidden_approval_property" time="0.012"><properties><property name="p3_id" value="P3-T07" /></properties></testcase><testcase classname="tests.p3.test_p3" name="test_T08_nfc_and_collision" time="0.032"><properties><property name="p3_id" value="P3-T08" /></properties><failure message="KeyError: 'csv_options'">p3_pack = PosixPath('/tmp/pytest-of-agent/pytest-15/p3-approved0/P3_Implementation_Pack_v1.0_APPROVED')
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-15/test_T08_nfc_and_collision0')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x7ff6d454acc0&gt;
+
+    def test_T08_nfc_and_collision(p3_pack, tmp_path, monkeypatch):
+        scenario(p3_pack, tmp_path, monkeypatch, 6)
+&gt;       s = scenario(p3_pack, tmp_path, monkeypatch, 7)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/p3/test_p3.py:80: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/p3/test_p3.py:29: in scenario
+    return instance.run() if run else instance
+           ^^^^^^^^^^^^^^
+tests/p3/driver.py:202: in run
+    result = self.api(action)
+             ^^^^^^^^^^^^^^^^
+tests/p3/driver.py:137: in api
+    return getattr(service, method)(order.id, documents['brief' if method == 'publish_brief' else 'spec'], expected)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/vde/workflow/service.py:169: in publish_brief
+    self._brief_source(uow, old, record)
+src/vde/workflow/service.py:107: in _brief_source
+    asset, _ = self._source(uow, order.id, source['asset_id'], options)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;vde.workflow.service.ManualWorkflow object at 0x7ff6d4543c20&gt;
+uow = &lt;vde.persistence.uow.UnitOfWork object at 0x7ff6d4434c80&gt;
+order_id = 'order-pa', asset_id = 'asset-pa-csv'
+selection = {'selected_delimiter': 'comma', 'selected_encoding': 'CP1251', 'source_type': 'LOCAL_CSV'}
+
+    def _source(self, uow, order_id, asset_id, selection=None):
+        """Repeat verified P1 bytes + unchanged P2 readers under the final UoW.
+    
+        LocalIngestion opens its own BEGIN IMMEDIATE; calling it here would nest
+        a second writer. Use its same P1 verification and P2 reader APIs with the
+        already-owned InputAsset record instead. No new ingestion implementation.
+        """
+        asset = self._asset(uow, order_id, asset_id)
+        budget = Budget()
+        require(0 &lt; asset.size_bytes &lt;= RAW, 'INPUT_NOT_FOUND', 'Asset exceeds the approved local byte limit')
+        raw = self.env.workspace.read_verified(asset.workspace_relpath, asset.byte_sha256, asset.size_bytes)
+        raw_check(raw)
+        budget.check()
+        if selection is not None:
+            require(selection['source_type'] == source_type(asset.original_filename),
+                    'INPUT_NOT_FOUND', 'Source type differs from the registered asset')
+            if selection['source_type'] == 'LOCAL_CSV':
+                read = read_csv(raw, asset_id=asset.id, byte_sha256=asset.byte_sha256,
+&gt;                               budget=budget, **selection['csv_options'])
+                                                 ^^^^^^^^^^^^^^^^^^^^^^^^
+E               KeyError: 'csv_options'
+
+src/vde/workflow/service.py:93: KeyError</failure></testcase><testcase classname="tests.p3.test_p3" name="test_T09_nested_criterion" time="0.014"><properties><property name="p3_id" value="P3-T09" /></properties></testcase><testcase classname="tests.p3.test_p3" name="test_T10_immutable_brief" time="0.016"><properties><property name="p3_id" value="P3-T10" /></properties><failure message="KeyError: 'csv_options'">p3_pack = PosixPath('/tmp/pytest-of-agent/pytest-15/p3-approved0/P3_Implementation_Pack_v1.0_APPROVED')
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-15/test_T10_immutable_brief0')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x7ff6d443f410&gt;
+
+    def test_T10_immutable_brief(p3_pack, tmp_path, monkeypatch):
+&gt;       s = scenario(p3_pack, tmp_path, monkeypatch, 24)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/p3/test_p3.py:97: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/p3/test_p3.py:28: in scenario
+    instance = Scenario(pack, tmp / f'f{number:02}', number, patch)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/p3/driver.py:70: in __init__
+    self.api(action, base=True)
+tests/p3/driver.py:137: in api
+    return getattr(service, method)(order.id, documents['brief' if method == 'publish_brief' else 'spec'], expected)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/vde/workflow/service.py:169: in publish_brief
+    self._brief_source(uow, old, record)
+src/vde/workflow/service.py:107: in _brief_source
+    asset, _ = self._source(uow, order.id, source['asset_id'], options)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;vde.workflow.service.ManualWorkflow object at 0x7ff6d443eb10&gt;
+uow = &lt;vde.persistence.uow.UnitOfWork object at 0x7ff6d4436e10&gt;
+order_id = 'order-pa', asset_id = 'asset-pa-csv'
+selection = {'selected_delimiter': 'comma', 'selected_encoding': 'CP1251', 'source_type': 'LOCAL_CSV'}
+
+    def _source(self, uow, order_id, asset_id, selection=None):
+        """Repeat verified P1 bytes + unchanged P2 readers under the final UoW.
+    
+        LocalIngestion opens its own BEGIN IMMEDIATE; calling it here would nest
+        a second writer. Use its same P1 verification and P2 reader APIs with the
+        already-owned InputAsset record instead. No new ingestion implementation.
+        """
+        asset = self._asset(uow, order_id, asset_id)
+        budget = Budget()
+        require(0 &lt; asset.size_bytes &lt;= RAW, 'INPUT_NOT_FOUND', 'Asset exceeds the approved local byte limit')
+        raw = self.env.workspace.read_verified(asset.workspace_relpath, asset.byte_sha256, asset.size_bytes)
+        raw_check(raw)
+        budget.check()
+        if selection is not None:
+            require(selection['source_type'] == source_type(asset.original_filename),
+                    'INPUT_NOT_FOUND', 'Source type differs from the registered asset')
+            if selection['source_type'] == 'LOCAL_CSV':
+                read = read_csv(raw, asset_id=asset.id, byte_sha256=asset.byte_sha256,
+&gt;                               budget=budget, **selection['csv_options'])
+                                                 ^^^^^^^^^^^^^^^^^^^^^^^^
+E               KeyError: 'csv_options'
+
+src/vde/workflow/service.py:93: KeyError</failure></testcase><testcase classname="tests.p3.test_p3" name="test_T11_selected_brief_stage" time="0.017"><properties><property name="p3_id" value="P3-T11" /></properties><failure message="KeyError: 'csv_options'">p3_pack = PosixPath('/tmp/pytest-of-agent/pytest-15/p3-approved0/P3_Implementation_Pack_v1.0_APPROVED')
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-15/test_T11_selected_brief_stage0')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x7ff6d4437a40&gt;
+
+    def test_T11_selected_brief_stage(p3_pack, tmp_path, monkeypatch):
+&gt;       s = scenario(p3_pack, tmp_path, monkeypatch, 9, run=False)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/p3/test_p3.py:109: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/p3/test_p3.py:28: in scenario
+    instance = Scenario(pack, tmp / f'f{number:02}', number, patch)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/p3/driver.py:70: in __init__
+    self.api(action, base=True)
+tests/p3/driver.py:137: in api
+    return getattr(service, method)(order.id, documents['brief' if method == 'publish_brief' else 'spec'], expected)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/vde/workflow/service.py:169: in publish_brief
+    self._brief_source(uow, old, record)
+src/vde/workflow/service.py:107: in _brief_source
+    asset, _ = self._source(uow, order.id, source['asset_id'], options)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;vde.workflow.service.ManualWorkflow object at 0x7ff6d4449e20&gt;
+uow = &lt;vde.persistence.uow.UnitOfWork object at 0x7ff6d444af90&gt;
+order_id = 'order-pa', asset_id = 'asset-pa-csv'
+selection = {'selected_delimiter': 'comma', 'selected_encoding': 'CP1251', 'source_type': 'LOCAL_CSV'}
+
+    def _source(self, uow, order_id, asset_id, selection=None):
+        """Repeat verified P1 bytes + unchanged P2 readers under the final UoW.
+    
+        LocalIngestion opens its own BEGIN IMMEDIATE; calling it here would nest
+        a second writer. Use its same P1 verification and P2 reader APIs with the
+        already-owned InputAsset record instead. No new ingestion implementation.
+        """
+        asset = self._asset(uow, order_id, asset_id)
+        budget = Budget()
+        require(0 &lt; asset.size_bytes &lt;= RAW, 'INPUT_NOT_FOUND', 'Asset exceeds the approved local byte limit')
+        raw = self.env.workspace.read_verified(asset.workspace_relpath, asset.byte_sha256, asset.size_bytes)
+        raw_check(raw)
+        budget.check()
+        if selection is not None:
+            require(selection['source_type'] == source_type(asset.original_filename),
+                    'INPUT_NOT_FOUND', 'Source type differs from the registered asset')
+            if selection['source_type'] == 'LOCAL_CSV':
+                read = read_csv(raw, asset_id=asset.id, byte_sha256=asset.byte_sha256,
+&gt;                               budget=budget, **selection['csv_options'])
+                                                 ^^^^^^^^^^^^^^^^^^^^^^^^
+E               KeyError: 'csv_options'
+
+src/vde/workflow/service.py:93: KeyError</failure></testcase><testcase classname="tests.p3.test_p3" name="test_T12_explicit_brief_approval" time="0.017"><properties><property name="p3_id" value="P3-T12" /></properties><failure message="KeyError: 'csv_options'">p3_pack = PosixPath('/tmp/pytest-of-agent/pytest-15/p3-approved0/P3_Implementation_Pack_v1.0_APPROVED')
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-15/test_T12_explicit_brief_approv0')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x7ff6d4543740&gt;
+
+    def test_T12_explicit_brief_approval(p3_pack, tmp_path, monkeypatch):
+&gt;       s = scenario(p3_pack, tmp_path, monkeypatch, 22)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/p3/test_p3.py:116: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/p3/test_p3.py:28: in scenario
+    instance = Scenario(pack, tmp / f'f{number:02}', number, patch)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/p3/driver.py:70: in __init__
+    self.api(action, base=True)
+tests/p3/driver.py:137: in api
+    return getattr(service, method)(order.id, documents['brief' if method == 'publish_brief' else 'spec'], expected)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/vde/workflow/service.py:169: in publish_brief
+    self._brief_source(uow, old, record)
+src/vde/workflow/service.py:107: in _brief_source
+    asset, _ = self._source(uow, order.id, source['asset_id'], options)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;vde.workflow.service.ManualWorkflow object at 0x7ff6d444a570&gt;
+uow = &lt;vde.persistence.uow.UnitOfWork object at 0x7ff6d443e060&gt;
+order_id = 'order-pa', asset_id = 'asset-pa-csv'
+selection = {'selected_delimiter': 'comma', 'selected_encoding': 'CP1251', 'source_type': 'LOCAL_CSV'}
+
+    def _source(self, uow, order_id, asset_id, selection=None):
+        """Repeat verified P1 bytes + unchanged P2 readers under the final UoW.
+    
+        LocalIngestion opens its own BEGIN IMMEDIATE; calling it here would nest
+        a second writer. Use its same P1 verification and P2 reader APIs with the
+        already-owned InputAsset record instead. No new ingestion implementation.
+        """
+        asset = self._asset(uow, order_id, asset_id)
+        budget = Budget()
+        require(0 &lt; asset.size_bytes &lt;= RAW, 'INPUT_NOT_FOUND', 'Asset exceeds the approved local byte limit')
+        raw = self.env.workspace.read_verified(asset.workspace_relpath, asset.byte_sha256, asset.size_bytes)
+        raw_check(raw)
+        budget.check()
+        if selection is not None:
+            require(selection['source_type'] == source_type(asset.original_filename),
+                    'INPUT_NOT_FOUND', 'Source type differs from the registered asset')
+            if selection['source_type'] == 'LOCAL_CSV':
+                read = read_csv(raw, asset_id=asset.id, byte_sha256=asset.byte_sha256,
+&gt;                               budget=budget, **selection['csv_options'])
+                                                 ^^^^^^^^^^^^^^^^^^^^^^^^
+E               KeyError: 'csv_options'
+
+src/vde/workflow/service.py:93: KeyError</failure></testcase><testcase classname="tests.p3.test_p3" name="test_T13_bad_brief_hash_guard" time="0.018"><properties><property name="p3_id" value="P3-T13" /></properties><failure message="KeyError: 'csv_options'">p3_pack = PosixPath('/tmp/pytest-of-agent/pytest-15/p3-approved0/P3_Implementation_Pack_v1.0_APPROVED')
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-15/test_T13_bad_brief_hash_guard0')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x7ff6d444a4e0&gt;
+
+    def test_T13_bad_brief_hash_guard(p3_pack, tmp_path, monkeypatch):
+&gt;       scenario(p3_pack, tmp_path, monkeypatch, 10)
+
+tests/p3/test_p3.py:125: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/p3/test_p3.py:28: in scenario
+    instance = Scenario(pack, tmp / f'f{number:02}', number, patch)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/p3/driver.py:70: in __init__
+    self.api(action, base=True)
+tests/p3/driver.py:137: in api
+    return getattr(service, method)(order.id, documents['brief' if method == 'publish_brief' else 'spec'], expected)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/vde/workflow/service.py:169: in publish_brief
+    self._brief_source(uow, old, record)
+src/vde/workflow/service.py:107: in _brief_source
+    asset, _ = self._source(uow, order.id, source['asset_id'], options)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;vde.workflow.service.ManualWorkflow object at 0x7ff6d443cda0&gt;
+uow = &lt;vde.persistence.uow.UnitOfWork object at 0x7ff6d44512b0&gt;
+order_id = 'order-pa', asset_id = 'asset-pa-csv'
+selection = {'selected_delimiter': 'comma', 'selected_encoding': 'CP1251', 'source_type': 'LOCAL_CSV'}
+
+    def _source(self, uow, order_id, asset_id, selection=None):
+        """Repeat verified P1 bytes + unchanged P2 readers under the final UoW.
+    
+        LocalIngestion opens its own BEGIN IMMEDIATE; calling it here would nest
+        a second writer. Use its same P1 verification and P2 reader APIs with the
+        already-owned InputAsset record instead. No new ingestion implementation.
+        """
+        asset = self._asset(uow, order_id, asset_id)
+        budget = Budget()
+        require(0 &lt; asset.size_bytes &lt;= RAW, 'INPUT_NOT_FOUND', 'Asset exceeds the approved local byte limit')
+        raw = self.env.workspace.read_verified(asset.workspace_relpath, asset.byte_sha256, asset.size_bytes)
+        raw_check(raw)
+        budget.check()
+        if selection is not None:
+            require(selection['source_type'] == source_type(asset.original_filename),
+                    'INPUT_NOT_FOUND', 'Source type differs from the registered asset')
+            if selection['source_type'] == 'LOCAL_CSV':
+                read = read_csv(raw, asset_id=asset.id, byte_sha256=asset.byte_sha256,
+&gt;                               budget=budget, **selection['csv_options'])
+                                                 ^^^^^^^^^^^^^^^^^^^^^^^^
+E               KeyError: 'csv_options'
+
+src/vde/workflow/service.py:93: KeyError</failure></testcase><testcase classname="tests.p3.test_p3" name="test_T14_brief_duplicate" time="0.018"><properties><property name="p3_id" value="P3-T14" /></properties><failure message="KeyError: 'csv_options'">p3_pack = PosixPath('/tmp/pytest-of-agent/pytest-15/p3-approved0/P3_Implementation_Pack_v1.0_APPROVED')
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-15/test_T14_brief_duplicate0')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x7ff6d4453e90&gt;
+
+    def test_T14_brief_duplicate(p3_pack, tmp_path, monkeypatch):
+&gt;       s = scenario(p3_pack, tmp_path, monkeypatch, 22)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/p3/test_p3.py:129: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/p3/test_p3.py:28: in scenario
+    instance = Scenario(pack, tmp / f'f{number:02}', number, patch)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/p3/driver.py:70: in __init__
+    self.api(action, base=True)
+tests/p3/driver.py:137: in api
+    return getattr(service, method)(order.id, documents['brief' if method == 'publish_brief' else 'spec'], expected)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/vde/workflow/service.py:169: in publish_brief
+    self._brief_source(uow, old, record)
+src/vde/workflow/service.py:107: in _brief_source
+    asset, _ = self._source(uow, order.id, source['asset_id'], options)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;vde.workflow.service.ManualWorkflow object at 0x7ff6d45cbe60&gt;
+uow = &lt;vde.persistence.uow.UnitOfWork object at 0x7ff6d45a1f10&gt;
+order_id = 'order-pa', asset_id = 'asset-pa-csv'
+selection = {'selected_delimiter': 'comma', 'selected_encoding': 'CP1251', 'source_type': 'LOCAL_CSV'}
+
+    def _source(self, uow, order_id, asset_id, selection=None):
+        """Repeat verified P1 bytes + unchanged P2 readers under the final UoW.
+    
+        LocalIngestion opens its own BEGIN IMMEDIATE; calling it here would nest
+        a second writer. Use its same P1 verification and P2 reader APIs with the
+        already-owned InputAsset record instead. No new ingestion implementation.
+        """
+        asset = self._asset(uow, order_id, asset_id)
+        budget = Budget()
+        require(0 &lt; asset.size_bytes &lt;= RAW, 'INPUT_NOT_FOUND', 'Asset exceeds the approved local byte limit')
+        raw = self.env.workspace.read_verified(asset.workspace_relpath, asset.byte_sha256, asset.size_bytes)
+        raw_check(raw)
+        budget.check()
+        if selection is not None:
+            require(selection['source_type'] == source_type(asset.original_filename),
+                    'INPUT_NOT_FOUND', 'Source type differs from the registered asset')
+            if selection['source_type'] == 'LOCAL_CSV':
+                read = read_csv(raw, asset_id=asset.id, byte_sha256=asset.byte_sha256,
+&gt;                               budget=budget, **selection['csv_options'])
+                                                 ^^^^^^^^^^^^^^^^^^^^^^^^
+E               KeyError: 'csv_options'
+
+src/vde/workflow/service.py:93: KeyError</failure></testcase><testcase classname="tests.p3.test_p3" name="test_T15_p0_context_schema" time="0.017"><properties><property name="p3_id" value="P3-T15" /></properties><failure message="KeyError: 'csv_options'">p3_pack = PosixPath('/tmp/pytest-of-agent/pytest-15/p3-approved0/P3_Implementation_Pack_v1.0_APPROVED')
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-15/test_T15_p0_context_schema0')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x7ff6d45a6300&gt;
+
+    def test_T15_p0_context_schema(p3_pack, tmp_path, monkeypatch):
+&gt;       scenario(p3_pack, tmp_path, monkeypatch, 9)
+
+tests/p3/test_p3.py:135: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/p3/test_p3.py:28: in scenario
+    instance = Scenario(pack, tmp / f'f{number:02}', number, patch)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/p3/driver.py:70: in __init__
+    self.api(action, base=True)
+tests/p3/driver.py:137: in api
+    return getattr(service, method)(order.id, documents['brief' if method == 'publish_brief' else 'spec'], expected)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/vde/workflow/service.py:169: in publish_brief
+    self._brief_source(uow, old, record)
+src/vde/workflow/service.py:107: in _brief_source
+    asset, _ = self._source(uow, order.id, source['asset_id'], options)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;vde.workflow.service.ManualWorkflow object at 0x7ff6d45a51f0&gt;
+uow = &lt;vde.persistence.uow.UnitOfWork object at 0x7ff6d55d8080&gt;
+order_id = 'order-pa', asset_id = 'asset-pa-csv'
+selection = {'selected_delimiter': 'comma', 'selected_encoding': 'CP1251', 'source_type': 'LOCAL_CSV'}
+
+    def _source(self, uow, order_id, asset_id, selection=None):
+        """Repeat verified P1 bytes + unchanged P2 readers under the final UoW.
+    
+        LocalIngestion opens its own BEGIN IMMEDIATE; calling it here would nest
+        a second writer. Use its same P1 verification and P2 reader APIs with the
+        already-owned InputAsset record instead. No new ingestion implementation.
+        """
+        asset = self._asset(uow, order_id, asset_id)
+        budget = Budget()
+        require(0 &lt; asset.size_bytes &lt;= RAW, 'INPUT_NOT_FOUND', 'Asset exceeds the approved local byte limit')
+        raw = self.env.workspace.read_verified(asset.workspace_relpath, asset.byte_sha256, asset.size_bytes)
+        raw_check(raw)
+        budget.check()
+        if selection is not None:
+            require(selection['source_type'] == source_type(asset.original_filename),
+                    'INPUT_NOT_FOUND', 'Source type differs from the registered asset')
+            if selection['source_type'] == 'LOCAL_CSV':
+                read = read_csv(raw, asset_id=asset.id, byte_sha256=asset.byte_sha256,
+&gt;                               budget=budget, **selection['csv_options'])
+                                                 ^^^^^^^^^^^^^^^^^^^^^^^^
+E               KeyError: 'csv_options'
+
+src/vde/workflow/service.py:93: KeyError</failure></testcase><testcase classname="tests.p3.test_p3" name="test_T16_spec_golden" time="0.018"><properties><property name="p3_id" value="P3-T16" /></properties><failure message="KeyError: 'csv_options'">p3_pack = PosixPath('/tmp/pytest-of-agent/pytest-15/p3-approved0/P3_Implementation_Pack_v1.0_APPROVED')
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-15/test_T16_spec_golden0')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x7ff6d4434e00&gt;
+
+    def test_T16_spec_golden(p3_pack, tmp_path, monkeypatch):
+&gt;       s = scenario(p3_pack, tmp_path, monkeypatch, 25, run=False)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/p3/test_p3.py:139: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/p3/test_p3.py:28: in scenario
+    instance = Scenario(pack, tmp / f'f{number:02}', number, patch)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/p3/driver.py:70: in __init__
+    self.api(action, base=True)
+tests/p3/driver.py:137: in api
+    return getattr(service, method)(order.id, documents['brief' if method == 'publish_brief' else 'spec'], expected)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/vde/workflow/service.py:169: in publish_brief
+    self._brief_source(uow, old, record)
+src/vde/workflow/service.py:107: in _brief_source
+    asset, _ = self._source(uow, order.id, source['asset_id'], options)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;vde.workflow.service.ManualWorkflow object at 0x7ff6d45caed0&gt;
+uow = &lt;vde.persistence.uow.UnitOfWork object at 0x7ff6d45caf30&gt;
+order_id = 'order-pa', asset_id = 'asset-pa-csv'
+selection = {'selected_delimiter': 'comma', 'selected_encoding': 'CP1251', 'source_type': 'LOCAL_CSV'}
+
+    def _source(self, uow, order_id, asset_id, selection=None):
+        """Repeat verified P1 bytes + unchanged P2 readers under the final UoW.
+    
+        LocalIngestion opens its own BEGIN IMMEDIATE; calling it here would nest
+        a second writer. Use its same P1 verification and P2 reader APIs with the
+        already-owned InputAsset record instead. No new ingestion implementation.
+        """
+        asset = self._asset(uow, order_id, asset_id)
+        budget = Budget()
+        require(0 &lt; asset.size_bytes &lt;= RAW, 'INPUT_NOT_FOUND', 'Asset exceeds the approved local byte limit')
+        raw = self.env.workspace.read_verified(asset.workspace_relpath, asset.byte_sha256, asset.size_bytes)
+        raw_check(raw)
+        budget.check()
+        if selection is not None:
+            require(selection['source_type'] == source_type(asset.original_filename),
+                    'INPUT_NOT_FOUND', 'Source type differs from the registered asset')
+            if selection['source_type'] == 'LOCAL_CSV':
+                read = read_csv(raw, asset_id=asset.id, byte_sha256=asset.byte_sha256,
+&gt;                               budget=budget, **selection['csv_options'])
+                                                 ^^^^^^^^^^^^^^^^^^^^^^^^
+E               KeyError: 'csv_options'
+
+src/vde/workflow/service.py:93: KeyError</failure></testcase><testcase classname="tests.p3.test_p3" name="test_T17_spec_requires_brief_approval" time="0.019"><properties><property name="p3_id" value="P3-T17" /></properties><failure message="KeyError: 'csv_options'">p3_pack = PosixPath('/tmp/pytest-of-agent/pytest-15/p3-approved0/P3_Implementation_Pack_v1.0_APPROVED')
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-15/test_T17_spec_requires_brief_a0')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x7ff6d45cac30&gt;
+
+    def test_T17_spec_requires_brief_approval(p3_pack, tmp_path, monkeypatch):
+&gt;       scenario(p3_pack, tmp_path, monkeypatch, 11)
+
+tests/p3/test_p3.py:147: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/p3/test_p3.py:29: in scenario
+    return instance.run() if run else instance
+           ^^^^^^^^^^^^^^
+tests/p3/driver.py:202: in run
+    result = self.api(action)
+             ^^^^^^^^^^^^^^^^
+tests/p3/driver.py:137: in api
+    return getattr(service, method)(order.id, documents['brief' if method == 'publish_brief' else 'spec'], expected)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/vde/workflow/service.py:169: in publish_brief
+    self._brief_source(uow, old, record)
+src/vde/workflow/service.py:107: in _brief_source
+    asset, _ = self._source(uow, order.id, source['asset_id'], options)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;vde.workflow.service.ManualWorkflow object at 0x7ff6d454cef0&gt;
+uow = &lt;vde.persistence.uow.UnitOfWork object at 0x7ff6d4543f20&gt;
+order_id = 'order-pa', asset_id = 'asset-pa-csv'
+selection = {'selected_delimiter': 'comma', 'selected_encoding': 'CP1251', 'source_type': 'LOCAL_CSV'}
+
+    def _source(self, uow, order_id, asset_id, selection=None):
+        """Repeat verified P1 bytes + unchanged P2 readers under the final UoW.
+    
+        LocalIngestion opens its own BEGIN IMMEDIATE; calling it here would nest
+        a second writer. Use its same P1 verification and P2 reader APIs with the
+        already-owned InputAsset record instead. No new ingestion implementation.
+        """
+        asset = self._asset(uow, order_id, asset_id)
+        budget = Budget()
+        require(0 &lt; asset.size_bytes &lt;= RAW, 'INPUT_NOT_FOUND', 'Asset exceeds the approved local byte limit')
+        raw = self.env.workspace.read_verified(asset.workspace_relpath, asset.byte_sha256, asset.size_bytes)
+        raw_check(raw)
+        budget.check()
+        if selection is not None:
+            require(selection['source_type'] == source_type(asset.original_filename),
+                    'INPUT_NOT_FOUND', 'Source type differs from the registered asset')
+            if selection['source_type'] == 'LOCAL_CSV':
+                read = read_csv(raw, asset_id=asset.id, byte_sha256=asset.byte_sha256,
+&gt;                               budget=budget, **selection['csv_options'])
+                                                 ^^^^^^^^^^^^^^^^^^^^^^^^
+E               KeyError: 'csv_options'
+
+src/vde/workflow/service.py:93: KeyError</failure></testcase><testcase classname="tests.p3.test_p3" name="test_T18_csv_options_persisted" time="0.019"><properties><property name="p3_id" value="P3-T18" /></properties><failure message="KeyError: 'csv_options'">p3_pack = PosixPath('/tmp/pytest-of-agent/pytest-15/p3-approved0/P3_Implementation_Pack_v1.0_APPROVED')
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-15/test_T18_csv_options_persisted0')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x7ff6d443f110&gt;
+
+    def test_T18_csv_options_persisted(p3_pack, tmp_path, monkeypatch):
+&gt;       s = scenario(p3_pack, tmp_path, monkeypatch, 1)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/p3/test_p3.py:151: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/p3/test_p3.py:29: in scenario
+    return instance.run() if run else instance
+           ^^^^^^^^^^^^^^
+tests/p3/driver.py:202: in run
+    result = self.api(action)
+             ^^^^^^^^^^^^^^^^
+tests/p3/driver.py:137: in api
+    return getattr(service, method)(order.id, documents['brief' if method == 'publish_brief' else 'spec'], expected)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/vde/workflow/service.py:169: in publish_brief
+    self._brief_source(uow, old, record)
+src/vde/workflow/service.py:107: in _brief_source
+    asset, _ = self._source(uow, order.id, source['asset_id'], options)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;vde.workflow.service.ManualWorkflow object at 0x7ff6d4543800&gt;
+uow = &lt;vde.persistence.uow.UnitOfWork object at 0x7ff6d4433a70&gt;
+order_id = 'order-pa', asset_id = 'asset-pa-csv'
+selection = {'selected_delimiter': 'comma', 'selected_encoding': 'CP1251', 'source_type': 'LOCAL_CSV'}
+
+    def _source(self, uow, order_id, asset_id, selection=None):
+        """Repeat verified P1 bytes + unchanged P2 readers under the final UoW.
+    
+        LocalIngestion opens its own BEGIN IMMEDIATE; calling it here would nest
+        a second writer. Use its same P1 verification and P2 reader APIs with the
+        already-owned InputAsset record instead. No new ingestion implementation.
+        """
+        asset = self._asset(uow, order_id, asset_id)
+        budget = Budget()
+        require(0 &lt; asset.size_bytes &lt;= RAW, 'INPUT_NOT_FOUND', 'Asset exceeds the approved local byte limit')
+        raw = self.env.workspace.read_verified(asset.workspace_relpath, asset.byte_sha256, asset.size_bytes)
+        raw_check(raw)
+        budget.check()
+        if selection is not None:
+            require(selection['source_type'] == source_type(asset.original_filename),
+                    'INPUT_NOT_FOUND', 'Source type differs from the registered asset')
+            if selection['source_type'] == 'LOCAL_CSV':
+                read = read_csv(raw, asset_id=asset.id, byte_sha256=asset.byte_sha256,
+&gt;                               budget=budget, **selection['csv_options'])
+                                                 ^^^^^^^^^^^^^^^^^^^^^^^^
+E               KeyError: 'csv_options'
+
+src/vde/workflow/service.py:93: KeyError</failure></testcase><testcase classname="tests.p3.test_p3" name="test_T19_xlsx_selection" time="0.023"><properties><property name="p3_id" value="P3-T19" /></properties><failure message="KeyError: 'sheet_name'">p3_pack = PosixPath('/tmp/pytest-of-agent/pytest-15/p3-approved0/P3_Implementation_Pack_v1.0_APPROVED')
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-15/test_T19_xlsx_selection0')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x7ff6d4430110&gt;
+
+    def test_T19_xlsx_selection(p3_pack, tmp_path, monkeypatch):
+&gt;       s = scenario(p3_pack, tmp_path, monkeypatch, 2)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/p3/test_p3.py:156: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/p3/test_p3.py:29: in scenario
+    return instance.run() if run else instance
+           ^^^^^^^^^^^^^^
+tests/p3/driver.py:202: in run
+    result = self.api(action)
+             ^^^^^^^^^^^^^^^^
+tests/p3/driver.py:137: in api
+    return getattr(service, method)(order.id, documents['brief' if method == 'publish_brief' else 'spec'], expected)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/vde/workflow/service.py:169: in publish_brief
+    self._brief_source(uow, old, record)
+src/vde/workflow/service.py:107: in _brief_source
+    asset, _ = self._source(uow, order.id, source['asset_id'], options)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;vde.workflow.service.ManualWorkflow object at 0x7ff6d442c3b0&gt;
+uow = &lt;vde.persistence.uow.UnitOfWork object at 0x7ff6d459d640&gt;
+order_id = 'order-pb', asset_id = 'asset-pb-xlsx'
+selection = {'selected_sheet': 'Orders', 'source_type': 'LOCAL_XLSX'}
+
+    def _source(self, uow, order_id, asset_id, selection=None):
+        """Repeat verified P1 bytes + unchanged P2 readers under the final UoW.
+    
+        LocalIngestion opens its own BEGIN IMMEDIATE; calling it here would nest
+        a second writer. Use its same P1 verification and P2 reader APIs with the
+        already-owned InputAsset record instead. No new ingestion implementation.
+        """
+        asset = self._asset(uow, order_id, asset_id)
+        budget = Budget()
+        require(0 &lt; asset.size_bytes &lt;= RAW, 'INPUT_NOT_FOUND', 'Asset exceeds the approved local byte limit')
+        raw = self.env.workspace.read_verified(asset.workspace_relpath, asset.byte_sha256, asset.size_bytes)
+        raw_check(raw)
+        budget.check()
+        if selection is not None:
+            require(selection['source_type'] == source_type(asset.original_filename),
+                    'INPUT_NOT_FOUND', 'Source type differs from the registered asset')
+            if selection['source_type'] == 'LOCAL_CSV':
+                read = read_csv(raw, asset_id=asset.id, byte_sha256=asset.byte_sha256,
+                                budget=budget, **selection['csv_options'])
+            else:
+                read = read_xlsx(raw, asset_id=asset.id, byte_sha256=asset.byte_sha256,
+&gt;                                budget=budget, sheet_name=selection['sheet_name'])
+                                                           ^^^^^^^^^^^^^^^^^^^^^^^
+E               KeyError: 'sheet_name'
+
+src/vde/workflow/service.py:96: KeyError</failure></testcase><testcase classname="tests.p3.test_p3" name="test_T20_no_auto_encoding" time="0.019"><properties><property name="p3_id" value="P3-T20" /></properties><failure message="KeyError: 'csv_options'">p3_pack = PosixPath('/tmp/pytest-of-agent/pytest-15/p3-approved0/P3_Implementation_Pack_v1.0_APPROVED')
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-15/test_T20_no_auto_encoding0')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x7ff6d459fb00&gt;
+
+    def test_T20_no_auto_encoding(p3_pack, tmp_path, monkeypatch):
+&gt;       scenario(p3_pack, tmp_path, monkeypatch, 12)
+
+tests/p3/test_p3.py:164: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/p3/test_p3.py:28: in scenario
+    instance = Scenario(pack, tmp / f'f{number:02}', number, patch)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/p3/driver.py:70: in __init__
+    self.api(action, base=True)
+tests/p3/driver.py:137: in api
+    return getattr(service, method)(order.id, documents['brief' if method == 'publish_brief' else 'spec'], expected)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/vde/workflow/service.py:169: in publish_brief
+    self._brief_source(uow, old, record)
+src/vde/workflow/service.py:107: in _brief_source
+    asset, _ = self._source(uow, order.id, source['asset_id'], options)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;vde.workflow.service.ManualWorkflow object at 0x7ff6d454cec0&gt;
+uow = &lt;vde.persistence.uow.UnitOfWork object at 0x7ff6d454a330&gt;
+order_id = 'order-pa', asset_id = 'asset-pa-csv'
+selection = {'selected_delimiter': 'comma', 'selected_encoding': 'CP1251', 'source_type': 'LOCAL_CSV'}
+
+    def _source(self, uow, order_id, asset_id, selection=None):
+        """Repeat verified P1 bytes + unchanged P2 readers under the final UoW.
+    
+        LocalIngestion opens its own BEGIN IMMEDIATE; calling it here would nest
+        a second writer. Use its same P1 verification and P2 reader APIs with the
+        already-owned InputAsset record instead. No new ingestion implementation.
+        """
+        asset = self._asset(uow, order_id, asset_id)
+        budget = Budget()
+        require(0 &lt; asset.size_bytes &lt;= RAW, 'INPUT_NOT_FOUND', 'Asset exceeds the approved local byte limit')
+        raw = self.env.workspace.read_verified(asset.workspace_relpath, asset.byte_sha256, asset.size_bytes)
+        raw_check(raw)
+        budget.check()
+        if selection is not None:
+            require(selection['source_type'] == source_type(asset.original_filename),
+                    'INPUT_NOT_FOUND', 'Source type differs from the registered asset')
+            if selection['source_type'] == 'LOCAL_CSV':
+                read = read_csv(raw, asset_id=asset.id, byte_sha256=asset.byte_sha256,
+&gt;                               budget=budget, **selection['csv_options'])
+                                                 ^^^^^^^^^^^^^^^^^^^^^^^^
+E               KeyError: 'csv_options'
+
+src/vde/workflow/service.py:93: KeyError</failure></testcase><testcase classname="tests.p3.test_p3" name="test_T21_exact_brief_context" time="0.018"><properties><property name="p3_id" value="P3-T21" /></properties><failure message="KeyError: 'csv_options'">p3_pack = PosixPath('/tmp/pytest-of-agent/pytest-15/p3-approved0/P3_Implementation_Pack_v1.0_APPROVED')
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-15/test_T21_exact_brief_context0')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x7ff6d4548140&gt;
+
+    def test_T21_exact_brief_context(p3_pack, tmp_path, monkeypatch):
+&gt;       scenario(p3_pack, tmp_path, monkeypatch, 13)
+
+tests/p3/test_p3.py:168: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/p3/test_p3.py:28: in scenario
+    instance = Scenario(pack, tmp / f'f{number:02}', number, patch)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/p3/driver.py:70: in __init__
+    self.api(action, base=True)
+tests/p3/driver.py:137: in api
+    return getattr(service, method)(order.id, documents['brief' if method == 'publish_brief' else 'spec'], expected)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/vde/workflow/service.py:169: in publish_brief
+    self._brief_source(uow, old, record)
+src/vde/workflow/service.py:107: in _brief_source
+    asset, _ = self._source(uow, order.id, source['asset_id'], options)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;vde.workflow.service.ManualWorkflow object at 0x7ff6d45a5250&gt;
+uow = &lt;vde.persistence.uow.UnitOfWork object at 0x7ff6d4af2db0&gt;
+order_id = 'order-pa', asset_id = 'asset-pa-csv'
+selection = {'selected_delimiter': 'comma', 'selected_encoding': 'CP1251', 'source_type': 'LOCAL_CSV'}
+
+    def _source(self, uow, order_id, asset_id, selection=None):
+        """Repeat verified P1 bytes + unchanged P2 readers under the final UoW.
+    
+        LocalIngestion opens its own BEGIN IMMEDIATE; calling it here would nest
+        a second writer. Use its same P1 verification and P2 reader APIs with the
+        already-owned InputAsset record instead. No new ingestion implementation.
+        """
+        asset = self._asset(uow, order_id, asset_id)
+        budget = Budget()
+        require(0 &lt; asset.size_bytes &lt;= RAW, 'INPUT_NOT_FOUND', 'Asset exceeds the approved local byte limit')
+        raw = self.env.workspace.read_verified(asset.workspace_relpath, asset.byte_sha256, asset.size_bytes)
+        raw_check(raw)
+        budget.check()
+        if selection is not None:
+            require(selection['source_type'] == source_type(asset.original_filename),
+                    'INPUT_NOT_FOUND', 'Source type differs from the registered asset')
+            if selection['source_type'] == 'LOCAL_CSV':
+                read = read_csv(raw, asset_id=asset.id, byte_sha256=asset.byte_sha256,
+&gt;                               budget=budget, **selection['csv_options'])
+                                                 ^^^^^^^^^^^^^^^^^^^^^^^^
+E               KeyError: 'csv_options'
+
+src/vde/workflow/service.py:93: KeyError</failure></testcase><testcase classname="tests.p3.test_p3" name="test_T22_criterion_references" time="0.017"><properties><property name="p3_id" value="P3-T22" /></properties><failure message="KeyError: 'csv_options'">p3_pack = PosixPath('/tmp/pytest-of-agent/pytest-15/p3-approved0/P3_Implementation_Pack_v1.0_APPROVED')
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-15/test_T22_criterion_references0')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x7ff6d45a5400&gt;
+
+    def test_T22_criterion_references(p3_pack, tmp_path, monkeypatch):
+&gt;       scenario(p3_pack, tmp_path, monkeypatch, 15)
+
+tests/p3/test_p3.py:172: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/p3/test_p3.py:28: in scenario
+    instance = Scenario(pack, tmp / f'f{number:02}', number, patch)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/p3/driver.py:70: in __init__
+    self.api(action, base=True)
+tests/p3/driver.py:137: in api
+    return getattr(service, method)(order.id, documents['brief' if method == 'publish_brief' else 'spec'], expected)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/vde/workflow/service.py:169: in publish_brief
+    self._brief_source(uow, old, record)
+src/vde/workflow/service.py:107: in _brief_source
+    asset, _ = self._source(uow, order.id, source['asset_id'], options)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;vde.workflow.service.ManualWorkflow object at 0x7ff6d443d250&gt;
+uow = &lt;vde.persistence.uow.UnitOfWork object at 0x7ff6d443ddc0&gt;
+order_id = 'order-pa', asset_id = 'asset-pa-csv'
+selection = {'selected_delimiter': 'comma', 'selected_encoding': 'CP1251', 'source_type': 'LOCAL_CSV'}
+
+    def _source(self, uow, order_id, asset_id, selection=None):
+        """Repeat verified P1 bytes + unchanged P2 readers under the final UoW.
+    
+        LocalIngestion opens its own BEGIN IMMEDIATE; calling it here would nest
+        a second writer. Use its same P1 verification and P2 reader APIs with the
+        already-owned InputAsset record instead. No new ingestion implementation.
+        """
+        asset = self._asset(uow, order_id, asset_id)
+        budget = Budget()
+        require(0 &lt; asset.size_bytes &lt;= RAW, 'INPUT_NOT_FOUND', 'Asset exceeds the approved local byte limit')
+        raw = self.env.workspace.read_verified(asset.workspace_relpath, asset.byte_sha256, asset.size_bytes)
+        raw_check(raw)
+        budget.check()
+        if selection is not None:
+            require(selection['source_type'] == source_type(asset.original_filename),
+                    'INPUT_NOT_FOUND', 'Source type differs from the registered asset')
+            if selection['source_type'] == 'LOCAL_CSV':
+                read = read_csv(raw, asset_id=asset.id, byte_sha256=asset.byte_sha256,
+&gt;                               budget=budget, **selection['csv_options'])
+                                                 ^^^^^^^^^^^^^^^^^^^^^^^^
+E               KeyError: 'csv_options'
+
+src/vde/workflow/service.py:93: KeyError</failure></testcase><testcase classname="tests.p3.test_p3" name="test_T23_closed_operations" time="0.018"><properties><property name="p3_id" value="P3-T23" /></properties><failure message="KeyError: 'csv_options'">p3_pack = PosixPath('/tmp/pytest-of-agent/pytest-15/p3-approved0/P3_Implementation_Pack_v1.0_APPROVED')
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-15/test_T23_closed_operations0')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x7ff6d45ca180&gt;
+
+    def test_T23_closed_operations(p3_pack, tmp_path, monkeypatch):
+&gt;       scenario(p3_pack, tmp_path, monkeypatch, 16)
+
+tests/p3/test_p3.py:176: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/p3/test_p3.py:28: in scenario
+    instance = Scenario(pack, tmp / f'f{number:02}', number, patch)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/p3/driver.py:70: in __init__
+    self.api(action, base=True)
+tests/p3/driver.py:137: in api
+    return getattr(service, method)(order.id, documents['brief' if method == 'publish_brief' else 'spec'], expected)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/vde/workflow/service.py:169: in publish_brief
+    self._brief_source(uow, old, record)
+src/vde/workflow/service.py:107: in _brief_source
+    asset, _ = self._source(uow, order.id, source['asset_id'], options)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;vde.workflow.service.ManualWorkflow object at 0x7ff6d4549d00&gt;
+uow = &lt;vde.persistence.uow.UnitOfWork object at 0x7ff6d459fbc0&gt;
+order_id = 'order-pa', asset_id = 'asset-pa-csv'
+selection = {'selected_delimiter': 'comma', 'selected_encoding': 'CP1251', 'source_type': 'LOCAL_CSV'}
+
+    def _source(self, uow, order_id, asset_id, selection=None):
+        """Repeat verified P1 bytes + unchanged P2 readers under the final UoW.
+    
+        LocalIngestion opens its own BEGIN IMMEDIATE; calling it here would nest
+        a second writer. Use its same P1 verification and P2 reader APIs with the
+        already-owned InputAsset record instead. No new ingestion implementation.
+        """
+        asset = self._asset(uow, order_id, asset_id)
+        budget = Budget()
+        require(0 &lt; asset.size_bytes &lt;= RAW, 'INPUT_NOT_FOUND', 'Asset exceeds the approved local byte limit')
+        raw = self.env.workspace.read_verified(asset.workspace_relpath, asset.byte_sha256, asset.size_bytes)
+        raw_check(raw)
+        budget.check()
+        if selection is not None:
+            require(selection['source_type'] == source_type(asset.original_filename),
+                    'INPUT_NOT_FOUND', 'Source type differs from the registered asset')
+            if selection['source_type'] == 'LOCAL_CSV':
+                read = read_csv(raw, asset_id=asset.id, byte_sha256=asset.byte_sha256,
+&gt;                               budget=budget, **selection['csv_options'])
+                                                 ^^^^^^^^^^^^^^^^^^^^^^^^
+E               KeyError: 'csv_options'
+
+src/vde/workflow/service.py:93: KeyError</failure></testcase><testcase classname="tests.p3.test_p3" name="test_T24_spec_append_selected" time="0.017"><properties><property name="p3_id" value="P3-T24" /></properties><failure message="KeyError: 'csv_options'">p3_pack = PosixPath('/tmp/pytest-of-agent/pytest-15/p3-approved0/P3_Implementation_Pack_v1.0_APPROVED')
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-15/test_T24_spec_append_selected0')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x7ff6d443ffe0&gt;
+
+    def test_T24_spec_append_selected(p3_pack, tmp_path, monkeypatch):
+&gt;       s = scenario(p3_pack, tmp_path, monkeypatch, 25, run=False)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/p3/test_p3.py:187: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/p3/test_p3.py:28: in scenario
+    instance = Scenario(pack, tmp / f'f{number:02}', number, patch)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/p3/driver.py:70: in __init__
+    self.api(action, base=True)
+tests/p3/driver.py:137: in api
+    return getattr(service, method)(order.id, documents['brief' if method == 'publish_brief' else 'spec'], expected)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/vde/workflow/service.py:169: in publish_brief
+    self._brief_source(uow, old, record)
+src/vde/workflow/service.py:107: in _brief_source
+    asset, _ = self._source(uow, order.id, source['asset_id'], options)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;vde.workflow.service.ManualWorkflow object at 0x7ff6d45a65d0&gt;
+uow = &lt;vde.persistence.uow.UnitOfWork object at 0x7ff6d444b590&gt;
+order_id = 'order-pa', asset_id = 'asset-pa-csv'
+selection = {'selected_delimiter': 'comma', 'selected_encoding': 'CP1251', 'source_type': 'LOCAL_CSV'}
+
+    def _source(self, uow, order_id, asset_id, selection=None):
+        """Repeat verified P1 bytes + unchanged P2 readers under the final UoW.
+    
+        LocalIngestion opens its own BEGIN IMMEDIATE; calling it here would nest
+        a second writer. Use its same P1 verification and P2 reader APIs with the
+        already-owned InputAsset record instead. No new ingestion implementation.
+        """
+        asset = self._asset(uow, order_id, asset_id)
+        budget = Budget()
+        require(0 &lt; asset.size_bytes &lt;= RAW, 'INPUT_NOT_FOUND', 'Asset exceeds the approved local byte limit')
+        raw = self.env.workspace.read_verified(asset.workspace_relpath, asset.byte_sha256, asset.size_bytes)
+        raw_check(raw)
+        budget.check()
+        if selection is not None:
+            require(selection['source_type'] == source_type(asset.original_filename),
+                    'INPUT_NOT_FOUND', 'Source type differs from the registered asset')
+            if selection['source_type'] == 'LOCAL_CSV':
+                read = read_csv(raw, asset_id=asset.id, byte_sha256=asset.byte_sha256,
+&gt;                               budget=budget, **selection['csv_options'])
+                                                 ^^^^^^^^^^^^^^^^^^^^^^^^
+E               KeyError: 'csv_options'
+
+src/vde/workflow/service.py:93: KeyError</failure></testcase><testcase classname="tests.p3.test_p3" name="test_T25_spec_revision_before_final" time="0.018"><properties><property name="p3_id" value="P3-T25" /></properties><failure message="KeyError: 'csv_options'">p3_pack = PosixPath('/tmp/pytest-of-agent/pytest-15/p3-approved0/P3_Implementation_Pack_v1.0_APPROVED')
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-15/test_T25_spec_revision_before_0')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x7ff6d45a47a0&gt;
+
+    def test_T25_spec_revision_before_final(p3_pack, tmp_path, monkeypatch):
+&gt;       s = scenario(p3_pack, tmp_path, monkeypatch, 25)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/p3/test_p3.py:193: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/p3/test_p3.py:28: in scenario
+    instance = Scenario(pack, tmp / f'f{number:02}', number, patch)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/p3/driver.py:70: in __init__
+    self.api(action, base=True)
+tests/p3/driver.py:137: in api
+    return getattr(service, method)(order.id, documents['brief' if method == 'publish_brief' else 'spec'], expected)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/vde/workflow/service.py:169: in publish_brief
+    self._brief_source(uow, old, record)
+src/vde/workflow/service.py:107: in _brief_source
+    asset, _ = self._source(uow, order.id, source['asset_id'], options)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;vde.workflow.service.ManualWorkflow object at 0x7ff6d44343b0&gt;
+uow = &lt;vde.persistence.uow.UnitOfWork object at 0x7ff6d44364b0&gt;
+order_id = 'order-pa', asset_id = 'asset-pa-csv'
+selection = {'selected_delimiter': 'comma', 'selected_encoding': 'CP1251', 'source_type': 'LOCAL_CSV'}
+
+    def _source(self, uow, order_id, asset_id, selection=None):
+        """Repeat verified P1 bytes + unchanged P2 readers under the final UoW.
+    
+        LocalIngestion opens its own BEGIN IMMEDIATE; calling it here would nest
+        a second writer. Use its same P1 verification and P2 reader APIs with the
+        already-owned InputAsset record instead. No new ingestion implementation.
+        """
+        asset = self._asset(uow, order_id, asset_id)
+        budget = Budget()
+        require(0 &lt; asset.size_bytes &lt;= RAW, 'INPUT_NOT_FOUND', 'Asset exceeds the approved local byte limit')
+        raw = self.env.workspace.read_verified(asset.workspace_relpath, asset.byte_sha256, asset.size_bytes)
+        raw_check(raw)
+        budget.check()
+        if selection is not None:
+            require(selection['source_type'] == source_type(asset.original_filename),
+                    'INPUT_NOT_FOUND', 'Source type differs from the registered asset')
+            if selection['source_type'] == 'LOCAL_CSV':
+                read = read_csv(raw, asset_id=asset.id, byte_sha256=asset.byte_sha256,
+&gt;                               budget=budget, **selection['csv_options'])
+                                                 ^^^^^^^^^^^^^^^^^^^^^^^^
+E               KeyError: 'csv_options'
+
+src/vde/workflow/service.py:93: KeyError</failure></testcase><testcase classname="tests.p3.test_p3" name="test_T26_atomic_final" time="0.020"><properties><property name="p3_id" value="P3-T26" /></properties><failure message="KeyError: 'csv_options'">p3_pack = PosixPath('/tmp/pytest-of-agent/pytest-15/p3-approved0/P3_Implementation_Pack_v1.0_APPROVED')
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-15/test_T26_atomic_final0')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x7ff6d4437fb0&gt;
+
+    def test_T26_atomic_final(p3_pack, tmp_path, monkeypatch):
+&gt;       s = scenario(p3_pack, tmp_path, monkeypatch, 1)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/p3/test_p3.py:199: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/p3/test_p3.py:29: in scenario
+    return instance.run() if run else instance
+           ^^^^^^^^^^^^^^
+tests/p3/driver.py:202: in run
+    result = self.api(action)
+             ^^^^^^^^^^^^^^^^
+tests/p3/driver.py:137: in api
+    return getattr(service, method)(order.id, documents['brief' if method == 'publish_brief' else 'spec'], expected)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/vde/workflow/service.py:169: in publish_brief
+    self._brief_source(uow, old, record)
+src/vde/workflow/service.py:107: in _brief_source
+    asset, _ = self._source(uow, order.id, source['asset_id'], options)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;vde.workflow.service.ManualWorkflow object at 0x7ff6d442eae0&gt;
+uow = &lt;vde.persistence.uow.UnitOfWork object at 0x7ff6d45a0350&gt;
+order_id = 'order-pa', asset_id = 'asset-pa-csv'
+selection = {'selected_delimiter': 'comma', 'selected_encoding': 'CP1251', 'source_type': 'LOCAL_CSV'}
+
+    def _source(self, uow, order_id, asset_id, selection=None):
+        """Repeat verified P1 bytes + unchanged P2 readers under the final UoW.
+    
+        LocalIngestion opens its own BEGIN IMMEDIATE; calling it here would nest
+        a second writer. Use its same P1 verification and P2 reader APIs with the
+        already-owned InputAsset record instead. No new ingestion implementation.
+        """
+        asset = self._asset(uow, order_id, asset_id)
+        budget = Budget()
+        require(0 &lt; asset.size_bytes &lt;= RAW, 'INPUT_NOT_FOUND', 'Asset exceeds the approved local byte limit')
+        raw = self.env.workspace.read_verified(asset.workspace_relpath, asset.byte_sha256, asset.size_bytes)
+        raw_check(raw)
+        budget.check()
+        if selection is not None:
+            require(selection['source_type'] == source_type(asset.original_filename),
+                    'INPUT_NOT_FOUND', 'Source type differs from the registered asset')
+            if selection['source_type'] == 'LOCAL_CSV':
+                read = read_csv(raw, asset_id=asset.id, byte_sha256=asset.byte_sha256,
+&gt;                               budget=budget, **selection['csv_options'])
+                                                 ^^^^^^^^^^^^^^^^^^^^^^^^
+E               KeyError: 'csv_options'
+
+src/vde/workflow/service.py:93: KeyError</failure></testcase><testcase classname="tests.p3.test_p3" name="test_T27_spec_approval_guards" time="0.018"><properties><property name="p3_id" value="P3-T27" /></properties><failure message="KeyError: 'csv_options'">p3_pack = PosixPath('/tmp/pytest-of-agent/pytest-15/p3-approved0/P3_Implementation_Pack_v1.0_APPROVED')
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-15/test_T27_spec_approval_guards0')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x7ff6d45a65d0&gt;
+
+    def test_T27_spec_approval_guards(p3_pack, tmp_path, monkeypatch):
+        for number in (20, 21, 38):
+&gt;           scenario(p3_pack, tmp_path, monkeypatch, number)
+
+tests/p3/test_p3.py:208: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/p3/test_p3.py:28: in scenario
+    instance = Scenario(pack, tmp / f'f{number:02}', number, patch)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/p3/driver.py:70: in __init__
+    self.api(action, base=True)
+tests/p3/driver.py:137: in api
+    return getattr(service, method)(order.id, documents['brief' if method == 'publish_brief' else 'spec'], expected)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/vde/workflow/service.py:169: in publish_brief
+    self._brief_source(uow, old, record)
+src/vde/workflow/service.py:107: in _brief_source
+    asset, _ = self._source(uow, order.id, source['asset_id'], options)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;vde.workflow.service.ManualWorkflow object at 0x7ff6d444b350&gt;
+uow = &lt;vde.persistence.uow.UnitOfWork object at 0x7ff6d45438f0&gt;
+order_id = 'order-pa', asset_id = 'asset-pa-csv'
+selection = {'selected_delimiter': 'comma', 'selected_encoding': 'CP1251', 'source_type': 'LOCAL_CSV'}
+
+    def _source(self, uow, order_id, asset_id, selection=None):
+        """Repeat verified P1 bytes + unchanged P2 readers under the final UoW.
+    
+        LocalIngestion opens its own BEGIN IMMEDIATE; calling it here would nest
+        a second writer. Use its same P1 verification and P2 reader APIs with the
+        already-owned InputAsset record instead. No new ingestion implementation.
+        """
+        asset = self._asset(uow, order_id, asset_id)
+        budget = Budget()
+        require(0 &lt; asset.size_bytes &lt;= RAW, 'INPUT_NOT_FOUND', 'Asset exceeds the approved local byte limit')
+        raw = self.env.workspace.read_verified(asset.workspace_relpath, asset.byte_sha256, asset.size_bytes)
+        raw_check(raw)
+        budget.check()
+        if selection is not None:
+            require(selection['source_type'] == source_type(asset.original_filename),
+                    'INPUT_NOT_FOUND', 'Source type differs from the registered asset')
+            if selection['source_type'] == 'LOCAL_CSV':
+                read = read_csv(raw, asset_id=asset.id, byte_sha256=asset.byte_sha256,
+&gt;                               budget=budget, **selection['csv_options'])
+                                                 ^^^^^^^^^^^^^^^^^^^^^^^^
+E               KeyError: 'csv_options'
+
+src/vde/workflow/service.py:93: KeyError</failure></testcase><testcase classname="tests.p3.test_p3" name="test_T28_final_duplicate" time="0.018"><properties><property name="p3_id" value="P3-T28" /></properties><failure message="KeyError: 'csv_options'">p3_pack = PosixPath('/tmp/pytest-of-agent/pytest-15/p3-approved0/P3_Implementation_Pack_v1.0_APPROVED')
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-15/test_T28_final_duplicate0')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x7ff6d444b2f0&gt;
+
+    def test_T28_final_duplicate(p3_pack, tmp_path, monkeypatch):
+&gt;       s = scenario(p3_pack, tmp_path, monkeypatch, 23)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/p3/test_p3.py:212: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/p3/test_p3.py:28: in scenario
+    instance = Scenario(pack, tmp / f'f{number:02}', number, patch)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/p3/driver.py:70: in __init__
+    self.api(action, base=True)
+tests/p3/driver.py:137: in api
+    return getattr(service, method)(order.id, documents['brief' if method == 'publish_brief' else 'spec'], expected)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/vde/workflow/service.py:169: in publish_brief
+    self._brief_source(uow, old, record)
+src/vde/workflow/service.py:107: in _brief_source
+    asset, _ = self._source(uow, order.id, source['asset_id'], options)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;vde.workflow.service.ManualWorkflow object at 0x7ff6d443e030&gt;
+uow = &lt;vde.persistence.uow.UnitOfWork object at 0x7ff6d459c860&gt;
+order_id = 'order-pa', asset_id = 'asset-pa-csv'
+selection = {'selected_delimiter': 'comma', 'selected_encoding': 'CP1251', 'source_type': 'LOCAL_CSV'}
+
+    def _source(self, uow, order_id, asset_id, selection=None):
+        """Repeat verified P1 bytes + unchanged P2 readers under the final UoW.
+    
+        LocalIngestion opens its own BEGIN IMMEDIATE; calling it here would nest
+        a second writer. Use its same P1 verification and P2 reader APIs with the
+        already-owned InputAsset record instead. No new ingestion implementation.
+        """
+        asset = self._asset(uow, order_id, asset_id)
+        budget = Budget()
+        require(0 &lt; asset.size_bytes &lt;= RAW, 'INPUT_NOT_FOUND', 'Asset exceeds the approved local byte limit')
+        raw = self.env.workspace.read_verified(asset.workspace_relpath, asset.byte_sha256, asset.size_bytes)
+        raw_check(raw)
+        budget.check()
+        if selection is not None:
+            require(selection['source_type'] == source_type(asset.original_filename),
+                    'INPUT_NOT_FOUND', 'Source type differs from the registered asset')
+            if selection['source_type'] == 'LOCAL_CSV':
+                read = read_csv(raw, asset_id=asset.id, byte_sha256=asset.byte_sha256,
+&gt;                               budget=budget, **selection['csv_options'])
+                                                 ^^^^^^^^^^^^^^^^^^^^^^^^
+E               KeyError: 'csv_options'
+
+src/vde/workflow/service.py:93: KeyError</failure></testcase><testcase classname="tests.p3.test_p3" name="test_T29_final_commit_rollback" time="0.019"><properties><property name="p3_id" value="P3-T29" /></properties><failure message="KeyError: 'csv_options'">p3_pack = PosixPath('/tmp/pytest-of-agent/pytest-15/p3-approved0/P3_Implementation_Pack_v1.0_APPROVED')
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-15/test_T29_final_commit_rollback0')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x7ff6d459ee40&gt;
+
+    def test_T29_final_commit_rollback(p3_pack, tmp_path, monkeypatch):
+&gt;       scenario(p3_pack, tmp_path, monkeypatch, 29)
+
+tests/p3/test_p3.py:219: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/p3/test_p3.py:28: in scenario
+    instance = Scenario(pack, tmp / f'f{number:02}', number, patch)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/p3/driver.py:70: in __init__
+    self.api(action, base=True)
+tests/p3/driver.py:137: in api
+    return getattr(service, method)(order.id, documents['brief' if method == 'publish_brief' else 'spec'], expected)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/vde/workflow/service.py:169: in publish_brief
+    self._brief_source(uow, old, record)
+src/vde/workflow/service.py:107: in _brief_source
+    asset, _ = self._source(uow, order.id, source['asset_id'], options)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;vde.workflow.service.ManualWorkflow object at 0x7ff6d45a3a10&gt;
+uow = &lt;vde.persistence.uow.UnitOfWork object at 0x7ff6d5499760&gt;
+order_id = 'order-pa', asset_id = 'asset-pa-csv'
+selection = {'selected_delimiter': 'comma', 'selected_encoding': 'CP1251', 'source_type': 'LOCAL_CSV'}
+
+    def _source(self, uow, order_id, asset_id, selection=None):
+        """Repeat verified P1 bytes + unchanged P2 readers under the final UoW.
+    
+        LocalIngestion opens its own BEGIN IMMEDIATE; calling it here would nest
+        a second writer. Use its same P1 verification and P2 reader APIs with the
+        already-owned InputAsset record instead. No new ingestion implementation.
+        """
+        asset = self._asset(uow, order_id, asset_id)
+        budget = Budget()
+        require(0 &lt; asset.size_bytes &lt;= RAW, 'INPUT_NOT_FOUND', 'Asset exceeds the approved local byte limit')
+        raw = self.env.workspace.read_verified(asset.workspace_relpath, asset.byte_sha256, asset.size_bytes)
+        raw_check(raw)
+        budget.check()
+        if selection is not None:
+            require(selection['source_type'] == source_type(asset.original_filename),
+                    'INPUT_NOT_FOUND', 'Source type differs from the registered asset')
+            if selection['source_type'] == 'LOCAL_CSV':
+                read = read_csv(raw, asset_id=asset.id, byte_sha256=asset.byte_sha256,
+&gt;                               budget=budget, **selection['csv_options'])
+                                                 ^^^^^^^^^^^^^^^^^^^^^^^^
+E               KeyError: 'csv_options'
+
+src/vde/workflow/service.py:93: KeyError</failure></testcase><testcase classname="tests.p3.test_p3" name="test_T30_read_only_handoff" time="0.019"><properties><property name="p3_id" value="P3-T30" /></properties><failure message="KeyError: 'csv_options'">p3_pack = PosixPath('/tmp/pytest-of-agent/pytest-15/p3-approved0/P3_Implementation_Pack_v1.0_APPROVED')
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-15/test_T30_read_only_handoff0')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x7ff6d45a2720&gt;
+
+    def test_T30_read_only_handoff(p3_pack, tmp_path, monkeypatch):
+&gt;       s = scenario(p3_pack, tmp_path, monkeypatch, 1)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/p3/test_p3.py:239: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/p3/test_p3.py:29: in scenario
+    return instance.run() if run else instance
+           ^^^^^^^^^^^^^^
+tests/p3/driver.py:202: in run
+    result = self.api(action)
+             ^^^^^^^^^^^^^^^^
+tests/p3/driver.py:137: in api
+    return getattr(service, method)(order.id, documents['brief' if method == 'publish_brief' else 'spec'], expected)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/vde/workflow/service.py:169: in publish_brief
+    self._brief_source(uow, old, record)
+src/vde/workflow/service.py:107: in _brief_source
+    asset, _ = self._source(uow, order.id, source['asset_id'], options)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;vde.workflow.service.ManualWorkflow object at 0x7ff6d43c5a90&gt;
+uow = &lt;vde.persistence.uow.UnitOfWork object at 0x7ff6d43c71a0&gt;
+order_id = 'order-pa', asset_id = 'asset-pa-csv'
+selection = {'selected_delimiter': 'comma', 'selected_encoding': 'CP1251', 'source_type': 'LOCAL_CSV'}
+
+    def _source(self, uow, order_id, asset_id, selection=None):
+        """Repeat verified P1 bytes + unchanged P2 readers under the final UoW.
+    
+        LocalIngestion opens its own BEGIN IMMEDIATE; calling it here would nest
+        a second writer. Use its same P1 verification and P2 reader APIs with the
+        already-owned InputAsset record instead. No new ingestion implementation.
+        """
+        asset = self._asset(uow, order_id, asset_id)
+        budget = Budget()
+        require(0 &lt; asset.size_bytes &lt;= RAW, 'INPUT_NOT_FOUND', 'Asset exceeds the approved local byte limit')
+        raw = self.env.workspace.read_verified(asset.workspace_relpath, asset.byte_sha256, asset.size_bytes)
+        raw_check(raw)
+        budget.check()
+        if selection is not None:
+            require(selection['source_type'] == source_type(asset.original_filename),
+                    'INPUT_NOT_FOUND', 'Source type differs from the registered asset')
+            if selection['source_type'] == 'LOCAL_CSV':
+                read = read_csv(raw, asset_id=asset.id, byte_sha256=asset.byte_sha256,
+&gt;                               budget=budget, **selection['csv_options'])
+                                                 ^^^^^^^^^^^^^^^^^^^^^^^^
+E               KeyError: 'csv_options'
+
+src/vde/workflow/service.py:93: KeyError</failure></testcase><testcase classname="tests.p3.test_p3" name="test_T31_source_integrity" time="0.017"><properties><property name="p3_id" value="P3-T31" /></properties><failure message="KeyError: 'csv_options'">p3_pack = PosixPath('/tmp/pytest-of-agent/pytest-15/p3-approved0/P3_Implementation_Pack_v1.0_APPROVED')
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-15/test_T31_source_integrity0')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x7ff6d4434320&gt;
+
+    def test_T31_source_integrity(p3_pack, tmp_path, monkeypatch):
+&gt;       scenario(p3_pack, tmp_path, monkeypatch, 14)
+
+tests/p3/test_p3.py:249: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/p3/test_p3.py:28: in scenario
+    instance = Scenario(pack, tmp / f'f{number:02}', number, patch)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/p3/driver.py:70: in __init__
+    self.api(action, base=True)
+tests/p3/driver.py:137: in api
+    return getattr(service, method)(order.id, documents['brief' if method == 'publish_brief' else 'spec'], expected)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/vde/workflow/service.py:169: in publish_brief
+    self._brief_source(uow, old, record)
+src/vde/workflow/service.py:107: in _brief_source
+    asset, _ = self._source(uow, order.id, source['asset_id'], options)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;vde.workflow.service.ManualWorkflow object at 0x7ff6d4430410&gt;
+uow = &lt;vde.persistence.uow.UnitOfWork object at 0x7ff6d4431a60&gt;
+order_id = 'order-pa', asset_id = 'asset-pa-csv'
+selection = {'selected_delimiter': 'comma', 'selected_encoding': 'CP1251', 'source_type': 'LOCAL_CSV'}
+
+    def _source(self, uow, order_id, asset_id, selection=None):
+        """Repeat verified P1 bytes + unchanged P2 readers under the final UoW.
+    
+        LocalIngestion opens its own BEGIN IMMEDIATE; calling it here would nest
+        a second writer. Use its same P1 verification and P2 reader APIs with the
+        already-owned InputAsset record instead. No new ingestion implementation.
+        """
+        asset = self._asset(uow, order_id, asset_id)
+        budget = Budget()
+        require(0 &lt; asset.size_bytes &lt;= RAW, 'INPUT_NOT_FOUND', 'Asset exceeds the approved local byte limit')
+        raw = self.env.workspace.read_verified(asset.workspace_relpath, asset.byte_sha256, asset.size_bytes)
+        raw_check(raw)
+        budget.check()
+        if selection is not None:
+            require(selection['source_type'] == source_type(asset.original_filename),
+                    'INPUT_NOT_FOUND', 'Source type differs from the registered asset')
+            if selection['source_type'] == 'LOCAL_CSV':
+                read = read_csv(raw, asset_id=asset.id, byte_sha256=asset.byte_sha256,
+&gt;                               budget=budget, **selection['csv_options'])
+                                                 ^^^^^^^^^^^^^^^^^^^^^^^^
+E               KeyError: 'csv_options'
+
+src/vde/workflow/service.py:93: KeyError</failure></testcase><testcase classname="tests.p3.test_p3" name="test_T32_brief_revision_invalidates_selection" time="0.018"><properties><property name="p3_id" value="P3-T32" /></properties><failure message="KeyError: 'csv_options'">p3_pack = PosixPath('/tmp/pytest-of-agent/pytest-15/p3-approved0/P3_Implementation_Pack_v1.0_APPROVED')
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-15/test_T32_brief_revision_invali0')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x7ff6d44317c0&gt;
+
+    def test_T32_brief_revision_invalidates_selection(p3_pack, tmp_path, monkeypatch):
+&gt;       s = scenario(p3_pack, tmp_path, monkeypatch, 24, run=False)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/p3/test_p3.py:254: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/p3/test_p3.py:28: in scenario
+    instance = Scenario(pack, tmp / f'f{number:02}', number, patch)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/p3/driver.py:70: in __init__
+    self.api(action, base=True)
+tests/p3/driver.py:137: in api
+    return getattr(service, method)(order.id, documents['brief' if method == 'publish_brief' else 'spec'], expected)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/vde/workflow/service.py:169: in publish_brief
+    self._brief_source(uow, old, record)
+src/vde/workflow/service.py:107: in _brief_source
+    asset, _ = self._source(uow, order.id, source['asset_id'], options)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;vde.workflow.service.ManualWorkflow object at 0x7ff6d4448680&gt;
+uow = &lt;vde.persistence.uow.UnitOfWork object at 0x7ff6d4549bb0&gt;
+order_id = 'order-pa', asset_id = 'asset-pa-csv'
+selection = {'selected_delimiter': 'comma', 'selected_encoding': 'CP1251', 'source_type': 'LOCAL_CSV'}
+
+    def _source(self, uow, order_id, asset_id, selection=None):
+        """Repeat verified P1 bytes + unchanged P2 readers under the final UoW.
+    
+        LocalIngestion opens its own BEGIN IMMEDIATE; calling it here would nest
+        a second writer. Use its same P1 verification and P2 reader APIs with the
+        already-owned InputAsset record instead. No new ingestion implementation.
+        """
+        asset = self._asset(uow, order_id, asset_id)
+        budget = Budget()
+        require(0 &lt; asset.size_bytes &lt;= RAW, 'INPUT_NOT_FOUND', 'Asset exceeds the approved local byte limit')
+        raw = self.env.workspace.read_verified(asset.workspace_relpath, asset.byte_sha256, asset.size_bytes)
+        raw_check(raw)
+        budget.check()
+        if selection is not None:
+            require(selection['source_type'] == source_type(asset.original_filename),
+                    'INPUT_NOT_FOUND', 'Source type differs from the registered asset')
+            if selection['source_type'] == 'LOCAL_CSV':
+                read = read_csv(raw, asset_id=asset.id, byte_sha256=asset.byte_sha256,
+&gt;                               budget=budget, **selection['csv_options'])
+                                                 ^^^^^^^^^^^^^^^^^^^^^^^^
+E               KeyError: 'csv_options'
+
+src/vde/workflow/service.py:93: KeyError</failure></testcase><testcase classname="tests.p3.test_p3" name="test_T33_handoff_missing_before_io" time="0.018"><properties><property name="p3_id" value="P3-T33" /></properties><failure message="KeyError: 'csv_options'">p3_pack = PosixPath('/tmp/pytest-of-agent/pytest-15/p3-approved0/P3_Implementation_Pack_v1.0_APPROVED')
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-15/test_T33_handoff_missing_befor0')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x7ff6d45496a0&gt;
+
+    def test_T33_handoff_missing_before_io(p3_pack, tmp_path, monkeypatch):
+&gt;       s = scenario(p3_pack, tmp_path, monkeypatch, 37, run=False)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/p3/test_p3.py:261: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/p3/test_p3.py:28: in scenario
+    instance = Scenario(pack, tmp / f'f{number:02}', number, patch)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/p3/driver.py:70: in __init__
+    self.api(action, base=True)
+tests/p3/driver.py:137: in api
+    return getattr(service, method)(order.id, documents['brief' if method == 'publish_brief' else 'spec'], expected)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/vde/workflow/service.py:169: in publish_brief
+    self._brief_source(uow, old, record)
+src/vde/workflow/service.py:107: in _brief_source
+    asset, _ = self._source(uow, order.id, source['asset_id'], options)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;vde.workflow.service.ManualWorkflow object at 0x7ff6d43c5e50&gt;
+uow = &lt;vde.persistence.uow.UnitOfWork object at 0x7ff6d43c7da0&gt;
+order_id = 'order-pa', asset_id = 'asset-pa-csv'
+selection = {'selected_delimiter': 'comma', 'selected_encoding': 'CP1251', 'source_type': 'LOCAL_CSV'}
+
+    def _source(self, uow, order_id, asset_id, selection=None):
+        """Repeat verified P1 bytes + unchanged P2 readers under the final UoW.
+    
+        LocalIngestion opens its own BEGIN IMMEDIATE; calling it here would nest
+        a second writer. Use its same P1 verification and P2 reader APIs with the
+        already-owned InputAsset record instead. No new ingestion implementation.
+        """
+        asset = self._asset(uow, order_id, asset_id)
+        budget = Budget()
+        require(0 &lt; asset.size_bytes &lt;= RAW, 'INPUT_NOT_FOUND', 'Asset exceeds the approved local byte limit')
+        raw = self.env.workspace.read_verified(asset.workspace_relpath, asset.byte_sha256, asset.size_bytes)
+        raw_check(raw)
+        budget.check()
+        if selection is not None:
+            require(selection['source_type'] == source_type(asset.original_filename),
+                    'INPUT_NOT_FOUND', 'Source type differs from the registered asset')
+            if selection['source_type'] == 'LOCAL_CSV':
+                read = read_csv(raw, asset_id=asset.id, byte_sha256=asset.byte_sha256,
+&gt;                               budget=budget, **selection['csv_options'])
+                                                 ^^^^^^^^^^^^^^^^^^^^^^^^
+E               KeyError: 'csv_options'
+
+src/vde/workflow/service.py:93: KeyError</failure></testcase><testcase classname="tests.p3.test_p3" name="test_T34_p0_transition_graph" time="0.020"><properties><property name="p3_id" value="P3-T34" /></properties><failure message="KeyError: 'csv_options'">p3_pack = PosixPath('/tmp/pytest-of-agent/pytest-15/p3-approved0/P3_Implementation_Pack_v1.0_APPROVED')
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-15/test_T34_p0_transition_graph0')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x7ff6d43c6960&gt;
+
+    def test_T34_p0_transition_graph(p3_pack, tmp_path, monkeypatch):
+&gt;       scenario(p3_pack, tmp_path, monkeypatch, 26)
+
+tests/p3/test_p3.py:267: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/p3/test_p3.py:28: in scenario
+    instance = Scenario(pack, tmp / f'f{number:02}', number, patch)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/p3/driver.py:70: in __init__
+    self.api(action, base=True)
+tests/p3/driver.py:137: in api
+    return getattr(service, method)(order.id, documents['brief' if method == 'publish_brief' else 'spec'], expected)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/vde/workflow/service.py:169: in publish_brief
+    self._brief_source(uow, old, record)
+src/vde/workflow/service.py:107: in _brief_source
+    asset, _ = self._source(uow, order.id, source['asset_id'], options)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;vde.workflow.service.ManualWorkflow object at 0x7ff6d43dbad0&gt;
+uow = &lt;vde.persistence.uow.UnitOfWork object at 0x7ff6d4320890&gt;
+order_id = 'order-pa', asset_id = 'asset-pa-csv'
+selection = {'selected_delimiter': 'comma', 'selected_encoding': 'CP1251', 'source_type': 'LOCAL_CSV'}
+
+    def _source(self, uow, order_id, asset_id, selection=None):
+        """Repeat verified P1 bytes + unchanged P2 readers under the final UoW.
+    
+        LocalIngestion opens its own BEGIN IMMEDIATE; calling it here would nest
+        a second writer. Use its same P1 verification and P2 reader APIs with the
+        already-owned InputAsset record instead. No new ingestion implementation.
+        """
+        asset = self._asset(uow, order_id, asset_id)
+        budget = Budget()
+        require(0 &lt; asset.size_bytes &lt;= RAW, 'INPUT_NOT_FOUND', 'Asset exceeds the approved local byte limit')
+        raw = self.env.workspace.read_verified(asset.workspace_relpath, asset.byte_sha256, asset.size_bytes)
+        raw_check(raw)
+        budget.check()
+        if selection is not None:
+            require(selection['source_type'] == source_type(asset.original_filename),
+                    'INPUT_NOT_FOUND', 'Source type differs from the registered asset')
+            if selection['source_type'] == 'LOCAL_CSV':
+                read = read_csv(raw, asset_id=asset.id, byte_sha256=asset.byte_sha256,
+&gt;                               budget=budget, **selection['csv_options'])
+                                                 ^^^^^^^^^^^^^^^^^^^^^^^^
+E               KeyError: 'csv_options'
+
+src/vde/workflow/service.py:93: KeyError</failure></testcase><testcase classname="tests.p3.test_p3" name="test_T35_event_cas_rollback" time="0.018"><properties><property name="p3_id" value="P3-T35" /></properties><failure message="KeyError: 'csv_options'">p3_pack = PosixPath('/tmp/pytest-of-agent/pytest-15/p3-approved0/P3_Implementation_Pack_v1.0_APPROVED')
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-15/test_T35_event_cas_rollback0')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x7ff6d43c7aa0&gt;
+
+    def test_T35_event_cas_rollback(p3_pack, tmp_path, monkeypatch):
+        for number in (28, 29, 30):
+            with monkeypatch.context() as patch:
+&gt;               scenario(p3_pack, tmp_path, patch, number)
+
+tests/p3/test_p3.py:274: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/p3/test_p3.py:28: in scenario
+    instance = Scenario(pack, tmp / f'f{number:02}', number, patch)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/p3/driver.py:70: in __init__
+    self.api(action, base=True)
+tests/p3/driver.py:137: in api
+    return getattr(service, method)(order.id, documents['brief' if method == 'publish_brief' else 'spec'], expected)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/vde/workflow/service.py:169: in publish_brief
+    self._brief_source(uow, old, record)
+src/vde/workflow/service.py:107: in _brief_source
+    asset, _ = self._source(uow, order.id, source['asset_id'], options)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;vde.workflow.service.ManualWorkflow object at 0x7ff6d45a4da0&gt;
+uow = &lt;vde.persistence.uow.UnitOfWork object at 0x7ff6d45489b0&gt;
+order_id = 'order-pa', asset_id = 'asset-pa-csv'
+selection = {'selected_delimiter': 'comma', 'selected_encoding': 'CP1251', 'source_type': 'LOCAL_CSV'}
+
+    def _source(self, uow, order_id, asset_id, selection=None):
+        """Repeat verified P1 bytes + unchanged P2 readers under the final UoW.
+    
+        LocalIngestion opens its own BEGIN IMMEDIATE; calling it here would nest
+        a second writer. Use its same P1 verification and P2 reader APIs with the
+        already-owned InputAsset record instead. No new ingestion implementation.
+        """
+        asset = self._asset(uow, order_id, asset_id)
+        budget = Budget()
+        require(0 &lt; asset.size_bytes &lt;= RAW, 'INPUT_NOT_FOUND', 'Asset exceeds the approved local byte limit')
+        raw = self.env.workspace.read_verified(asset.workspace_relpath, asset.byte_sha256, asset.size_bytes)
+        raw_check(raw)
+        budget.check()
+        if selection is not None:
+            require(selection['source_type'] == source_type(asset.original_filename),
+                    'INPUT_NOT_FOUND', 'Source type differs from the registered asset')
+            if selection['source_type'] == 'LOCAL_CSV':
+                read = read_csv(raw, asset_id=asset.id, byte_sha256=asset.byte_sha256,
+&gt;                               budget=budget, **selection['csv_options'])
+                                                 ^^^^^^^^^^^^^^^^^^^^^^^^
+E               KeyError: 'csv_options'
+
+src/vde/workflow/service.py:93: KeyError</failure></testcase><testcase classname="tests.p3.test_p3" name="test_T36_crash_boundaries" time="0.017"><properties><property name="p3_id" value="P3-T36" /></properties><failure message="KeyError: 'csv_options'">p3_pack = PosixPath('/tmp/pytest-of-agent/pytest-15/p3-approved0/P3_Implementation_Pack_v1.0_APPROVED')
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-15/test_T36_crash_boundaries0')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x7ff6d4449fd0&gt;
+
+    def test_T36_crash_boundaries(p3_pack, tmp_path, monkeypatch):
+        results = []
+        for number, role in [(28, 'brief'), (29, 'spec')]:
+            for phase in ['before_commit', 'after_commit']:
+&gt;               s = scenario(p3_pack, tmp_path / (role + phase), monkeypatch, number, run=False)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/p3/test_p3.py:293: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/p3/test_p3.py:28: in scenario
+    instance = Scenario(pack, tmp / f'f{number:02}', number, patch)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/p3/driver.py:70: in __init__
+    self.api(action, base=True)
+tests/p3/driver.py:137: in api
+    return getattr(service, method)(order.id, documents['brief' if method == 'publish_brief' else 'spec'], expected)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/vde/workflow/service.py:169: in publish_brief
+    self._brief_source(uow, old, record)
+src/vde/workflow/service.py:107: in _brief_source
+    asset, _ = self._source(uow, order.id, source['asset_id'], options)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;vde.workflow.service.ManualWorkflow object at 0x7ff6d459c320&gt;
+uow = &lt;vde.persistence.uow.UnitOfWork object at 0x7ff6d459f500&gt;
+order_id = 'order-pa', asset_id = 'asset-pa-csv'
+selection = {'selected_delimiter': 'comma', 'selected_encoding': 'CP1251', 'source_type': 'LOCAL_CSV'}
+
+    def _source(self, uow, order_id, asset_id, selection=None):
+        """Repeat verified P1 bytes + unchanged P2 readers under the final UoW.
+    
+        LocalIngestion opens its own BEGIN IMMEDIATE; calling it here would nest
+        a second writer. Use its same P1 verification and P2 reader APIs with the
+        already-owned InputAsset record instead. No new ingestion implementation.
+        """
+        asset = self._asset(uow, order_id, asset_id)
+        budget = Budget()
+        require(0 &lt; asset.size_bytes &lt;= RAW, 'INPUT_NOT_FOUND', 'Asset exceeds the approved local byte limit')
+        raw = self.env.workspace.read_verified(asset.workspace_relpath, asset.byte_sha256, asset.size_bytes)
+        raw_check(raw)
+        budget.check()
+        if selection is not None:
+            require(selection['source_type'] == source_type(asset.original_filename),
+                    'INPUT_NOT_FOUND', 'Source type differs from the registered asset')
+            if selection['source_type'] == 'LOCAL_CSV':
+                read = read_csv(raw, asset_id=asset.id, byte_sha256=asset.byte_sha256,
+&gt;                               budget=budget, **selection['csv_options'])
+                                                 ^^^^^^^^^^^^^^^^^^^^^^^^
+E               KeyError: 'csv_options'
+
+src/vde/workflow/service.py:93: KeyError</failure></testcase><testcase classname="tests.p3.test_p3" name="test_T37_process_restart" time="0.019"><properties><property name="p3_id" value="P3-T37" /></properties><failure message="KeyError: 'csv_options'">p3_pack = PosixPath('/tmp/pytest-of-agent/pytest-15/p3-approved0/P3_Implementation_Pack_v1.0_APPROVED')
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-15/test_T37_process_restart0')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x7ff6d459db80&gt;
+
+    def test_T37_process_restart(p3_pack, tmp_path, monkeypatch):
+&gt;       scenario(p3_pack, tmp_path, monkeypatch, 35)
+
+tests/p3/test_p3.py:313: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/p3/test_p3.py:29: in scenario
+    return instance.run() if run else instance
+           ^^^^^^^^^^^^^^
+tests/p3/driver.py:202: in run
+    result = self.api(action)
+             ^^^^^^^^^^^^^^^^
+tests/p3/driver.py:137: in api
+    return getattr(service, method)(order.id, documents['brief' if method == 'publish_brief' else 'spec'], expected)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/vde/workflow/service.py:169: in publish_brief
+    self._brief_source(uow, old, record)
+src/vde/workflow/service.py:107: in _brief_source
+    asset, _ = self._source(uow, order.id, source['asset_id'], options)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;vde.workflow.service.ManualWorkflow object at 0x7ff6d4320c20&gt;
+uow = &lt;vde.persistence.uow.UnitOfWork object at 0x7ff6d4322690&gt;
+order_id = 'order-pa', asset_id = 'asset-pa-csv'
+selection = {'selected_delimiter': 'comma', 'selected_encoding': 'CP1251', 'source_type': 'LOCAL_CSV'}
+
+    def _source(self, uow, order_id, asset_id, selection=None):
+        """Repeat verified P1 bytes + unchanged P2 readers under the final UoW.
+    
+        LocalIngestion opens its own BEGIN IMMEDIATE; calling it here would nest
+        a second writer. Use its same P1 verification and P2 reader APIs with the
+        already-owned InputAsset record instead. No new ingestion implementation.
+        """
+        asset = self._asset(uow, order_id, asset_id)
+        budget = Budget()
+        require(0 &lt; asset.size_bytes &lt;= RAW, 'INPUT_NOT_FOUND', 'Asset exceeds the approved local byte limit')
+        raw = self.env.workspace.read_verified(asset.workspace_relpath, asset.byte_sha256, asset.size_bytes)
+        raw_check(raw)
+        budget.check()
+        if selection is not None:
+            require(selection['source_type'] == source_type(asset.original_filename),
+                    'INPUT_NOT_FOUND', 'Source type differs from the registered asset')
+            if selection['source_type'] == 'LOCAL_CSV':
+                read = read_csv(raw, asset_id=asset.id, byte_sha256=asset.byte_sha256,
+&gt;                               budget=budget, **selection['csv_options'])
+                                                 ^^^^^^^^^^^^^^^^^^^^^^^^
+E               KeyError: 'csv_options'
+
+src/vde/workflow/service.py:93: KeyError</failure></testcase><testcase classname="tests.p3.test_p3" name="test_T38_corrupt_authoritative_json" time="0.017"><properties><property name="p3_id" value="P3-T38" /></properties><failure message="KeyError: 'csv_options'">p3_pack = PosixPath('/tmp/pytest-of-agent/pytest-15/p3-approved0/P3_Implementation_Pack_v1.0_APPROVED')
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-15/test_T38_corrupt_authoritative0')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x7ff6d443fe30&gt;
+
+    def test_T38_corrupt_authoritative_json(p3_pack, tmp_path, monkeypatch):
+&gt;       s = scenario(p3_pack, tmp_path, monkeypatch, 34)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/p3/test_p3.py:317: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/p3/test_p3.py:28: in scenario
+    instance = Scenario(pack, tmp / f'f{number:02}', number, patch)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/p3/driver.py:70: in __init__
+    self.api(action, base=True)
+tests/p3/driver.py:137: in api
+    return getattr(service, method)(order.id, documents['brief' if method == 'publish_brief' else 'spec'], expected)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/vde/workflow/service.py:169: in publish_brief
+    self._brief_source(uow, old, record)
+src/vde/workflow/service.py:107: in _brief_source
+    asset, _ = self._source(uow, order.id, source['asset_id'], options)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;vde.workflow.service.ManualWorkflow object at 0x7ff6d45a3260&gt;
+uow = &lt;vde.persistence.uow.UnitOfWork object at 0x7ff6d444b1d0&gt;
+order_id = 'order-pa', asset_id = 'asset-pa-csv'
+selection = {'selected_delimiter': 'comma', 'selected_encoding': 'CP1251', 'source_type': 'LOCAL_CSV'}
+
+    def _source(self, uow, order_id, asset_id, selection=None):
+        """Repeat verified P1 bytes + unchanged P2 readers under the final UoW.
+    
+        LocalIngestion opens its own BEGIN IMMEDIATE; calling it here would nest
+        a second writer. Use its same P1 verification and P2 reader APIs with the
+        already-owned InputAsset record instead. No new ingestion implementation.
+        """
+        asset = self._asset(uow, order_id, asset_id)
+        budget = Budget()
+        require(0 &lt; asset.size_bytes &lt;= RAW, 'INPUT_NOT_FOUND', 'Asset exceeds the approved local byte limit')
+        raw = self.env.workspace.read_verified(asset.workspace_relpath, asset.byte_sha256, asset.size_bytes)
+        raw_check(raw)
+        budget.check()
+        if selection is not None:
+            require(selection['source_type'] == source_type(asset.original_filename),
+                    'INPUT_NOT_FOUND', 'Source type differs from the registered asset')
+            if selection['source_type'] == 'LOCAL_CSV':
+                read = read_csv(raw, asset_id=asset.id, byte_sha256=asset.byte_sha256,
+&gt;                               budget=budget, **selection['csv_options'])
+                                                 ^^^^^^^^^^^^^^^^^^^^^^^^
+E               KeyError: 'csv_options'
+
+src/vde/workflow/service.py:93: KeyError</failure></testcase><testcase classname="tests.p3.test_p3" name="test_T39_streamlit_workflow" time="0.143"><properties><property name="p3_id" value="P3-T39" /></properties><failure message="assert not ElementList(_list=[Exception(message=&quot;'csv_options'&quot;, stack_trace=['File &quot;/workspace/verified-data-extraction/src/vde/...ne 93, in _source\n    budget=budget, **selection[\'csv_options\'])\n                     ~~~~~~~~~^^^^^^^^^^^^^^^'])])&#10; +  where ElementList(_list=[Exception(message=&quot;'csv_options'&quot;, stack_trace=['File &quot;/workspace/verified-data-extraction/src/vde/...ne 93, in _source\n    budget=budget, **selection[\'csv_options\'])\n                     ~~~~~~~~~^^^^^^^^^^^^^^^'])]) = AppTest(\n    _script_path='/workspace/verified-data-extraction/src/vde/app.py',\n    default_timeout=3,\n    session_sta...SpecialBlock(\n            type='sidebar'\n        ),\n        2: SpecialBlock(\n            type='event'\n        )\n    }\n).exception">p3_pack = PosixPath('/tmp/pytest-of-agent/pytest-15/p3-approved0/P3_Implementation_Pack_v1.0_APPROVED')
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-15/test_T39_streamlit_workflow0')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x7ff6d44481d0&gt;
+
+    def test_T39_streamlit_workflow(p3_pack, tmp_path, monkeypatch):
+        s = scenario(p3_pack, tmp_path, monkeypatch, 1, run=False)
+        app = s.ui()
+        def act(kind, label, value=None):
+            widget = element(app, kind, label)
+            if kind == 'button': widget.click()
+            else: widget.set_value(value)
+            app.run(timeout=30); assert not app.exception
+        act('selectbox', 'P3 registered input', s.asset.id)
+        act('selectbox', 'P3 encoding', 'CP1251')
+        act('selectbox', 'P3 delimiter', ',')
+        act('button', 'Verify P3 input and preview')
+        act('button', 'Begin manual review')
+        act('text_area', 'Brief JSON draft', json.dumps(s.base['brief']))
+        act('button', 'Validate Brief draft')
+        assert not app.error
+&gt;       act('button', 'Save new Brief version')
+
+tests/p3/test_p3.py:341: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+kind = 'button', label = 'Save new Brief version', value = None
+
+    def act(kind, label, value=None):
+        widget = element(app, kind, label)
+        if kind == 'button': widget.click()
+        else: widget.set_value(value)
+&gt;       app.run(timeout=30); assert not app.exception
+                             ^^^^^^^^^^^^^^^^^^^^^^^^
+E       assert not ElementList(_list=[Exception(message="'csv_options'", stack_trace=['File "/workspace/verified-data-extraction/src/vde/...ne 93, in _source\n    budget=budget, **selection[\'csv_options\'])\n                     ~~~~~~~~~^^^^^^^^^^^^^^^'])])
+E        +  where ElementList(_list=[Exception(message="'csv_options'", stack_trace=['File "/workspace/verified-data-extraction/src/vde/...ne 93, in _source\n    budget=budget, **selection[\'csv_options\'])\n                     ~~~~~~~~~^^^^^^^^^^^^^^^'])]) = AppTest(\n    _script_path='/workspace/verified-data-extraction/src/vde/app.py',\n    default_timeout=3,\n    session_sta...SpecialBlock(\n            type='sidebar'\n        ),\n        2: SpecialBlock(\n            type='event'\n        )\n    }\n).exception
+
+tests/p3/test_p3.py:332: AssertionError</failure></testcase><testcase classname="tests.p3.test_p3" name="test_T40_passive_reruns" time="0.106"><properties><property name="p3_id" value="P3-T40" /></properties></testcase><testcase classname="tests.p3.test_p3" name="test_T41_health" time="0.017"><properties><property name="p3_id" value="P3-T41" /></properties><failure message="KeyError: 'csv_options'">p3_pack = PosixPath('/tmp/pytest-of-agent/pytest-15/p3-approved0/P3_Implementation_Pack_v1.0_APPROVED')
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-15/test_T41_health0')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x7ff6d4029550&gt;
+
+    def test_T41_health(p3_pack, tmp_path, monkeypatch):
+        for number in (32, 33):
+&gt;           s = scenario(p3_pack, tmp_path, monkeypatch, number)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/p3/test_p3.py:369: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/p3/test_p3.py:28: in scenario
+    instance = Scenario(pack, tmp / f'f{number:02}', number, patch)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/p3/driver.py:70: in __init__
+    self.api(action, base=True)
+tests/p3/driver.py:137: in api
+    return getattr(service, method)(order.id, documents['brief' if method == 'publish_brief' else 'spec'], expected)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/vde/workflow/service.py:169: in publish_brief
+    self._brief_source(uow, old, record)
+src/vde/workflow/service.py:107: in _brief_source
+    asset, _ = self._source(uow, order.id, source['asset_id'], options)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;vde.workflow.service.ManualWorkflow object at 0x7ff6d4136c60&gt;
+uow = &lt;vde.persistence.uow.UnitOfWork object at 0x7ff6d4136c90&gt;
+order_id = 'order-pa', asset_id = 'asset-pa-csv'
+selection = {'selected_delimiter': 'comma', 'selected_encoding': 'CP1251', 'source_type': 'LOCAL_CSV'}
+
+    def _source(self, uow, order_id, asset_id, selection=None):
+        """Repeat verified P1 bytes + unchanged P2 readers under the final UoW.
+    
+        LocalIngestion opens its own BEGIN IMMEDIATE; calling it here would nest
+        a second writer. Use its same P1 verification and P2 reader APIs with the
+        already-owned InputAsset record instead. No new ingestion implementation.
+        """
+        asset = self._asset(uow, order_id, asset_id)
+        budget = Budget()
+        require(0 &lt; asset.size_bytes &lt;= RAW, 'INPUT_NOT_FOUND', 'Asset exceeds the approved local byte limit')
+        raw = self.env.workspace.read_verified(asset.workspace_relpath, asset.byte_sha256, asset.size_bytes)
+        raw_check(raw)
+        budget.check()
+        if selection is not None:
+            require(selection['source_type'] == source_type(asset.original_filename),
+                    'INPUT_NOT_FOUND', 'Source type differs from the registered asset')
+            if selection['source_type'] == 'LOCAL_CSV':
+                read = read_csv(raw, asset_id=asset.id, byte_sha256=asset.byte_sha256,
+&gt;                               budget=budget, **selection['csv_options'])
+                                                 ^^^^^^^^^^^^^^^^^^^^^^^^
+E               KeyError: 'csv_options'
+
+src/vde/workflow/service.py:93: KeyError</failure></testcase><testcase classname="tests.p3.test_p3" name="test_T42_review_diff" time="0.019"><properties><property name="p3_id" value="P3-T42" /></properties><failure message="KeyError: 'csv_options'">p3_pack = PosixPath('/tmp/pytest-of-agent/pytest-15/p3-approved0/P3_Implementation_Pack_v1.0_APPROVED')
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-15/test_T42_review_diff0')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x7ff6d4136db0&gt;
+
+    def test_T42_review_diff(p3_pack, tmp_path, monkeypatch):
+        for number, role, pointer in [(24, 'brief', '/objective'), (25, 'spec', '/output/file_name')]:
+&gt;           s = scenario(p3_pack, tmp_path, monkeypatch, number)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/p3/test_p3.py:383: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/p3/test_p3.py:28: in scenario
+    instance = Scenario(pack, tmp / f'f{number:02}', number, patch)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/p3/driver.py:70: in __init__
+    self.api(action, base=True)
+tests/p3/driver.py:137: in api
+    return getattr(service, method)(order.id, documents['brief' if method == 'publish_brief' else 'spec'], expected)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/vde/workflow/service.py:169: in publish_brief
+    self._brief_source(uow, old, record)
+src/vde/workflow/service.py:107: in _brief_source
+    asset, _ = self._source(uow, order.id, source['asset_id'], options)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;vde.workflow.service.ManualWorkflow object at 0x7ff6d43c5670&gt;
+uow = &lt;vde.persistence.uow.UnitOfWork object at 0x7ff6d45488c0&gt;
+order_id = 'order-pa', asset_id = 'asset-pa-csv'
+selection = {'selected_delimiter': 'comma', 'selected_encoding': 'CP1251', 'source_type': 'LOCAL_CSV'}
+
+    def _source(self, uow, order_id, asset_id, selection=None):
+        """Repeat verified P1 bytes + unchanged P2 readers under the final UoW.
+    
+        LocalIngestion opens its own BEGIN IMMEDIATE; calling it here would nest
+        a second writer. Use its same P1 verification and P2 reader APIs with the
+        already-owned InputAsset record instead. No new ingestion implementation.
+        """
+        asset = self._asset(uow, order_id, asset_id)
+        budget = Budget()
+        require(0 &lt; asset.size_bytes &lt;= RAW, 'INPUT_NOT_FOUND', 'Asset exceeds the approved local byte limit')
+        raw = self.env.workspace.read_verified(asset.workspace_relpath, asset.byte_sha256, asset.size_bytes)
+        raw_check(raw)
+        budget.check()
+        if selection is not None:
+            require(selection['source_type'] == source_type(asset.original_filename),
+                    'INPUT_NOT_FOUND', 'Source type differs from the registered asset')
+            if selection['source_type'] == 'LOCAL_CSV':
+                read = read_csv(raw, asset_id=asset.id, byte_sha256=asset.byte_sha256,
+&gt;                               budget=budget, **selection['csv_options'])
+                                                 ^^^^^^^^^^^^^^^^^^^^^^^^
+E               KeyError: 'csv_options'
+
+src/vde/workflow/service.py:93: KeyError</failure></testcase><testcase classname="tests.p3.test_p3" name="test_T43_approved_ui_readonly" time="0.018"><properties><property name="p3_id" value="P3-T43" /></properties><failure message="KeyError: 'csv_options'">p3_pack = PosixPath('/tmp/pytest-of-agent/pytest-15/p3-approved0/P3_Implementation_Pack_v1.0_APPROVED')
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-15/test_T43_approved_ui_readonly0')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x7ff6d4432330&gt;
+
+    def test_T43_approved_ui_readonly(p3_pack, tmp_path, monkeypatch):
+&gt;       s = scenario(p3_pack, tmp_path, monkeypatch, 26)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/p3/test_p3.py:393: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/p3/test_p3.py:28: in scenario
+    instance = Scenario(pack, tmp / f'f{number:02}', number, patch)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/p3/driver.py:70: in __init__
+    self.api(action, base=True)
+tests/p3/driver.py:137: in api
+    return getattr(service, method)(order.id, documents['brief' if method == 'publish_brief' else 'spec'], expected)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/vde/workflow/service.py:169: in publish_brief
+    self._brief_source(uow, old, record)
+src/vde/workflow/service.py:107: in _brief_source
+    asset, _ = self._source(uow, order.id, source['asset_id'], options)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;vde.workflow.service.ManualWorkflow object at 0x7ff6d41a6660&gt;
+uow = &lt;vde.persistence.uow.UnitOfWork object at 0x7ff6d41a4fb0&gt;
+order_id = 'order-pa', asset_id = 'asset-pa-csv'
+selection = {'selected_delimiter': 'comma', 'selected_encoding': 'CP1251', 'source_type': 'LOCAL_CSV'}
+
+    def _source(self, uow, order_id, asset_id, selection=None):
+        """Repeat verified P1 bytes + unchanged P2 readers under the final UoW.
+    
+        LocalIngestion opens its own BEGIN IMMEDIATE; calling it here would nest
+        a second writer. Use its same P1 verification and P2 reader APIs with the
+        already-owned InputAsset record instead. No new ingestion implementation.
+        """
+        asset = self._asset(uow, order_id, asset_id)
+        budget = Budget()
+        require(0 &lt; asset.size_bytes &lt;= RAW, 'INPUT_NOT_FOUND', 'Asset exceeds the approved local byte limit')
+        raw = self.env.workspace.read_verified(asset.workspace_relpath, asset.byte_sha256, asset.size_bytes)
+        raw_check(raw)
+        budget.check()
+        if selection is not None:
+            require(selection['source_type'] == source_type(asset.original_filename),
+                    'INPUT_NOT_FOUND', 'Source type differs from the registered asset')
+            if selection['source_type'] == 'LOCAL_CSV':
+                read = read_csv(raw, asset_id=asset.id, byte_sha256=asset.byte_sha256,
+&gt;                               budget=budget, **selection['csv_options'])
+                                                 ^^^^^^^^^^^^^^^^^^^^^^^^
+E               KeyError: 'csv_options'
+
+src/vde/workflow/service.py:93: KeyError</failure></testcase><testcase classname="tests.p3.test_p3" name="test_T44_brief_revision_setup" time="0.018"><properties><property name="p3_id" value="P3-T44" /></properties><failure message="KeyError: 'csv_options'">p3_pack = PosixPath('/tmp/pytest-of-agent/pytest-15/p3-approved0/P3_Implementation_Pack_v1.0_APPROVED')
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-15/test_T44_brief_revision_setup0')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x7ff6d41a70e0&gt;
+
+    def test_T44_brief_revision_setup(p3_pack, tmp_path, monkeypatch):
+&gt;       s = scenario(p3_pack, tmp_path, monkeypatch, 24, run=False)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/p3/test_p3.py:402: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/p3/test_p3.py:28: in scenario
+    instance = Scenario(pack, tmp / f'f{number:02}', number, patch)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/p3/driver.py:70: in __init__
+    self.api(action, base=True)
+tests/p3/driver.py:137: in api
+    return getattr(service, method)(order.id, documents['brief' if method == 'publish_brief' else 'spec'], expected)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/vde/workflow/service.py:169: in publish_brief
+    self._brief_source(uow, old, record)
+src/vde/workflow/service.py:107: in _brief_source
+    asset, _ = self._source(uow, order.id, source['asset_id'], options)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;vde.workflow.service.ManualWorkflow object at 0x7ff6d41a4da0&gt;
+uow = &lt;vde.persistence.uow.UnitOfWork object at 0x7ff6d4101520&gt;
+order_id = 'order-pa', asset_id = 'asset-pa-csv'
+selection = {'selected_delimiter': 'comma', 'selected_encoding': 'CP1251', 'source_type': 'LOCAL_CSV'}
+
+    def _source(self, uow, order_id, asset_id, selection=None):
+        """Repeat verified P1 bytes + unchanged P2 readers under the final UoW.
+    
+        LocalIngestion opens its own BEGIN IMMEDIATE; calling it here would nest
+        a second writer. Use its same P1 verification and P2 reader APIs with the
+        already-owned InputAsset record instead. No new ingestion implementation.
+        """
+        asset = self._asset(uow, order_id, asset_id)
+        budget = Budget()
+        require(0 &lt; asset.size_bytes &lt;= RAW, 'INPUT_NOT_FOUND', 'Asset exceeds the approved local byte limit')
+        raw = self.env.workspace.read_verified(asset.workspace_relpath, asset.byte_sha256, asset.size_bytes)
+        raw_check(raw)
+        budget.check()
+        if selection is not None:
+            require(selection['source_type'] == source_type(asset.original_filename),
+                    'INPUT_NOT_FOUND', 'Source type differs from the registered asset')
+            if selection['source_type'] == 'LOCAL_CSV':
+                read = read_csv(raw, asset_id=asset.id, byte_sha256=asset.byte_sha256,
+&gt;                               budget=budget, **selection['csv_options'])
+                                                 ^^^^^^^^^^^^^^^^^^^^^^^^
+E               KeyError: 'csv_options'
+
+src/vde/workflow/service.py:93: KeyError</failure></testcase><testcase classname="tests.p3.test_p3" name="test_T45_spec_revision_setup" time="0.018"><properties><property name="p3_id" value="P3-T45" /></properties><failure message="KeyError: 'csv_options'">p3_pack = PosixPath('/tmp/pytest-of-agent/pytest-15/p3-approved0/P3_Implementation_Pack_v1.0_APPROVED')
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-15/test_T45_spec_revision_setup0')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x7ff6d459f050&gt;
+
+    def test_T45_spec_revision_setup(p3_pack, tmp_path, monkeypatch):
+&gt;       s = scenario(p3_pack, tmp_path, monkeypatch, 25, run=False)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/p3/test_p3.py:409: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/p3/test_p3.py:28: in scenario
+    instance = Scenario(pack, tmp / f'f{number:02}', number, patch)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/p3/driver.py:70: in __init__
+    self.api(action, base=True)
+tests/p3/driver.py:137: in api
+    return getattr(service, method)(order.id, documents['brief' if method == 'publish_brief' else 'spec'], expected)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/vde/workflow/service.py:169: in publish_brief
+    self._brief_source(uow, old, record)
+src/vde/workflow/service.py:107: in _brief_source
+    asset, _ = self._source(uow, order.id, source['asset_id'], options)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;vde.workflow.service.ManualWorkflow object at 0x7ff6d444ab10&gt;
+uow = &lt;vde.persistence.uow.UnitOfWork object at 0x7ff6d4448a70&gt;
+order_id = 'order-pa', asset_id = 'asset-pa-csv'
+selection = {'selected_delimiter': 'comma', 'selected_encoding': 'CP1251', 'source_type': 'LOCAL_CSV'}
+
+    def _source(self, uow, order_id, asset_id, selection=None):
+        """Repeat verified P1 bytes + unchanged P2 readers under the final UoW.
+    
+        LocalIngestion opens its own BEGIN IMMEDIATE; calling it here would nest
+        a second writer. Use its same P1 verification and P2 reader APIs with the
+        already-owned InputAsset record instead. No new ingestion implementation.
+        """
+        asset = self._asset(uow, order_id, asset_id)
+        budget = Budget()
+        require(0 &lt; asset.size_bytes &lt;= RAW, 'INPUT_NOT_FOUND', 'Asset exceeds the approved local byte limit')
+        raw = self.env.workspace.read_verified(asset.workspace_relpath, asset.byte_sha256, asset.size_bytes)
+        raw_check(raw)
+        budget.check()
+        if selection is not None:
+            require(selection['source_type'] == source_type(asset.original_filename),
+                    'INPUT_NOT_FOUND', 'Source type differs from the registered asset')
+            if selection['source_type'] == 'LOCAL_CSV':
+                read = read_csv(raw, asset_id=asset.id, byte_sha256=asset.byte_sha256,
+&gt;                               budget=budget, **selection['csv_options'])
+                                                 ^^^^^^^^^^^^^^^^^^^^^^^^
+E               KeyError: 'csv_options'
+
+src/vde/workflow/service.py:93: KeyError</failure></testcase><testcase classname="tests.p3.test_p3" name="test_T46_p0_pa" time="0.019"><properties><property name="p3_id" value="P3-T46" /></properties><failure message="KeyError: 'csv_options'">p3_pack = PosixPath('/tmp/pytest-of-agent/pytest-15/p3-approved0/P3_Implementation_Pack_v1.0_APPROVED')
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-15/test_T46_p0_pa0')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x7ff6d4449040&gt;
+
+    def test_T46_p0_pa(p3_pack, tmp_path, monkeypatch):
+&gt;       s = scenario(p3_pack, tmp_path, monkeypatch, 1)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/p3/test_p3.py:416: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/p3/test_p3.py:29: in scenario
+    return instance.run() if run else instance
+           ^^^^^^^^^^^^^^
+tests/p3/driver.py:202: in run
+    result = self.api(action)
+             ^^^^^^^^^^^^^^^^
+tests/p3/driver.py:137: in api
+    return getattr(service, method)(order.id, documents['brief' if method == 'publish_brief' else 'spec'], expected)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/vde/workflow/service.py:169: in publish_brief
+    self._brief_source(uow, old, record)
+src/vde/workflow/service.py:107: in _brief_source
+    asset, _ = self._source(uow, order.id, source['asset_id'], options)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;vde.workflow.service.ManualWorkflow object at 0x7ff6d45a3e60&gt;
+uow = &lt;vde.persistence.uow.UnitOfWork object at 0x7ff6d443f4d0&gt;
+order_id = 'order-pa', asset_id = 'asset-pa-csv'
+selection = {'selected_delimiter': 'comma', 'selected_encoding': 'CP1251', 'source_type': 'LOCAL_CSV'}
+
+    def _source(self, uow, order_id, asset_id, selection=None):
+        """Repeat verified P1 bytes + unchanged P2 readers under the final UoW.
+    
+        LocalIngestion opens its own BEGIN IMMEDIATE; calling it here would nest
+        a second writer. Use its same P1 verification and P2 reader APIs with the
+        already-owned InputAsset record instead. No new ingestion implementation.
+        """
+        asset = self._asset(uow, order_id, asset_id)
+        budget = Budget()
+        require(0 &lt; asset.size_bytes &lt;= RAW, 'INPUT_NOT_FOUND', 'Asset exceeds the approved local byte limit')
+        raw = self.env.workspace.read_verified(asset.workspace_relpath, asset.byte_sha256, asset.size_bytes)
+        raw_check(raw)
+        budget.check()
+        if selection is not None:
+            require(selection['source_type'] == source_type(asset.original_filename),
+                    'INPUT_NOT_FOUND', 'Source type differs from the registered asset')
+            if selection['source_type'] == 'LOCAL_CSV':
+                read = read_csv(raw, asset_id=asset.id, byte_sha256=asset.byte_sha256,
+&gt;                               budget=budget, **selection['csv_options'])
+                                                 ^^^^^^^^^^^^^^^^^^^^^^^^
+E               KeyError: 'csv_options'
+
+src/vde/workflow/service.py:93: KeyError</failure></testcase><testcase classname="tests.p3.test_p3" name="test_T47_p0_pb" time="0.022"><properties><property name="p3_id" value="P3-T47" /></properties><failure message="KeyError: 'sheet_name'">p3_pack = PosixPath('/tmp/pytest-of-agent/pytest-15/p3-approved0/P3_Implementation_Pack_v1.0_APPROVED')
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-15/test_T47_p0_pb0')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x7ff6d402a780&gt;
+
+    def test_T47_p0_pb(p3_pack, tmp_path, monkeypatch):
+&gt;       s = scenario(p3_pack, tmp_path, monkeypatch, 2)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/p3/test_p3.py:422: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/p3/test_p3.py:29: in scenario
+    return instance.run() if run else instance
+           ^^^^^^^^^^^^^^
+tests/p3/driver.py:202: in run
+    result = self.api(action)
+             ^^^^^^^^^^^^^^^^
+tests/p3/driver.py:137: in api
+    return getattr(service, method)(order.id, documents['brief' if method == 'publish_brief' else 'spec'], expected)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/vde/workflow/service.py:169: in publish_brief
+    self._brief_source(uow, old, record)
+src/vde/workflow/service.py:107: in _brief_source
+    asset, _ = self._source(uow, order.id, source['asset_id'], options)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;vde.workflow.service.ManualWorkflow object at 0x7ff6d443d1f0&gt;
+uow = &lt;vde.persistence.uow.UnitOfWork object at 0x7ff6d40c0680&gt;
+order_id = 'order-pb', asset_id = 'asset-pb-xlsx'
+selection = {'selected_sheet': 'Orders', 'source_type': 'LOCAL_XLSX'}
+
+    def _source(self, uow, order_id, asset_id, selection=None):
+        """Repeat verified P1 bytes + unchanged P2 readers under the final UoW.
+    
+        LocalIngestion opens its own BEGIN IMMEDIATE; calling it here would nest
+        a second writer. Use its same P1 verification and P2 reader APIs with the
+        already-owned InputAsset record instead. No new ingestion implementation.
+        """
+        asset = self._asset(uow, order_id, asset_id)
+        budget = Budget()
+        require(0 &lt; asset.size_bytes &lt;= RAW, 'INPUT_NOT_FOUND', 'Asset exceeds the approved local byte limit')
+        raw = self.env.workspace.read_verified(asset.workspace_relpath, asset.byte_sha256, asset.size_bytes)
+        raw_check(raw)
+        budget.check()
+        if selection is not None:
+            require(selection['source_type'] == source_type(asset.original_filename),
+                    'INPUT_NOT_FOUND', 'Source type differs from the registered asset')
+            if selection['source_type'] == 'LOCAL_CSV':
+                read = read_csv(raw, asset_id=asset.id, byte_sha256=asset.byte_sha256,
+                                budget=budget, **selection['csv_options'])
+            else:
+                read = read_xlsx(raw, asset_id=asset.id, byte_sha256=asset.byte_sha256,
+&gt;                                budget=budget, sheet_name=selection['sheet_name'])
+                                                           ^^^^^^^^^^^^^^^^^^^^^^^
+E               KeyError: 'sheet_name'
+
+src/vde/workflow/service.py:96: KeyError</failure></testcase><testcase classname="tests.p3.test_p3" name="test_T48_hash_vectors" time="0.013"><properties><property name="p3_id" value="P3-T48" /></properties></testcase><testcase classname="tests.p3.test_p3" name="test_T52_pack_fixture_integrity" time="0.204"><properties><property name="p3_id" value="P3-T52" /></properties></testcase></testsuite></testsuites>

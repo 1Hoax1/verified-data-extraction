@@ -1,0 +1,282 @@
+{
+  "tested_commit": "6a8e67252131c2b6a6a70388aa47ead899c35140",
+  "authorized_main": "ba73d05d2294dfb7e51b9c3c758e63c6065286d6",
+  "started_at_utc": "2026-10-11T10:24:01.812723+00:00",
+  "finished_at_utc": "2026-10-11T10:24:40.528153+00:00",
+  "command_argv": [
+    "/workspace/verified-data-extraction/.venv/bin/python",
+    "-m",
+    "pytest",
+    "tests/p3",
+    "-q",
+    "--junitxml=/workspace/verified-data-extraction/docs/p3/validation/p3-results.xml"
+  ],
+  "counts": {
+    "p1": {
+      "tests": 42,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "p2": {
+      "tests": 54,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "p3": {
+      "tests": 52,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    }
+  },
+  "total_pass": 148,
+  "fail": 0,
+  "error": 0,
+  "skip": 0,
+  "xfail": 0,
+  "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+  "executable": "/workspace/verified-data-extraction/.venv/bin/python",
+  "platform": "Linux-6.18.44-x86_64-with-glibc2.41",
+  "packages": [
+    {
+      "name": "GitPython",
+      "version": "3.2.0"
+    },
+    {
+      "name": "Jinja2",
+      "version": "3.1.6"
+    },
+    {
+      "name": "MarkupSafe",
+      "version": "3.0.4"
+    },
+    {
+      "name": "Pygments",
+      "version": "2.21.0"
+    },
+    {
+      "name": "altair",
+      "version": "5.5.0"
+    },
+    {
+      "name": "attrs",
+      "version": "26.1.0"
+    },
+    {
+      "name": "blinker",
+      "version": "1.9.0"
+    },
+    {
+      "name": "cachetools",
+      "version": "6.2.6"
+    },
+    {
+      "name": "certifi",
+      "version": "2026.7.22"
+    },
+    {
+      "name": "charset-normalizer",
+      "version": "3.5.2"
+    },
+    {
+      "name": "click",
+      "version": "8.5.0"
+    },
+    {
+      "name": "et_xmlfile",
+      "version": "2.0.0"
+    },
+    {
+      "name": "gitdb",
+      "version": "4.0.12"
+    },
+    {
+      "name": "idna",
+      "version": "3.20"
+    },
+    {
+      "name": "iniconfig",
+      "version": "2.3.1"
+    },
+    {
+      "name": "jsonschema",
+      "version": "4.26.0"
+    },
+    {
+      "name": "jsonschema-specifications",
+      "version": "2025.9.1"
+    },
+    {
+      "name": "narwhals",
+      "version": "2.26.0"
+    },
+    {
+      "name": "numpy",
+      "version": "2.5.3"
+    },
+    {
+      "name": "openpyxl",
+      "version": "3.1.5"
+    },
+    {
+      "name": "packaging",
+      "version": "25.0"
+    },
+    {
+      "name": "pandas",
+      "version": "2.3.3"
+    },
+    {
+      "name": "pillow",
+      "version": "11.3.0"
+    },
+    {
+      "name": "pluggy",
+      "version": "1.6.0"
+    },
+    {
+      "name": "protobuf",
+      "version": "6.33.6"
+    },
+    {
+      "name": "pyarrow",
+      "version": "25.0.1"
+    },
+    {
+      "name": "pydeck",
+      "version": "0.9.3"
+    },
+    {
+      "name": "pytest",
+      "version": "8.4.2"
+    },
+    {
+      "name": "python-dateutil",
+      "version": "2.9.0.post0"
+    },
+    {
+      "name": "pytz",
+      "version": "2026.5"
+    },
+    {
+      "name": "referencing",
+      "version": "0.37.0"
+    },
+    {
+      "name": "requests",
+      "version": "2.34.2"
+    },
+    {
+      "name": "rfc8785",
+      "version": "0.1.4"
+    },
+    {
+      "name": "rpds-py",
+      "version": "2026.9.1"
+    },
+    {
+      "name": "six",
+      "version": "1.17.0"
+    },
+    {
+      "name": "smmap",
+      "version": "5.0.3"
+    },
+    {
+      "name": "streamlit",
+      "version": "1.50.0"
+    },
+    {
+      "name": "tenacity",
+      "version": "9.2.1"
+    },
+    {
+      "name": "toml",
+      "version": "0.10.2"
+    },
+    {
+      "name": "tornado",
+      "version": "6.5.10"
+    },
+    {
+      "name": "typing_extensions",
+      "version": "4.16.0"
+    },
+    {
+      "name": "tzdata",
+      "version": "2026.5"
+    },
+    {
+      "name": "urllib3",
+      "version": "2.8.0"
+    },
+    {
+      "name": "verified-data-extraction",
+      "version": "0.1.0"
+    },
+    {
+      "name": "verified-data-extraction",
+      "version": "0.1.0"
+    },
+    {
+      "name": "watchdog",
+      "version": "6.0.0"
+    }
+  ],
+  "rss": {
+    "csv": 198193152,
+    "xlsx": 153718784
+  },
+  "rss_limit_bytes": 536870912,
+  "approved_scenarios_pass": 40,
+  "regenerated_xlsx_byte_identical": 21,
+  "frozen_runtime_and_packs_unchanged": true,
+  "source_sha256": {
+    "pyproject.toml": "071362c27bbc0f5d8d890f183963bbe20a064b5d0539e8b340773e353a7d4156",
+    "src/vde/__init__.py": "cd8a6696b9fffa286810bf790fafd899ffead2519c7bcb89a72c623cb5f2fdde",
+    "src/vde/app.py": "936e66c623985d215756baedf1e5c794b4891da550f7b447c7721a5e8b0dfeff",
+    "src/vde/bootstrap.py": "582f972f5a0d749498458c8ad8234a16909eedb9a8894179268445b98c5287b7",
+    "src/vde/config.py": "613d600cde4530457543019941d2a50bca02d07e964dc8cb394d62b5dca6417a",
+    "src/vde/contracts.py": "61ca43cf6357af2bba9738c03d37341078e634054544c7d77f6161a56ada8691",
+    "src/vde/errors.py": "d025728c36761a927d782dd56e93d5a150350ad99c68cdd2b3d7641b74f5e568",
+    "src/vde/ingestion/__init__.py": "d889f881c9c32173675088186ab3d9877160406c87707935d0341d9938709589",
+    "src/vde/ingestion/csv_reader.py": "af5024512a7c67088e667435880fc847b5cacfb5039288ccacaff8297749386b",
+    "src/vde/ingestion/diagnostics.py": "4af3063a13c63907a5af5a3ee46c75b460337e4e7c9d0cb170b9d25fa89ab03a",
+    "src/vde/ingestion/limits.py": "c64a976d5dca3212fc942ed1095fe92c526b36d75897a052c605b7c0005ea87f",
+    "src/vde/ingestion/local.py": "d20b2e496abe5e04d74a69db00c52dfff53a4bda0f7b3a8f83bf2577ff2d5859",
+    "src/vde/ingestion/preview.py": "f33b89b3936ce43240c4facf39b33287c0746354fbffaf1656d89686aa459bfb",
+    "src/vde/ingestion/ui.py": "3e0002a25c6f2227349ee5254c99cd5748b9ca868584e85bf0d815e0a1dbcab1",
+    "src/vde/ingestion/xlsx_reader.py": "52721841db24132913cf22dbc5a74dc5faff998d5b5cbd71f0815b758c94e9aa",
+    "src/vde/models.py": "2c1637b28cb3d2471c9dd6db0e952433e78dea5ce4dd72eb0965bb53c901bd68",
+    "src/vde/persistence/__init__.py": "7993ab04d099856afa95d1fa59a4e14023dfc68d15946d5678d8f30bad596664",
+    "src/vde/persistence/database.py": "f647ec69dd47c1728a3bfd0cb09fa64f582e712405e9192bd6f78181bbe5d5a8",
+    "src/vde/persistence/migrations/001_p1_baseline.sql": "186d6415d59f3fa48d8f1d350b3746689bb46f6e129394a4811c8cc717e53d76",
+    "src/vde/persistence/repositories.py": "c62b34396b678404170fb1e122ccb9937e6c2cef774faae36563fa1ecac515dd",
+    "src/vde/persistence/uow.py": "5da8ffbbcba07e3015c20d0c7f3526f01f8abb47b7c140c3b4284006ff7119af",
+    "src/vde/recovery.py": "43c016dac35ceb2cfcd9f0c84b77679e23afc0e1505c3dfaaa7b2d6d6d23829a",
+    "src/vde/storage.py": "75bf9f7dc2ca0d4261d07238085e4ee870fc8701350519141618977cbec41c5e",
+    "src/vde/workflow/__init__.py": "e94a9339e0fa3d7cf308341c189c4f519f025140aaee5d07799af68231f8431e",
+    "src/vde/workflow/errors.py": "6b7f2349337551ec39e4ad6b809dd4658e522e71f28e17cec594927c63cf92a4",
+    "src/vde/workflow/read_model.py": "cd68bf55b2b896a6a080854b97f5d3bca4797fee671d35a1f13a6d1e8000b714",
+    "src/vde/workflow/service.py": "61238ddf354cddb0e801d6ce7624b3d60994dd923226989275cb76e5ec209f85",
+    "src/vde/workflow/ui.py": "9a04ec9a103e35da387eb74325b24b2e9659dbe29fd1a5d78150f49dabb5a7ea",
+    "src/vde/workflow/validation.py": "daa3e48e4cb7273fac41d78f88274f4c54641fce8f8d428f45fc8fcf2ba39d00",
+    "src/vde/workspace.py": "cf7330c85ac7a5b1ed559481f43a8bda02cfc5d8940f3053bc32a87df0580e17",
+    "tests/p1/conftest.py": "2bae5a8348059542445ad4e843bc4523034b3be50f2a7a122441ce0caf41df57",
+    "tests/p1/test_p1.py": "0b8aa83407e6595d69592862a2d7adf585510ccafc3443b24991609071ed0bde",
+    "tests/p2/conftest.py": "97a21e6ca197c9332e3242d40f558c445eab9e298d902baa93427e43331b2968",
+    "tests/p2/rss_probe.py": "d1de78b7415c1acffc93f42f2bea1e720ff7fe1388a198d55e4d6f4cb6a84101",
+    "tests/p2/scope_allowlist_v1.json": "181e5df6648c23d4571169972393c68c4d971f3c27b471a01c3a93b02c2df55a",
+    "tests/p2/test_p2.py": "62629de899925977c738fb78b68ff453da7c4d3530f658d3973efdbab76cdf02",
+    "tests/p3/conftest.py": "5015be4e1bef23e0079f0473fe5da3c54fd78635f959a693bcfcab34a416da0c",
+    "tests/p3/driver.py": "27393416f9311c0571582006b7f1786c3caee8c55f293bfe1b43992aab851647",
+    "tests/p3/restart_probe.py": "2ae05af070cc4871785307800b0fdbc984a1505c026d0f5e3263b8adcee0b087",
+    "tests/p3/run_validation.py": "10d0291ef7eb40f4f59e6c257bd6ca9394f910aaeebf0ec635873a3b505a03a7",
+    "tests/p3/scope_allowlist_v1.json": "be262ad5c83e89e844e60c9ffa2f86f4bc8b20255592ef9970cd9aff38253a9d",
+    "tests/p3/test_p3.py": "97218489259204630788690f41b67d3070179a8f17da60e7ca24b728a1898d13",
+    "tests/scope_policy.py": "c25bcb80e8a2675d2a20130d149fc3678db9859294da9612d6fd392e8131682a",
+    "uv.lock": "7a4ed597bb53a55189cce5b9c5d32b191f150f6cbc92f55122382cd164b42776"
+  }
+}

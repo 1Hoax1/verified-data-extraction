@@ -1,0 +1,49 @@
+{
+  "tested_commit": "6a8e67252131c2b6a6a70388aa47ead899c35140",
+  "archive_sha256": "1fed602bcea695be892150581b9cbcb00807681f0a389f598bd54fac9e504d84",
+  "manifest_entries_verified": 57,
+  "csv_fixtures_verified": 12,
+  "xlsx_regenerated_byte_identical": 21,
+  "generator_command_argv": [
+    "/workspace/verified-data-extraction/.venv/bin/python",
+    "/tmp/pytest-of-agent/pytest-31/test_T54_rss_and_fixtures0/regenerated/build_xlsx_fixtures.py"
+  ],
+  "generator_stdout": "Built 21 binary XLSX fixtures",
+  "csv_sha256": {
+    "duplicate_headers.csv": "9a2503934ed1b17fb1f3da3a3c84720c13268d57d602e8c24251aee32c4e806b",
+    "empty.csv": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "header_row_offset.csv": "ca6d8d959654852e8a5102cc9b714f55e6b4e57862bf8b610a3ca68277f8361b",
+    "invalid_utf8.csv": "52700e1ccc9ea70c955507e371d6feab1f19fde8f18b89b20d1cab768f199361",
+    "late_ragged.csv": "008dd1f3847584b5c01d1ba7b2caaa87388d0f0de84431bca6119c0993df883b",
+    "literals.csv": "74e1a9e35af80d01228eba9caa6debc1cfc59ab95f79fccf99aede49e0559cc9",
+    "many_rows.csv": "71cf19f9eb203fc7142232af710d40cc2026ee47ddd2aabeb75909b40a7b8d6f",
+    "ragged.csv": "2099bd0022eae966fe8a22b0de596fb5cc8eaa12f46284b68dd3c4af8a164da7",
+    "single_column.csv": "bec49218ff70ca03c29083a31cbad2c4b5341af67de15708338e9181f7c959fa",
+    "tab_utf8.csv": "6988f263fb2d52249f851885bd56619dcd6c6a90e7c14fad4b0683af37842d68",
+    "utf8sig.csv": "bc70d5b496b4c2a8003418433696791717f3b2f06bab285367fc2760d100f0be",
+    "valid_semicolon_utf8.csv": "9635f3635d467a08651c14a42bb49177f6c529d9026dd50407c65f86af7162f3"
+  },
+  "xlsx_sha256": {
+    "cache_explicit_empty.xlsx": "b36f71ed0c5d3ea2726ce327d54f9da7a7a20de55bcf64ac52e9d5839d7d6a5c",
+    "cache_missing.xlsx": "0bbbfe8bd2d8fbd35e0c24a4a9548a8c8c8c69037b56f25e5a03ace4d919c694",
+    "cache_numeric.xlsx": "d9ff381b6c9362f94dd1a6447998b486915ca1484cbaee8194ab202cff004664",
+    "columns_over_200.xlsx": "5f6c33aa4e0326dfba1714e4614b194bb8447aaf3e8e436ddbc899cb815575ff",
+    "entries_over_10000.xlsx": "ee5211e75d5b0f0043bd48e1c26df84630c9931f3d13f34503eb6e1443694dbd",
+    "error_formula_cache.xlsx": "700d624c6de3371789f7b8759a86561a9e450d92122969cb9be3f4c9e4421f37",
+    "header_duplicate.xlsx": "9444b74632cc8b57927f740f669da87771f1f91ded0bf16148cd58ceeaad004d",
+    "header_merged.xlsx": "18ef3365742cd97a454c75290555b15c616eecc8bf1a0cf39de88ae665d3e875",
+    "header_only.xlsx": "fafe5f5fe59a1b26fb9d4954236426aad580d5730034e8b7b5a2040b3ba389f0",
+    "invalid_selected_sheet_xml.xlsx": "d0f7e3613709e6d0fdd9a4d16d7f87b0bca89c9b98d79e941c0a8beb3c26bcc1",
+    "invalid_workbook_xml.xlsx": "2b7945350f83870518b09963c526260757080fac4bf3a8d75e8256f0c38aff86",
+    "member_over_100m.xlsx": "48aceaaee9a386919bafe3aba695699cdb82a1788b4caf6f02b7665be696a4e2",
+    "multi_sheet.xlsx": "cad19e295dc70500e39df20ca6f346ed51953bfd5a355bc4190058dcc5c70097",
+    "not_a_zip.xlsx": "81764e324a203156549d82afefdbbc9b4719a985b66c4b764a78ab55761d0a1b",
+    "preview_cell_over_65536.xlsx": "5d51cdfc62a1327ab05de4d517c70159e4f983c623cdf33fa3e2eaae5816670a",
+    "ratio_over_100.xlsx": "e7f0565a0ed8180ec1c22946c355b0591ce0fe7b23f0f012aab603039fcea920",
+    "row1_blank.xlsx": "c7f0a88cbe587999b1f8866aab19380c0f566de84b071ddf431a14a541d57c0d",
+    "rows_over_100000.xlsx": "2947884aef1a0cc7c298fbd75c5bd6997af8ee1e6d54c1d1e9a597559dc24fc5",
+    "total_over_250m.xlsx": "2c085b5a882398d6cc546ea426c89ec858c9275c51c89eead3ee774e6a93063f",
+    "typed_cells.xlsx": "6cc42ac1ebe11ebe98d9a25887a53d209e266d86a9b61da835172bd50586bbf5",
+    "unselected_cache_missing.xlsx": "c3527deae37f477232e6de255a777ae1d7df54e441563f29813fba6cf393689c"
+  }
+}

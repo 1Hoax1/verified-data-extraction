@@ -1,0 +1,46 @@
+COMMAND ["/workspace/verified-data-extraction/.venv/bin/python", "-m", "pytest", "tests/p2", "-q", "--junitxml=/workspace/verified-data-extraction/docs/p3/validation/p2-results.xml"]
+..................................F...................                   [100%]
+=================================== FAILURES ===================================
+____________________________ test_T35_rerun_upload _____________________________
+
+service = <vde.ingestion.local.LocalIngestion object at 0x7ff2583088c0>
+env = BootstrapResult(workspace=<vde.workspace.Workspace object at 0x7ff25830a6f0>, recovery=RecoveryReport(errors=[], staging=[], orphans=[], stale_runs=[]))
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7ff25848ef90>
+
+    def test_T35_rerun_upload(service, env, monkeypatch):
+        raw = b'a\nb\n'
+        from streamlit.runtime.uploaded_file_manager import UploadedFile, UploadedFileRec
+        from streamlit.proto.Common_pb2 import FileURLs
+        mock_upload = UploadedFile(UploadedFileRec('upload-test', 'local.csv', 'text/csv', raw), FileURLs())
+        first = register_upload(service, ORDER, mock_upload)
+        app = ui(env, monkeypatch)
+        app.selectbox[0].select(ORDER).run()
+        app.selectbox[1].select(first.id).run()
+        app.selectbox[2].select('UTF-8').run()
+        app.selectbox[3].select(',').run()
+        app.button[-1].click().run()
+>       assert not app.exception
+E       assert not ElementList(_list=[Exception(message="'NoneType' object has no attribute 'version_id'", stack_trace=['File "/workspace....py", line 125, in panel\n    command(order_id, review.version_id, order)\n                      ^^^^^^^^^^^^^^^^^'])])
+E        +  where ElementList(_list=[Exception(message="'NoneType' object has no attribute 'version_id'", stack_trace=['File "/workspace....py", line 125, in panel\n    command(order_id, review.version_id, order)\n                      ^^^^^^^^^^^^^^^^^'])]) = AppTest(\n    _script_path='/workspace/verified-data-extraction/src/vde/app.py',\n    default_timeout=3,\n    session_sta...SpecialBlock(\n            type='sidebar'\n        ),\n        2: SpecialBlock(\n            type='event'\n        )\n    }\n).exception
+
+tests/p2/test_p2.py:392: AssertionError
+----------------------------- Captured stderr call -----------------------------
+2026-10-11 10:16:39.178 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+2026-10-11 10:16:39.233 Uncaught app execution
+Traceback (most recent call last):
+  File "/workspace/verified-data-extraction/.venv/lib/python3.12/site-packages/streamlit/runtime/scriptrunner/exec_code.py", line 128, in exec_func_with_error_handling
+    result = func()
+             ^^^^^^
+  File "/workspace/verified-data-extraction/.venv/lib/python3.12/site-packages/streamlit/runtime/scriptrunner/script_runner.py", line 669, in code_to_exec
+    exec(code, module.__dict__)  # noqa: S102
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/verified-data-extraction/src/vde/app.py", line 23, in <module>
+    workflow_panel(result)
+  File "/workspace/verified-data-extraction/src/vde/workflow/ui.py", line 125, in panel
+    command(order_id, review.version_id, order)
+                      ^^^^^^^^^^^^^^^^^
+AttributeError: 'NoneType' object has no attribute 'version_id'
+- generated xml file: /workspace/verified-data-extraction/docs/p3/validation/p2-results.xml -
+=========================== short test summary info ============================
+FAILED tests/p2/test_p2.py::test_T35_rerun_upload - assert not ElementList(_l...
+1 failed, 53 passed in 18.77s
