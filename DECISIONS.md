@@ -30,6 +30,9 @@
 - P4 implementation start gate — OPEN / AUTHORIZED (owner-confirmed 2026-10-30; no auto-merge, Gate B NOT_RUN)
 - P4 Gate B — NOT_RUN / NOT_PASSED
 - CR-P4-001 — APPROVED (test-boundary only; NOT_IMPLEMENTED)
+- CR-P4-002 — APPROVED (owner-confirmed MAIN CHAT 2026-10-30; P4-T13 expects 4 P-B source rows, P4-T42 still 3 final; implementation in Draft PR #4, NOT_VALIDATED)
+- CR-P4-003 — APPROVED (owner-confirmed MAIN CHAT 2026-10-30; test-only changed-path diff baseline for P2-T40/P3-T51 to P4 start 76851105…; negative checks retained; NOT_VALIDATED)
+- CR-P4-004 — APPROVED (owner-confirmed MAIN CHAT 2026-10-30; correct negative proper fraction Decimal wire grammar and tests; NOT_VALIDATED)
 - P4-Q01..Q05 and Q07 — APPROVED (Q03 revised signed64 / V2 / Unicode)
 - P4-Q06 — DEFERRED (CR-P3-001 unchanged)
 
@@ -284,3 +287,16 @@ Status: OPEN / AUTHORIZED. P4 stage IN_IMPLEMENTATION (work permitted; no P4 imp
 - Known P0 manifest P-C 13-file discrepancy remains unresolved and must not be 'fixed' by fabricating P0 content.
 - Formal implementation-start record: `docs/p4/v1.0/IMPLEMENTATION_START_AUTHORIZATION.md`.
 - Next step: give Codex the implementation task under this authorization; report an unmerged Draft PR and actual validation report.
+
+
+### P4 — Formal owner approval of CR-P4-002, CR-P4-003 and CR-P4-004 (2026-10-30)
+Status: **APPROVED** (main managing chat); implementation remains in unmerged Draft PR #4, Gate B NOT_CLOSED.
+
+- Owner explicitly confirmed: “Утверждаю CR-P4-002, CR-P4-003 и CR-P4-004 в предложенных узких границах”. This **supersedes any claimed approval made only in the implementation/specialist chat**. No change request is approved by Codex independently.
+- **CR-P4-002 APPROVED:** Correct only P4-T13 full-row XLSX acceptance oracle to 6 headers and **four original rows** (including duplicate O-002), in frozen P0 source order and cached-cell semantics. P4-T42 continues to require **three output rows**. Keep P0/P1/P2/P3 runtime, approved P4 v1.0 ZIP and source fixtures immutable.
+- **CR-P4-003 APPROVED:** Test-only adjustment of P2-T40 and P3-T51 `git diff --name-only` baseline to the exact P4 Implementation Start SHA `7685110506d115805c473b064752f86e9e5c045b`. Preserve all historical test IDs, negative probes, untracked-file inventory, frozen code hashes, production APIs, dependency/migration checks and scope protections. No wildcard authorization.
+- **CR-P4-004 APPROVED:** Clarify finite canonical Decimal wire syntax for negative proper fractions such as `-0.25`; whole-string ASCII regex `(?:0|-?(?:[1-9][0-9]*(?:\\.[0-9]*[1-9])?|0\\.[0-9]*[1-9]))` (unescaped literal regex in source: `(?:0|-?(?:[1-9][0-9]*(?:\.[0-9]*[1-9])?|0\.[0-9]*[1-9]))`). Continue rejecting `-0`, `+1`, exponent form, leading or insignificant trailing zeros and NaN/Infinity; negative zero canonicalizes to `0`; retain signed64 tags and original F/X/W fixtures, add exact tests P4-T25/T57.
+- Exact CR proposal text is now stored in `docs/change_requests/CR-P4-002.md`, `CR-P4-003.md`, `CR-P4-004.md`, byte-for-byte from Draft PR #4 to avoid merge conflicts; **this register entry is the formal main-chat approval authority**, independently of source-file historical wording.
+- No implementation code, tests, P0–P3 production files, state graph, migrations or release ZIP altered by this decision commit. P4 remains `IN_IMPLEMENTATION`, Gate B remains `NOT_RUN / NOT_PASSED` in the managing decision register until explicit validation/closure; PR #4 stays Draft/unmerged.
+- **Integration risk / mandatory pre-merge check:** existing P2-T40 and P3-T51 test commands use `git diff --name-only 7685110506…` and the repository-path auditor rejects `DECISIONS.md`. This formal post-baseline approval modifies that file in `main`, so the same tests may fail on a future combined or merged history even though they passed on the prior feature head. Confirm against the exact future integration commit; do not silently drop/skip the governance protection or shift the baseline without separately approved change if required.
+- Next action: continue independent Gate B review with explicit CR approval recorded, and require a fully audited combined-tree regression before any owner-authorized merge.
