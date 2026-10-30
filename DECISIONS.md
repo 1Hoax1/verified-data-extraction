@@ -8,7 +8,7 @@
 - P0 Formal Contracts and Fixtures — VALIDATED
 - P1 Implementation Pack v1.0 — APPROVED
 - Current release target — Pilot Slice V1
-- Current stage — P4 Gate A CLOSED / PASS (design APPROVED; approved ZIP GitHub VERIFIED; implementation NOT_AUTHORIZED)
+- Current stage — P4 Implementation Start Gate OPEN / AUTHORIZED (Gate A CLOSED / PASS, approved ZIP VERIFIED; Gate B NOT_RUN)
 - P1 — VALIDATED
 - P1 completion/release gate — CLOSED (PASS, owner-confirmed 2026-10-08)
 - P2 Implementation Pack v1.0 — APPROVED
@@ -24,10 +24,10 @@
 - P3 Gate B — CLOSED / PASS (owner-confirmed 2026-10-11)
 - CR-P3-001 — DEFERRED (no P0 state graph change)
 - CR-P3-002 — APPROVED / IMPLEMENTED / VALIDATED (P3 Gate B; P2-T40 phase-scoped, P3-T51 full application)
-- P4 — APPROVED (design only; Gate A CLOSED / PASS, owner-confirmed 2026-10-30; implementation NOT_STARTED)
-- P4 Implementation Pack v1.0 — APPROVED (GitHub ZIP upload VERIFIED, exact 112649 B and SHA-256; implementation NOT_STARTED)
+- P4 — IN_IMPLEMENTATION (implementation start owner-authorized 2026-10-30; Gate A APPROVED; no P4 runtime/code or tests yet committed)
+- P4 Implementation Pack v1.0 — APPROVED (GitHub ZIP upload VERIFIED, exact 112649 B and SHA-256; implementation authorized separately)
 - P4 Gate A — CLOSED / PASS (owner-confirmed 2026-10-30)
-- P4 implementation start gate — NOT_AUTHORIZED / CLOSED
+- P4 implementation start gate — OPEN / AUTHORIZED (owner-confirmed 2026-10-30; no auto-merge, Gate B NOT_RUN)
 - P4 Gate B — NOT_RUN / NOT_PASSED
 - CR-P4-001 — APPROVED (test-boundary only; NOT_IMPLEMENTED)
 - P4-Q01..Q05 and Q07 — APPROVED (Q03 revised signed64 / V2 / Unicode)
@@ -269,3 +269,18 @@ Status: VERIFIED; P4 design APPROVED, Gate A CLOSED / PASS; implementation start
 - Verification record: `docs/p4/v1.0/GITHUB_ARCHIVE_UPLOAD_VERIFIED.md`.
 - Existing P4 Gate A remains CLOSED / PASS. CR-P4-001 is APPROVED / NOT_IMPLEMENTED; P4 Gate B is NOT_RUN. This file upload does **not** authorize P4 implementation.
 - Next decision required from owner: open P4 implementation start gate, strictly within v1.0 approved pack and CR-P4-001 test-only scope.
+
+### P4 — Implementation Start Gate authorization (owner-confirmed 2026-10-30)
+Status: OPEN / AUTHORIZED. P4 stage IN_IMPLEMENTATION (work permitted; no P4 implementation yet merged or tests executed).
+
+- decision_revision: P4_IMPLEMENTATION_START_AUTHORIZED_2026-10-30.
+- Owner explicitly confirmed opening the implementation start gate in the main managing chat after Gate A CLOSED / PASS and GitHub-approved ZIP byte-for-byte SHA-256 verification.
+- Binding approved source: `docs/p4/v1.0/P4_Implementation_Pack_v1.0_APPROVED.zip` at main baseline `8ae219d717b36f463ea76eccaeb8c88d74aeeefc`; SHA-256 `e3c686f81e3ba0d63874420d0f67f7585b9861826fdbc8a76dfb6a5d8f2aa5aa` (112649 bytes).
+- **Authorized:** P4-only deterministic 12-operation engine, preflight/revalidation of two exact Approvals, verified full-row CSV/XLSX adapter, bounded processing, P1-native ExecutionRun and internal Artifact, manual Streamlit trigger, P4_INTERNAL_V2 signed64/JCS exact wire, P4 test suite and narrowly approved CR-P4-001 test-only scope correction.
+- **Forbidden:** P5 QA/export, P6, new operation types, changed P0/P1/P2/P3 production contracts, migrations/state graph/Approval semantics, new infrastructure, arbitrary LLM code, external marketplace automation or auto-messaging, bypassing deterministic FAIL, silent scope changes or regression test skip/xfail.
+- Work in `feature/p4-deterministic-engine` branch, not on `main`; present an unmerged Draft PR for independent review and Gate B assessment. PR creation alone does not mean validated. Do not merge without owner authorization.
+- Future Gate B requires actual 64/64 P4, 52/52 P3, 54/54 P2, 42/42 P1, P0 hash/schema/goldens, 38 F + 19 X + 45 W fixtures, 100000x200 memory/time constraints, crash/restart and audit checks with 0 fail/error/skip/xfail; record environment, exact commands and reproducible test evidence. A test plan is not a passing test.
+- CR-P4-001 remains APPROVED / NOT_IMPLEMENTED until the exact test-only change is committed, run and reviewed. P4 Gate B remains NOT_RUN / NOT_PASSED and requires separate explicit owner closure.
+- Known P0 manifest P-C 13-file discrepancy remains unresolved and must not be 'fixed' by fabricating P0 content.
+- Formal implementation-start record: `docs/p4/v1.0/IMPLEMENTATION_START_AUTHORIZATION.md`.
+- Next step: give Codex the implementation task under this authorization; report an unmerged Draft PR and actual validation report.
