@@ -1,0 +1,18 @@
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/workspace/verified-data-extraction/tests/p4/stress_probe.py", line 92, in <module>
+    main()
+  File "/workspace/verified-data-extraction/tests/p4/stress_probe.py", line 29, in main
+    a = Approved(directory/'approved', raw=source.read_bytes(), fields=fields_for_stress(), pipeline=stress_pipeline(),
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/verified-data-extraction/tests/p4/support.py", line 70, in __init__
+    self.workflow.publish_spec(self.order_id, spec, self.order())
+  File "/workspace/verified-data-extraction/src/vde/workflow/service.py", line 206, in publish_spec
+    doc = validate_spec(document, old, (brief, approval), chosen)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/verified-data-extraction/src/vde/workflow/validation.py", line 87, in validate_spec
+    require((doc['order_id'], doc['brief_version_id'], doc['brief_content_hash']) ==
+  File "/workspace/verified-data-extraction/src/vde/workflow/errors.py", line 35, in require
+    raise WorkflowError(code, reason)
+vde.workflow.errors.WorkflowError: Spec exact Brief context differs

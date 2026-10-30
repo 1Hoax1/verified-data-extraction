@@ -1,0 +1,16 @@
+{
+  "P-A": {
+    "columns": 6,
+    "golden_csv_sha256": "c3b4e1f9a885bcf969cd34a9041951c1bed1abcd6aaba4c4f1f2fcd414d86cc9",
+    "logical_sha256": "2e02a70bbb96712640966117fbc724de3fe8a27a8db4c049037599bbd6ec3500",
+    "result": "PASS",
+    "rows": 3
+  },
+  "P-B": {
+    "columns": 6,
+    "golden_csv_sha256": "1e9449a8ff90f0cac9d62ba94b3d6e812dd565f85e9dd91fb2b48b6cbbf4d3c6",
+    "logical_sha256": "3ebed54a3c2d5a62ef971c0ce1d604c32efd77d38c1b93b59496ad2d92156578",
+    "result": "PASS",
+    "rows": 3
+  }
+}

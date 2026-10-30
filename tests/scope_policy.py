@@ -15,6 +15,7 @@ P1_MODULES = (
 )
 POLICY = Path(__file__).with_name('p2') / 'scope_allowlist_v1.json'
 P3_POLICY = Path(__file__).with_name('p3') / 'scope_allowlist_v1.json'
+P4_POLICY = Path(__file__).with_name('p4') / 'scope_allowlist_v1.json'
 
 
 def surface(text):
@@ -41,14 +42,17 @@ def audit_application(root, baseline_pyproject, baseline_lock, *, phase='p2'):
     root = Path(root)
     policy = json.loads(POLICY.read_text())
     approved_p3 = json.loads(P3_POLICY.read_text())
+    approved_p4 = json.loads(P4_POLICY.read_text())
     actual_paths = {p.relative_to(root).as_posix() for p in (root / 'src').rglob('*')
                     if p.is_file() and '__pycache__' not in p.parts and not any(part.endswith('.egg-info') for part in p.parts)}
-    assert actual_paths == set(approved_p3['source_paths']), 'Unapproved application source/module/migration'
+    # CR-P4-001: only enumerated P4-owned files are admitted; P4-T62 audits
+    # their complete contents. Historical source and negative checks remain.
+    assert actual_paths == set(approved_p3['source_paths']) | set(approved_p4['p4_source_paths']), 'Unapproved application source/module/migration'
     for path, digest in policy['frozen_p1_sha256'].items():
         assert hashlib.sha256((root / path).read_bytes()).hexdigest() == digest, 'P1 runtime or migration drift: ' + path
     for path, expected in policy['python_surfaces'].items():
         if path == 'src/vde/app.py':
-            expected = approved_p3['python_surfaces'][path]
+            expected = approved_p4['python_surfaces'][path]
         actual = surface((root / path).read_text())
         # Additions AND removals require an explicit reviewed boundary update.
         for field in ('imports', 'calls', 'definitions'):
@@ -59,8 +63,15 @@ def audit_application(root, baseline_pyproject, baseline_lock, *, phase='p2'):
         assert hashlib.sha256((root / path).read_bytes()).hexdigest() == digest, 'P2 runtime drift: ' + path
     if phase == 'p3':
         for path, digest in approved_p3['reviewed_p3_sha256'].items():
-            assert hashlib.sha256((root / path).read_bytes()).hexdigest() == digest, 'Unapproved P3 source drift: ' + path
+            data = (root / path).read_bytes()
+            if path == 'src/vde/app.py':
+                integration = approved_p4['app_integration'].encode('utf-8')
+                assert data.endswith(integration), 'Unapproved P4 app integration'
+                data = data[:-len(integration)]
+            assert hashlib.sha256(data).hexdigest() == digest, 'Unapproved P3 source drift: ' + path
         for path, expected in approved_p3['python_surfaces'].items():
+            if path == 'src/vde/app.py':
+                expected = approved_p4['python_surfaces'][path]
             assert surface((root / path).read_text()) == expected, 'Unapproved application surface: ' + path
     project = tomllib.loads((root / 'pyproject.toml').read_text())
     base = tomllib.loads(baseline_pyproject)
@@ -104,6 +115,9 @@ def audit_repository_paths(paths):
     approved_p3 = json.loads(P3_POLICY.read_text())
     allowed |= set(approved_p3['source_paths']) - set(P1_MODULES) - {'src/vde/persistence/migrations/001_p1_baseline.sql'}
     allowed |= set(approved_p3['test_paths'])
+    approved_p4 = json.loads(P4_POLICY.read_text())
+    allowed |= set(approved_p4['p4_source_paths']) | set(approved_p4['test_paths'])
+    allowed |= set(approved_p4['amendment_paths'])
     for path in paths:
         assert path in allowed or path.startswith(('docs/p2/validation/', 'docs/p3/validation/',
-               'docs/p2/amendments/v1.1/')), 'Unapproved repository change: ' + path
+               'docs/p2/amendments/v1.1/', 'docs/p4/validation/')), 'Unapproved repository change: ' + path
