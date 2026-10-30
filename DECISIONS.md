@@ -8,7 +8,7 @@
 - P0 Formal Contracts and Fixtures — VALIDATED
 - P1 Implementation Pack v1.0 — APPROVED
 - Current release target — Pilot Slice V1
-- Current stage — P4 design preparation only (NOT_STARTED; no approved P4 pack)
+- Current stage — P4 Gate A CLOSED / PASS (design APPROVED; implementation NOT_AUTHORIZED; approved binary GitHub upload PENDING)
 - P1 — VALIDATED
 - P1 completion/release gate — CLOSED (PASS, owner-confirmed 2026-10-08)
 - P2 Implementation Pack v1.0 — APPROVED
@@ -24,7 +24,14 @@
 - P3 Gate B — CLOSED / PASS (owner-confirmed 2026-10-11)
 - CR-P3-001 — DEFERRED (no P0 state graph change)
 - CR-P3-002 — APPROVED / IMPLEMENTED / VALIDATED (P3 Gate B; P2-T40 phase-scoped, P3-T51 full application)
-- P4 — NOT_STARTED (design preparation only; implementation not authorized)
+- P4 — APPROVED (design only; Gate A CLOSED / PASS, owner-confirmed 2026-10-30; implementation NOT_STARTED)
+- P4 Implementation Pack v1.0 — APPROVED (locally assembled and CRC/manifest/static verified; GitHub ZIP upload PENDING)
+- P4 Gate A — CLOSED / PASS (owner-confirmed 2026-10-30)
+- P4 implementation start gate — NOT_AUTHORIZED / CLOSED
+- P4 Gate B — NOT_RUN / NOT_PASSED
+- CR-P4-001 — APPROVED (test-boundary only; NOT_IMPLEMENTED)
+- P4-Q01..Q05 and Q07 — APPROVED (Q03 revised signed64 / V2 / Unicode)
+- P4-Q06 — DEFERRED (CR-P3-001 unchanged)
 
 ## Approved architecture
 
@@ -236,3 +243,18 @@ Status: VALIDATED; Gate B CLOSED / PASS.
 - CR-P3-002 implementation VALIDATED; CR-P3-001 remains DEFERRED, so no post-APPROVED revision.
 - Accepted limits and absence of independent CI are recorded in formal closure document. No new architecture, persistence schema, Pilot scope or additional Change Request.
 - Next authorized activity: P4 design/contract/fixtures/acceptance planning only. P4 code implementation requires separate owner approval, and P4 VALIDATED requires future actual tests and explicit Gate B closure.
+
+### P4 — Formal Gate A design approval (owner-confirmed 2026-10-30)
+Status: APPROVED (design pack v1.0); Gate A CLOSED / PASS; Gate B NOT_RUN.
+
+- decision_revision: P4_GATE_A_APPROVED_2026-10-30
+- Owner explicitly confirmed the proposed P4 Gate A approval in the main managing chat after independent review and successful strict P0 checkout evidence.
+- Approved candidate source: P4_Implementation_Pack_v0.4.1_candidate.zip, SHA-256 79f725fd96075f3ca87b6172819d82b557f5e373b1f5ebc46f08cfbe8b2e3d0a, 104894 bytes; CRC and 48/48 payload manifest PASS; 38 F, 19 X, 45 W fixtures, 64 P4 test definitions.
+- Locally assembled release archive: P4_Implementation_Pack_v1.0_APPROVED.zip, SHA-256 e3c686f81e3ba0d63874420d0f67f7585b9861826fdbc8a76dfb6a5d8f2aa5aa, 112649 bytes, 53 manifest payloads, CRC/53/53 PASS, 48/48 original source payloads byte-identical, local static verifier PASS, nine isolated mutations rejected. **Archive has not yet been uploaded to GitHub; upload and exact SHA verification are pending before separate implementation-start authorization.**
+- Formal Gate A approval: docs/p4/v1.0/GATE_A_APPROVAL.md; strict reported validation: docs/p4/v1.0/STRICT_VALIDATION_EVIDENCE.md; upload requirement docs/p4/v1.0/GITHUB_ARCHIVE_UPLOAD_PENDING.md.
+- External Codex strict verifier on real P0 checkout 411fda98b499646b355782d3ca3c34e20f9322ae: exit 0, 36 schema-valid, 2 schema-invalid rejected, 1 semantic-invalid recognized, two goldens, nine mutations rejected. Not independently re-run on a separate P0 checkout; runtime P4 tests NOT_RUN.
+- P4-Q01, Q02, Q03 (revised signed64 tagged-string P4_INTERNAL_V2 and exact Unicode), Q04, Q05 (mandatory future Gate B stress), Q07 APPROVED; P4-Q06 DEFERRED. P4-D01..D14 adopted only within reviewed scope; D15 DEFERRED.
+- CR-P4-001 APPROVED (test-only P3-T51 phase scoping + P4-T62 full-app audit), NOT_IMPLEMENTED. Full record: docs/change_requests/CR-P4-001.md.
+- Frozen P0/P1/P2/P3 rules and Pilot Slice V1 scope unchanged, including P0 12-operation whitelist and no post-APPROVED revision. No production code, dependencies, migrations, P5 QA/export or external automation authorized.
+- Existing P0 manifest discrepancy: 13 missing P-C fixture files remain recorded as a separate risk, not silently restored; strict P4 checker uses its exact verified P0 subset.
+- Owner Gate A closure does NOT authorize P4 implementation start, Gate B closure, code PR or merge. Next action: exact approved ZIP upload+SHA verification, then request separate owner authorization to begin implementation.
