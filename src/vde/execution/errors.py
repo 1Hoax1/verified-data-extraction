@@ -34,7 +34,7 @@ class ExecutionError(Exception):
                         message='Deterministic transformation rejected.', details=details,
                         order_id=order_id, run_id=run_id, source_id=source_id,
                         operation_id=op.get('operation_id'), dataset_id=op.get('input_dataset'),
-                        column=self.column, row_ids=[] if self.row_id is None else [self.row_id],
+                        column=self.column, row_ids=[] if self.row_id is None else [str(self.row_id)],
                         retryable=False, created_at=utc_now())
         validate(document, 'execution_error')
         return document

@@ -11,7 +11,7 @@ from .errors import require, ExecutionError
 
 REVISION = 'P4_INTERNAL_V2'
 INTEGER = re.compile(r'(?:0|-?[1-9][0-9]*)', re.ASCII)
-DECIMAL = re.compile(r'(?:0|-?[1-9][0-9]*)(?:\.[0-9]*[1-9])?', re.ASCII)
+DECIMAL = re.compile(r'(?:0|-?(?:[1-9][0-9]*(?:\.[0-9]*[1-9])?|0\.[0-9]*[1-9]))', re.ASCII)
 
 
 def decimal_text(value):
@@ -81,7 +81,18 @@ def decode_cell(cell, expected_type=None):
 
 
 def row_bytes(values):
-    return rfc8785.dumps([encode_cell(value) for value in values])
+    # Arrays compose canonical scalar encodings without re-encoding hundreds
+    # of identical cells. The memo lives for one bounded row only, never for
+    # a dataset/session. Every token still comes from the conforming library.
+    tokens, local = [], {}
+    for value in values:
+        require(value is None or type(value) in (str, bool, int, Decimal, date, datetime, time),
+                'SCHEMA_MISMATCH', 'Unsupported runtime scalar')
+        key = type(value), value
+        if key not in local:
+            local[key] = rfc8785.dumps(encode_cell(value))
+        tokens.append(local[key])
+    return b'[' + b','.join(tokens) + b']'
 
 
 def serialize(columns, rows, dataset_id, budget, sink=None):
@@ -94,8 +105,7 @@ def serialize(columns, rows, dataset_id, budget, sink=None):
         if sink is None:
             output.extend(data)
         else:
-            budget.reserve(len(data))
-            sink.write(data)
+            budget.write(sink, data)
 
     write(rfc8785.dumps(header)[:-2])
     count = 0

@@ -125,6 +125,12 @@ class ExecutionService:
         self._health()
         budget, plan = active.budget, active.plan
         try:
+            with self._uow() as uow:
+                stored = uow.runs.get(active.id)
+                require(stored.status == 'running' and stored.order_id == plan.order.id
+                        and uow.specs.get(stored.transformation_spec_version_id) == plan.spec
+                        and uow.briefs.get(stored.brief_version_id) == plan.brief,
+                        'VERSION_INCOMPATIBLE', 'Active execution plan differs from immutable P1 facts')
             with tempfile.TemporaryDirectory(prefix='p4-', dir=self.env.workspace.path('.staging')) as scratch:
                 from pathlib import Path
                 table = apply(plan, active.source, budget, scratch)
@@ -141,6 +147,7 @@ class ExecutionService:
                 budget.check()
                 # Frozen P1 accepts opaque bytes. Only this boundary allocates
                 # the complete serialized payload, never a logical row matrix.
+                budget.allocation(output.stat().st_size)
                 data = output.read_bytes()
                 checksum = hashlib.sha256(data).hexdigest()
                 budget.check()
@@ -157,12 +164,12 @@ class ExecutionService:
                         (order.selected_brief_version_id, order.selected_transformation_spec_version_id) == (plan.brief.id, plan.spec.id),
                         'VERSION_INCOMPATIBLE', 'Completion context changed')
                 artifacts = uow.artifacts.list_for_run(run.id)
-                require(len(artifacts) == 1 and artifacts[0] == artifact and artifact.checksum == checksum,
-                        'STORAGE_ERROR', 'Exactly one matching internal Artifact required')
+                if not (len(artifacts) == 1 and artifacts[0] == artifact and artifact.checksum == checksum):
+                    raise StorageError('Exactly one matching internal Artifact required')
                 _, verified = self.env.workspace.inspect(artifact.workspace_relpath)
                 source_size, source_hash = self.env.workspace.inspect(plan.asset.workspace_relpath)
-                require(verified == checksum and source_hash == plan.asset.byte_sha256 and source_size == plan.asset.size_bytes,
-                        'STORAGE_ERROR', 'Source/Artifact bytes changed')
+                if not (verified == checksum and source_hash == plan.asset.byte_sha256 and source_size == plan.asset.size_bytes):
+                    raise StorageError('Source/Artifact bytes changed; no failure write on corrupt storage')
                 metrics = summarize(plan, table, count, checksum, budget, active.source.warnings)
                 uow.runs.update(replace(run, status='succeeded', finished_at=utc_now(), metrics_json=metrics))
                 self._event(uow, run, 'RUN_SUCCEEDED', {'artifact_id': artifact.id, 'checksum': checksum})
@@ -189,6 +196,9 @@ class ExecutionService:
             run = uow.runs.get(run_id)
             order = uow.orders.get(run.order_id)
             require(run.status == 'succeeded' and order.status == 'EXECUTING', 'STATE_INVALID_TRANSITION', 'Internal result is incomplete')
+            require((order.selected_brief_version_id, order.selected_transformation_spec_version_id) ==
+                    (run.brief_version_id, run.transformation_spec_version_id),
+                    'VERSION_INCOMPATIBLE', 'Selected result versions differ from Run')
             artifacts = uow.artifacts.list_for_run(run.id)
             require(len(artifacts) == 1, 'STORAGE_ERROR', 'Ambiguous/missing internal Artifact')
             artifact = artifacts[0]
@@ -203,6 +213,13 @@ class ExecutionService:
             asset = uow.inputs.get(run.input_snapshot_json['asset_id'])
             require(asset.order_id == order.id and asset.byte_sha256 == run.input_snapshot_json['source_byte_sha256'],
                     'VERSION_INCOMPATIBLE', 'Result source differs')
+            source = spec.document_json['inputs'][0]
+            brief = uow.briefs.get(run.brief_version_id)
+            require(run.input_snapshot_json == dict(asset_id=asset.id, source_byte_sha256=asset.byte_sha256,
+                        input_selection={k: source[k] for k in ('source_type', 'sheet_name', 'csv_options')},
+                        brief_content_hash=brief.content_hash, transformation_content_hash=spec.content_hash)
+                    and source['asset_id'] == asset.id and metrics['source'] == run.input_snapshot_json,
+                    'VERSION_INCOMPATIBLE', 'Result snapshot differs from source/approvals')
             expected_columns, dataset_id = metrics['columns'], metrics['dataset_id']
         data = Storage(self.env.database, self.env.workspace).read_artifact(artifact.id)
         count = sum(1 for _ in iter_payload(data, expected_columns=expected_columns, dataset_id=dataset_id))

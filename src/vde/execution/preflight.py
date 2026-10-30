@@ -6,7 +6,8 @@ from vde.contracts import content_hash, validate
 from vde.ingestion.local import source_type
 from vde.workflow.read_model import VerifiedSelection
 from vde.workflow.validation import validate_spec
-from .errors import require
+from vde.workflow.errors import WorkflowError
+from .errors import require, ExecutionError
 
 
 @dataclass(frozen=True)
@@ -55,6 +56,7 @@ def verify_and_plan(uow, order_id, expected_order, handoff):
             'APPROVAL_MISSING', 'Exact immutable Approval facts required')
     asset = next((a for a in uow.inputs.list_for_order(order_id) if a.id == handoff.asset_id), None)
     require(asset is not None, 'INPUT_NOT_FOUND', 'Order-owned InputAsset required')
+    require(0 < asset.size_bytes <= 100000000, 'INPUT_NOT_FOUND', 'InputAsset exceeds the approved byte limit')
     require(asset.byte_sha256 == handoff.byte_sha256, 'APPROVAL_HASH_MISMATCH', 'Source byte hash differs')
     source = spec.document_json['inputs'][0]
     require(source['asset_id'] == asset.id, 'INPUT_NOT_FOUND', 'Source asset differs from Spec')
@@ -64,5 +66,8 @@ def verify_and_plan(uow, order_id, expected_order, handoff):
     verified = VerifiedSelection(order_id, asset.id, asset.byte_sha256, source['source_type'],
                                  {k: deepcopy(source[k]) for k in ('sheet_name', 'csv_options')}, [], [])
     validate(brief.document_json, 'brief_version')
-    validate_spec(spec.document_json, order, (brief, ba), verified)
+    try:
+        validate_spec(spec.document_json, order, (brief, ba), verified)
+    except WorkflowError as exc:
+        raise ExecutionError(exc.code, exc.reason) from exc
     return Plan(order, brief, spec, ba, sa, asset, deepcopy(handoff))

@@ -2,13 +2,14 @@
 from contextlib import ExitStack
 from dataclasses import replace
 import heapq
+import hashlib
 import itertools
 import json
 from pathlib import Path
 from uuid import uuid4
 
 from vde.ingestion.limits import current_rss
-from .errors import require
+from .errors import require, ExecutionError
 from .source_adapter import Row
 from .wire import encode_cell, decode_cell
 
@@ -44,8 +45,9 @@ def sort_key(columns, params):
 
 
 def _record(position, row):
-    data = json.dumps([position, row.source, row.ordinal, [encode_cell(v) for v in row.values]],
-                      ensure_ascii=False, separators=(',', ':'), allow_nan=False).encode('utf-8') + b'\n'
+    body = json.dumps([position, row.source, row.ordinal, [encode_cell(v) for v in row.values]],
+                      ensure_ascii=False, separators=(',', ':'), allow_nan=False).encode('utf-8')
+    data = hashlib.sha256(body).hexdigest().encode('ascii') + b' ' + body + b'\n'
     require(len(data) <= 8*1024*1024, 'SCHEMA_MISMATCH', 'Spill row exceeds buffer')
     return data
 
@@ -61,19 +63,29 @@ def external_sort(rows, key, directory, budget):
         with target.open('xb', buffering=1024*1024) as stream:
             for index, entry in enumerate(entries):
                 raw = entry[3]
-                budget.reserve(len(raw))
-                stream.write(raw)
+                budget.write(stream, raw)
                 if index % 1000 == 0:
                     budget.check()
 
     def read(stream):
-        for index, raw in enumerate(stream):
-            require(len(raw) <= 8*1024*1024, 'SCHEMA_MISMATCH', 'Spill record size')
-            position, source, ordinal, cells = json.loads(raw)
-            row = Row(source, tuple(decode_cell(c) for c in cells), ordinal)
+        index = 0
+        while raw := stream.readline(8*1024*1024+1):
+            require(len(raw) <= 8*1024*1024 and raw.endswith(b'\n'), 'STORAGE_ERROR', 'P4_SPILL_CORRUPT')
+            checksum, separator, body = raw[:-1].partition(b' ')
+            require(separator and len(checksum) == 64 and hashlib.sha256(body).hexdigest().encode('ascii') == checksum,
+                    'STORAGE_ERROR', 'P4_SPILL_CORRUPT')
+            try:
+                position, source, ordinal, cells = json.loads(body)
+                require(type(position) is int and position >= 0 and type(source) is int and source >= 1
+                        and (ordinal is None or type(ordinal) is int and ordinal >= 0)
+                        and type(cells) is list and 0 < len(cells) <= 200, 'STORAGE_ERROR', 'P4_SPILL_CORRUPT')
+                row = Row(source, tuple(decode_cell(c) for c in cells), ordinal)
+            except (ValueError, TypeError, ExecutionError) as exc:
+                raise ExecutionError('STORAGE_ERROR', 'P4_SPILL_CORRUPT') from exc
             if index % 1000 == 0:
                 budget.check()
             yield key(row), position, row, raw
+            index += 1
 
     def remove(paths):
         for item in paths:

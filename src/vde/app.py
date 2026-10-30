@@ -21,3 +21,5 @@ from vde.ingestion.ui import panel
 panel(result)
 from vde.workflow.ui import panel as workflow_panel
 workflow_panel(result)
+from vde.execution.ui import panel as execution_panel
+execution_panel(result)

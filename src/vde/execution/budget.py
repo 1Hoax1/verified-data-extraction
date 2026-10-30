@@ -15,6 +15,7 @@ class Budget:
         self.peak = self.baseline
         self.scratch_bytes = self.scratch_peak = self.merge_fan_in = 0
         self.samples = 0
+        self.io_since_check = 0
 
     def check(self):
         rss = self.rss_reader()
@@ -32,8 +33,27 @@ class Budget:
         self.scratch_bytes += size
         self.scratch_peak = max(self.scratch_peak, self.scratch_bytes)
 
+    def allocation(self, size):
+        """Guard the known-size opaque payload required by frozen P1."""
+        self.check()
+        require(self.rss_reader()-self.baseline+size <= self.rss_limit,
+                'STORAGE_ERROR', 'P4_RSS_BUDGET')
+
     def release(self, size):
         self.scratch_bytes -= size
+
+    def write(self, stream, data):
+        """Keep P4 scratch I/O and budget checkpoints within one MiB."""
+        view, position = memoryview(data), 0
+        while position < len(view):
+            size = min(len(view)-position, 1048576-self.io_since_check)
+            self.reserve(size)
+            stream.write(view[position:position+size])
+            position += size
+            self.io_since_check += size
+            if self.io_since_check == 1048576:
+                self.check()
+                self.io_since_check = 0
 
     def summary(self):
         return dict(incremental_peak_rss=self.peak-self.baseline,
