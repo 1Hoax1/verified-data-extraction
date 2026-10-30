@@ -1,0 +1,1070 @@
+{
+  "p1": {
+    "P1-T01": {
+      "status": "PASS",
+      "seconds": 0.006,
+      "test": "test_T01_clean_bootstrap"
+    },
+    "P1-T02": {
+      "status": "PASS",
+      "seconds": 0.233,
+      "test": "test_T02_idempotent_bootstrap"
+    },
+    "P1-T03": {
+      "status": "PASS",
+      "seconds": 0.006,
+      "test": "test_T03_migration_checksum_drift"
+    },
+    "P1-T04": {
+      "status": "PASS",
+      "seconds": 0.007,
+      "test": "test_T04_failed_migration_rollback"
+    },
+    "P1-T05": {
+      "status": "PASS",
+      "seconds": 0.007,
+      "test": "test_T05_foreign_key_enforcement"
+    },
+    "P1-T06": {
+      "status": "PASS",
+      "seconds": 0.005,
+      "test": "test_T06_exact_states_and_approval_stages"
+    },
+    "P1-T07": {
+      "status": "PASS",
+      "seconds": 0.191,
+      "test": "test_T07_order_restart"
+    },
+    "P1-T08": {
+      "status": "PASS",
+      "seconds": 0.331,
+      "test": "test_T08_input_byte_roundtrip"
+    },
+    "P1-T09": {
+      "status": "PASS",
+      "seconds": 0.006,
+      "test": "test_T09_path_traversal"
+    },
+    "P1-T10": {
+      "status": "PASS",
+      "seconds": 0.139,
+      "test": "test_T10_workspace_relocation"
+    },
+    "P1-T11": {
+      "status": "PASS",
+      "seconds": 0.08,
+      "test": "test_T11_brief_append_only"
+    },
+    "P1-T12": {
+      "status": "PASS",
+      "seconds": 0.108,
+      "test": "test_T12_spec_exact_brief_link"
+    },
+    "P1-T13": {
+      "status": "PASS",
+      "seconds": 0.397,
+      "test": "test_T13_p0_hash_vectors_persistence"
+    },
+    "P1-T14": {
+      "status": "PASS",
+      "seconds": 0.005,
+      "test": "test_T14_no_approval_fields_on_versions"
+    },
+    "P1-T15": {
+      "status": "PASS",
+      "seconds": 0.075,
+      "test": "test_T15_brief_duplicate_approval"
+    },
+    "P1-T16": {
+      "status": "PASS",
+      "seconds": 0.086,
+      "test": "test_T16_spec_duplicate_and_context"
+    },
+    "P1-T17": {
+      "status": "PASS",
+      "seconds": 0.071,
+      "test": "test_T17_approval_immutability"
+    },
+    "P1-T18": {
+      "status": "PASS",
+      "seconds": 0.119,
+      "test": "test_T18_approval_after_corrupt_content"
+    },
+    "P1-T19": {
+      "status": "PASS",
+      "seconds": 0.07,
+      "test": "test_T19_event_immutability_and_order"
+    },
+    "P1-T20": {
+      "status": "PASS",
+      "seconds": 0.276,
+      "test": "test_T20_crash_before_promotion"
+    },
+    "P1-T21": {
+      "status": "PASS",
+      "seconds": 0.511,
+      "test": "test_T21_crash_after_promotion"
+    },
+    "P1-T22": {
+      "status": "PASS",
+      "seconds": 0.137,
+      "test": "test_T22_referenced_file_missing"
+    },
+    "P1-T23": {
+      "status": "PASS",
+      "seconds": 0.137,
+      "test": "test_T23_checksum_mismatch"
+    },
+    "P1-T24": {
+      "status": "PASS",
+      "seconds": 0.073,
+      "test": "test_T24_atomic_collision"
+    },
+    "P1-T25": {
+      "status": "PASS",
+      "seconds": 0.691,
+      "test": "test_T25_execution_run_restart"
+    },
+    "P1-T26": {
+      "status": "PASS",
+      "seconds": 0.59,
+      "test": "test_T26_artifact_restart"
+    },
+    "P1-T27": {
+      "status": "PASS",
+      "seconds": 0.458,
+      "test": "test_T27_qa_report_restart"
+    },
+    "P1-T28": {
+      "status": "PASS",
+      "seconds": 0.492,
+      "test": "test_T28_stale_running_detect_only"
+    },
+    "P1-T29": {
+      "status": "PASS",
+      "seconds": 0.005,
+      "test": "test_T29_database_integrity_failure"
+    },
+    "P1-T30": {
+      "status": "PASS",
+      "seconds": 0.015,
+      "test": "test_T30_p1_scope_audit"
+    },
+    "P1-T31": {
+      "status": "PASS",
+      "seconds": 0.07,
+      "test": "test_T31_brief_approval_raw_guard"
+    },
+    "P1-T32": {
+      "status": "PASS",
+      "seconds": 0.073,
+      "test": "test_T32_spec_approval_raw_guard"
+    },
+    "P1-T33": {
+      "status": "PASS",
+      "seconds": 0.077,
+      "test": "test_T33_execution_exact_raw_guard"
+    },
+    "P1-T34": {
+      "status": "PASS",
+      "seconds": 0.112,
+      "test": "test_T34_qa_exact_run_versions"
+    },
+    "P1-T35": {
+      "status": "PASS",
+      "seconds": 0.104,
+      "test": "test_T35_event_run_order"
+    },
+    "P1-T36": {
+      "status": "PASS",
+      "seconds": 0.106,
+      "test": "test_T36_selected_same_order"
+    },
+    "P1-T37": {
+      "status": "PASS",
+      "seconds": 0.076,
+      "test": "test_T37_brief_authoritative_write"
+    },
+    "P1-T38": {
+      "status": "PASS",
+      "seconds": 0.105,
+      "test": "test_T38_spec_authoritative_write"
+    },
+    "P1-T39": {
+      "status": "PASS",
+      "seconds": 0.153,
+      "test": "test_T39_version_corruption_recovery"
+    },
+    "P1-T40": {
+      "status": "PASS",
+      "seconds": 0.177,
+      "test": "test_T40_qa_json_index_validation"
+    },
+    "P1-T41": {
+      "status": "PASS",
+      "seconds": 0.142,
+      "test": "test_T41_file_and_audit_single_commit"
+    },
+    "P1-T42": {
+      "status": "PASS",
+      "seconds": 0.14,
+      "test": "test_T42_public_error_contract"
+    }
+  },
+  "p2": {
+    "P2-T01": {
+      "status": "PASS",
+      "seconds": 0.05,
+      "test": "test_T01_existing_order_ui"
+    },
+    "P2-T02": {
+      "status": "PASS",
+      "seconds": 0.009,
+      "test": "test_T02_original_storage"
+    },
+    "P2-T03": {
+      "status": "PASS",
+      "seconds": 0.001,
+      "test": "test_T03_pa_golden"
+    },
+    "P2-T04": {
+      "status": "PASS",
+      "seconds": 0.012,
+      "test": "test_T04_semicolon"
+    },
+    "P2-T05": {
+      "status": "PASS",
+      "seconds": 0.001,
+      "test": "test_T05_bom"
+    },
+    "P2-T06": {
+      "status": "PASS",
+      "seconds": 0.0,
+      "test": "test_T06_tab"
+    },
+    "P2-T07": {
+      "status": "PASS",
+      "seconds": 0.001,
+      "test": "test_T07_logical_header"
+    },
+    "P2-T08": {
+      "status": "PASS",
+      "seconds": 0.001,
+      "test": "test_T08_options_required"
+    },
+    "P2-T09": {
+      "status": "PASS",
+      "seconds": 0.001,
+      "test": "test_T09_invalid_options"
+    },
+    "P2-T10": {
+      "status": "PASS",
+      "seconds": 0.001,
+      "test": "test_T10_wrong_encoding"
+    },
+    "P2-T11": {
+      "status": "PASS",
+      "seconds": 0.01,
+      "test": "test_T11_invalid_utf8_preserved"
+    },
+    "P2-T12": {
+      "status": "PASS",
+      "seconds": 0.001,
+      "test": "test_T12_ragged"
+    },
+    "P2-T13": {
+      "status": "PASS",
+      "seconds": 0.001,
+      "test": "test_T13_quoted"
+    },
+    "P2-T14": {
+      "status": "PASS",
+      "seconds": 0.001,
+      "test": "test_T14_duplicate"
+    },
+    "P2-T15": {
+      "status": "PASS",
+      "seconds": 0.001,
+      "test": "test_T15_blank_header"
+    },
+    "P2-T16": {
+      "status": "PASS",
+      "seconds": 0.006,
+      "test": "test_T16_empty"
+    },
+    "P2-T17": {
+      "status": "PASS",
+      "seconds": 0.172,
+      "test": "test_T17_raw_size"
+    },
+    "P2-T18": {
+      "status": "PASS",
+      "seconds": 0.001,
+      "test": "test_T18_first_five"
+    },
+    "P2-T19": {
+      "status": "PASS",
+      "seconds": 0.001,
+      "test": "test_T19_late_ragged"
+    },
+    "P2-T20": {
+      "status": "PASS",
+      "seconds": 0.0,
+      "test": "test_T20_strings"
+    },
+    "P2-T21": {
+      "status": "PASS",
+      "seconds": 0.001,
+      "test": "test_T21_literal_formula"
+    },
+    "P2-T22": {
+      "status": "PASS",
+      "seconds": 0.001,
+      "test": "test_T22_one_column"
+    },
+    "P2-T23": {
+      "status": "PASS",
+      "seconds": 0.001,
+      "test": "test_T23_sheet_order"
+    },
+    "P2-T24": {
+      "status": "PASS",
+      "seconds": 0.039,
+      "test": "test_T24_explicit_sheet"
+    },
+    "P2-T25": {
+      "status": "PASS",
+      "seconds": 0.005,
+      "test": "test_T25_pb_golden"
+    },
+    "P2-T26": {
+      "status": "PASS",
+      "seconds": 0.005,
+      "test": "test_T26_warning"
+    },
+    "P2-T27": {
+      "status": "PASS",
+      "seconds": 0.006,
+      "test": "test_T27_missing_cache"
+    },
+    "P2-T28": {
+      "status": "PASS",
+      "seconds": 0.006,
+      "test": "test_T28_unselected_cache"
+    },
+    "P2-T29": {
+      "status": "PASS",
+      "seconds": 0.016,
+      "test": "test_T29_corrupt"
+    },
+    "P2-T30": {
+      "status": "PASS",
+      "seconds": 0.05,
+      "test": "test_T30_preflight"
+    },
+    "P2-T31": {
+      "status": "PASS",
+      "seconds": 0.006,
+      "test": "test_T31_unsupported"
+    },
+    "P2-T32": {
+      "status": "PASS",
+      "seconds": 0.006,
+      "test": "test_T32_single_sheet"
+    },
+    "P2-T33": {
+      "status": "PASS",
+      "seconds": 0.008,
+      "test": "test_T33_cross_order"
+    },
+    "P2-T34": {
+      "status": "PASS",
+      "seconds": 0.014,
+      "test": "test_T34_restart"
+    },
+    "P2-T35": {
+      "status": "PASS",
+      "seconds": 0.084,
+      "test": "test_T35_rerun_upload"
+    },
+    "P2-T36": {
+      "status": "PASS",
+      "seconds": 0.011,
+      "test": "test_T36_parse_retry"
+    },
+    "P2-T37": {
+      "status": "PASS",
+      "seconds": 4.049,
+      "test": "test_T37_public_diagnostics"
+    },
+    "P2-T38": {
+      "status": "PASS",
+      "seconds": 0.014,
+      "test": "test_T38_p1_faults"
+    },
+    "P2-T39": {
+      "status": "PASS",
+      "seconds": 6.889,
+      "test": "test_T39_p1_regression"
+    },
+    "P2-T40": {
+      "status": "PASS",
+      "seconds": 0.381,
+      "test": "test_T40_scope_dependencies"
+    },
+    "P2-T41": {
+      "status": "PASS",
+      "seconds": 0.01,
+      "test": "test_T41_header_rules"
+    },
+    "P2-T42": {
+      "status": "PASS",
+      "seconds": 0.003,
+      "test": "test_T42_empty_cache"
+    },
+    "P2-T43": {
+      "status": "PASS",
+      "seconds": 0.009,
+      "test": "test_T43_cache_presence"
+    },
+    "P2-T44": {
+      "status": "PASS",
+      "seconds": 0.024,
+      "test": "test_T44_entries"
+    },
+    "P2-T45": {
+      "status": "PASS",
+      "seconds": 0.001,
+      "test": "test_T45_member"
+    },
+    "P2-T46": {
+      "status": "PASS",
+      "seconds": 0.001,
+      "test": "test_T46_total"
+    },
+    "P2-T47": {
+      "status": "PASS",
+      "seconds": 0.001,
+      "test": "test_T47_ratio"
+    },
+    "P2-T48": {
+      "status": "PASS",
+      "seconds": 0.003,
+      "test": "test_T48_header_only"
+    },
+    "P2-T49": {
+      "status": "PASS",
+      "seconds": 0.004,
+      "test": "test_T49_typed"
+    },
+    "P2-T50": {
+      "status": "PASS",
+      "seconds": 0.003,
+      "test": "test_T50_error_cache"
+    },
+    "P2-T51": {
+      "status": "PASS",
+      "seconds": 0.016,
+      "test": "test_T51_health"
+    },
+    "P2-T52": {
+      "status": "PASS",
+      "seconds": 4.067,
+      "test": "test_T52_scan_caps"
+    },
+    "P2-T53": {
+      "status": "PASS",
+      "seconds": 0.319,
+      "test": "test_T53_preview_limits"
+    },
+    "P2-T54": {
+      "status": "PASS",
+      "seconds": 7.773,
+      "test": "test_T54_rss_and_fixtures"
+    }
+  },
+  "p3": {
+    "P3-T01": {
+      "status": "PASS",
+      "seconds": 0.018,
+      "test": "test_T01_existing_order"
+    },
+    "P3-T02": {
+      "status": "PASS",
+      "seconds": 0.023,
+      "test": "test_T02_foreign_asset"
+    },
+    "P3-T03": {
+      "status": "PASS",
+      "seconds": 0.009,
+      "test": "test_T03_p2_csv"
+    },
+    "P3-T04": {
+      "status": "PASS",
+      "seconds": 0.022,
+      "test": "test_T04_manual_transition"
+    },
+    "P3-T05": {
+      "status": "PASS",
+      "seconds": 0.026,
+      "test": "test_T05_brief_golden"
+    },
+    "P3-T06": {
+      "status": "PASS",
+      "seconds": 0.016,
+      "test": "test_T06_missing_objective"
+    },
+    "P3-T07": {
+      "status": "PASS",
+      "seconds": 0.016,
+      "test": "test_T07_forbidden_approval_property"
+    },
+    "P3-T08": {
+      "status": "PASS",
+      "seconds": 0.084,
+      "test": "test_T08_nfc_and_collision"
+    },
+    "P3-T09": {
+      "status": "PASS",
+      "seconds": 0.017,
+      "test": "test_T09_nested_criterion"
+    },
+    "P3-T10": {
+      "status": "PASS",
+      "seconds": 0.23,
+      "test": "test_T10_immutable_brief"
+    },
+    "P3-T11": {
+      "status": "PASS",
+      "seconds": 0.039,
+      "test": "test_T11_selected_brief_stage"
+    },
+    "P3-T12": {
+      "status": "PASS",
+      "seconds": 0.097,
+      "test": "test_T12_explicit_brief_approval"
+    },
+    "P3-T13": {
+      "status": "PASS",
+      "seconds": 0.057,
+      "test": "test_T13_bad_brief_hash_guard"
+    },
+    "P3-T14": {
+      "status": "PASS",
+      "seconds": 0.095,
+      "test": "test_T14_brief_duplicate"
+    },
+    "P3-T15": {
+      "status": "PASS",
+      "seconds": 0.053,
+      "test": "test_T15_p0_context_schema"
+    },
+    "P3-T16": {
+      "status": "PASS",
+      "seconds": 0.192,
+      "test": "test_T16_spec_golden"
+    },
+    "P3-T17": {
+      "status": "PASS",
+      "seconds": 0.058,
+      "test": "test_T17_spec_requires_brief_approval"
+    },
+    "P3-T18": {
+      "status": "PASS",
+      "seconds": 0.441,
+      "test": "test_T18_csv_options_persisted"
+    },
+    "P3-T19": {
+      "status": "PASS",
+      "seconds": 0.554,
+      "test": "test_T19_xlsx_selection"
+    },
+    "P3-T20": {
+      "status": "PASS",
+      "seconds": 0.092,
+      "test": "test_T20_no_auto_encoding"
+    },
+    "P3-T21": {
+      "status": "PASS",
+      "seconds": 0.112,
+      "test": "test_T21_exact_brief_context"
+    },
+    "P3-T22": {
+      "status": "PASS",
+      "seconds": 0.112,
+      "test": "test_T22_criterion_references"
+    },
+    "P3-T23": {
+      "status": "PASS",
+      "seconds": 0.184,
+      "test": "test_T23_closed_operations"
+    },
+    "P3-T24": {
+      "status": "PASS",
+      "seconds": 0.163,
+      "test": "test_T24_spec_append_selected"
+    },
+    "P3-T25": {
+      "status": "PASS",
+      "seconds": 0.422,
+      "test": "test_T25_spec_revision_before_final"
+    },
+    "P3-T26": {
+      "status": "PASS",
+      "seconds": 0.358,
+      "test": "test_T26_atomic_final"
+    },
+    "P3-T27": {
+      "status": "PASS",
+      "seconds": 0.763,
+      "test": "test_T27_spec_approval_guards"
+    },
+    "P3-T28": {
+      "status": "PASS",
+      "seconds": 0.963,
+      "test": "test_T28_final_duplicate"
+    },
+    "P3-T29": {
+      "status": "PASS",
+      "seconds": 0.602,
+      "test": "test_T29_final_commit_rollback"
+    },
+    "P3-T30": {
+      "status": "PASS",
+      "seconds": 0.46,
+      "test": "test_T30_read_only_handoff"
+    },
+    "P3-T31": {
+      "status": "PASS",
+      "seconds": 0.395,
+      "test": "test_T31_source_integrity"
+    },
+    "P3-T32": {
+      "status": "PASS",
+      "seconds": 0.232,
+      "test": "test_T32_brief_revision_invalidates_selection"
+    },
+    "P3-T33": {
+      "status": "PASS",
+      "seconds": 0.062,
+      "test": "test_T33_handoff_missing_before_io"
+    },
+    "P3-T34": {
+      "status": "PASS",
+      "seconds": 0.409,
+      "test": "test_T34_p0_transition_graph"
+    },
+    "P3-T35": {
+      "status": "PASS",
+      "seconds": 1.586,
+      "test": "test_T35_event_cas_rollback"
+    },
+    "P3-T36": {
+      "status": "PASS",
+      "seconds": 3.292,
+      "test": "test_T36_crash_boundaries"
+    },
+    "P3-T37": {
+      "status": "PASS",
+      "seconds": 0.906,
+      "test": "test_T37_process_restart"
+    },
+    "P3-T38": {
+      "status": "PASS",
+      "seconds": 0.057,
+      "test": "test_T38_corrupt_authoritative_json"
+    },
+    "P3-T39": {
+      "status": "PASS",
+      "seconds": 1.38,
+      "test": "test_T39_streamlit_workflow"
+    },
+    "P3-T40": {
+      "status": "PASS",
+      "seconds": 0.154,
+      "test": "test_T40_passive_reruns"
+    },
+    "P3-T41": {
+      "status": "PASS",
+      "seconds": 0.117,
+      "test": "test_T41_health"
+    },
+    "P3-T42": {
+      "status": "PASS",
+      "seconds": 0.93,
+      "test": "test_T42_review_diff"
+    },
+    "P3-T43": {
+      "status": "PASS",
+      "seconds": 0.727,
+      "test": "test_T43_approved_ui_readonly"
+    },
+    "P3-T44": {
+      "status": "PASS",
+      "seconds": 0.235,
+      "test": "test_T44_brief_revision_setup"
+    },
+    "P3-T45": {
+      "status": "PASS",
+      "seconds": 0.358,
+      "test": "test_T45_spec_revision_setup"
+    },
+    "P3-T46": {
+      "status": "PASS",
+      "seconds": 0.444,
+      "test": "test_T46_p0_pa"
+    },
+    "P3-T47": {
+      "status": "PASS",
+      "seconds": 0.35,
+      "test": "test_T47_p0_pb"
+    },
+    "P3-T48": {
+      "status": "PASS",
+      "seconds": 0.015,
+      "test": "test_T48_hash_vectors"
+    },
+    "P3-T49": {
+      "status": "PASS",
+      "seconds": 6.763,
+      "test": "test_T49_p1_regression"
+    },
+    "P3-T50": {
+      "status": "PASS",
+      "seconds": 24.514,
+      "test": "test_T50_p2_regression"
+    },
+    "P3-T51": {
+      "status": "PASS",
+      "seconds": 1.519,
+      "test": "test_T51_whole_application_scope"
+    },
+    "P3-T52": {
+      "status": "PASS",
+      "seconds": 0.193,
+      "test": "test_T52_pack_fixture_integrity"
+    }
+  },
+  "p4": {
+    "P4-T01": {
+      "status": "PASS",
+      "seconds": 0.947,
+      "test": "test_T01_approved_csv_vertical"
+    },
+    "P4-T02": {
+      "status": "PASS",
+      "seconds": 0.345,
+      "test": "test_T02_missing_brief_approval"
+    },
+    "P4-T03": {
+      "status": "PASS",
+      "seconds": 0.348,
+      "test": "test_T03_missing_spec_approval"
+    },
+    "P4-T04": {
+      "status": "PASS",
+      "seconds": 0.368,
+      "test": "test_T04_brief_hash_mismatch"
+    },
+    "P4-T05": {
+      "status": "PASS",
+      "seconds": 0.358,
+      "test": "test_T05_spec_hash_and_brief_context"
+    },
+    "P4-T06": {
+      "status": "PASS",
+      "seconds": 0.337,
+      "test": "test_T06_wrong_order_and_selected_versions"
+    },
+    "P4-T07": {
+      "status": "PASS",
+      "seconds": 0.468,
+      "test": "test_T07_stale_approval_and_hash"
+    },
+    "P4-T08": {
+      "status": "PASS",
+      "seconds": 0.166,
+      "test": "test_T08_incomplete_order"
+    },
+    "P4-T09": {
+      "status": "PASS",
+      "seconds": 0.35,
+      "test": "test_T09_stale_order_cas"
+    },
+    "P4-T10": {
+      "status": "PASS",
+      "seconds": 1.048,
+      "test": "test_T10_fresh_process_handoff"
+    },
+    "P4-T11": {
+      "status": "PASS",
+      "seconds": 0.346,
+      "test": "test_T11_missing_column_and_unknown_operation_preflight"
+    },
+    "P4-T12": {
+      "status": "PASS",
+      "seconds": 7.918,
+      "test": "test_T12_full_csv_scan"
+    },
+    "P4-T13": {
+      "status": "PASS",
+      "seconds": 0.334,
+      "test": "test_T13_full_xlsx_source_per_CR_P4_002"
+    },
+    "P4-T14": {
+      "status": "PASS",
+      "seconds": 0.465,
+      "test": "test_T14_approved_selection_mismatch"
+    },
+    "P4-T15": {
+      "status": "PASS",
+      "seconds": 0.28,
+      "test": "test_T15_xlsx_cache_and_bad_zip"
+    },
+    "P4-T16": {
+      "status": "PASS",
+      "seconds": 0.353,
+      "test": "test_T16_closed_parameters_and_chain"
+    },
+    "P4-T17": {
+      "status": "PASS",
+      "seconds": 0.29,
+      "test": "test_T17_select"
+    },
+    "P4-T18": {
+      "status": "PASS",
+      "seconds": 0.493,
+      "test": "test_T18_drop"
+    },
+    "P4-T19": {
+      "status": "PASS",
+      "seconds": 0.307,
+      "test": "test_T19_rename"
+    },
+    "P4-T20": {
+      "status": "PASS",
+      "seconds": 0.773,
+      "test": "test_T20_trim_and_unicode"
+    },
+    "P4-T21": {
+      "status": "PASS",
+      "seconds": 0.378,
+      "test": "test_T21_case"
+    },
+    "P4-T22": {
+      "status": "PASS",
+      "seconds": 0.232,
+      "test": "test_T22_literal_replace"
+    },
+    "P4-T23": {
+      "status": "PASS",
+      "seconds": 0.201,
+      "test": "test_T23_date"
+    },
+    "P4-T24": {
+      "status": "PASS",
+      "seconds": 0.373,
+      "test": "test_T24_date_fail_and_null"
+    },
+    "P4-T25": {
+      "status": "PASS",
+      "seconds": 0.415,
+      "test": "test_T25_exact_number_and_signed64"
+    },
+    "P4-T26": {
+      "status": "PASS",
+      "seconds": 1.379,
+      "test": "test_T26_number_failure_overflow"
+    },
+    "P4-T27": {
+      "status": "PASS",
+      "seconds": 0.507,
+      "test": "test_T27_fill"
+    },
+    "P4-T28": {
+      "status": "PASS",
+      "seconds": 0.788,
+      "test": "test_T28_drop_missing"
+    },
+    "P4-T29": {
+      "status": "PASS",
+      "seconds": 0.591,
+      "test": "test_T29_sort"
+    },
+    "P4-T30": {
+      "status": "PASS",
+      "seconds": 0.695,
+      "test": "test_T30_deduplicate"
+    },
+    "P4-T31": {
+      "status": "PASS",
+      "seconds": 0.098,
+      "test": "test_T31_zero_columns"
+    },
+    "P4-T32": {
+      "status": "PASS",
+      "seconds": 0.223,
+      "test": "test_T32_mixed_sort"
+    },
+    "P4-T33": {
+      "status": "PASS",
+      "seconds": 0.278,
+      "test": "test_T33_null_dedup"
+    },
+    "P4-T34": {
+      "status": "PASS",
+      "seconds": 0.231,
+      "test": "test_T34_non_string_trim"
+    },
+    "P4-T35": {
+      "status": "PASS",
+      "seconds": 0.002,
+      "test": "test_T35_pipeline_order"
+    },
+    "P4-T36": {
+      "status": "PASS",
+      "seconds": 0.437,
+      "test": "test_T36_branch_cycle_reuse_rejected"
+    },
+    "P4-T37": {
+      "status": "PASS",
+      "seconds": 2.396,
+      "test": "test_T37_missing_columns_and_failed_state"
+    },
+    "P4-T38": {
+      "status": "PASS",
+      "seconds": 0.058,
+      "test": "test_T38_sort_semantic_invariant"
+    },
+    "P4-T39": {
+      "status": "PASS",
+      "seconds": 0.038,
+      "test": "test_T39_schema_parameters"
+    },
+    "P4-T40": {
+      "status": "PASS",
+      "seconds": 3.706,
+      "test": "test_T40_full_shape_limits"
+    },
+    "P4-T41": {
+      "status": "PASS",
+      "seconds": 0.95,
+      "test": "test_T41_p0_csv_golden"
+    },
+    "P4-T42": {
+      "status": "PASS",
+      "seconds": 0.685,
+      "test": "test_T42_p0_xlsx_golden"
+    },
+    "P4-T43": {
+      "status": "PASS",
+      "seconds": 3.842,
+      "test": "test_T43_p0_semantic_errors"
+    },
+    "P4-T44": {
+      "status": "PASS",
+      "seconds": 0.918,
+      "test": "test_T44_start_atomicity"
+    },
+    "P4-T45": {
+      "status": "PASS",
+      "seconds": 1.277,
+      "test": "test_T45_kill_before_start_commit"
+    },
+    "P4-T46": {
+      "status": "PASS",
+      "seconds": 1.193,
+      "test": "test_T46_kill_after_start_commit"
+    },
+    "P4-T47": {
+      "status": "PASS",
+      "seconds": 1.203,
+      "test": "test_T47_kill_mid_pipeline"
+    },
+    "P4-T48": {
+      "status": "PASS",
+      "seconds": 1.23,
+      "test": "test_T48_kill_after_promotion"
+    },
+    "P4-T49": {
+      "status": "PASS",
+      "seconds": 1.326,
+      "test": "test_T49_artifact_event_rollback"
+    },
+    "P4-T50": {
+      "status": "PASS",
+      "seconds": 3.019,
+      "test": "test_T50_committed_restart_and_bad_integer_wires"
+    },
+    "P4-T51": {
+      "status": "PASS",
+      "seconds": 3.914,
+      "test": "test_T51_explicit_retry_and_no_stale_adoption"
+    },
+    "P4-T52": {
+      "status": "PASS",
+      "seconds": 2.097,
+      "test": "test_T52_failed_run_order_event_atomic"
+    },
+    "P4-T53": {
+      "status": "PASS",
+      "seconds": 0.875,
+      "test": "test_T53_no_p5_output_or_qa"
+    },
+    "P4-T54": {
+      "status": "PASS",
+      "seconds": 2.02,
+      "test": "test_T54_ui_manual_click_only"
+    },
+    "P4-T55": {
+      "status": "PASS",
+      "seconds": 0.861,
+      "test": "test_T55_ui_health_blocked_and_degraded"
+    },
+    "P4-T56": {
+      "status": "PASS",
+      "seconds": 2.592,
+      "test": "test_T56_ui_audit_and_failure_context"
+    },
+    "P4-T57": {
+      "status": "PASS",
+      "seconds": 3.252,
+      "test": "test_T57_repeatability_and_wire_catalog"
+    },
+    "P4-T58": {
+      "status": "PASS",
+      "seconds": 0.048,
+      "test": "test_T58_seeded_typed_sort_dedup_reference"
+    },
+    "P4-T59": {
+      "status": "PASS",
+      "seconds": 111.879,
+      "test": "test_T59_positive_dense_workload_and_injected_limits"
+    },
+    "P4-T60": {
+      "status": "PASS",
+      "seconds": 1.22,
+      "test": "test_T60_asset_integrity_and_health"
+    },
+    "P4-T61": {
+      "status": "PASS",
+      "seconds": 0.024,
+      "test": "test_T61_forbidden_scope"
+    },
+    "P4-T62": {
+      "status": "PASS",
+      "seconds": 0.216,
+      "test": "test_T62_whole_application_scope_CR_P4_001"
+    },
+    "P4-T63": {
+      "status": "PASS",
+      "seconds": 82.509,
+      "test": "test_T63_frozen_regression_evidence_and_p0"
+    },
+    "P4-T64": {
+      "status": "PASS",
+      "seconds": 0.435,
+      "test": "test_T64_approved_archive_strict_verifier"
+    }
+  }
+}

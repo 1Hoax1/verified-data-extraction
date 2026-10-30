@@ -1,0 +1,12 @@
+{
+  "argv": [
+    "/workspace/verified-data-extraction/.venv/bin/python",
+    "-m",
+    "pytest",
+    "tests/p4/test_execution.py",
+    "-q",
+    "-k",
+    "not T12 and not T40 and not T59"
+  ],
+  "cwd": "/workspace/verified-data-extraction"
+}
