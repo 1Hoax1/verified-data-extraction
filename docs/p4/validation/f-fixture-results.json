@@ -1,0 +1,546 @@
+{
+  "P4-F01": {
+    "columns": [
+      "value",
+      "id"
+    ],
+    "driver": "actual execution.engine.apply",
+    "result": "PASS",
+    "rows": 2,
+    "service_integration": {
+      "driver": "P1 source + real P3 approval + P4 service",
+      "input_unchanged": true,
+      "result": "PASS",
+      "source_type": "LOCAL_CSV",
+      "terminal": "succeeded"
+    }
+  },
+  "P4-F02": {
+    "driver": "actual execution.engine.apply",
+    "error": "COLUMN_NOT_FOUND",
+    "result": "PASS",
+    "service_integration": {
+      "driver": "P1 source + real P3 approval + P4 service",
+      "input_unchanged": true,
+      "result": "PASS",
+      "source_type": "LOCAL_CSV",
+      "terminal": "APPROVED"
+    }
+  },
+  "P4-F03": {
+    "columns": [
+      "id",
+      "name"
+    ],
+    "driver": "actual execution.engine.apply",
+    "result": "PASS",
+    "rows": 1,
+    "service_integration": {
+      "driver": "P1 source + real P3 approval + P4 service",
+      "input_unchanged": true,
+      "result": "PASS",
+      "source_type": "LOCAL_CSV",
+      "terminal": "succeeded"
+    }
+  },
+  "P4-F04": {
+    "columns": [
+      "id",
+      "name"
+    ],
+    "driver": "actual execution.engine.apply",
+    "result": "PASS",
+    "rows": 1,
+    "service_integration": {
+      "driver": "P1 source + real P3 approval + P4 service",
+      "input_unchanged": true,
+      "result": "PASS",
+      "source_type": "LOCAL_CSV",
+      "terminal": "succeeded"
+    }
+  },
+  "P4-F05": {
+    "driver": "actual execution.engine.apply",
+    "error": "COLUMN_NOT_FOUND",
+    "result": "PASS",
+    "service_integration": {
+      "driver": "P1 source + real P3 approval + P4 service",
+      "input_unchanged": true,
+      "result": "PASS",
+      "source_type": "LOCAL_CSV",
+      "terminal": "APPROVED"
+    }
+  },
+  "P4-F06": {
+    "columns": [
+      "name",
+      "id"
+    ],
+    "driver": "actual execution.engine.apply",
+    "result": "PASS",
+    "rows": 1,
+    "service_integration": {
+      "driver": "P1 source + real P3 approval + P4 service",
+      "input_unchanged": true,
+      "result": "PASS",
+      "source_type": "LOCAL_CSV",
+      "terminal": "succeeded"
+    }
+  },
+  "P4-F07": {
+    "driver": "actual execution.engine.apply",
+    "error": "COLUMN_COLLISION",
+    "result": "PASS",
+    "service_integration": {
+      "driver": "P1 source + real P3 approval + P4 service",
+      "input_unchanged": true,
+      "result": "PASS",
+      "source_type": "LOCAL_CSV",
+      "terminal": "APPROVED"
+    }
+  },
+  "P4-F08": {
+    "columns": [
+      "id",
+      "txt"
+    ],
+    "driver": "actual execution.engine.apply",
+    "result": "PASS",
+    "rows": 2,
+    "service_integration": {
+      "driver": "P1 source + real P3 approval + P4 service",
+      "input_unchanged": true,
+      "result": "PASS",
+      "source_type": "LOCAL_CSV",
+      "terminal": "succeeded"
+    }
+  },
+  "P4-F09": {
+    "columns": [
+      "s"
+    ],
+    "driver": "actual execution.engine.apply",
+    "result": "PASS",
+    "rows": 1,
+    "service_integration": {
+      "driver": "P1 source + real P3 approval + P4 service",
+      "input_unchanged": true,
+      "result": "PASS",
+      "source_type": "LOCAL_CSV",
+      "terminal": "succeeded"
+    }
+  },
+  "P4-F10": {
+    "columns": [
+      "s"
+    ],
+    "driver": "actual execution.engine.apply",
+    "result": "PASS",
+    "rows": 2,
+    "service_integration": {
+      "driver": "P1 source + real P3 approval + P4 service",
+      "input_unchanged": true,
+      "result": "PASS",
+      "source_type": "LOCAL_CSV",
+      "terminal": "succeeded"
+    }
+  },
+  "P4-F11": {
+    "columns": [
+      "s"
+    ],
+    "driver": "actual execution.engine.apply",
+    "result": "PASS",
+    "rows": 1,
+    "service_integration": {
+      "driver": "P1 source + real P3 approval + P4 service",
+      "input_unchanged": true,
+      "result": "PASS",
+      "source_type": "LOCAL_CSV",
+      "terminal": "succeeded"
+    }
+  },
+  "P4-F12": {
+    "columns": [
+      "c"
+    ],
+    "driver": "actual execution.engine.apply",
+    "result": "PASS",
+    "rows": 3,
+    "service_integration": {
+      "driver": "P1 source + real P3 approval + P4 service",
+      "input_unchanged": true,
+      "result": "PASS",
+      "source_type": "LOCAL_CSV",
+      "terminal": "succeeded"
+    }
+  },
+  "P4-F13": {
+    "driver": "actual execution.engine.apply",
+    "error": "INVALID_PARAMETER",
+    "result": "PASS",
+    "service_integration": {
+      "code": "INVALID_PARAMETER",
+      "rejected_by": "P3 schema/semantic approval boundary",
+      "result": "PASS"
+    }
+  },
+  "P4-F14": {
+    "columns": [
+      "d"
+    ],
+    "driver": "actual execution.engine.apply",
+    "result": "PASS",
+    "rows": 2,
+    "service_integration": {
+      "driver": "P1 source + real P3 approval + P4 service",
+      "input_unchanged": true,
+      "result": "PASS",
+      "source_type": "LOCAL_CSV",
+      "terminal": "succeeded"
+    }
+  },
+  "P4-F15": {
+    "driver": "actual execution.engine.apply",
+    "error": "PARSE_FAILED",
+    "result": "PASS",
+    "service_integration": {
+      "driver": "P1 source + real P3 approval + P4 service",
+      "input_unchanged": true,
+      "result": "PASS",
+      "source_type": "LOCAL_CSV",
+      "terminal": "FAILED"
+    }
+  },
+  "P4-F16": {
+    "columns": [
+      "d"
+    ],
+    "driver": "actual execution.engine.apply",
+    "result": "PASS",
+    "rows": 2,
+    "service_integration": {
+      "driver": "P1 source + real P3 approval + P4 service",
+      "input_unchanged": true,
+      "result": "PASS",
+      "source_type": "LOCAL_CSV",
+      "terminal": "succeeded"
+    }
+  },
+  "P4-F17": {
+    "columns": [
+      "n"
+    ],
+    "driver": "actual execution.engine.apply",
+    "result": "PASS",
+    "rows": 2,
+    "service_integration": {
+      "driver": "P1 source + real P3 approval + P4 service",
+      "input_unchanged": true,
+      "result": "PASS",
+      "source_type": "LOCAL_CSV",
+      "terminal": "succeeded"
+    }
+  },
+  "P4-F18": {
+    "columns": [
+      "n"
+    ],
+    "driver": "actual execution.engine.apply",
+    "result": "PASS",
+    "rows": 2,
+    "service_integration": {
+      "driver": "P1 source + real P3 approval + P4 service",
+      "input_unchanged": true,
+      "result": "PASS",
+      "source_type": "LOCAL_CSV",
+      "terminal": "succeeded"
+    }
+  },
+  "P4-F19": {
+    "driver": "actual execution.engine.apply",
+    "error": "PARSE_FAILED",
+    "result": "PASS",
+    "service_integration": {
+      "driver": "P1 source + real P3 approval + P4 service",
+      "input_unchanged": true,
+      "result": "PASS",
+      "source_type": "LOCAL_CSV",
+      "terminal": "FAILED"
+    }
+  },
+  "P4-F20": {
+    "columns": [
+      "n"
+    ],
+    "driver": "actual execution.engine.apply",
+    "result": "PASS",
+    "rows": 2,
+    "service_integration": {
+      "driver": "P1 source + real P3 approval + P4 service",
+      "input_unchanged": true,
+      "result": "PASS",
+      "source_type": "LOCAL_CSV",
+      "terminal": "succeeded"
+    }
+  },
+  "P4-F21": {
+    "columns": [
+      "n"
+    ],
+    "driver": "actual execution.engine.apply",
+    "result": "PASS",
+    "rows": 2,
+    "service_integration": {
+      "driver": "P1 source + real P3 approval + P4 service",
+      "input_unchanged": true,
+      "result": "PASS",
+      "source_type": "LOCAL_XLSX",
+      "terminal": "succeeded"
+    }
+  },
+  "P4-F22": {
+    "columns": [
+      "a",
+      "b"
+    ],
+    "driver": "actual execution.engine.apply",
+    "result": "PASS",
+    "rows": 1,
+    "service_integration": {
+      "driver": "P1 source + real P3 approval + P4 service",
+      "input_unchanged": true,
+      "result": "PASS",
+      "source_type": "LOCAL_XLSX",
+      "terminal": "succeeded"
+    }
+  },
+  "P4-F23": {
+    "columns": [
+      "a",
+      "b"
+    ],
+    "driver": "actual execution.engine.apply",
+    "result": "PASS",
+    "rows": 3,
+    "service_integration": {
+      "driver": "P1 source + real P3 approval + P4 service",
+      "input_unchanged": true,
+      "result": "PASS",
+      "source_type": "LOCAL_XLSX",
+      "terminal": "succeeded"
+    }
+  },
+  "P4-F24": {
+    "columns": [
+      "key",
+      "id"
+    ],
+    "driver": "actual execution.engine.apply",
+    "result": "PASS",
+    "rows": 4,
+    "service_integration": {
+      "driver": "P1 source + real P3 approval + P4 service",
+      "input_unchanged": true,
+      "result": "PASS",
+      "source_type": "LOCAL_XLSX",
+      "terminal": "succeeded"
+    }
+  },
+  "P4-F25": {
+    "columns": [
+      "k",
+      "id"
+    ],
+    "driver": "actual execution.engine.apply",
+    "result": "PASS",
+    "rows": 3,
+    "service_integration": {
+      "driver": "P1 source + real P3 approval + P4 service",
+      "input_unchanged": true,
+      "result": "PASS",
+      "source_type": "LOCAL_XLSX",
+      "terminal": "succeeded"
+    }
+  },
+  "P4-F26": {
+    "columns": [
+      "key",
+      "id"
+    ],
+    "driver": "actual execution.engine.apply",
+    "result": "PASS",
+    "rows": 2,
+    "service_integration": {
+      "driver": "P1 source + real P3 approval + P4 service",
+      "input_unchanged": true,
+      "result": "PASS",
+      "source_type": "LOCAL_CSV",
+      "terminal": "succeeded"
+    }
+  },
+  "P4-F27": {
+    "columns": [
+      "key",
+      "id"
+    ],
+    "driver": "actual execution.engine.apply",
+    "result": "PASS",
+    "rows": 3,
+    "service_integration": {
+      "driver": "P1 source + real P3 approval + P4 service",
+      "input_unchanged": true,
+      "result": "PASS",
+      "source_type": "LOCAL_CSV",
+      "terminal": "succeeded"
+    }
+  },
+  "P4-F28": {
+    "columns": [
+      "key",
+      "id"
+    ],
+    "driver": "actual execution.engine.apply",
+    "result": "PASS",
+    "rows": 2,
+    "service_integration": {
+      "driver": "P1 source + real P3 approval + P4 service",
+      "input_unchanged": true,
+      "result": "PASS",
+      "source_type": "LOCAL_CSV",
+      "terminal": "succeeded"
+    }
+  },
+  "P4-F29": {
+    "columns": [
+      "a"
+    ],
+    "driver": "actual execution.engine.apply",
+    "result": "PASS",
+    "rows": 0,
+    "service_integration": {
+      "driver": "P1 source + real P3 approval + P4 service",
+      "input_unchanged": true,
+      "result": "PASS",
+      "source_type": "LOCAL_XLSX",
+      "terminal": "succeeded"
+    }
+  },
+  "P4-F30": {
+    "driver": "actual execution.engine.apply",
+    "error": "COLUMN_NOT_FOUND",
+    "result": "PASS",
+    "service_integration": {
+      "driver": "P1 source + real P3 approval + P4 service",
+      "input_unchanged": true,
+      "result": "PASS",
+      "source_type": "LOCAL_CSV",
+      "terminal": "APPROVED"
+    }
+  },
+  "P4-F31": {
+    "driver": "actual execution.engine.apply",
+    "error": "INVALID_OPERATION",
+    "result": "PASS",
+    "service_integration": {
+      "code": "INVALID_OPERATION",
+      "rejected_by": "P3 schema/semantic approval boundary",
+      "result": "PASS"
+    }
+  },
+  "P4-F32": {
+    "driver": "actual execution.engine.apply",
+    "error": "INVALID_PARAMETER",
+    "result": "PASS",
+    "service_integration": {
+      "code": "INVALID_PARAMETER",
+      "rejected_by": "P3 schema/semantic approval boundary",
+      "result": "PASS"
+    }
+  },
+  "P4-F33": {
+    "columns": [
+      "name"
+    ],
+    "driver": "actual execution.engine.apply",
+    "result": "PASS",
+    "rows": 1,
+    "service_integration": {
+      "driver": "P1 source + real P3 approval + P4 service",
+      "input_unchanged": true,
+      "result": "PASS",
+      "source_type": "LOCAL_CSV",
+      "terminal": "succeeded"
+    }
+  },
+  "P4-F34": {
+    "columns": [
+      "v"
+    ],
+    "driver": "actual execution.engine.apply",
+    "result": "PASS",
+    "rows": 2,
+    "service_integration": {
+      "driver": "P1 source + real P3 approval + P4 service",
+      "input_unchanged": true,
+      "result": "PASS",
+      "source_type": "LOCAL_XLSX",
+      "terminal": "succeeded"
+    }
+  },
+  "P4-F35": {
+    "driver": "actual execution.engine.apply",
+    "error": "SCHEMA_MISMATCH",
+    "result": "PASS",
+    "service_integration": {
+      "driver": "P1 source + real P3 approval + P4 service",
+      "input_unchanged": true,
+      "result": "PASS",
+      "source_type": "LOCAL_CSV",
+      "terminal": "APPROVED"
+    }
+  },
+  "P4-F36": {
+    "driver": "actual execution.engine.apply",
+    "error": "SCHEMA_MISMATCH",
+    "result": "PASS",
+    "service_integration": {
+      "driver": "P1 source + real P3 approval + P4 service",
+      "input_unchanged": true,
+      "result": "PASS",
+      "source_type": "LOCAL_XLSX",
+      "terminal": "FAILED"
+    }
+  },
+  "P4-F37": {
+    "columns": [
+      "key",
+      "id"
+    ],
+    "driver": "actual execution.engine.apply",
+    "result": "PASS",
+    "rows": 2,
+    "service_integration": {
+      "driver": "P1 source + real P3 approval + P4 service",
+      "input_unchanged": true,
+      "result": "PASS",
+      "source_type": "LOCAL_XLSX",
+      "terminal": "succeeded"
+    }
+  },
+  "P4-F38": {
+    "columns": [
+      "v"
+    ],
+    "driver": "actual execution.engine.apply",
+    "result": "PASS",
+    "rows": 2,
+    "service_integration": {
+      "driver": "P1 source + real P3 approval + P4 service",
+      "input_unchanged": true,
+      "result": "PASS",
+      "source_type": "LOCAL_XLSX",
+      "terminal": "succeeded"
+    }
+  }
+}

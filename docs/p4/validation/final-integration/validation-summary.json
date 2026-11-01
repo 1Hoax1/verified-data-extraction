@@ -1,0 +1,221 @@
+{
+  "status": "FINAL_INTEGRATION_VALIDATION_PASS; OWNER_MERGE_AUTHORIZATION_PENDING",
+  "gate_b": "CLOSED / PASS BY OWNER; NOT_REDECIDED",
+  "pr5": "DRAFT / UNMERGED",
+  "initial_release_commit": "2115e51e6036404b5134b984c9c176bbd562f2f4",
+  "tested_commit": "d4ad0c297a67b4eae6a3ae1b018dc6fa73a6e2ed",
+  "tested_tree": "1ce97d0ba09dcd03d1120ac8e5a32a91ff3a32db",
+  "phase_exit_codes": {
+    "positive-01": 0,
+    "scope-01": 0,
+    "full-01": 0
+  },
+  "mandatory_tests": {
+    "P1": 42,
+    "P2": 54,
+    "P3": 52,
+    "P4": 64
+  },
+  "total_passed": 212,
+  "failures": 0,
+  "errors": 0,
+  "skips": 0,
+  "xfails": 0,
+  "governance_cases": {
+    "P01": {
+      "result": "PASS",
+      "detail": "Real integrated HEAD/index/disk and exact G/B/H/L/M/P verified by both auditors",
+      "subcases": 1,
+      "enforcement": "executed assertion"
+    },
+    "P02": {
+      "result": "PASS",
+      "detail": "Full real changed/untracked inventory; original P2-T40/P3-T51 also run separately and in combined suite",
+      "subcases": 1,
+      "enforcement": "executed assertion"
+    },
+    "P03": {
+      "result": "PASS",
+      "detail": "Full clean copied tree passes with explicitly verified real authority",
+      "subcases": 1,
+      "enforcement": "executed assertion"
+    },
+    "P04": {
+      "result": "PASS",
+      "detail": "Descendant evidence-only commit passes without repin",
+      "subcases": 1,
+      "enforcement": "executed assertion"
+    },
+    "N01": {
+      "result": "PASS",
+      "detail": "Unchanged no-context singleton rejection; both historical assertions remain",
+      "subcases": 2,
+      "enforcement": "executed assertion"
+    },
+    "N02": {
+      "result": "PASS",
+      "detail": "Byte addition/removal, CRLF and Unicode normalization each rejected",
+      "subcases": 5,
+      "enforcement": "executed assertion"
+    },
+    "N03": {
+      "result": "PASS",
+      "detail": "Staged-only, unstaged-only, and changed HEAD with approved index/disk each rejected",
+      "subcases": 3,
+      "enforcement": "executed assertion"
+    },
+    "N04": {
+      "result": "PASS",
+      "detail": "Missing file, symlink, executable mode, conflicting index stages each rejected",
+      "subcases": 4,
+      "enforcement": "executed assertion"
+    },
+    "N05": {
+      "result": "PASS",
+      "detail": "Both obsolete approved/baseline document versions rejected",
+      "subcases": 2,
+      "enforcement": "executed assertion"
+    },
+    "N06": {
+      "result": "PASS",
+      "detail": "Missing ancestry, replace ref, shallow history, unknown authority object rejected",
+      "subcases": 4,
+      "enforcement": "executed assertion"
+    },
+    "N07": {
+      "result": "PASS",
+      "detail": "Digest and closed-schema/serialization negatives both exercised",
+      "subcases": 18,
+      "enforcement": "executed assertion"
+    },
+    "N08": {
+      "result": "PASS",
+      "detail": "Recomputed arbitrary document/pin still fails the original expected P",
+      "subcases": 1,
+      "enforcement": "executed assertion"
+    },
+    "N09": {
+      "result": "PASS",
+      "detail": "Changed pin/P requires independent owner receipt; synthetic alternative mismatches actual receipt",
+      "subcases": 1,
+      "enforcement": "executed independent receipt comparison; human authorization remains a review boundary"
+    },
+    "N10": {
+      "result": "PASS",
+      "detail": "Approved document never authorizes a forbidden neighboring path",
+      "subcases": 1,
+      "enforcement": "executed assertion"
+    },
+    "N11": {
+      "result": "PASS",
+      "detail": "Missing pin/authority and modified scratch bytes rejected, with no historical fallback",
+      "subcases": 4,
+      "enforcement": "executed assertion"
+    },
+    "N12": {
+      "result": "PASS",
+      "detail": "Frozen legacy/P4 sources, migration, P0 schema, pack and dependency lock all reject mutation; historical snippets also retained",
+      "subcases": 6,
+      "enforcement": "executed assertion"
+    },
+    "N13": {
+      "result": "PASS",
+      "detail": "New descendant document is rejected until explicitly repinned; only one active version",
+      "subcases": 1,
+      "enforcement": "executed assertion"
+    },
+    "P05": {
+      "result": "PASS",
+      "detail": "Future-repin mechanics tested using isolated synthetic receipt/authority; real owner approval is not fabricated",
+      "subcases": 1,
+      "enforcement": "test-only simulation of the external approval boundary; real active pin unchanged"
+    },
+    "N14": {
+      "result": "PASS",
+      "detail": "Both frozen historical test files reject any bytes beyond the exact approved amendment",
+      "subcases": 2,
+      "enforcement": "executed assertion"
+    }
+  },
+  "recorded_governance_subcases": 59,
+  "G1_to_G2_transition": {
+    "active_G2_matches_owner_receipt": "PASS",
+    "approved_G2_copy": "PASS",
+    "obsolete_G1_document": "REJECTED",
+    "obsolete_G1_pin": "REJECTED"
+  },
+  "fixture_coverage": {
+    "f-fixture": 38,
+    "x-fixture": 19,
+    "w-fixture": 45
+  },
+  "P0_goldens": 2,
+  "strict_verifier": {
+    "result": "STATIC_PINS_REFS_AND_P0_CONTRACTS_PASS",
+    "operation_cases": 38,
+    "failure_cases": 19,
+    "exact_failure_postconditions": 19,
+    "golden": 2,
+    "P0_checkout": "CHECKED",
+    "p0_valid_operation_schemas": 36,
+    "p0_schema_invalid_operation_cases": 2,
+    "p0_semantic_invalid_operation_cases": 1,
+    "operation_semantic_execution": "NOT_RUN",
+    "runtime_gate_b": "NOT_RUN",
+    "precision_cases": 45,
+    "signed64_round_trips": 13,
+    "rejected_bad_wires": 26,
+    "unicode_exact_oracles": 2,
+    "source_integer_overflow_oracles": 4
+  },
+  "mutations_rejected": 9,
+  "pin_G2": {
+    "approval_commit": "27cdea7b204c36e839f1c3b1a8de387f64c0a91e",
+    "decisions_blob": "90cbcbaf9838dcee9cc87b889958b15816b4b0fd",
+    "decisions_sha256": "035f180a346ff9f1c9a5074e872d2eb10e1d6dd1a289acf90f7eeb7d372e4782",
+    "decisions_size_bytes": 36955,
+    "format": "P4_GOVERNANCE_PIN_V1",
+    "git_mode": "100644",
+    "implementation_baseline": "7685110506d115805c473b064752f86e9e5c045b",
+    "path": "DECISIONS.md",
+    "repository": "1Hoax1/verified-data-extraction"
+  },
+  "pin_sha256_P2": "f7a80b663b7a7347e7f38bb2aaf6281f6d1dce4344f079be02cc45210de3d050",
+  "stress": {
+    "result": "PASS",
+    "tested_commit": "d4ad0c297a67b4eae6a3ae1b018dc6fa73a6e2ed",
+    "source_bytes": 40801000,
+    "source_sha256": "5c5d2dbf69c0b8f4d27be5ec8a258677eb883d5ad267a4ec644b0205978aa97d",
+    "input_rows": 100000,
+    "columns": 200,
+    "result_rows": 90000,
+    "full_reference_cells_checked": 18000000,
+    "result_sha256": "ea277f2873ed3bd712c7148c2b87035c42ed4cdbbec54edee2d59d63a6b5420b",
+    "elapsed_seconds": 59.31668244499997,
+    "baseline_rss_bytes": 49049600,
+    "observed_peak_rss_bytes": 342593536,
+    "incremental_peak_rss_bytes": 293543936,
+    "runtime_resources": {
+      "incremental_peak_rss": 93921280,
+      "elapsed_seconds": 58.93738503200075,
+      "scratch_peak_bytes": 180144042,
+      "merge_fan_in": 16,
+      "rss_samples": 7284
+    }
+  },
+  "implementation_changed_files": [
+    "tests/p4/approved_governance_pin_v1.json",
+    "tests/p4/scope_allowlist_v1.json",
+    "tests/scope_policy.py"
+  ],
+  "production_changes": 0,
+  "old_validation_evidence_restored": true,
+  "all_final_phases_same_commit_and_tree": true,
+  "merge_authorization": "NOT_GRANTED; separate main managing chat owner decision required",
+  "limitations": [
+    "P05 future-authority repin is a scoped test-only simulation.",
+    "N09 retains the independently verified owner-receipt/human-review boundary; no local test proves human authorization if every audit trust anchor is rewritten.",
+    "Linux/Python3.12.14 only, no independent-host/Windows/CI or physical-power-loss claim.",
+    "Existing sampled-RSS/soft deadline and P0 P-C 13-file discrepancy remain unchanged."
+  ]
+}

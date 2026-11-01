@@ -1,0 +1,10 @@
+{
+  "argv": [
+    "/workspace/verified-data-extraction/.venv/bin/python",
+    "-m",
+    "p4.stress_probe",
+    "/workspace/p4-implementation-work/P4_Implementation_Pack_v1.0_APPROVED",
+    "/tmp/p4-stress-development-02"
+  ],
+  "cwd": "/workspace/verified-data-extraction"
+}

@@ -1,0 +1,26 @@
+{
+  "status": "VERIFIED_OWNER_STAGE_A",
+  "record": "CR-P4-005_REVISED_APPROVED_2026-11-01",
+  "authority": "main managing chat explicit owner confirmation 2026-11-01",
+  "repository": "1Hoax1/verified-data-extraction",
+  "implementation_baseline": "7685110506d115805c473b064752f86e9e5c045b",
+  "prior_owner_approval": "89d8e590d528cce58b5476a41ca5cc482e59be3e",
+  "approval_commit": "f65e175708bc52058cbaf288d6953f2ac5ba5a50",
+  "path": "DECISIONS.md",
+  "decisions_blob": "fee2ec5795db8307f6201ea2883d37b508ffd366",
+  "decisions_sha256": "0eb02c0a72188b14c24ee2f247f5bf036736033b84611f5f07035352b0564c00",
+  "decisions_size_bytes": 33056,
+  "git_mode": "100644",
+  "approved_proposal_path": "docs/change_requests/CR-P4-005_REVISED_PROPOSED.md",
+  "approved_proposal_sha256": "6545b582d4003449fdc7a5f0da3d7b2b0db8bfb314e7f85776e9b39f6c396170",
+  "evidence": {
+    "verified_on": "2026-11-01",
+    "verification": "Full source blob was read from immutable GitHub commit G and SHA-256 recomputed from exact decoded binary bytes; Git tree mode/blob/size and ancestry verified.",
+    "ancestry": "7685110506d115805c473b064752f86e9e5c045b -> 89d8e590d528cce58b5476a41ca5cc482e59be3e -> f65e175708bc52058cbaf288d6953f2ac5ba5a50",
+    "tested_runtime": "NOT_RUN",
+    "pin_file_status": "NOT_CREATED",
+    "PR4_status": "DRAFT_UNMERGED",
+    "gate_b": "NOT_CLOSED",
+    "bounds": "Test-only exact-governance pin; do not merge PR #4 or modify P0-P4 production code."
+  }
+}

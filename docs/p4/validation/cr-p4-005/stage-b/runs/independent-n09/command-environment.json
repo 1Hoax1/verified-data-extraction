@@ -1,0 +1,14 @@
+{
+  "command": [
+    "/workspace/verified-data-extraction/.venv/bin/python",
+    "/workspace/p4-cr005-stageb-work/check_n09.py"
+  ],
+  "cwd": "/workspace/p4-cr005-integration",
+  "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+  "started_at_moscow": "2026-11-01T23:53:37.476070+03:00",
+  "exit_code": 0,
+  "tested_commit": "a868134fb9f3118bd5e56c26662db55fe281430d",
+  "tested_tree": "0150b2eccb498d86b6e0ecf2cbc854a6de381f39",
+  "stdout_sha256": "cab104af81662f8c1c9651dc934d4a4d3dcdc459134f6a3a8e500287b9e1c70a",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

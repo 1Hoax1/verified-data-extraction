@@ -1,0 +1,19 @@
+{
+  "status": "PASS",
+  "remote_refs": [
+    "222869da1d56c833851d44f25b87e8180f97562d\trefs/heads/feature/p4-deterministic-engine",
+    "a868134fb9f3118bd5e56c26662db55fe281430d\trefs/heads/integration/p4-cr-p4-005-20261101",
+    "966f2dd98c897302940d6b200769bfe640f57bef\trefs/heads/main"
+  ],
+  "github_commit": "a868134fb9f3118bd5e56c26662db55fe281430d",
+  "PR4": {
+    "url": "https://github.com/1Hoax1/verified-data-extraction/pull/4",
+    "state": "open",
+    "draft": true,
+    "merged": false,
+    "head": "feature/p4-deterministic-engine",
+    "head_sha": "222869da1d56c833851d44f25b87e8180f97562d"
+  },
+  "no_main_or_PR4_updates": true,
+  "integrated_branch_head_equals_tested_commit": true
+}

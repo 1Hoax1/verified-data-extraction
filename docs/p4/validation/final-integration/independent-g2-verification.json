@@ -1,0 +1,24 @@
+{
+  "status": "PASS",
+  "source": "Real GitHub objects fetched with Git; GitHub API independently resolves G2",
+  "initial_release_commit": "2115e51e6036404b5134b984c9c176bbd562f2f4",
+  "lineage": [
+    "7685110506d115805c473b064752f86e9e5c045b",
+    "89d8e590d528cce58b5476a41ca5cc482e59be3e",
+    "f65e175708bc52058cbaf288d6953f2ac5ba5a50",
+    "966f2dd98c897302940d6b200769bfe640f57bef",
+    "27cdea7b204c36e839f1c3b1a8de387f64c0a91e",
+    "2595ad45c962ad6ec5790261ecdaf59907ff8b40",
+    "2115e51e6036404b5134b984c9c176bbd562f2f4"
+  ],
+  "G2": "27cdea7b204c36e839f1c3b1a8de387f64c0a91e",
+  "B2": "90cbcbaf9838dcee9cc87b889958b15816b4b0fd",
+  "H2": "035f180a346ff9f1c9a5074e872d2eb10e1d6dd1a289acf90f7eeb7d372e4782",
+  "L2": 36955,
+  "M": "100644",
+  "receipt_matches_git_objects": true,
+  "release_DECISIONS_matches_G2": true,
+  "production_tests_contracts_packages_equal_previous_validated_snapshot": true,
+  "gate_b": "CLOSED / PASS BY OWNER",
+  "merge_authorization": "NOT_GRANTED"
+}
