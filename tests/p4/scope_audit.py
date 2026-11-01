@@ -167,7 +167,7 @@ def governance_repository_probes(root, tmp_path, monkeypatch):
     rejected(lambda: scope.audit_repository_paths(['DECISIONS.md']))
     passed('N01', 'Unchanged no-context singleton rejection; both historical assertions remain', 2)
     variants = [original + b' ', original[:-1], original.replace(b'\n', b'\r\n'),
-                unicodedata.normalize('NFD', original.decode()).encode()]
+                original + 'é'.encode(), original + unicodedata.normalize('NFD', 'é').encode()]
     assert all(raw != original for raw in variants)
     for raw in variants:
         document.write_bytes(raw)
@@ -293,7 +293,7 @@ def governance_repository_probes(root, tmp_path, monkeypatch):
         file.write_bytes(previous)
     passed('N12', 'Frozen legacy/P4 sources, migration, P0 schema, pack and dependency lock all reject mutation; historical snippets also retained', len(protected))
 
-    second = commit_document(original + b'\n# Simulated approved G2 in isolated test fixture only\n')
+    second = commit_document(original + '\n# Simulated approved G2 café in isolated test fixture only\n'.encode())
     rejected(lambda: scope.verify_governance_document(repo))
     passed('N13', 'New descendant document is rejected until explicitly repinned; only one active version')
     candidate = dict(pin, approval_commit=second,
@@ -311,6 +311,12 @@ def governance_repository_probes(root, tmp_path, monkeypatch):
         patch.setattr(sys.modules[__name__], 'POLICY', candidate_policy)
         scope.verify_governance_document(repo)
         audit_p4(repo)
+        # The real approved document has no decomposable codepoints. Use the
+        # scoped G2 fixture to prove equivalent Unicode spelling still fails.
+        normalized = unicodedata.normalize('NFD', document.read_text()).encode()
+        assert normalized != document.read_bytes()
+        document.write_bytes(normalized)
+        rejected(lambda: scope.verify_governance_document(repo))
         document.write_bytes(original)
         rejected(lambda: scope.verify_governance_document(repo))
     restore()
