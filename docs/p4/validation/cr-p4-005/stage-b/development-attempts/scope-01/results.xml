@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="1" skipped="0" tests="3" time="88.486" timestamp="2026-11-01T20:43:36.818827+00:00" hostname="3babf30c8964"><testcase classname="tests.p4.test_execution" name="test_T61_forbidden_scope" time="0.053"><properties><property name="p4_id" value="P4-T61" /></properties></testcase><testcase classname="tests.p4.test_execution" name="test_T62_whole_application_scope_CR_P4_001" time="0.683"><properties><property name="p4_id" value="P4-T62" /></properties><failure message="AssertionError">tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-1/test_T62_whole_application_sco0')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x7fca46317d10&gt;
+
+    def test_T62_whole_application_scope_CR_P4_001(tmp_path, monkeypatch):
+        from .scope_audit import audit_p4, negative_repository_probes, governance_repository_probes
+        from scope_policy import audit_application
+        base_project = subprocess.check_output(['git','show','129300728c446b82eaeafe1068e27339eb7176dd:pyproject.toml'],cwd=ROOT,text=True)
+        base_lock = subprocess.check_output(['git','show','129300728c446b82eaeafe1068e27339eb7176dd:uv.lock'],cwd=ROOT,text=True)
+        audit_application(ROOT, base_project, base_lock, phase='p3')
+        audit_p4(ROOT)
+        negative_repository_probes(ROOT, tmp_path)
+&gt;       governance_repository_probes(ROOT, tmp_path, monkeypatch)
+
+tests/p4/test_execution.py:744: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+root = PosixPath('/workspace/p4-cr005-integration')
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-1/test_T62_whole_application_sco0')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x7fca46317d10&gt;
+
+    def governance_repository_probes(root, tmp_path, monkeypatch):
+        """P01-P05/N01-N14; mutations use isolated real Git history, never root."""
+        import subprocess
+        import unicodedata
+        import pytest
+        import scope_policy as scope
+        results, commands = {}, []
+    
+        def run(directory, *args, input=None):
+            argv = ['git', '-c', 'user.name=P4 test fixture', '-c', 'user.email=p4-fixture@example.invalid', *args]
+            proc = subprocess.run(argv, cwd=directory, input=input, capture_output=True)
+            commands.append({'argv': argv, 'cwd': str(directory), 'exit_code': proc.returncode,
+                             'stdout': proc.stdout.decode(errors='replace'), 'stderr': proc.stderr.decode(errors='replace')})
+            assert proc.returncode == 0, proc.stderr.decode(errors='replace')
+            return proc.stdout
+    
+        def passed(identity, detail, count=1, enforcement='executed assertion'):
+            results[identity] = {'result': 'PASS', 'detail': detail, 'subcases': count, 'enforcement': enforcement}
+    
+        def rejected(action):
+            with pytest.raises(AssertionError, match='Unapproved'):
+                action()
+    
+        pin = scope.verify_governance_document(root)
+        frozen_baseline(root)
+        passed('P01', 'Real integrated HEAD/index/disk and exact G/B/H/L/M/P verified by both auditors')
+        changed = run(root, 'diff', '--name-only', scope.GOVERNANCE_BASELINE).decode().splitlines()
+        untracked = run(root, 'ls-files', '--others', '--exclude-standard').decode().splitlines()
+        scope.audit_repository_paths(changed + untracked, root=root)
+        passed('P02', 'Full real changed/untracked inventory; original P2-T40/P3-T51 also run separately and in combined suite')
+        copied = tmp_path / 'whole-app'
+        audit_p4(copied, authority_root=root)
+        passed('P03', 'Full clean copied tree passes with explicitly verified real authority')
+    
+        repo = tmp_path / 'governance-git'
+        run(tmp_path, 'clone', '--shared', '--no-checkout', '--quiet', str(root), str(repo))
+        start = run(root, 'rev-parse', 'HEAD').decode().strip()
+        run(repo, 'switch', '--detach', '--quiet', start)
+        document = repo / 'DECISIONS.md'
+        pin_path = repo / scope.GOVERNANCE_PIN
+        original, original_pin = document.read_bytes(), pin_path.read_bytes()
+    
+        def restore():
+            # This path is a disposable clone under pytest tmp storage only.
+            assert repo.parent == tmp_path and repo != root
+            run(repo, 'restore', '--source=' + start, '--staged', '--worktree', '--', 'DECISIONS.md', scope.GOVERNANCE_PIN)
+            run(repo, 'switch', '--detach', '--quiet', start)
+            document.chmod(0o644)
+            assert document.read_bytes() == original and pin_path.read_bytes() == original_pin
+            scope.verify_governance_document(repo)
+    
+        def commit_document(raw):
+            document.write_bytes(raw)
+            run(repo, 'add', '--', 'DECISIONS.md')
+            run(repo, 'commit', '--quiet', '-m', 'Synthetic governance probe, not owner approval')
+            return run(repo, 'rev-parse', 'HEAD').decode().strip()
+    
+        # A descendant evidence-only commit does not rotate the approved document.
+        extra = repo / 'docs/p4/validation/probe-evidence.txt'
+        extra.write_text('test-only descendant\n')
+        run(repo, 'add', '--', str(extra.relative_to(repo)))
+        run(repo, 'commit', '--quiet', '-m', 'Synthetic evidence-only descendant')
+        scope.verify_governance_document(repo)
+        passed('P04', 'Descendant evidence-only commit passes without repin')
+        restore()
+    
+        rejected(lambda: scope.audit_repository_paths(['DECISIONS.md']))
+        passed('N01', 'Unchanged no-context singleton rejection; both historical assertions remain', 2)
+        variants = [original + b' ', original[:-1], original.replace(b'\n', b'\r\n'),
+                    unicodedata.normalize('NFD', original.decode()).encode()]
+&gt;       assert all(raw != original for raw in variants)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AssertionError
+
+tests/p4/scope_audit.py:171: AssertionError</failure></testcase><testcase classname="tests.p4.test_execution" name="test_T63_frozen_regression_evidence_and_p0" time="87.392"><properties><property name="p4_id" value="P4-T63" /></properties></testcase></testsuite></testsuites>

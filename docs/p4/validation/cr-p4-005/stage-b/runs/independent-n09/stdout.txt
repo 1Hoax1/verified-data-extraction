@@ -1,0 +1,178 @@
+{
+  "case": "N09",
+  "result": "PASS",
+  "tested_commit": "a868134fb9f3118bd5e56c26662db55fe281430d",
+  "tested_tree": "0150b2eccb498d86b6e0ecf2cbc854a6de381f39",
+  "without_rewritten_P": "REJECTED",
+  "isolated_verifier_after_rewriting_P": "MECHANICALLY_ACCEPTED; NOT_OWNER_APPROVAL",
+  "independent_p4_policy": "REJECTED",
+  "independent_owner_receipt_comparison": "REJECTED",
+  "mismatching_receipt_fields": [
+    "approval_commit",
+    "decisions_blob",
+    "decisions_sha256",
+    "decisions_size_bytes"
+  ],
+  "real_inputs_unchanged": true,
+  "commands": [
+    {
+      "argv": [
+        "git",
+        "-c",
+        "user.name=P4 isolated reviewer probe",
+        "-c",
+        "user.email=p4-review@example.invalid",
+        "rev-parse",
+        "HEAD"
+      ],
+      "cwd": "/workspace/p4-cr005-integration",
+      "exit_code": 0,
+      "stdout": "a868134fb9f3118bd5e56c26662db55fe281430d\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "-c",
+        "user.name=P4 isolated reviewer probe",
+        "-c",
+        "user.email=p4-review@example.invalid",
+        "rev-parse",
+        "HEAD^{tree}"
+      ],
+      "cwd": "/workspace/p4-cr005-integration",
+      "exit_code": 0,
+      "stdout": "0150b2eccb498d86b6e0ecf2cbc854a6de381f39\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "-c",
+        "user.name=P4 isolated reviewer probe",
+        "-c",
+        "user.email=p4-review@example.invalid",
+        "clone",
+        "--shared",
+        "--no-checkout",
+        "--quiet",
+        "/workspace/p4-cr005-integration",
+        "/tmp/p4-cr005-n09-6xx71k2m/disposable-git"
+      ],
+      "cwd": "/tmp/p4-cr005-n09-6xx71k2m",
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "-c",
+        "user.name=P4 isolated reviewer probe",
+        "-c",
+        "user.email=p4-review@example.invalid",
+        "switch",
+        "--detach",
+        "--quiet",
+        "a868134fb9f3118bd5e56c26662db55fe281430d"
+      ],
+      "cwd": "/tmp/p4-cr005-n09-6xx71k2m/disposable-git",
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "-c",
+        "user.name=P4 isolated reviewer probe",
+        "-c",
+        "user.email=p4-review@example.invalid",
+        "add",
+        "--",
+        "DECISIONS.md"
+      ],
+      "cwd": "/tmp/p4-cr005-n09-6xx71k2m/disposable-git",
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "-c",
+        "user.name=P4 isolated reviewer probe",
+        "-c",
+        "user.email=p4-review@example.invalid",
+        "commit",
+        "--quiet",
+        "-m",
+        "Synthetic N09 document, not owner authorization"
+      ],
+      "cwd": "/tmp/p4-cr005-n09-6xx71k2m/disposable-git",
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "-c",
+        "user.name=P4 isolated reviewer probe",
+        "-c",
+        "user.email=p4-review@example.invalid",
+        "rev-parse",
+        "HEAD"
+      ],
+      "cwd": "/tmp/p4-cr005-n09-6xx71k2m/disposable-git",
+      "exit_code": 0,
+      "stdout": "24c8c78cf9007e0ded0139ed26ce49ff650f5000\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "-c",
+        "user.name=P4 isolated reviewer probe",
+        "-c",
+        "user.email=p4-review@example.invalid",
+        "rev-parse",
+        "HEAD:DECISIONS.md"
+      ],
+      "cwd": "/tmp/p4-cr005-n09-6xx71k2m/disposable-git",
+      "exit_code": 0,
+      "stdout": "4b6156a2f37b9606f7ee21d0d2d051d25eb5d55e\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "-c",
+        "user.name=P4 isolated reviewer probe",
+        "-c",
+        "user.email=p4-review@example.invalid",
+        "rev-parse",
+        "HEAD"
+      ],
+      "cwd": "/workspace/p4-cr005-integration",
+      "exit_code": 0,
+      "stdout": "a868134fb9f3118bd5e56c26662db55fe281430d\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "-c",
+        "user.name=P4 isolated reviewer probe",
+        "-c",
+        "user.email=p4-review@example.invalid",
+        "status",
+        "--porcelain"
+      ],
+      "cwd": "/workspace/p4-cr005-integration",
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": ""
+    }
+  ]
+}
