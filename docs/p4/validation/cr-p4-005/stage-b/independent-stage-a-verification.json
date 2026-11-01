@@ -1,0 +1,18 @@
+{
+  "status": "PASS",
+  "main": "966f2dd98c897302940d6b200769bfe640f57bef",
+  "G": "f65e175708bc52058cbaf288d6953f2ac5ba5a50",
+  "B": "fee2ec5795db8307f6201ea2883d37b508ffd366",
+  "H": "0eb02c0a72188b14c24ee2f247f5bf036736033b84611f5f07035352b0564c00",
+  "L": 33056,
+  "M": "100644",
+  "ancestry": [
+    "7685110506d115805c473b064752f86e9e5c045b",
+    "89d8e590d528cce58b5476a41ca5cc482e59be3e",
+    "f65e175708bc52058cbaf288d6953f2ac5ba5a50",
+    "966f2dd98c897302940d6b200769bfe640f57bef"
+  ],
+  "receipt_matches_user_values": true,
+  "proposal_hash_matches_approval": true,
+  "source": "Real fetched GitHub Git objects, no synthesized files"
+}

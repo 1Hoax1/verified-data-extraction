@@ -489,9 +489,10 @@ def test_T51_whole_application_scope(p3_pack, tmp_path, monkeypatch):
     base_project = subprocess.check_output(['git', 'show', '129300728c446b82eaeafe1068e27339eb7176dd:pyproject.toml'], cwd=ROOT, text=True)
     base_lock = subprocess.check_output(['git', 'show', '129300728c446b82eaeafe1068e27339eb7176dd:uv.lock'], cwd=ROOT, text=True)
     audit_application(ROOT, base_project, base_lock, phase='p3')
-    changed = subprocess.check_output(['git', 'diff', '--name-only', 'ba73d05'], cwd=ROOT, text=True).splitlines()
+    # CR-P4-003: exclude governance already present at owner-authorized P4 start.
+    changed = subprocess.check_output(['git', 'diff', '--name-only', '7685110506d115805c473b064752f86e9e5c045b'], cwd=ROOT, text=True).splitlines()
     untracked = subprocess.check_output(['git', 'ls-files', '--others', '--exclude-standard'], cwd=ROOT, text=True).splitlines()
-    audit_repository_paths(changed + untracked)
+    audit_repository_paths(changed + untracked, root=ROOT)
     scratch = tmp_path / 'audit'
     shutil.copytree(ROOT / 'src', scratch / 'src', ignore=shutil.ignore_patterns('__pycache__', '*.egg-info'))
     for name in ['pyproject.toml', 'uv.lock']: shutil.copy(ROOT / name, scratch / name)

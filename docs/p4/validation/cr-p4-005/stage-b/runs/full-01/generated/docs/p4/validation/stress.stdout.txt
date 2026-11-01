@@ -1,0 +1,22 @@
+{
+  "result": "PASS",
+  "tested_commit": "a868134fb9f3118bd5e56c26662db55fe281430d",
+  "source_bytes": 40801000,
+  "source_sha256": "5c5d2dbf69c0b8f4d27be5ec8a258677eb883d5ad267a4ec644b0205978aa97d",
+  "input_rows": 100000,
+  "columns": 200,
+  "result_rows": 90000,
+  "full_reference_cells_checked": 18000000,
+  "result_sha256": "ea277f2873ed3bd712c7148c2b87035c42ed4cdbbec54edee2d59d63a6b5420b",
+  "elapsed_seconds": 58.05426226099917,
+  "baseline_rss_bytes": 48984064,
+  "observed_peak_rss_bytes": 342601728,
+  "incremental_peak_rss_bytes": 293617664,
+  "runtime_resources": {
+    "incremental_peak_rss": 94060544,
+    "elapsed_seconds": 57.69393429899901,
+    "scratch_peak_bytes": 180144042,
+    "merge_fan_in": 16,
+    "rss_samples": 7284
+  }
+}

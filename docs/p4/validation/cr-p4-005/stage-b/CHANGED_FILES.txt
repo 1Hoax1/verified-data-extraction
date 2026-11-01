@@ -1,0 +1,9 @@
+docs/p4/amendments/v1.3/GOVERNANCE_AUDIT_AMENDMENT.md
+tests/p2/test_p2.py
+tests/p3/test_p3.py
+tests/p4/approved_governance_pin_v1.json
+tests/p4/build_scope_policy.py
+tests/p4/scope_allowlist_v1.json
+tests/p4/scope_audit.py
+tests/p4/test_execution.py
+tests/scope_policy.py

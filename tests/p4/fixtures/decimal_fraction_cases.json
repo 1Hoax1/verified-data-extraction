@@ -1,0 +1,12 @@
+{
+  "authority": "Owner-approved CR-P4-004; supplemental P4-T25/T57 cases; immutable F/X/W fixtures unchanged",
+  "valid": [
+    {"source_text": "-0.25", "wire": "-0.25"},
+    {"source_text": "-0.0010", "wire": "-0.001"},
+    {"source_text": "-0.0000", "wire": "0"},
+    {"source_text": "-1.2500", "wire": "-1.25"},
+    {"source_text": "0.2500", "wire": "0.25"},
+    {"source_text": "0.000", "wire": "0"}
+  ],
+  "invalid_wire_texts": ["-0", "+1", "01", "-01", "1e3", "1.0", "1.00", "0.0", "-0.0", "-0.2500", "NaN", "Infinity"]
+}

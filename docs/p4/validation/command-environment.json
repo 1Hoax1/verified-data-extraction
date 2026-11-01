@@ -1,0 +1,31 @@
+{
+  "tested_commit": "420cd3a8b83c32f3f6b6a970b49d07fb42caa1ea",
+  "baseline_commit": "7685110506d115805c473b064752f86e9e5c045b",
+  "command": [
+    "/workspace/verified-data-extraction/.venv/bin/python",
+    "-m",
+    "pytest",
+    "tests/p1",
+    "tests/p2",
+    "tests/p3",
+    "tests/p4",
+    "-q",
+    "--junitxml=/workspace/verified-data-extraction/docs/p4/validation/all-results.xml"
+  ],
+  "cwd": "/workspace/verified-data-extraction",
+  "started_at_moscow": "2026-10-30T23:06:03.692424+03:00",
+  "finished_at_moscow": "2026-10-30T23:11:43.043994+03:00",
+  "exit_code": 0,
+  "PYTHONPATH": "/workspace/verified-data-extraction/src:/workspace/verified-data-extraction/tests",
+  "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+  "executable": "/workspace/verified-data-extraction/.venv/bin/python",
+  "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+  "packages": {
+    "pytest": "8.4.2",
+    "jsonschema": "4.26.0",
+    "referencing": "0.37.0",
+    "rfc8785": "0.1.4",
+    "openpyxl": "3.1.5",
+    "streamlit": "1.50.0"
+  }
+}

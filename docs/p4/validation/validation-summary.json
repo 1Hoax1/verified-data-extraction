@@ -1,0 +1,68 @@
+{
+  "status": "TECHNICAL_ACCEPTANCE_PASS; GATE_B_PENDING_OWNER_REVIEW",
+  "tested_commit": "420cd3a8b83c32f3f6b6a970b49d07fb42caa1ea",
+  "mandatory_tests": {
+    "p1": {
+      "passed": 42,
+      "failures": 0,
+      "errors": 0,
+      "skips": 0,
+      "xfails": 0
+    },
+    "p2": {
+      "passed": 54,
+      "failures": 0,
+      "errors": 0,
+      "skips": 0,
+      "xfails": 0
+    },
+    "p3": {
+      "passed": 52,
+      "failures": 0,
+      "errors": 0,
+      "skips": 0,
+      "xfails": 0
+    },
+    "p4": {
+      "passed": 64,
+      "failures": 0,
+      "errors": 0,
+      "skips": 0,
+      "xfails": 0
+    }
+  },
+  "total_passed": 212,
+  "f_fixtures": 38,
+  "x_fixtures": 19,
+  "w_fixtures": 45,
+  "approved_zip_sha256": "e3c686f81e3ba0d63874420d0f67f7585b9861826fdbc8a76dfb6a5d8f2aa5aa",
+  "stress": {
+    "result": "PASS",
+    "tested_commit": "420cd3a8b83c32f3f6b6a970b49d07fb42caa1ea",
+    "source_bytes": 40801000,
+    "source_sha256": "5c5d2dbf69c0b8f4d27be5ec8a258677eb883d5ad267a4ec644b0205978aa97d",
+    "input_rows": 100000,
+    "columns": 200,
+    "result_rows": 90000,
+    "full_reference_cells_checked": 18000000,
+    "result_sha256": "ea277f2873ed3bd712c7148c2b87035c42ed4cdbbec54edee2d59d63a6b5420b",
+    "elapsed_seconds": 57.22857844800092,
+    "baseline_rss_bytes": 48742400,
+    "observed_peak_rss_bytes": 342392832,
+    "incremental_peak_rss_bytes": 293650432,
+    "runtime_resources": {
+      "incremental_peak_rss": 92835840,
+      "elapsed_seconds": 56.87040485000034,
+      "scratch_peak_bytes": 180144042,
+      "merge_fan_in": 16,
+      "rss_samples": 7284
+    }
+  },
+  "CRs": [
+    "CR-P4-001",
+    "CR-P4-002",
+    "CR-P4-003",
+    "CR-P4-004"
+  ],
+  "upstream_validation_history_restored": true
+}
