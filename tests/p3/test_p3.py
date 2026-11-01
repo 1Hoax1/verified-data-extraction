@@ -492,7 +492,7 @@ def test_T51_whole_application_scope(p3_pack, tmp_path, monkeypatch):
     # CR-P4-003: exclude governance already present at owner-authorized P4 start.
     changed = subprocess.check_output(['git', 'diff', '--name-only', '7685110506d115805c473b064752f86e9e5c045b'], cwd=ROOT, text=True).splitlines()
     untracked = subprocess.check_output(['git', 'ls-files', '--others', '--exclude-standard'], cwd=ROOT, text=True).splitlines()
-    audit_repository_paths(changed + untracked)
+    audit_repository_paths(changed + untracked, root=ROOT)
     scratch = tmp_path / 'audit'
     shutil.copytree(ROOT / 'src', scratch / 'src', ignore=shutil.ignore_patterns('__pycache__', '*.egg-info'))
     for name in ['pyproject.toml', 'uv.lock']: shutil.copy(ROOT / name, scratch / name)

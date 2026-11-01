@@ -470,7 +470,7 @@ def test_T40_scope_dependencies(env, tmp_path):
     # CR-P4-003: exclude governance already present at owner-authorized P4 start.
     changed = subprocess.check_output(['git', 'diff', '--name-only', '7685110506d115805c473b064752f86e9e5c045b'], cwd=ROOT, text=True).splitlines()
     untracked = subprocess.check_output(['git', 'ls-files', '--others', '--exclude-standard'], cwd=ROOT, text=True).splitlines()
-    audit_repository_paths(changed + untracked)
+    audit_repository_paths(changed + untracked, root=ROOT)
     for path in ['worker.py', 'scripts/network_ingestion.py', 'docs/p1/v1.0/P1_TEST_PLAN.md', 'DECISIONS.md', 'tests/p1/conftest.py']:
         with pytest.raises(AssertionError, match='Unapproved repository change'):
             audit_repository_paths([path])

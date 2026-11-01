@@ -1,0 +1,11 @@
+{
+  "approval_commit": "f65e175708bc52058cbaf288d6953f2ac5ba5a50",
+  "decisions_blob": "fee2ec5795db8307f6201ea2883d37b508ffd366",
+  "decisions_sha256": "0eb02c0a72188b14c24ee2f247f5bf036736033b84611f5f07035352b0564c00",
+  "decisions_size_bytes": 33056,
+  "format": "P4_GOVERNANCE_PIN_V1",
+  "git_mode": "100644",
+  "implementation_baseline": "7685110506d115805c473b064752f86e9e5c045b",
+  "path": "DECISIONS.md",
+  "repository": "1Hoax1/verified-data-extraction"
+}

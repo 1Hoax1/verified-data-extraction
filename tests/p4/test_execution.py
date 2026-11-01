@@ -733,14 +733,15 @@ def test_T61_forbidden_scope(tmp_path):
             audit_snippet(snippet)
 
 
-def test_T62_whole_application_scope_CR_P4_001(tmp_path):
-    from .scope_audit import audit_p4, negative_repository_probes
+def test_T62_whole_application_scope_CR_P4_001(tmp_path, monkeypatch):
+    from .scope_audit import audit_p4, negative_repository_probes, governance_repository_probes
     from scope_policy import audit_application
     base_project = subprocess.check_output(['git','show','129300728c446b82eaeafe1068e27339eb7176dd:pyproject.toml'],cwd=ROOT,text=True)
     base_lock = subprocess.check_output(['git','show','129300728c446b82eaeafe1068e27339eb7176dd:uv.lock'],cwd=ROOT,text=True)
     audit_application(ROOT, base_project, base_lock, phase='p3')
     audit_p4(ROOT)
     negative_repository_probes(ROOT, tmp_path)
+    governance_repository_probes(ROOT, tmp_path, monkeypatch)
 
 
 def test_T63_frozen_regression_evidence_and_p0(p4_pack, tmp_path):
