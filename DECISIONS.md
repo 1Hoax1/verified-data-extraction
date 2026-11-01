@@ -8,7 +8,7 @@
 - P0 Formal Contracts and Fixtures — VALIDATED
 - P1 Implementation Pack v1.0 — APPROVED
 - Current release target — Pilot Slice V1
-- Current stage — P4 Implementation Start Gate OPEN / AUTHORIZED (Gate A CLOSED / PASS, approved ZIP VERIFIED; Gate B NOT_RUN)
+- Current stage — P4 Gate B CLOSED / PASS; P4 VALIDATED on tested integration snapshot; final merge and governance repin PENDING
 - P1 — VALIDATED
 - P1 completion/release gate — CLOSED (PASS, owner-confirmed 2026-10-08)
 - P2 Implementation Pack v1.0 — APPROVED
@@ -24,16 +24,16 @@
 - P3 Gate B — CLOSED / PASS (owner-confirmed 2026-10-11)
 - CR-P3-001 — DEFERRED (no P0 state graph change)
 - CR-P3-002 — APPROVED / IMPLEMENTED / VALIDATED (P3 Gate B; P2-T40 phase-scoped, P3-T51 full application)
-- P4 — IN_IMPLEMENTATION (implementation start owner-authorized 2026-10-30; Gate A APPROVED; no P4 runtime/code or tests yet committed)
+- P4 — VALIDATED (Gate B CLOSED / PASS, owner-confirmed 2026-11-02; tested integration commit a868134fb9f3118bd5e56c26662db55fe281430d; NOT_MERGED_TO_MAIN)
 - P4 Implementation Pack v1.0 — APPROVED (GitHub ZIP upload VERIFIED, exact 112649 B and SHA-256; implementation authorized separately)
 - P4 Gate A — CLOSED / PASS (owner-confirmed 2026-10-30)
-- P4 implementation start gate — OPEN / AUTHORIZED (owner-confirmed 2026-10-30; no auto-merge, Gate B NOT_RUN)
-- P4 Gate B — NOT_RUN / NOT_PASSED
-- CR-P4-001 — APPROVED (test-boundary only; NOT_IMPLEMENTED)
-- CR-P4-002 — APPROVED (owner-confirmed MAIN CHAT 2026-10-30; P4-T13 expects 4 P-B source rows, P4-T42 still 3 final; implementation in Draft PR #4, NOT_VALIDATED)
-- CR-P4-003 — APPROVED (owner-confirmed MAIN CHAT 2026-10-30; test-only changed-path diff baseline for P2-T40/P3-T51 to P4 start 76851105…; negative checks retained; NOT_VALIDATED)
-- CR-P4-004 — APPROVED (owner-confirmed MAIN CHAT 2026-10-30; correct negative proper fraction Decimal wire grammar and tests; NOT_VALIDATED)
-- CR-P4-005 — APPROVED (owner-confirmed MAIN CHAT 2026-11-01; exact DECISIONS governance pin + historical integration audit, TEST-ONLY; NOT_IMPLEMENTED / NOT_VALIDATED)
+- P4 implementation start gate — historical OPEN / AUTHORIZED (2026-10-30; implementation validated on integration branch, merge NOT_AUTHORIZED)
+- P4 Gate B — CLOSED / PASS (owner-confirmed 2026-11-02; 212/212, F38/X19/W45, goldens/strict verifier/crash-load; evidence a3cc40d6ea4d97d118dabee577d24c47811518c1)
+- CR-P4-001 — APPROVED / IMPLEMENTED / VALIDATED in tested integration snapshot (test-boundary only)
+- CR-P4-002 — APPROVED / IMPLEMENTED / VALIDATED (P4-T13 4 source rows, P4-T42 3 final; original P0 preserved)
+- CR-P4-003 — APPROVED / IMPLEMENTED / VALIDATED (P2-T40/P3-T51 narrow changed-path baseline only)
+- CR-P4-004 — APPROVED / IMPLEMENTED / VALIDATED (canonical negative proper fractions test/contract amendment only)
+- CR-P4-005 — APPROVED / IMPLEMENTED / VALIDATED at pinned governance snapshot G=f65e175708bc52058cbaf288d6953f2ac5ba5a50 (test-only; repin REQUIRED after this closure decision)
 - P4-Q01..Q05 and Q07 — APPROVED (Q03 revised signed64 / V2 / Unicode)
 - P4-Q06 — DEFERRED (CR-P3-001 unchanged)
 
@@ -314,3 +314,20 @@ Status: **APPROVED** (main managing chat); implementation remains in unmerged Dr
 - **Restrictions:** No P0–P4 production change, P5, new dependencies/migrations/operations/state transitions, no weakening tests, no modification of prior approved packs and old integration failure evidence. Full 212 tests and negatives must run on exact new integrated tree before Gate B, with additional P4 pin/ancestry probes; no automatic PR merge.
 - **Current evidence:** historical review integration `9620f8f44c5a8fca41aa37f47034ccd54a563e89` failed P2-T40/P3-T51; approved fix code not yet applied, full post-change tests NOT_RUN. This governance-only approval does not close Gate B.
 - **Next action:** publish verified G/B/H/L/M receipt outside DECISIONS and instruct Codex to implement approved narrow correction on isolated integration branch, provide repeatable validation, and keep PR #4 Draft.
+
+### P4 — Owner closure of Gate B (2026-11-02)
+
+**Decision:** `P4_GATE_B_CLOSED_PASS_2026-11-02`; **P4 VALIDATED on the immutable reviewed snapshot only**, not yet released/merged to `main`.
+
+- **Explicit owner decision in main managing chat:** “Утверждаю закрытие P4 Gate B со статусом CLOSED / PASS по проверенной версии `a868134…` и доказательствам `a3cc40d6…`. Разрешаю подготовку финального интеграционного PR без автоматического слияния”.
+- **Tested implementation commit:** `a868134fb9f3118bd5e56c26662db55fe281430d`; **tested tree:** `0150b2eccb498d86b6e0ecf2cbc854a6de381f39`.
+- **Evidence-only child commit:** `a3cc40d6ea4d97d118dabee577d24c47811518c1` (adds exactly 126 evidence paths under `docs/p4/validation/cr-p4-005/stage-b/`, no code/tests changes). Exact 122 original ZIP payload Git blobs independently matched; GitHub manifest and published JUnit/stdout/metrics independently reviewed.
+- **Mandatory acceptance:** P1 42/42, P2 54/54, P3 52/52, P4 64/64 = **212/212 PASS**, no failures/errors/skips/xfails; P2-T40/P3-T51 2/2 PASS; P4-T61/T62/T63 3/3 PASS; P01–P05/N01–N14 19/19 with 59 subcases. F38/X19/W45 all PASS, real P0 goldens and strict verifier PASS (9/9 mutations rejected); separate-process crash/restart and immutable asset checks evidenced.
+- **Full-density resource acceptance:** 100000 × 200 input; 90000 × 200 verified output; 18 million output cells checked; 58.054262 sec < 120-sec soft target, incremental peak RSS 293617664 bytes < 536870912-byte budget.
+- Independent review verified GitHub object ancestry, exact trees, original and publication evidence integrity, test execution logs and constraints. The reviewer did not re-execute 212 tests on another host; results are attributed exclusively to exact tested commit/tree.
+- **Accepted limitations:** Linux/Python 3.12; sampled RSS/soft deadline, no cross-host/Windows/CI or physical power-loss proof, AppTest not manual browser acceptance, legacy P0 13 missing P-C files discrepancy still open. No synthetic P0 restoration; no new functionality or scope.
+- **Acceptance boundary:** P4 runtime and CR-P4-001…005 are APPROVED / IMPLEMENTED / VALIDATED on the tested integration snapshot. **`main` still lacks P4 implementation**. Existing PR #4 is an obsolete Draft head at `222869da1d56c833851d44f25b87e8180f97562d`; **it must not be merged as-is**.
+- **Authorization:** prepare a distinct, final **Draft** integration PR. No automatic merge, no implementation of P5, no automatic approval of release.
+- **Required repin under already APPROVED CR-P4-005:** This owner-confirmed closure modifies `DECISIONS.md`; after the governance-only closure commit **G2** is immutable, independently verify exact `G2:DECISIONS.md` G2/B2/H2/L2/M and publish the receipt **outside** `DECISIONS.md`. The previous pin to `G=f65e175708bc52058cbaf288d6953f2ac5ba5a50` remains historical and will not pass integrated history. Codex may update **only** the single active pin/P/test policy and new evidence via the already approved narrow repin procedure, without a new CR solely for checksum.
+- **Before owner authorization to merge:** ensure final PR branch is descendant of G2 and evidence receipt, run required P2/P3/P4 scope tests, all negative cases and full 212/212 regression on the **final combined tree** after repin, check that production code and old fixtures are byte-identical to the validated snapshot, record all results. Any new substantive deviation requires a CR. The owner alone separately authorizes merge.
+- Formal closure document: `docs/p4/validation/P4_GATE_B_CLOSURE.md`. **One next step:** prepare the final Draft integration PR, then request Codex repin/regression before merge.
