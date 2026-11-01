@@ -24,7 +24,7 @@ GOVERNANCE_PIN = 'tests/p4/approved_governance_pin_v1.json'
 GOVERNANCE_BASELINE = '7685110506d115805c473b064752f86e9e5c045b'
 PRIOR_OWNER_APPROVAL = '89d8e590d528cce58b5476a41ca5cc482e59be3e'
 # CR-P4-005: computed after immutable Stage A, never from DECISIONS at runtime.
-GOVERNANCE_PIN_SHA256 = '9d75ee4d3f7cd03cf111f070dad73e8b6fe4590fc910abf0fedf880072743f0f'
+GOVERNANCE_PIN_SHA256 = 'f7a80b663b7a7347e7f38bb2aaf6281f6d1dce4344f079be02cc45210de3d050'
 
 
 def _governance_require(condition, reason):
