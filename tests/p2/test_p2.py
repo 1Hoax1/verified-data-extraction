@@ -467,7 +467,8 @@ def test_T40_scope_dependencies(env, tmp_path):
     audit_application(ROOT, baseline_project, baseline_lock)
     # CR-P3-002: owner-approved P3 start baseline; upstream governance changes
     # are not implementation changes in this branch. Original negative probes remain.
-    changed = subprocess.check_output(['git', 'diff', '--name-only', 'ba73d05d2294dfb7e51b9c3c758e63c6065286d6'], cwd=ROOT, text=True).splitlines()
+    # CR-P4-003: exclude governance already present at owner-authorized P4 start.
+    changed = subprocess.check_output(['git', 'diff', '--name-only', '7685110506d115805c473b064752f86e9e5c045b'], cwd=ROOT, text=True).splitlines()
     untracked = subprocess.check_output(['git', 'ls-files', '--others', '--exclude-standard'], cwd=ROOT, text=True).splitlines()
     audit_repository_paths(changed + untracked)
     for path in ['worker.py', 'scripts/network_ingestion.py', 'docs/p1/v1.0/P1_TEST_PLAN.md', 'DECISIONS.md', 'tests/p1/conftest.py']:
