@@ -1,0 +1,11 @@
+{
+  "argv": [
+    "/workspace/verified-data-extraction/.venv/bin/python",
+    "-m",
+    "p4.restart_probe",
+    "/tmp/pytest-of-agent/pytest-31/test_T51_explicit_retry_and_no0/after_promotion_before_metadata/workspace",
+    "after_promotion_before_metadata"
+  ],
+  "cwd": "/workspace/p4-final-integration",
+  "exit_code": -9
+}

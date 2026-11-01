@@ -1,0 +1,23 @@
+{
+  "command": [
+    "/workspace/verified-data-extraction/.venv/bin/python",
+    "/workspace/p4-final-validation-work/check_repin_controls.py"
+  ],
+  "cwd": "/workspace/p4-final-integration",
+  "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+  "packages": {
+    "pytest": "8.4.2",
+    "jsonschema": "4.26.0",
+    "referencing": "0.37.0",
+    "rfc8785": "0.1.4",
+    "openpyxl": "3.1.5",
+    "streamlit": "1.50.0"
+  },
+  "started_at_moscow": "2026-11-02T00:47:55.285593+03:00",
+  "finished_at_moscow": "2026-11-02T00:47:55.597247+03:00",
+  "exit_code": 0,
+  "tested_commit": "d4ad0c297a67b4eae6a3ae1b018dc6fa73a6e2ed",
+  "tested_tree": "1ce97d0ba09dcd03d1120ac8e5a32a91ff3a32db",
+  "stdout_sha256": "41cea873262f9094663e54d544530e0f66182769d1713e029c7c2b170d60ab1c",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

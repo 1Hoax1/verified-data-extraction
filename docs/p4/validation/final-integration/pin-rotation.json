@@ -1,0 +1,27 @@
+{
+  "previous_pin": {
+    "approval_commit": "f65e175708bc52058cbaf288d6953f2ac5ba5a50",
+    "decisions_blob": "fee2ec5795db8307f6201ea2883d37b508ffd366",
+    "decisions_sha256": "0eb02c0a72188b14c24ee2f247f5bf036736033b84611f5f07035352b0564c00",
+    "decisions_size_bytes": 33056,
+    "format": "P4_GOVERNANCE_PIN_V1",
+    "git_mode": "100644",
+    "implementation_baseline": "7685110506d115805c473b064752f86e9e5c045b",
+    "path": "DECISIONS.md",
+    "repository": "1Hoax1/verified-data-extraction"
+  },
+  "new_pin": {
+    "repository": "1Hoax1/verified-data-extraction",
+    "path": "DECISIONS.md",
+    "implementation_baseline": "7685110506d115805c473b064752f86e9e5c045b",
+    "approval_commit": "27cdea7b204c36e839f1c3b1a8de387f64c0a91e",
+    "decisions_blob": "90cbcbaf9838dcee9cc87b889958b15816b4b0fd",
+    "decisions_sha256": "035f180a346ff9f1c9a5074e872d2eb10e1d6dd1a289acf90f7eeb7d372e4782",
+    "decisions_size_bytes": 36955,
+    "git_mode": "100644",
+    "format": "P4_GOVERNANCE_PIN_V1"
+  },
+  "previous_P": "9d75ee4d3f7cd03cf111f070dad73e8b6fe4590fc910abf0fedf880072743f0f",
+  "P2": "f7a80b663b7a7347e7f38bb2aaf6281f6d1dce4344f079be02cc45210de3d050",
+  "scope": "Only active pin and verifier/P4-policy expected SHA-256 changed"
+}
