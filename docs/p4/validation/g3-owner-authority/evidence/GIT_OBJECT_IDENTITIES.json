@@ -1,0 +1,65 @@
+[
+  {
+    "label": "G2",
+    "type": "commit",
+    "git_sha1": "27cdea7b204c36e839f1c3b1a8de387f64c0a91e",
+    "payload_bytes": 323,
+    "payload_sha256": "f7bb02c957c840c05be661379d84f5d760e9eff69ae87a495f2ef0e07b92ad7c"
+  },
+  {
+    "label": "INTERMEDIATE",
+    "type": "commit",
+    "git_sha1": "2595ad45c962ad6ec5790261ecdaf59907ff8b40",
+    "payload_bytes": 319,
+    "payload_sha256": "554500cef0822685a014bb350ba351db921fc01227f4fd0ced35399f18322623"
+  },
+  {
+    "label": "PARENT",
+    "type": "commit",
+    "git_sha1": "edc40399a4a5db448278edd098bff4307b308dbd",
+    "payload_bytes": 1380,
+    "payload_sha256": "574c168552df5930f2f7032d0479bae4425dab610740f1ded4fd4a046d220ad0"
+  },
+  {
+    "label": "G3",
+    "type": "commit",
+    "git_sha1": "d941714bc1d152d0a2189aa954e623460b4e6d03",
+    "payload_bytes": 750,
+    "payload_sha256": "5b2e650c1878710a753324de44fb065e452870358d39b2f42458e58b2aa12a15"
+  },
+  {
+    "label": "G3",
+    "type": "tree",
+    "git_sha1": "c2200a045500928311bad5ec90619fcd5db5e3e0",
+    "payload_bytes": 350,
+    "payload_sha256": "79d8893a050341dcea0625b38897ee4a19150a93e6782a3b0f8b9f34bd352214"
+  },
+  {
+    "label": "G2",
+    "type": "tree",
+    "git_sha1": "c02103e1be4f5b8252ce33b9eb2233cf243e3468",
+    "payload_bytes": 350,
+    "payload_sha256": "069abff3745192bf22e772abe739733c8162230b0ee6d75d3358be3e2c4b061c"
+  },
+  {
+    "label": "PARENT",
+    "type": "tree",
+    "git_sha1": "9cd6b96604765174eb14645003297cfaaea31fcd",
+    "payload_bytes": 350,
+    "payload_sha256": "a521efc71871d78cf1bd84979365d9295628026dd1f797e876a0dfa5cefa835a"
+  },
+  {
+    "label": "G3_DECISIONS",
+    "type": "blob",
+    "git_sha1": "be002c5b196b3a374c39fe511d2e1c68477723ab",
+    "payload_bytes": 40572,
+    "payload_sha256": "c76e162cca8e044dcc78d3f52a52b57fd230592b17249b6048f6f753618b6d18"
+  },
+  {
+    "label": "G2_AND_PARENT_DECISIONS",
+    "type": "blob",
+    "git_sha1": "90cbcbaf9838dcee9cc87b889958b15816b4b0fd",
+    "payload_bytes": 36955,
+    "payload_sha256": "035f180a346ff9f1c9a5074e872d2eb10e1d6dd1a289acf90f7eeb7d372e4782"
+  }
+]

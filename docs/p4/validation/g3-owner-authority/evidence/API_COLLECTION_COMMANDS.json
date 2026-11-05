@@ -1,0 +1,167 @@
+[
+  {
+    "name": "G3_COMMIT",
+    "argv": [
+      "gh",
+      "api",
+      "repos/1Hoax1/verified-data-extraction/commits/d941714bc1d152d0a2189aa954e623460b4e6d03"
+    ],
+    "method": "GET",
+    "exit_code": 0,
+    "response_file": "api/G3_COMMIT.json"
+  },
+  {
+    "name": "G2_COMMIT",
+    "argv": [
+      "gh",
+      "api",
+      "repos/1Hoax1/verified-data-extraction/commits/27cdea7b204c36e839f1c3b1a8de387f64c0a91e"
+    ],
+    "method": "GET",
+    "exit_code": 0,
+    "response_file": "api/G2_COMMIT.json"
+  },
+  {
+    "name": "PARENT_COMMIT",
+    "argv": [
+      "gh",
+      "api",
+      "repos/1Hoax1/verified-data-extraction/commits/edc40399a4a5db448278edd098bff4307b308dbd"
+    ],
+    "method": "GET",
+    "exit_code": 0,
+    "response_file": "api/PARENT_COMMIT.json"
+  },
+  {
+    "name": "COMPARE_G2_TO_G3",
+    "argv": [
+      "gh",
+      "api",
+      "repos/1Hoax1/verified-data-extraction/compare/27cdea7b204c36e839f1c3b1a8de387f64c0a91e...d941714bc1d152d0a2189aa954e623460b4e6d03"
+    ],
+    "method": "GET",
+    "exit_code": 0,
+    "response_file": "api/COMPARE_G2_TO_G3.json"
+  },
+  {
+    "name": "COMPARE_PARENT_TO_G3",
+    "argv": [
+      "gh",
+      "api",
+      "repos/1Hoax1/verified-data-extraction/compare/edc40399a4a5db448278edd098bff4307b308dbd...d941714bc1d152d0a2189aa954e623460b4e6d03"
+    ],
+    "method": "GET",
+    "exit_code": 0,
+    "response_file": "api/COMPARE_PARENT_TO_G3.json"
+  },
+  {
+    "name": "G3_BRANCH_REF",
+    "argv": [
+      "gh",
+      "api",
+      "repos/1Hoax1/verified-data-extraction/git/ref/heads/governance/p4-final-merge-reconciliation"
+    ],
+    "method": "GET",
+    "exit_code": 0,
+    "response_file": "api/G3_BRANCH_REF.json"
+  },
+  {
+    "name": "MAIN_REF_BEFORE",
+    "argv": [
+      "gh",
+      "api",
+      "repos/1Hoax1/verified-data-extraction/git/ref/heads/main"
+    ],
+    "method": "GET",
+    "exit_code": 0,
+    "response_file": "api/MAIN_REF_BEFORE.json"
+  },
+  {
+    "name": "G3_DECISIONS_BLOB",
+    "argv": [
+      "gh",
+      "api",
+      "repos/1Hoax1/verified-data-extraction/git/blobs/be002c5b196b3a374c39fe511d2e1c68477723ab"
+    ],
+    "method": "GET",
+    "exit_code": 0,
+    "response_file": "api/G3_DECISIONS_BLOB.json"
+  },
+  {
+    "name": "G3_ROOT_TREE",
+    "argv": [
+      "gh",
+      "api",
+      "repos/1Hoax1/verified-data-extraction/git/trees/c2200a045500928311bad5ec90619fcd5db5e3e0"
+    ],
+    "method": "GET",
+    "exit_code": 0,
+    "response_file": "api/G3_ROOT_TREE.json"
+  },
+  {
+    "name": "G2_ROOT_TREE",
+    "argv": [
+      "gh",
+      "api",
+      "repos/1Hoax1/verified-data-extraction/git/trees/c02103e1be4f5b8252ce33b9eb2233cf243e3468"
+    ],
+    "method": "GET",
+    "exit_code": 0,
+    "response_file": "api/G2_ROOT_TREE.json"
+  },
+  {
+    "name": "PARENT_ROOT_TREE",
+    "argv": [
+      "gh",
+      "api",
+      "repos/1Hoax1/verified-data-extraction/git/trees/9cd6b96604765174eb14645003297cfaaea31fcd"
+    ],
+    "method": "GET",
+    "exit_code": 0,
+    "response_file": "api/PARENT_ROOT_TREE.json"
+  },
+  {
+    "name": "INTERMEDIATE_COMMIT",
+    "argv": [
+      "gh",
+      "api",
+      "repos/1Hoax1/verified-data-extraction/commits/2595ad45c962ad6ec5790261ecdaf59907ff8b40"
+    ],
+    "method": "GET",
+    "exit_code": 0,
+    "response_file": "api/INTERMEDIATE_COMMIT.json"
+  },
+  {
+    "name": "PARENT_DECISIONS_BLOB",
+    "argv": [
+      "gh",
+      "api",
+      "repos/1Hoax1/verified-data-extraction/git/blobs/90cbcbaf9838dcee9cc87b889958b15816b4b0fd"
+    ],
+    "method": "GET",
+    "exit_code": 0,
+    "response_file": "api/PARENT_DECISIONS_BLOB.json"
+  },
+  {
+    "name": "MAIN_REF_AFTER",
+    "argv": [
+      "gh",
+      "api",
+      "repos/1Hoax1/verified-data-extraction/git/ref/heads/main"
+    ],
+    "method": "GET",
+    "exit_code": 0,
+    "response_file": "api/MAIN_REF_AFTER.json"
+  },
+  {
+    "name": "G3_BRANCH_REF_AFTER",
+    "argv": [
+      "gh",
+      "api",
+      "repos/1Hoax1/verified-data-extraction/git/ref/heads/governance/p4-final-merge-reconciliation"
+    ],
+    "method": "GET",
+    "exit_code": 0,
+    "response_file": "api/G3_BRANCH_REF_AFTER.json"
+  }
+]

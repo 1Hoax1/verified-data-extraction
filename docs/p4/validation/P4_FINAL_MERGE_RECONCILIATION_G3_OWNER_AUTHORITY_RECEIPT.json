@@ -1,0 +1,67 @@
+{
+  "status": "PREPARED_FOR_MAIN_MANAGING_CHAT_REVIEW; NOT_PUBLISHED",
+  "record": "P4_FINAL_MERGE_RECONCILIATION_G3_OWNER_AUTHORITY_RECEIPT",
+  "repository": "1Hoax1/verified-data-extraction",
+  "path": "DECISIONS.md",
+  "implementation_baseline": "7685110506d115805c473b064752f86e9e5c045b",
+  "previous_approval_commit": "27cdea7b204c36e839f1c3b1a8de387f64c0a91e",
+  "approval_commit": "d941714bc1d152d0a2189aa954e623460b4e6d03",
+  "decisions_blob": "be002c5b196b3a374c39fe511d2e1c68477723ab",
+  "decisions_sha256": "c76e162cca8e044dcc78d3f52a52b57fd230592b17249b6048f6f753618b6d18",
+  "decisions_size_bytes": 40572,
+  "git_mode": "100644",
+  "governance_commit_branch": "governance/p4-final-merge-reconciliation",
+  "owner_authority": {
+    "existing_decision_status": "APPROVED",
+    "decision_date": "2026-11-02",
+    "source": "Main Managing Chat — Part 2; explicit owner confirmation supplied by the user in this conversation",
+    "approval_quote": "Утверждаю запись P4 Final Merge Reconciliation в предложенной редакции",
+    "approved_text_sha256": "e07d23cd122202e2fec7d3032e2296804772c1d60a8d6f11ff56f9734a7eb607",
+    "approved_text_size_bytes": 3616,
+    "historical_PROPOSED_status_preserved": true,
+    "status_explanation": "The supplied original proposal retained PROPOSED wording; its later actual approval is the accompanying owner confirmation. No source wording was changed.",
+    "exact_G3_publication_separately_authorized": true,
+    "publication_scope": "The prior owner authorization covered publication of the exact G3 commit in an isolated branch; it is not authorization to publish this prepared receipt or to merge.",
+    "new_owner_decision_created_by_verification": false
+  },
+  "technical_verification": {
+    "status": "PASS",
+    "verified_at_moscow": "2026-11-05T14:41:13.293467+03:00",
+    "direct_parent": "edc40399a4a5db448278edd098bff4307b308dbd",
+    "previous_G2_is_ancestor": true,
+    "first_parent_lineage": [
+      "27cdea7b204c36e839f1c3b1a8de387f64c0a91e",
+      "2595ad45c962ad6ec5790261ecdaf59907ff8b40",
+      "edc40399a4a5db448278edd098bff4307b308dbd",
+      "d941714bc1d152d0a2189aa954e623460b4e6d03"
+    ],
+    "exact_Git_commit_tree_blob_identity_verified": true,
+    "exact_document_sha256_size_mode_verified": true,
+    "exact_approved_record_verified": true,
+    "G3_changed_paths": [
+      "DECISIONS.md"
+    ],
+    "unauthorized_production_contract_fixture_test_migration_dependency_changes": false,
+    "report_path": "docs/p4/validation/g3-owner-authority/INDEPENDENT_VERIFICATION_REPORT.md",
+    "manifest_path": "docs/p4/validation/g3-owner-authority/MANIFEST.sha256",
+    "authority_distinction": "Git object verification confirms identity/content/ancestry; the existing owner decision is sourced from explicit owner instructions, not inferred from commit authorship or an APPROVED string."
+  },
+  "preparation_scope": {
+    "receipt_published": false,
+    "new_repository_commit_created": false,
+    "DECISIONS_modified": false,
+    "active_G2_pin_or_test_policies_modified": false,
+    "governance_repin_performed": false,
+    "production_tests_contracts_fixtures_migrations_dependencies_modified": false,
+    "main_merge_performed": false,
+    "P5_started_or_authorized": false,
+    "new_212_test_regression": "NOT_RUN"
+  },
+  "review_and_follow_up": {
+    "destination": "Main Managing Chat — Part 2",
+    "receipt_publication": "PENDING_REVIEW; NOT_PERFORMED",
+    "proposed_repository_path": "docs/p4/validation/P4_FINAL_MERGE_RECONCILIATION_G3_OWNER_AUTHORITY_RECEIPT.json",
+    "procedure_path": "docs/p4/validation/g3-owner-authority/PUBLICATION_PROCEDURE.md",
+    "binding_procedure": "Existing approved CR-P4-005 limited governance repin procedure remains binding. No automatic repin or automatic latest-main trust."
+  }
+}

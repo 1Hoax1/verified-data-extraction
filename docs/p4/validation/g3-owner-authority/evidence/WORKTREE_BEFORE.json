@@ -1,0 +1,12 @@
+{
+  "head": "d941714bc1d152d0a2189aa954e623460b4e6d03",
+  "status": "",
+  "protected_worktree_sha256": {
+    "DECISIONS.md": "c76e162cca8e044dcc78d3f52a52b57fd230592b17249b6048f6f753618b6d18",
+    "tests/p4/approved_governance_pin_v1.json": "f7a80b663b7a7347e7f38bb2aaf6281f6d1dce4344f079be02cc45210de3d050",
+    "tests/scope_policy.py": "1946caedf7b45c1329f4bf7c3cbd682f4398b2ef4f350f200fa2c542325bd7d6",
+    "tests/p4/scope_allowlist_v1.json": "18c3207c24720ac43641397ba8d552e7d81d0222d6cd765f89500a4cf0ccfa2d"
+  },
+  "approved_source_sha256": "e07d23cd122202e2fec7d3032e2296804772c1d60a8d6f11ff56f9734a7eb607",
+  "approved_source_bytes": 3616
+}
