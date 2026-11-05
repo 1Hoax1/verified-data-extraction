@@ -1,0 +1,197 @@
+{
+  "P4-W01": {
+    "actual_runtime_round_trip": true,
+    "canonical_payload_sha256": "3fecb5d06689bf4cad18c10f72167e873beb0c3f920f2f6a04d2e9e8015c74a7",
+    "result": "PASS"
+  },
+  "P4-W02": {
+    "actual_runtime_round_trip": true,
+    "canonical_payload_sha256": "59bb3edbaad237cbe4983784fc3a4e5a0152747d3fa77ad7fd86022fe9260f1b",
+    "result": "PASS"
+  },
+  "P4-W03": {
+    "actual_runtime_round_trip": true,
+    "canonical_payload_sha256": "034e439c6affbe28f7fb0eeeacfee6c6959ac3f8c55528ac23694cea7c826d40",
+    "result": "PASS"
+  },
+  "P4-W04": {
+    "actual_runtime_round_trip": true,
+    "canonical_payload_sha256": "f4780e52f7765aa21c2bd29806b2f4f99d4c30649d6efd92c8c074d8fa383c1d",
+    "result": "PASS"
+  },
+  "P4-W05": {
+    "actual_runtime_round_trip": true,
+    "canonical_payload_sha256": "22c657896013d9a82a72bebc68b1dd2f5bc0f4b909f57b2db9f371b71ae5871c",
+    "result": "PASS"
+  },
+  "P4-W06": {
+    "actual_runtime_round_trip": true,
+    "canonical_payload_sha256": "c66bdb81348087c80b18d8a57741a4c2a53a1173aa6c1dc82ebfdb4419f06540",
+    "result": "PASS"
+  },
+  "P4-W07": {
+    "actual_runtime_round_trip": true,
+    "canonical_payload_sha256": "c01699c4c7ad766a77b27fdd26042a7fbe9f54178eb22edc76e014e8425b7a4c",
+    "result": "PASS"
+  },
+  "P4-W08": {
+    "actual_runtime_round_trip": true,
+    "canonical_payload_sha256": "7a3d496a83b17dccd3ef6d1f3c978a383842ba90299b9c9b31bbe2a06e808eef",
+    "result": "PASS"
+  },
+  "P4-W09": {
+    "actual_runtime_round_trip": true,
+    "canonical_payload_sha256": "ba914246a3b221b0212160702a49f1ef91962bdbda921fbbeecbd994d95d3429",
+    "result": "PASS"
+  },
+  "P4-W10": {
+    "actual_runtime_round_trip": true,
+    "canonical_payload_sha256": "9109a9c3f715a8cb60acd7b42474c4b09149e73b43004118a3595fc6e19092dc",
+    "result": "PASS"
+  },
+  "P4-W11": {
+    "actual_runtime_round_trip": true,
+    "canonical_payload_sha256": "85ba9ef72b878c4b30bd6a703ac8dbb0ddf31cb5bd4d8e0fb976cfc8c43fd800",
+    "result": "PASS"
+  },
+  "P4-W12": {
+    "actual_runtime_round_trip": true,
+    "canonical_payload_sha256": "57aea839c7cb1d12185351362986d6f313ac76c5f4d4b4d86fbf75721e2718b9",
+    "result": "PASS"
+  },
+  "P4-W13": {
+    "actual_runtime_round_trip": true,
+    "canonical_payload_sha256": "eeef793d56c7525b43571a48cac5d236fe694eeac972eb1435b06e04af4331d7",
+    "result": "PASS"
+  },
+  "P4-W14": {
+    "result": "PASS",
+    "runtime_decoder": "REJECTED_WITHOUT_COERCION"
+  },
+  "P4-W15": {
+    "result": "PASS",
+    "runtime_decoder": "REJECTED_WITHOUT_COERCION"
+  },
+  "P4-W16": {
+    "result": "PASS",
+    "runtime_decoder": "REJECTED_WITHOUT_COERCION"
+  },
+  "P4-W17": {
+    "result": "PASS",
+    "runtime_decoder": "REJECTED_WITHOUT_COERCION"
+  },
+  "P4-W18": {
+    "result": "PASS",
+    "runtime_decoder": "REJECTED_WITHOUT_COERCION"
+  },
+  "P4-W19": {
+    "result": "PASS",
+    "runtime_decoder": "REJECTED_WITHOUT_COERCION"
+  },
+  "P4-W20": {
+    "result": "PASS",
+    "runtime_decoder": "REJECTED_WITHOUT_COERCION"
+  },
+  "P4-W21": {
+    "result": "PASS",
+    "runtime_decoder": "REJECTED_WITHOUT_COERCION"
+  },
+  "P4-W22": {
+    "result": "PASS",
+    "runtime_decoder": "REJECTED_WITHOUT_COERCION"
+  },
+  "P4-W23": {
+    "result": "PASS",
+    "runtime_decoder": "REJECTED_WITHOUT_COERCION"
+  },
+  "P4-W24": {
+    "result": "PASS",
+    "runtime_decoder": "REJECTED_WITHOUT_COERCION"
+  },
+  "P4-W25": {
+    "result": "PASS",
+    "runtime_decoder": "REJECTED_WITHOUT_COERCION"
+  },
+  "P4-W26": {
+    "result": "PASS",
+    "runtime_decoder": "REJECTED_WITHOUT_COERCION"
+  },
+  "P4-W27": {
+    "result": "PASS",
+    "runtime_decoder": "REJECTED_WITHOUT_COERCION"
+  },
+  "P4-W28": {
+    "result": "PASS",
+    "runtime_decoder": "REJECTED_WITHOUT_COERCION"
+  },
+  "P4-W29": {
+    "result": "PASS",
+    "runtime_decoder": "REJECTED_WITHOUT_COERCION"
+  },
+  "P4-W30": {
+    "result": "PASS",
+    "runtime_decoder": "REJECTED_WITHOUT_COERCION"
+  },
+  "P4-W31": {
+    "result": "PASS",
+    "runtime_decoder": "REJECTED_WITHOUT_COERCION"
+  },
+  "P4-W32": {
+    "result": "PASS",
+    "runtime_decoder": "REJECTED_WITHOUT_COERCION"
+  },
+  "P4-W33": {
+    "result": "PASS",
+    "runtime_decoder": "REJECTED_WITHOUT_COERCION"
+  },
+  "P4-W34": {
+    "result": "PASS",
+    "runtime_decoder": "REJECTED_WITHOUT_COERCION"
+  },
+  "P4-W35": {
+    "result": "PASS",
+    "runtime_decoder": "REJECTED_WITHOUT_COERCION"
+  },
+  "P4-W36": {
+    "result": "PASS",
+    "runtime_decoder": "REJECTED_WITHOUT_COERCION"
+  },
+  "P4-W37": {
+    "result": "PASS",
+    "runtime_decoder": "REJECTED_WITHOUT_COERCION"
+  },
+  "P4-W38": {
+    "result": "PASS",
+    "runtime_decoder": "REJECTED_WITHOUT_COERCION"
+  },
+  "P4-W39": {
+    "result": "PASS",
+    "runtime_decoder": "REJECTED_WITHOUT_COERCION"
+  },
+  "P4-W40": {
+    "actual_runtime_round_trip": true,
+    "canonical_payload_sha256": "be2700eb83a5fc67ba04fc877cd7b7c386c4b6df70f43809f379d8a037f167b8",
+    "result": "PASS"
+  },
+  "P4-W41": {
+    "actual_runtime_round_trip": true,
+    "canonical_payload_sha256": "5c20f39bf24500e9a931f79544fa3304dbafac2ed36c92b0e44c83cdac380448",
+    "result": "PASS"
+  },
+  "P4-W42": {
+    "actual_errors_policy": "FAIL",
+    "result": "PASS"
+  },
+  "P4-W43": {
+    "actual_errors_policy": "SET_NULL",
+    "result": "PASS"
+  },
+  "P4-W44": {
+    "actual_errors_policy": "FAIL",
+    "result": "PASS"
+  },
+  "P4-W45": {
+    "actual_errors_policy": "SET_NULL",
+    "result": "PASS"
+  }
+}

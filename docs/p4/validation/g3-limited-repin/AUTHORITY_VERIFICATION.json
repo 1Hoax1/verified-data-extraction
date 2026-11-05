@@ -1,0 +1,20 @@
+{
+  "status": "PASS",
+  "R3": "2ec6a895362f0b1b3a0d81a4930d623e00349441",
+  "R3_only_parent": "d941714bc1d152d0a2189aa954e623460b4e6d03",
+  "G3": "d941714bc1d152d0a2189aa954e623460b4e6d03",
+  "previous_G2": "27cdea7b204c36e839f1c3b1a8de387f64c0a91e",
+  "G2_is_ancestor_of_G3": true,
+  "B3": "be002c5b196b3a374c39fe511d2e1c68477723ab",
+  "H3": "c76e162cca8e044dcc78d3f52a52b57fd230592b17249b6048f6f753618b6d18",
+  "L3": 40572,
+  "M": "100644",
+  "owner_receipt_present_and_matches": true,
+  "R3_evidence_inventory": 52,
+  "R3_evidence_manifest_verified": 51,
+  "main_before": "edc40399a4a5db448278edd098bff4307b308dbd",
+  "G3_source_head": "d941714bc1d152d0a2189aa954e623460b4e6d03",
+  "R3_source_head": "2ec6a895362f0b1b3a0d81a4930d623e00349441",
+  "target_branch_exists": false,
+  "independently_computed_pin_sha256": "95b7c92a417ec06a80f3d4e839e136e00100e4313d1bee021c94f5beda1f0df7"
+}

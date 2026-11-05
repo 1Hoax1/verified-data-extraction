@@ -1,0 +1,43 @@
+diff --git a/tests/p4/approved_governance_pin_v1.json b/tests/p4/approved_governance_pin_v1.json
+index c94c974..94034f3 100644
+--- a/tests/p4/approved_governance_pin_v1.json
++++ b/tests/p4/approved_governance_pin_v1.json
+@@ -1,8 +1,8 @@
+ {
+-  "approval_commit": "27cdea7b204c36e839f1c3b1a8de387f64c0a91e",
+-  "decisions_blob": "90cbcbaf9838dcee9cc87b889958b15816b4b0fd",
+-  "decisions_sha256": "035f180a346ff9f1c9a5074e872d2eb10e1d6dd1a289acf90f7eeb7d372e4782",
+-  "decisions_size_bytes": 36955,
++  "approval_commit": "d941714bc1d152d0a2189aa954e623460b4e6d03",
++  "decisions_blob": "be002c5b196b3a374c39fe511d2e1c68477723ab",
++  "decisions_sha256": "c76e162cca8e044dcc78d3f52a52b57fd230592b17249b6048f6f753618b6d18",
++  "decisions_size_bytes": 40572,
+   "format": "P4_GOVERNANCE_PIN_V1",
+   "git_mode": "100644",
+   "implementation_baseline": "7685110506d115805c473b064752f86e9e5c045b",
+diff --git a/tests/p4/scope_allowlist_v1.json b/tests/p4/scope_allowlist_v1.json
+index 17be2b1..16b09db 100644
+--- a/tests/p4/scope_allowlist_v1.json
++++ b/tests/p4/scope_allowlist_v1.json
+@@ -208,7 +208,7 @@
+   },
+   "governance_pin": {
+     "path": "tests/p4/approved_governance_pin_v1.json",
+-    "sha256": "f7a80b663b7a7347e7f38bb2aaf6281f6d1dce4344f079be02cc45210de3d050"
++    "sha256": "95b7c92a417ec06a80f3d4e839e136e00100e4313d1bee021c94f5beda1f0df7"
+   },
+   "lock_sha256": "7a4ed597bb53a55189cce5b9c5d32b191f150f6cbc92f55122382cd164b42776",
+   "p4_source_paths": [
+diff --git a/tests/scope_policy.py b/tests/scope_policy.py
+index 80007be..5af60f3 100644
+--- a/tests/scope_policy.py
++++ b/tests/scope_policy.py
+@@ -24,7 +24,7 @@ GOVERNANCE_PIN = 'tests/p4/approved_governance_pin_v1.json'
+ GOVERNANCE_BASELINE = '7685110506d115805c473b064752f86e9e5c045b'
+ PRIOR_OWNER_APPROVAL = '89d8e590d528cce58b5476a41ca5cc482e59be3e'
+ # CR-P4-005: computed after immutable Stage A, never from DECISIONS at runtime.
+-GOVERNANCE_PIN_SHA256 = 'f7a80b663b7a7347e7f38bb2aaf6281f6d1dce4344f079be02cc45210de3d050'
++GOVERNANCE_PIN_SHA256 = '95b7c92a417ec06a80f3d4e839e136e00100e4313d1bee021c94f5beda1f0df7'
+ 
+ 
+ def _governance_require(condition, reason):

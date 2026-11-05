@@ -1,0 +1,14 @@
+{
+  "argv": [
+    "/workspace/verified-data-extraction/.venv/bin/python",
+    "-m",
+    "pytest",
+    "tests/p1",
+    "tests/p2",
+    "tests/p3",
+    "-q",
+    "--junitxml=/tmp/pytest-of-agent/pytest-7/test_T63_frozen_regression_evi0/p0-p3-regression.xml"
+  ],
+  "cwd": "/workspace/p4-g3-limited-repin",
+  "exit_code": 0
+}
