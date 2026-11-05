@@ -1,8 +1,8 @@
 {
-  "approval_commit": "27cdea7b204c36e839f1c3b1a8de387f64c0a91e",
-  "decisions_blob": "90cbcbaf9838dcee9cc87b889958b15816b4b0fd",
-  "decisions_sha256": "035f180a346ff9f1c9a5074e872d2eb10e1d6dd1a289acf90f7eeb7d372e4782",
-  "decisions_size_bytes": 36955,
+  "approval_commit": "d941714bc1d152d0a2189aa954e623460b4e6d03",
+  "decisions_blob": "be002c5b196b3a374c39fe511d2e1c68477723ab",
+  "decisions_sha256": "c76e162cca8e044dcc78d3f52a52b57fd230592b17249b6048f6f753618b6d18",
+  "decisions_size_bytes": 40572,
   "format": "P4_GOVERNANCE_PIN_V1",
   "git_mode": "100644",
   "implementation_baseline": "7685110506d115805c473b064752f86e9e5c045b",
