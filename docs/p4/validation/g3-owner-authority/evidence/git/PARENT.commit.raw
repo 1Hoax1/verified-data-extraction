@@ -1,0 +1,26 @@
+tree 9cd6b96604765174eb14645003297cfaaea31fcd
+parent 2595ad45c962ad6ec5790261ecdaf59907ff8b40
+parent 0a54c7722f73842d1b5227e1fd8e28a33450f44b
+author 1Hoax1 <144477708+1Hoax1@users.noreply.github.com> 1793570736 +0300
+committer GitHub <noreply@github.com> 1793570736 +0300
+gpgsig -----BEGIN PGP SIGNATURE-----
+ 
+ wsFcBAABCAAQBQJq57ewCRC1aQ7uu5UhlAAAZdAQAEpQVDwl+iGFD8AOmogM0Lyz
+ 2NUdlsLrGo2ESFeCB9zDQAvjX2zwYLhni79Sgh3D8wwMtjr02doObpZqETP3cYIE
+ 4BBkxcqEwfTdYYxYpeT/LNv6tujWZp2EmXANPBT3ap9XTXJz8HwdgaRoj1/Xoqkt
+ fNLHbursx5FWxVuJkqteK3cmE+xeUgpWG1iagK8Ngx5sb63NJ3pLjkADtiapUQPZ
+ wj3Si6/8sohH6hbtQ4OioZwjxSmRuOuqJWOPwc9FyKBY+smFL4ONfO041QZMUlpr
+ VpVfmTYPq2n/hrUZ2XxgE9FOpTB3vDbbvstH8gozhCiPxqFsbsJtg2mEOYQdgBtT
+ 7+SpkzVYG7Kep+eQmvyTZFkkqBWrcXeZ6GGZV2fCUB5pHUmGOHiK0CRv4fkzHAVU
+ wpOuTSCBu1yBXDh5WP6eZsBh1lRWxCu1c+1nDk+8U42IthXwgtZCCfCCDzTQQtg8
+ 2dFf1hINF3GSyS6jTBNtAagk57XM+8Fcn6DEkMv3yj0Kqc9PHV95n2sWLPVV/qvn
+ HCFoc0Zga8KD6AQgkEIHAJnx8jfOoyqgE8Sw2uKLVgBTB9bfwNZFQlA90li/rqqr
+ DbVZ19xG5x8r9EJBhJXz3eUFv1+MfNH5Lmx3xtaLuJ0FTndcv3j3ikqsbmxbGIXJ
+ m9Xy0RC5d2eCx1eM0sgA
+ =Ynyo
+ -----END PGP SIGNATURE-----
+ 
+
+Merge pull request #5: validated P4 Pilot Slice V1 integration
+
+P4 Gate B CLOSED / PASS by owner. Integrate validated deterministic transformation engine, CR-P4-005 G2 repin and immutable final validation evidence; 212/212 PASS at d4ad0c2. Preserve ancestry and approved governance.

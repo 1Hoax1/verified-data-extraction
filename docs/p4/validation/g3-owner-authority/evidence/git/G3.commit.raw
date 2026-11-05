@@ -1,0 +1,14 @@
+tree c2200a045500928311bad5ec90619fcd5db5e3e0
+parent edc40399a4a5db448278edd098bff4307b308dbd
+author hizzo <novoego1@gmail.com> 1793611343 +0000
+committer hizzo <novoego1@gmail.com> 1793611343 +0000
+
+Record owner-approved P4 final merge reconciliation
+
+Authority: explicit owner approval in Main Managing Chat — Part 2, 2026-11-02:
+"Утверждаю запись P4 Final Merge Reconciliation в предложенной редакции".
+
+Append the supplied approved record verbatim. Preserve its historical PROPOSED
+marker as explicitly instructed; current approval is the accompanying owner
+confirmation. Do not rewrite past decisions or assert retroactive merge
+permission. No governance repin, receipt publication or P5 work is performed.

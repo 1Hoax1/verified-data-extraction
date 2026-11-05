@@ -1,0 +1,11 @@
+{
+  "commit": "bfd4bb4cb18d130027607c5f643993858785cbe4",
+  "parent": "2ec6a895362f0b1b3a0d81a4930d623e00349441",
+  "tree": "159d2581aff5acc8ccf46ddcc6033e6743b44c64",
+  "changed_paths": [
+    "tests/p4/approved_governance_pin_v1.json",
+    "tests/p4/scope_allowlist_v1.json",
+    "tests/scope_policy.py"
+  ],
+  "protected_files_SHA256_equal": 653
+}

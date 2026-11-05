@@ -1,0 +1,175 @@
+{
+  "status": "PASS",
+  "verified_at_moscow": "2026-11-05T14:41:13.293467+03:00",
+  "method": "Fresh GitHub REST GET responses plus fresh full Git fetch into a separate bare repository; recompute exact canonical commit/tree/blob Git SHA-1 and document SHA-256.",
+  "direct_parent": "edc40399a4a5db448278edd098bff4307b308dbd",
+  "G2_to_G3_first_parent_lineage": [
+    "27cdea7b204c36e839f1c3b1a8de387f64c0a91e",
+    "2595ad45c962ad6ec5790261ecdaf59907ff8b40",
+    "edc40399a4a5db448278edd098bff4307b308dbd",
+    "d941714bc1d152d0a2189aa954e623460b4e6d03"
+  ],
+  "API_compare_G2_to_G3": {
+    "status": "ahead",
+    "merge_base": "27cdea7b204c36e839f1c3b1a8de387f64c0a91e",
+    "ahead_by": 16,
+    "behind_by": 0
+  },
+  "root_entry_comparison": {
+    ".gitignore": {
+      "parent": [
+        "100644",
+        "blob",
+        "d25b9e133851aa318971e46f6b5dc8d45ed33d69"
+      ],
+      "G3": [
+        "100644",
+        "blob",
+        "d25b9e133851aa318971e46f6b5dc8d45ed33d69"
+      ],
+      "unchanged": true
+    },
+    "DECISIONS.md": {
+      "parent": [
+        "100644",
+        "blob",
+        "90cbcbaf9838dcee9cc87b889958b15816b4b0fd"
+      ],
+      "G3": [
+        "100644",
+        "blob",
+        "be002c5b196b3a374c39fe511d2e1c68477723ab"
+      ],
+      "unchanged": false
+    },
+    "README.md": {
+      "parent": [
+        "100644",
+        "blob",
+        "4dd58403a288e4962b1383e6054436baa8f04121"
+      ],
+      "G3": [
+        "100644",
+        "blob",
+        "4dd58403a288e4962b1383e6054436baa8f04121"
+      ],
+      "unchanged": true
+    },
+    "docs": {
+      "parent": [
+        "040000",
+        "tree",
+        "39254c0c82c590512d712424b271e4fcfd3265ba"
+      ],
+      "G3": [
+        "040000",
+        "tree",
+        "39254c0c82c590512d712424b271e4fcfd3265ba"
+      ],
+      "unchanged": true
+    },
+    "pecs": {
+      "parent": [
+        "040000",
+        "tree",
+        "3d8c92dddd6ff1ea1eff548e6e7f4f61fc1b1787"
+      ],
+      "G3": [
+        "040000",
+        "tree",
+        "3d8c92dddd6ff1ea1eff548e6e7f4f61fc1b1787"
+      ],
+      "unchanged": true
+    },
+    "pyproject.toml": {
+      "parent": [
+        "100644",
+        "blob",
+        "79ce8b9d56308ca1f6d1a1c716f110e65462a5b3"
+      ],
+      "G3": [
+        "100644",
+        "blob",
+        "79ce8b9d56308ca1f6d1a1c716f110e65462a5b3"
+      ],
+      "unchanged": true
+    },
+    "scripts": {
+      "parent": [
+        "040000",
+        "tree",
+        "98e41dcc667dcf43d2864879087756f367318b98"
+      ],
+      "G3": [
+        "040000",
+        "tree",
+        "98e41dcc667dcf43d2864879087756f367318b98"
+      ],
+      "unchanged": true
+    },
+    "src": {
+      "parent": [
+        "040000",
+        "tree",
+        "0cb25d45959a5f1a2373b8d422811efd21d84d84"
+      ],
+      "G3": [
+        "040000",
+        "tree",
+        "0cb25d45959a5f1a2373b8d422811efd21d84d84"
+      ],
+      "unchanged": true
+    },
+    "tests": {
+      "parent": [
+        "040000",
+        "tree",
+        "06104e3f907e12a43be89cbba4a158b7893b4f34"
+      ],
+      "G3": [
+        "040000",
+        "tree",
+        "06104e3f907e12a43be89cbba4a158b7893b4f34"
+      ],
+      "unchanged": true
+    },
+    "uv.lock": {
+      "parent": [
+        "100644",
+        "blob",
+        "4aa622aeb2ee3db50ff58225fbbe321b11412873"
+      ],
+      "G3": [
+        "100644",
+        "blob",
+        "4aa622aeb2ee3db50ff58225fbbe321b11412873"
+      ],
+      "unchanged": true
+    }
+  },
+  "different_root_paths": [
+    "DECISIONS.md"
+  ],
+  "G3_change": {
+    "path": "DECISIONS.md",
+    "added_lines": 80,
+    "removed_lines": 0
+  },
+  "exact_approved_source": {
+    "sha256": "e07d23cd122202e2fec7d3032e2296804772c1d60a8d6f11ff56f9734a7eb607",
+    "size_bytes": 3616,
+    "baseline_prefix_bytes_preserved": 36955,
+    "separator_bytes": 1,
+    "entire_document_is_baseline_plus_exact_source": true
+  },
+  "canonical_Git_objects_rehashed": 9,
+  "document_sha256_verified_by": [
+    "Python hashlib",
+    "sha256sum"
+  ],
+  "publication_source_branch_unchanged": true,
+  "observed_main_sha_unchanged": "edc40399a4a5db448278edd098bff4307b308dbd",
+  "protected_worktree_unchanged": true,
+  "new_212_test_regression": "NOT_RUN; no new runtime acceptance claimed",
+  "independence_scope": "Independent fresh-object recomputation of previous claims; same Codex/execution environment, not a new independent human approval or second-host test run."
+}

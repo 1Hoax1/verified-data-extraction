@@ -1,0 +1,227 @@
+{
+  "status": "CR-P4-005 G3 LIMITED REPIN — IMPLEMENTED / TECHNICALLY VALIDATED / NOT_MERGED",
+  "owner_acceptance_or_final_integration_approval": "NOT_CLAIMED; Main Managing Chat — Part 2 review required",
+  "gate_b": "Existing owner CLOSED / PASS unchanged; not reopened or closed by this task",
+  "baseline_R3": "2ec6a895362f0b1b3a0d81a4930d623e00349441",
+  "governance_G3": "d941714bc1d152d0a2189aa954e623460b4e6d03",
+  "tested_implementation_commit": "bfd4bb4cb18d130027607c5f643993858785cbe4",
+  "tested_tree": "159d2581aff5acc8ccf46ddcc6033e6743b44c64",
+  "implementation_parent": "2ec6a895362f0b1b3a0d81a4930d623e00349441",
+  "phase_exit_codes": {
+    "positive-01": 0,
+    "scope-01": 0,
+    "full-01": 0
+  },
+  "mandatory_counts": {
+    "P1": 42,
+    "P2": 54,
+    "P3": 52,
+    "P4": 64
+  },
+  "total_passed": 212,
+  "failures": 0,
+  "errors": 0,
+  "skips": 0,
+  "xfails": 0,
+  "pin_sha256": "95b7c92a417ec06a80f3d4e839e136e00100e4313d1bee021c94f5beda1f0df7",
+  "active_pin": {
+    "approval_commit": "d941714bc1d152d0a2189aa954e623460b4e6d03",
+    "decisions_blob": "be002c5b196b3a374c39fe511d2e1c68477723ab",
+    "decisions_sha256": "c76e162cca8e044dcc78d3f52a52b57fd230592b17249b6048f6f753618b6d18",
+    "decisions_size_bytes": 40572,
+    "format": "P4_GOVERNANCE_PIN_V1",
+    "git_mode": "100644",
+    "implementation_baseline": "7685110506d115805c473b064752f86e9e5c045b",
+    "path": "DECISIONS.md",
+    "repository": "1Hoax1/verified-data-extraction"
+  },
+  "governance_cases": {
+    "P01": {
+      "result": "PASS",
+      "detail": "Real integrated HEAD/index/disk and exact G/B/H/L/M/P verified by both auditors",
+      "subcases": 1,
+      "enforcement": "executed assertion"
+    },
+    "P02": {
+      "result": "PASS",
+      "detail": "Full real changed/untracked inventory; original P2-T40/P3-T51 also run separately and in combined suite",
+      "subcases": 1,
+      "enforcement": "executed assertion"
+    },
+    "P03": {
+      "result": "PASS",
+      "detail": "Full clean copied tree passes with explicitly verified real authority",
+      "subcases": 1,
+      "enforcement": "executed assertion"
+    },
+    "P04": {
+      "result": "PASS",
+      "detail": "Descendant evidence-only commit passes without repin",
+      "subcases": 1,
+      "enforcement": "executed assertion"
+    },
+    "N01": {
+      "result": "PASS",
+      "detail": "Unchanged no-context singleton rejection; both historical assertions remain",
+      "subcases": 2,
+      "enforcement": "executed assertion"
+    },
+    "N02": {
+      "result": "PASS",
+      "detail": "Byte addition/removal, CRLF and Unicode normalization each rejected",
+      "subcases": 5,
+      "enforcement": "executed assertion"
+    },
+    "N03": {
+      "result": "PASS",
+      "detail": "Staged-only, unstaged-only, and changed HEAD with approved index/disk each rejected",
+      "subcases": 3,
+      "enforcement": "executed assertion"
+    },
+    "N04": {
+      "result": "PASS",
+      "detail": "Missing file, symlink, executable mode, conflicting index stages each rejected",
+      "subcases": 4,
+      "enforcement": "executed assertion"
+    },
+    "N05": {
+      "result": "PASS",
+      "detail": "Both obsolete approved/baseline document versions rejected",
+      "subcases": 2,
+      "enforcement": "executed assertion"
+    },
+    "N06": {
+      "result": "PASS",
+      "detail": "Missing ancestry, replace ref, shallow history, unknown authority object rejected",
+      "subcases": 4,
+      "enforcement": "executed assertion"
+    },
+    "N07": {
+      "result": "PASS",
+      "detail": "Digest and closed-schema/serialization negatives both exercised",
+      "subcases": 18,
+      "enforcement": "executed assertion"
+    },
+    "N08": {
+      "result": "PASS",
+      "detail": "Recomputed arbitrary document/pin still fails the original expected P",
+      "subcases": 1,
+      "enforcement": "executed assertion"
+    },
+    "N09": {
+      "result": "PASS",
+      "detail": "Changed pin/P requires independent owner receipt; synthetic alternative mismatches actual receipt",
+      "subcases": 1,
+      "enforcement": "executed independent receipt comparison; human authorization remains a review boundary"
+    },
+    "N10": {
+      "result": "PASS",
+      "detail": "Approved document never authorizes a forbidden neighboring path",
+      "subcases": 1,
+      "enforcement": "executed assertion"
+    },
+    "N11": {
+      "result": "PASS",
+      "detail": "Missing pin/authority and modified scratch bytes rejected, with no historical fallback",
+      "subcases": 4,
+      "enforcement": "executed assertion"
+    },
+    "N12": {
+      "result": "PASS",
+      "detail": "Frozen legacy/P4 sources, migration, P0 schema, pack and dependency lock all reject mutation; historical snippets also retained",
+      "subcases": 6,
+      "enforcement": "executed assertion"
+    },
+    "N13": {
+      "result": "PASS",
+      "detail": "New descendant document is rejected until explicitly repinned; only one active version",
+      "subcases": 1,
+      "enforcement": "executed assertion"
+    },
+    "P05": {
+      "result": "PASS",
+      "detail": "Future-repin mechanics tested using isolated synthetic receipt/authority; real owner approval is not fabricated",
+      "subcases": 1,
+      "enforcement": "test-only simulation of the external approval boundary; real active pin unchanged"
+    },
+    "N14": {
+      "result": "PASS",
+      "detail": "Both frozen historical test files reject any bytes beyond the exact approved amendment",
+      "subcases": 2,
+      "enforcement": "executed assertion"
+    }
+  },
+  "governance_cases_passed": 19,
+  "governance_subcases": 59,
+  "G2_to_G3_transition": {
+    "active_G3_matches_owner_receipt": "PASS",
+    "approved_G3_copy": "PASS",
+    "obsolete_G2_document": "REJECTED",
+    "obsolete_G2_pin": "REJECTED"
+  },
+  "fixture_counts": {
+    "f-fixture": 38,
+    "x-fixture": 19,
+    "w-fixture": 45
+  },
+  "P0_goldens": 2,
+  "strict_verifier": {
+    "result": "STATIC_PINS_REFS_AND_P0_CONTRACTS_PASS",
+    "operation_cases": 38,
+    "failure_cases": 19,
+    "exact_failure_postconditions": 19,
+    "golden": 2,
+    "P0_checkout": "CHECKED",
+    "p0_valid_operation_schemas": 36,
+    "p0_schema_invalid_operation_cases": 2,
+    "p0_semantic_invalid_operation_cases": 1,
+    "operation_semantic_execution": "NOT_RUN",
+    "runtime_gate_b": "NOT_RUN",
+    "precision_cases": 45,
+    "signed64_round_trips": 13,
+    "rejected_bad_wires": 26,
+    "unicode_exact_oracles": 2,
+    "source_integer_overflow_oracles": 4
+  },
+  "mutations_rejected": 9,
+  "stress": {
+    "result": "PASS",
+    "tested_commit": "bfd4bb4cb18d130027607c5f643993858785cbe4",
+    "source_bytes": 40801000,
+    "source_sha256": "5c5d2dbf69c0b8f4d27be5ec8a258677eb883d5ad267a4ec644b0205978aa97d",
+    "input_rows": 100000,
+    "columns": 200,
+    "result_rows": 90000,
+    "full_reference_cells_checked": 18000000,
+    "result_sha256": "ea277f2873ed3bd712c7148c2b87035c42ed4cdbbec54edee2d59d63a6b5420b",
+    "elapsed_seconds": 63.032923739998296,
+    "baseline_rss_bytes": 49049600,
+    "observed_peak_rss_bytes": 342376448,
+    "incremental_peak_rss_bytes": 293326848,
+    "runtime_resources": {
+      "incremental_peak_rss": 90284032,
+      "elapsed_seconds": 62.63916867900116,
+      "scratch_peak_bytes": 180144042,
+      "merge_fan_in": 16,
+      "rss_samples": 7284
+    }
+  },
+  "implementation_changes": [
+    "tests/p4/approved_governance_pin_v1.json",
+    "tests/p4/scope_allowlist_v1.json",
+    "tests/scope_policy.py"
+  ],
+  "protected_SHA256_comparisons_passed": 653,
+  "historical_evidence_restored": true,
+  "all_phases_same_implementation_commit_and_tree": true,
+  "subsequent_evidence_commit": "Evidence-only child; actual SHA is recorded in the final publication handoff, not self-embedded.",
+  "limitations": [
+    "P05 simulates a future receipt authority only in a scoped disposable test repository.",
+    "N09 retains the independent owner-receipt/human review boundary; rewriting all local trust anchors cannot authenticate a human approval.",
+    "Linux/Python3.12.14 only; no independent host, Windows, CI, physical power loss or manual-browser verification.",
+    "RSS sampled, deadline soft; inherited P0 P-C 13-file discrepancy unchanged."
+  ],
+  "main_merge_performed": false,
+  "P5_design_or_implementation_started": false,
+  "new_CR_or_scope_change": false
+}

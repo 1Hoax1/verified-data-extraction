@@ -1,0 +1,14 @@
+{
+  "invalid_examples/parse_failure_policy_fail.semantic_invalid.json": {
+    "actual_error": "PARSE_FAILED",
+    "result": "PASS"
+  },
+  "invalid_examples/preflight_missing_column.semantic_invalid.json": {
+    "actual_error": "COLUMN_NOT_FOUND",
+    "result": "PASS"
+  },
+  "invalid_examples/rename_collision.semantic_invalid.json": {
+    "actual_error": "COLUMN_COLLISION",
+    "result": "PASS"
+  }
+}

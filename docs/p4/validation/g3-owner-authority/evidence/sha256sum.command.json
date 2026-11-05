@@ -1,0 +1,7 @@
+{
+  "argv": [
+    "sha256sum",
+    "/workspace/p4-g3-owner-authority-review/docs/p4/validation/g3-owner-authority/evidence/G3_DECISIONS.exact.md"
+  ],
+  "exit_code": 0
+}

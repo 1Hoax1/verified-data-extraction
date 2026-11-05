@@ -1,0 +1,50 @@
+[
+  {
+    "argv": [
+      "git",
+      "init",
+      "--bare",
+      "/workspace/p4-g3-owner-authority-work/github-objects.git"
+    ],
+    "cwd": "/workspace/p4-g3-owner-authority-work",
+    "started_at_moscow": "2026-11-05T14:34:33.328781+03:00",
+    "exit_code": 0,
+    "stdout_file": "git-init.stdout.txt",
+    "stderr_file": "git-init.stderr.txt"
+  },
+  {
+    "argv": [
+      "git",
+      "-c",
+      "credential.helper=",
+      "-c",
+      "credential.helper=!gh auth git-credential",
+      "-C",
+      "/workspace/p4-g3-owner-authority-work/github-objects.git",
+      "fetch",
+      "--no-tags",
+      "https://github.com/1Hoax1/verified-data-extraction.git",
+      "refs/heads/governance/p4-final-merge-reconciliation:refs/heads/verified-g3"
+    ],
+    "cwd": "/workspace/p4-g3-owner-authority-work",
+    "started_at_moscow": "2026-11-05T14:34:33.335925+03:00",
+    "exit_code": 0,
+    "stdout_file": "git-fetch.stdout.txt",
+    "stderr_file": "git-fetch.stderr.txt"
+  },
+  {
+    "argv": [
+      "git",
+      "--no-replace-objects",
+      "-C",
+      "/workspace/p4-g3-owner-authority-work/github-objects.git",
+      "rev-parse",
+      "refs/heads/verified-g3"
+    ],
+    "cwd": "/workspace/p4-g3-owner-authority-work",
+    "started_at_moscow": "2026-11-05T14:34:35.075338+03:00",
+    "exit_code": 0,
+    "stdout_file": "git-ref.stdout.txt",
+    "stderr_file": "git-ref.stderr.txt"
+  }
+]
