@@ -1,0 +1,27 @@
+{
+  "app_append": "from vde.p6.ui import delivery_panel\ndelivery_panel(result)\n",
+  "app_insert_before_ingestion": "from vde.p6.ui import order_panel\norder_panel(result)\n",
+  "baseline": "0af4a1ff49ccf8fa59c39780d749e15cb5042fc3",
+  "evidence_directory_prefix": "runtime-",
+  "evidence_parent": "docs/p6/validation/",
+  "format": "P6_SCOPE_POLICY_V1",
+  "implementation_start": "b93e0ef4ed69343968ff7ae4188d586c0d1485a5",
+  "release_paths": [
+    "docs/p6/README_PILOT.md",
+    "docs/p6/RELEASE_CHECKLIST.md"
+  ],
+  "source_paths": [
+    "src/vde/p6/__init__.py",
+    "src/vde/p6/orders.py",
+    "src/vde/p6/delivery.py",
+    "src/vde/p6/ui.py"
+  ],
+  "test_paths": [
+    "tests/p6/__init__.py",
+    "tests/p6/conftest.py",
+    "tests/p6/test_acceptance.py",
+    "tests/p6/scope_audit.py",
+    "tests/p6/scope_policy_v1.json",
+    "tests/p6/run_validation.py"
+  ]
+}

@@ -17,6 +17,8 @@ elif result.health == "degraded":
     st.json({"staging": result.recovery.staging, "orphans": result.recovery.orphans, "stale_runs": result.recovery.stale_runs})
 else:
     st.success("Local persistence is ready.")
+from vde.p6.ui import order_panel
+order_panel(result)
 from vde.ingestion.ui import panel
 panel(result)
 from vde.workflow.ui import panel as workflow_panel
@@ -25,3 +27,5 @@ from vde.execution.ui import panel as execution_panel
 execution_panel(result)
 from vde.p5.ui import panel as export_qa_panel
 export_qa_panel(result)
+from vde.p6.ui import delivery_panel
+delivery_panel(result)
