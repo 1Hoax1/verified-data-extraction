@@ -1,0 +1,12 @@
+{
+  "status": "LINUX_DOCKER_PASSED",
+  "source_state": "Clean committed implementation tree",
+  "actual_mac_host_execution": "NOT_RUN",
+  "read_only_repository_mount": true,
+  "persistent_disposable_workspace_mount": true,
+  "source_commit": "deddc2799464076227173bd2e4890f552ffe64bf",
+  "image": "python:3.12.14-slim-bookworm",
+  "image_digests": [
+    "python@sha256:392307d22300de8b5986851a12d9176dfc0fc073e65bf6523ebd7dcbeb23564e"
+  ]
+}

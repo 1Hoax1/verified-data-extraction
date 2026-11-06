@@ -1,0 +1,5 @@
+Same README image, UID/GID, read-only source and writable persistent data; detached execution for probing.
+Managed HTTPS trust: read-only combined host CA at /run/combined-ca.pem, SSL_CERT_FILE and PIP_CERT.
+Docker configured proxy and registry credentials preserved without modification or disclosure.
+Additional /smoke readonly driver and /evidence writable mounts are test support only.
+Linux-host Docker execution only; actual Mac-host execution NOT_RUN.

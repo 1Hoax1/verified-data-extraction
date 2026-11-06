@@ -1,0 +1,12 @@
+{
+  "nodeid": "tests/p6/test_acceptance.py::test_T02_create_order_form_exact_fields_and_p2_visibility",
+  "outcome": "passed",
+  "duration_seconds": 0.044011252000927925,
+  "properties": [
+    [
+      "p6_id",
+      "P6-T02"
+    ]
+  ],
+  "failure": null
+}

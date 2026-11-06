@@ -1,0 +1,29 @@
+{
+  "http_transfers": {
+    "result": {
+      "bytes": 277,
+      "sha256": "c3b4e1f9a885bcf969cd34a9041951c1bed1abcd6aaba4c4f1f2fcd414d86cc9",
+      "url": "/mock/media/feb9ca32e98c27b803913361265fb557e554bbaea618fae19de93c5d.csv",
+      "status": 200,
+      "content_type": "text/csv",
+      "content_disposition": "attachment; filename=\"customers_clean.csv\""
+    },
+    "report": {
+      "bytes": 10658,
+      "sha256": "862d5a4d4ecedb0ac1f91de4709af5d57604f5b76b920c28231cd30647bbfa71",
+      "url": "/mock/media/506ea5dcbd96cffc89b4472f15b5b130ddbf11c378c0a96e498ad3d5.vde-qa-json",
+      "status": 200,
+      "content_type": "application/json; charset=utf-8",
+      "content_disposition": "attachment; filename=\"qa_report_p5-qa-f1f97579-e488-4164-b56e-6937a939c82a.json\""
+    }
+  },
+  "golden_sha256": "c3b4e1f9a885bcf969cd34a9041951c1bed1abcd6aaba4c4f1f2fcd414d86cc9",
+  "snapshot_key": [
+    "6a3dd484-09ed-4c24-a5e8-67f9fe85df9c",
+    "7e1b002e-fdea-475f-a088-c2ecb9869d38",
+    "p5-final-88d958a3d2ef1bfccf3fb575b052f518748e5d67d348332e1171adbdbb2bf89e",
+    "c3b4e1f9a885bcf969cd34a9041951c1bed1abcd6aaba4c4f1f2fcd414d86cc9",
+    "PASS",
+    "CSV"
+  ]
+}

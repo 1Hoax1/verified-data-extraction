@@ -1,0 +1,47 @@
+[
+  {
+    "attempt": 0,
+    "error": "[Errno 104] Connection reset by peer"
+  },
+  {
+    "attempt": 1,
+    "error": "[Errno 104] Connection reset by peer"
+  },
+  {
+    "attempt": 2,
+    "error": "[Errno 104] Connection reset by peer"
+  },
+  {
+    "attempt": 3,
+    "error": "[Errno 104] Connection reset by peer"
+  },
+  {
+    "attempt": 4,
+    "error": "[Errno 104] Connection reset by peer"
+  },
+  {
+    "attempt": 5,
+    "error": "[Errno 104] Connection reset by peer"
+  },
+  {
+    "attempt": 6,
+    "error": "[Errno 104] Connection reset by peer"
+  },
+  {
+    "attempt": 7,
+    "error": "[Errno 104] Connection reset by peer"
+  },
+  {
+    "attempt": 8,
+    "error": "[Errno 104] Connection reset by peer"
+  },
+  {
+    "attempt": 9,
+    "error": "[Errno 104] Connection reset by peer"
+  },
+  {
+    "attempt": 10,
+    "status": 200,
+    "body": "ok"
+  }
+]

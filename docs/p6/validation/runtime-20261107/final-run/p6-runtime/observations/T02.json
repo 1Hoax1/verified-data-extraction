@@ -1,0 +1,36 @@
+{
+  "request_token": "1556428a-7091-47cd-a016-25166d4b843c",
+  "submitted": {
+    "Order title": "  Isolated order  ",
+    "Listing text": "  Exact listing\ntext  ",
+    "Listing URL (optional)": "https://example.invalid/no-fetch",
+    "Budget (canonical decimal, optional)": "123.45",
+    "Deadline (UTC YYYY-MM-DDTHH:MM:SSZ, optional)": "2026-12-01T12:00:00Z",
+    "Notes (optional)": "  verbatim notes  "
+  },
+  "persisted": {
+    "id": "1556428a-7091-47cd-a016-25166d4b843c",
+    "title": "Isolated order",
+    "listing_text": "  Exact listing\ntext  ",
+    "listing_url": "https://example.invalid/no-fetch",
+    "status": "DRAFT",
+    "approval_stage": null,
+    "selected_brief_version_id": null,
+    "selected_transformation_spec_version_id": null,
+    "budget": "123.45",
+    "deadline": "2026-12-01T12:00:00Z",
+    "notes": "  verbatim notes  ",
+    "created_at": "2026-11-06T22:21:50Z",
+    "updated_at": "2026-11-06T22:21:50Z"
+  },
+  "associated_counts": {
+    "input_assets": 0,
+    "brief_versions": 0,
+    "transformation_spec_versions": 0,
+    "approvals": 0,
+    "execution_runs": 0,
+    "artifacts": 0,
+    "qa_reports": 0,
+    "event_log": 0
+  }
+}

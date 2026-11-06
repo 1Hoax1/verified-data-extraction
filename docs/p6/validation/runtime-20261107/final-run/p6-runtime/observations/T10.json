@@ -1,0 +1,25 @@
+{
+  "intermediate_counts": {
+    "orders": 1,
+    "input_assets": 1,
+    "brief_versions": 1,
+    "transformation_spec_versions": 0,
+    "approvals": 1,
+    "execution_runs": 0,
+    "artifacts": 0,
+    "qa_reports": 0,
+    "event_log": 4
+  },
+  "terminal_counts": {
+    "orders": 1,
+    "input_assets": 1,
+    "brief_versions": 1,
+    "transformation_spec_versions": 1,
+    "approvals": 2,
+    "execution_runs": 1,
+    "artifacts": 2,
+    "qa_reports": 1,
+    "event_log": 11
+  },
+  "old_snapshot_reused": false
+}

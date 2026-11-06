@@ -1,0 +1,10 @@
+{
+  "argv": [
+    "git",
+    "rev-parse",
+    "HEAD",
+    "HEAD^{tree}"
+  ],
+  "cwd": "/workspace/p6-streamlit-e2e",
+  "utc": "2026-11-06T21:54:00.245114+00:00"
+}

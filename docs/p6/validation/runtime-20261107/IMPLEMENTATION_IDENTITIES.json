@@ -1,0 +1,11 @@
+{
+  "tested_commit": "deddc2799464076227173bd2e4890f552ffe64bf",
+  "tested_tree": "afc4126ccddce4ca4615ac411b1dd6281a98a960",
+  "approved_start": "b93e0ef4ed69343968ff7ae4188d586c0d1485a5",
+  "main_baseline": "0af4a1ff49ccf8fa59c39780d749e15cb5042fc3",
+  "exact_diff_sha256": "a990533146d0e5e1769d226f831d9b41f1982a835e78828acf5ccb8046ce601d",
+  "commits_since_start": [
+    "deddc2799464076227173bd2e4890f552ffe64bf 9838151ca50e10976c85d087fe17ec0d30ae2fea test(p6): classify approved Create Order scope conflicts precisely",
+    "9838151ca50e10976c85d087fe17ec0d30ae2fea b93e0ef4ed69343968ff7ae4188d586c0d1485a5 feat(p6): add explicit order creation and verified result delivery"
+  ]
+}

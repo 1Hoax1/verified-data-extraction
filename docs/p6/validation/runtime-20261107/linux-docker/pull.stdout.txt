@@ -1,0 +1,4 @@
+3.12.14-slim-bookworm: Pulling from library/python
+Digest: sha256:392307d22300de8b5986851a12d9176dfc0fc073e65bf6523ebd7dcbeb23564e
+Status: Image is up to date for python:3.12.14-slim-bookworm
+docker.io/library/python:3.12.14-slim-bookworm

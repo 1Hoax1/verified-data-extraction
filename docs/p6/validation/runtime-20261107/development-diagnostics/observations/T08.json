@@ -1,0 +1,26 @@
+{
+  "order_status": "NEEDS_FIX",
+  "QA": "FAIL",
+  "warnings": [
+    "NEEDS_FIX — diagnostic result; NOT APPROVED FOR DELIVERY",
+    "NEEDS_FIX — diagnostic result — NOT FOR DELIVERY"
+  ],
+  "http_transfers": {
+    "result": {
+      "bytes": 118,
+      "sha256": "ab2c047b0c4024f49a4db8de1cf6f649e2c2caa45aca6db2241fe71174bf9737",
+      "url": "/mock/media/7705bf8291c1048bf0504d05db3771031c2b11a64c329db21fc09748.csv",
+      "status": 200,
+      "content_type": "text/csv",
+      "content_disposition": "attachment; filename=\"problematic_normalized_DIAGNOSTIC_NOT_FOR_DELIVERY.csv\""
+    },
+    "report": {
+      "bytes": 11537,
+      "sha256": "55ae79da5b29ad9d34e8ca336d7706eea37f3980e54ae29cd55d6cb5018c6a37",
+      "url": "/mock/media/9686793c610888f28318831fac0e76e929d31cb516472027fb9e1a2c.vde-qa-json",
+      "status": 200,
+      "content_type": "application/json; charset=utf-8",
+      "content_disposition": "attachment; filename=\"qa_report_p5-qa-6b4f6ae4-d363-49f1-bb4e-cc747857a492.json\""
+    }
+  }
+}

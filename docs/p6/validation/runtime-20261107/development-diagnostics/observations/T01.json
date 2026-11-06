@@ -1,0 +1,27 @@
+{
+  "health": "ready",
+  "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+  "before": {
+    "orders": [],
+    "input_assets": [],
+    "brief_versions": [],
+    "transformation_spec_versions": [],
+    "approvals": [],
+    "execution_runs": [],
+    "artifacts": [],
+    "qa_reports": [],
+    "event_log": []
+  },
+  "after": {
+    "orders": [],
+    "input_assets": [],
+    "brief_versions": [],
+    "transformation_spec_versions": [],
+    "approvals": [],
+    "execution_runs": [],
+    "artifacts": [],
+    "qa_reports": [],
+    "event_log": []
+  },
+  "passive_rerenders": 3
+}

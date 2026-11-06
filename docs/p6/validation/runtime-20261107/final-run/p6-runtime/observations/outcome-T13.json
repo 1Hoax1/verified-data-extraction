@@ -1,0 +1,12 @@
+{
+  "nodeid": "tests/p6/test_acceptance.py::test_T13_cross_order_and_context_guards_before_artifact_access",
+  "outcome": "passed",
+  "duration_seconds": 1.4438343290021294,
+  "properties": [
+    [
+      "p6_id",
+      "P6-T13"
+    ]
+  ],
+  "failure": null
+}

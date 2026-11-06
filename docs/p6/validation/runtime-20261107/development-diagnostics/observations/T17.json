@@ -1,0 +1,50 @@
+{
+  "source_workspace": "/workspace/p6-work/stress-source",
+  "source_db_sha256": "72381920bb07102a71a5206790ca7d34841dd0671c8c8f5664acc49dc3f4bc2c",
+  "source_payload_hashes": {
+    "orders/order-pa/input/asset-pa-csv/payload": "353698a4bab0ffc54633cb3fabad7eb404821b5f97dfeb7eb9676dafec4d9239",
+    "orders/order-pa/runs/f4a73b0f-853c-4dc3-9176-bb20e36573db/artifacts/ea88612b-9a37-4fb2-a40e-5186c0ab7a7b/payload": "5703dc726e5b5cfe2b2359b1c30a16d32637f7194da8825124a3be1a7644d13e",
+    "orders/order-pa/runs/f4a73b0f-853c-4dc3-9176-bb20e36573db/artifacts/p5-final-7cc170660c3d240a769b0eab2ff5f2721d2e843a4a23d8b27338b1d81baf1336/payload": "353698a4bab0ffc54633cb3fabad7eb404821b5f97dfeb7eb9676dafec4d9239"
+  },
+  "provenance": "Copied existing P5 generated test workspace; no new Approvals issued.",
+  "actual_rows": 100000,
+  "actual_columns": 200,
+  "actual_result_bytes": 40500998,
+  "P6_resources": {
+    "baseline_rss": 88178688,
+    "peak_rss": 208719872,
+    "incremental_peak_rss": 120541184,
+    "rss_limit": 536870912,
+    "rss_samples": 413,
+    "sampling_interval_seconds": 0.01,
+    "elapsed_seconds": 7.723289146000752,
+    "result_size_bytes": 40500998,
+    "report_size_bytes": 22612,
+    "estimated_allocation_bytes": 188634470
+  },
+  "http_transfers": {
+    "result": {
+      "bytes": 40500998,
+      "sha256": "353698a4bab0ffc54633cb3fabad7eb404821b5f97dfeb7eb9676dafec4d9239",
+      "url": "/mock/media/f48b94d65b7b017fe6242600ea9a1b22912a7f21365821e5fa3aea97.csv",
+      "status": 200,
+      "content_type": "text/csv",
+      "content_disposition": "attachment; filename=\"result.csv\""
+    },
+    "report": {
+      "bytes": 22612,
+      "sha256": "7c41ae48c4b748122d0c7230ef4559b15c7d8865717a3a3510b630f45ccc3b6d",
+      "url": "/mock/media/7cfca7d2650a66db06a2e617ef9d8e56faf6614296d73bba7ad7aa4c.vde-qa-json",
+      "status": 200,
+      "content_type": "application/json; charset=utf-8",
+      "content_disposition": "attachment; filename=\"qa_report_p5-qa-0a6d1da7-715e-40d1-803c-3a774f90e052.json\""
+    }
+  },
+  "tightened_budget_denial": "P6_DOWNLOAD_RESOURCE_LIMIT",
+  "post_first_registration_allocation_failure_transfers": [
+    {
+      "url": "/mock/media/f48b94d65b7b017fe6242600ea9a1b22912a7f21365821e5fa3aea97.csv",
+      "http_status": 404
+    }
+  ]
+}

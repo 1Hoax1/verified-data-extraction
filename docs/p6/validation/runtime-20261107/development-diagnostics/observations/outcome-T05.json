@@ -1,0 +1,12 @@
+{
+  "nodeid": "tests/p6/test_acceptance.py::test_T05_pa_csv_result_and_qa_actual_http_transfer",
+  "outcome": "passed",
+  "duration_seconds": 12.058456626000407,
+  "properties": [
+    [
+      "p6_id",
+      "P6-T05"
+    ]
+  ],
+  "failure": null
+}

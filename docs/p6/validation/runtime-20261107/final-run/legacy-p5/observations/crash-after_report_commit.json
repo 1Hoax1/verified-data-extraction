@@ -1,0 +1,22 @@
+{
+  "command": [
+    "/workspace/verified-data-extraction/.venv/bin/python",
+    "-m",
+    "p5.restart_probe",
+    "/tmp/pytest-of-agent/pytest-87/test_T71_terminal_commit_survi0/workspace",
+    "c14867db-ff4a-439f-9f51-8328f45fafc9",
+    "after_report_commit"
+  ],
+  "exit_code": -9,
+  "stdout": "",
+  "stderr": "",
+  "health": "ready",
+  "delta": {
+    "artifacts": 1,
+    "qa_reports": 1,
+    "event_log": 2,
+    "approvals": 0,
+    "execution_runs": 0
+  },
+  "Order": "READY"
+}

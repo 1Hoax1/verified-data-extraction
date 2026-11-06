@@ -1,0 +1,13 @@
+{
+  "argv": [
+    "docker",
+    "--host=unix:///var/run/docker.sock",
+    "image",
+    "inspect",
+    "python:3.12.14-slim-bookworm",
+    "--format",
+    "{{json .RepoDigests}}"
+  ],
+  "cwd": "/workspace/p6-streamlit-e2e",
+  "utc": "2026-11-06T21:54:01.370286+00:00"
+}

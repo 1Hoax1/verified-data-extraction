@@ -1,0 +1,8 @@
+{
+  "DRAFT/no_run": "P6_NOT_READY",
+  "DRAFT": "P6_NOT_READY",
+  "FAILED": "P6_NOT_READY",
+  "EXECUTING": "P6_NOT_READY",
+  "APPROVED": "P6_NOT_READY",
+  "missing_approval": "STORAGE_ERROR"
+}

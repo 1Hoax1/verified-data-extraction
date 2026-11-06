@@ -1,0 +1,17 @@
+{
+  "pin_sha256": "95b7c92a417ec06a80f3d4e839e136e00100e4313d1bee021c94f5beda1f0df7",
+  "pin": {
+    "approval_commit": "d941714bc1d152d0a2189aa954e623460b4e6d03",
+    "decisions_blob": "be002c5b196b3a374c39fe511d2e1c68477723ab",
+    "decisions_sha256": "c76e162cca8e044dcc78d3f52a52b57fd230592b17249b6048f6f753618b6d18",
+    "decisions_size_bytes": 40572,
+    "format": "P4_GOVERNANCE_PIN_V1",
+    "git_mode": "100644",
+    "implementation_baseline": "7685110506d115805c473b064752f86e9e5c045b",
+    "path": "DECISIONS.md",
+    "repository": "1Hoax1/verified-data-extraction"
+  },
+  "repin": false,
+  "decisions_sha256": "c76e162cca8e044dcc78d3f52a52b57fd230592b17249b6048f6f753618b6d18",
+  "source_main_unchanged": true
+}

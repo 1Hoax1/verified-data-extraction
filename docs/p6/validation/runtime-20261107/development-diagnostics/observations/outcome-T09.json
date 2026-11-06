@@ -1,0 +1,12 @@
+{
+  "nodeid": "tests/p6/test_acceptance.py::test_T09_ineligible_states_and_missing_approvals",
+  "outcome": "passed",
+  "duration_seconds": 2.64314286300214,
+  "properties": [
+    [
+      "p6_id",
+      "P6-T09"
+    ]
+  ],
+  "failure": null
+}

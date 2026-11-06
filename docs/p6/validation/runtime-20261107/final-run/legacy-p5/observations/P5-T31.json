@@ -1,0 +1,37 @@
+{
+  "fixture": "P5-DQ-016-POS",
+  "result": "PASS",
+  "observed_check": {
+    "schema_version": "1.1",
+    "check_id": "DQ-016",
+    "name": "DQ-016 deterministic check",
+    "status": "PASS",
+    "severity": "ERROR",
+    "target": {
+      "artifact": null,
+      "dataset_id": null,
+      "column": null,
+      "row_ids": []
+    },
+    "expected": true,
+    "actual": {
+      "type": "decimal",
+      "values": [
+        {
+          "type": "decimal",
+          "value": "1.25"
+        }
+      ]
+    },
+    "affected_count": 0,
+    "sample_row_ids": [],
+    "message": "All selected data checked.",
+    "criterion_id": null
+  },
+  "supplemental": [
+    {
+      "CR_P5_003": "PASS",
+      "all_other_conversions": "FORBIDDEN"
+    }
+  ]
+}

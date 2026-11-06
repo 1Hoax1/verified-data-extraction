@@ -1,0 +1,129 @@
+{
+  "audit": {
+    "result": "PASS",
+    "baseline": "0af4a1ff49ccf8fa59c39780d749e15cb5042fc3",
+    "implementation_start": "b93e0ef4ed69343968ff7ae4188d586c0d1485a5",
+    "protected_main_files": 1458,
+    "protected_start_files": 1461,
+    "new_runtime_files": 4,
+    "exact_app_additions": 4,
+    "historical_tests_policies_governance_unchanged": true
+  },
+  "negative_probes": [
+    {
+      "probe": "P1_source",
+      "result": "REJECTED",
+      "reason": "Protected file changed: src/vde/storage.py"
+    },
+    {
+      "probe": "P2_source",
+      "result": "REJECTED",
+      "reason": "Protected file changed: src/vde/ingestion/local.py"
+    },
+    {
+      "probe": "P3_source",
+      "result": "REJECTED",
+      "reason": "Protected file changed: src/vde/workflow/service.py"
+    },
+    {
+      "probe": "P4_source",
+      "result": "REJECTED",
+      "reason": "Protected file changed: src/vde/execution/service.py"
+    },
+    {
+      "probe": "P5_source",
+      "result": "REJECTED",
+      "reason": "Protected file changed: src/vde/p5/service.py"
+    },
+    {
+      "probe": "old_test",
+      "result": "REJECTED",
+      "reason": "Protected file changed: tests/p5/test_acceptance.py"
+    },
+    {
+      "probe": "old_policy",
+      "result": "REJECTED",
+      "reason": "Protected file changed: tests/p5/scope_policy_v1.json"
+    },
+    {
+      "probe": "old_audit",
+      "result": "REJECTED",
+      "reason": "Protected file changed: tests/p5/scope_audit.py"
+    },
+    {
+      "probe": "P0_schema",
+      "result": "REJECTED",
+      "reason": "Protected file changed: pecs/pilot_slice_v1/contracts/qa_report.schema.json"
+    },
+    {
+      "probe": "P0_fixture",
+      "result": "REJECTED",
+      "reason": "Protected file changed: pecs/pilot_slice_v1/fixtures/P-A_dirty_csv/expected_result.csv"
+    },
+    {
+      "probe": "dependency",
+      "result": "REJECTED",
+      "reason": "Protected file changed: pyproject.toml"
+    },
+    {
+      "probe": "lock",
+      "result": "REJECTED",
+      "reason": "Protected file changed: uv.lock"
+    },
+    {
+      "probe": "governance",
+      "result": "REJECTED",
+      "reason": "Unapproved governance document: copied document bytes"
+    },
+    {
+      "probe": "active_pin",
+      "result": "REJECTED",
+      "reason": "Protected file changed: tests/p4/approved_governance_pin_v1.json"
+    },
+    {
+      "probe": "migration",
+      "result": "REJECTED",
+      "reason": "Application inventory differs"
+    },
+    {
+      "probe": "extra_source",
+      "result": "REJECTED",
+      "reason": "Application inventory differs"
+    },
+    {
+      "probe": "app_extra",
+      "result": "REJECTED",
+      "reason": "Protected file changed: src/vde/app.py"
+    },
+    {
+      "probe": "authority_doc",
+      "result": "REJECTED",
+      "reason": "Protected file changed: docs/p6/decisions/CR-P6-001_OWNER_DECISION_2026-11-06.md"
+    },
+    {
+      "probe": "historical_evidence",
+      "result": "REJECTED",
+      "reason": "Protected file changed: docs/p5/validation/runtime-20261106/final-run/p5-runtime/results.xml"
+    },
+    {
+      "probe": "file_mode",
+      "result": "REJECTED",
+      "reason": "File mode changed: /tmp/pytest-of-agent/pytest-88/test_T18_successor_scope_audit0/scope-probes/file_mode/src/vde/storage.py"
+    },
+    {
+      "probe": "unknown_file",
+      "result": "REJECTED",
+      "reason": "Unapproved files: ['p6-unapproved.txt']"
+    },
+    {
+      "probe": "owned_source",
+      "result": "REJECTED",
+      "reason": "Owned file differs from committed tree: src/vde/p6/delivery.py"
+    },
+    {
+      "probe": "new_policy",
+      "result": "REJECTED",
+      "reason": "Extra data: line 29 column 1 (char 871)"
+    }
+  ]
+}

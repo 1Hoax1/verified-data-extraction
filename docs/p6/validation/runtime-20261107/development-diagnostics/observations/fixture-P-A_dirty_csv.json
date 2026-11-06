@@ -1,0 +1,1042 @@
+{
+  "isolated_workspace": "/tmp/pytest-of-agent/pytest-66/p6-pa0/workspace",
+  "simulated_test_user_only": true,
+  "actions": [
+    {
+      "action": "button",
+      "label": "Create DRAFT Order",
+      "before_counts": {
+        "orders": 0,
+        "input_assets": 0,
+        "brief_versions": 0,
+        "transformation_spec_versions": 0,
+        "approvals": 0,
+        "execution_runs": 0,
+        "artifacts": 0,
+        "qa_reports": 0,
+        "event_log": 0
+      }
+    },
+    {
+      "action": "button",
+      "label": "Upload",
+      "before_counts": {
+        "orders": 1,
+        "input_assets": 0,
+        "brief_versions": 0,
+        "transformation_spec_versions": 0,
+        "approvals": 0,
+        "execution_runs": 0,
+        "artifacts": 0,
+        "qa_reports": 0,
+        "event_log": 0
+      }
+    },
+    {
+      "action": "checkbox",
+      "label": "Open manual workflow"
+    },
+    {
+      "action": "button",
+      "label": "Verify P3 input and preview",
+      "before_counts": {
+        "orders": 1,
+        "input_assets": 1,
+        "brief_versions": 0,
+        "transformation_spec_versions": 0,
+        "approvals": 0,
+        "execution_runs": 0,
+        "artifacts": 0,
+        "qa_reports": 0,
+        "event_log": 1
+      }
+    },
+    {
+      "action": "button",
+      "label": "Begin manual review",
+      "before_counts": {
+        "orders": 1,
+        "input_assets": 1,
+        "brief_versions": 0,
+        "transformation_spec_versions": 0,
+        "approvals": 0,
+        "execution_runs": 0,
+        "artifacts": 0,
+        "qa_reports": 0,
+        "event_log": 1
+      }
+    },
+    {
+      "action": "checkbox",
+      "label": "Open deterministic transformation"
+    },
+    {
+      "action": "button",
+      "label": "Validate Brief draft",
+      "before_counts": {
+        "orders": 1,
+        "input_assets": 1,
+        "brief_versions": 0,
+        "transformation_spec_versions": 0,
+        "approvals": 0,
+        "execution_runs": 0,
+        "artifacts": 0,
+        "qa_reports": 0,
+        "event_log": 2
+      }
+    },
+    {
+      "action": "button",
+      "label": "Save new Brief version",
+      "before_counts": {
+        "orders": 1,
+        "input_assets": 1,
+        "brief_versions": 0,
+        "transformation_spec_versions": 0,
+        "approvals": 0,
+        "execution_runs": 0,
+        "artifacts": 0,
+        "qa_reports": 0,
+        "event_log": 2
+      }
+    },
+    {
+      "action": "checkbox",
+      "label": "Confirm this exact Brief ID and hash"
+    },
+    {
+      "action": "button",
+      "label": "I approve this Brief version",
+      "before_counts": {
+        "orders": 1,
+        "input_assets": 1,
+        "brief_versions": 1,
+        "transformation_spec_versions": 0,
+        "approvals": 0,
+        "execution_runs": 0,
+        "artifacts": 0,
+        "qa_reports": 0,
+        "event_log": 3
+      }
+    },
+    {
+      "action": "checkbox",
+      "label": "Open deterministic transformation"
+    },
+    {
+      "action": "button",
+      "label": "Validate TransformationSpec draft",
+      "before_counts": {
+        "orders": 1,
+        "input_assets": 1,
+        "brief_versions": 1,
+        "transformation_spec_versions": 0,
+        "approvals": 1,
+        "execution_runs": 0,
+        "artifacts": 0,
+        "qa_reports": 0,
+        "event_log": 4
+      }
+    },
+    {
+      "action": "button",
+      "label": "Save new TransformationSpec version",
+      "before_counts": {
+        "orders": 1,
+        "input_assets": 1,
+        "brief_versions": 1,
+        "transformation_spec_versions": 0,
+        "approvals": 1,
+        "execution_runs": 0,
+        "artifacts": 0,
+        "qa_reports": 0,
+        "event_log": 4
+      }
+    },
+    {
+      "action": "checkbox",
+      "label": "Confirm this exact Spec ID, hash and approved Brief context"
+    },
+    {
+      "action": "button",
+      "label": "I approve TransformationSpec",
+      "before_counts": {
+        "orders": 1,
+        "input_assets": 1,
+        "brief_versions": 1,
+        "transformation_spec_versions": 1,
+        "approvals": 1,
+        "execution_runs": 0,
+        "artifacts": 0,
+        "qa_reports": 0,
+        "event_log": 5
+      }
+    },
+    {
+      "action": "checkbox",
+      "label": "Open deterministic transformation"
+    },
+    {
+      "action": "checkbox",
+      "label": "I confirm the selected source and pipeline"
+    },
+    {
+      "action": "button",
+      "label": "Execute",
+      "before_counts": {
+        "orders": 1,
+        "input_assets": 1,
+        "brief_versions": 1,
+        "transformation_spec_versions": 1,
+        "approvals": 2,
+        "execution_runs": 0,
+        "artifacts": 0,
+        "qa_reports": 0,
+        "event_log": 6
+      }
+    },
+    {
+      "action": "checkbox",
+      "label": "Open export and QA"
+    },
+    {
+      "action": "button",
+      "label": "Export + deterministic QA",
+      "before_counts": {
+        "orders": 1,
+        "input_assets": 1,
+        "brief_versions": 1,
+        "transformation_spec_versions": 1,
+        "approvals": 2,
+        "execution_runs": 1,
+        "artifacts": 1,
+        "qa_reports": 0,
+        "event_log": 9
+      }
+    }
+  ],
+  "identity_adaptations": [
+    {
+      "source": "pecs/pilot_slice_v1/fixtures/P-A_dirty_csv/brief_version.json",
+      "original_file_sha256": "422912ff8e31312e5f3c249208bb6e83eb6bf4625da37e6157f09086977d40d3",
+      "original_content_hash": "695088adceedcb49d1d494b352f2ee332da98dd953a7b997b42b36b76147854d",
+      "substitutions": [
+        {
+          "path": "order_id",
+          "original": "order-pa",
+          "adapted": "6a3dd484-09ed-4c24-a5e8-67f9fe85df9c"
+        },
+        {
+          "path": "inputs_expected[0].asset_id",
+          "original": "asset-pa-csv",
+          "adapted": "28f80bef-abf4-4ec7-843a-dcde81251e81"
+        },
+        {
+          "path": "source_refs",
+          "original": [
+            "asset-pa-csv"
+          ],
+          "adapted": [
+            "28f80bef-abf4-4ec7-843a-dcde81251e81"
+          ]
+        }
+      ],
+      "derived_content_hash": "f0829bb2f29406a74726485b2aaaa737d7841b77c630e624574c8217aba4753f",
+      "derived_json_sha256": "eca30ee065b40168948c01f03f9b62eba22442add8812b424b73fa0284ee1566",
+      "ui_allocates_version_id_created_at_and_monotonic_version_number": true
+    },
+    {
+      "source": "pecs/pilot_slice_v1/fixtures/P-A_dirty_csv/transformation_spec_version.json",
+      "original_file_sha256": "3cdf68776ea86ec08c57e11c29d96076fc73d02fa0e7ccf33fe4840b7ebf8420",
+      "original_content_hash": "490e68c8a918daee12f4f9dec02a5652f7b67d1f57e1f1c46bcce85a0a5429f8",
+      "substitutions": [
+        {
+          "path": "order_id",
+          "original": "order-pa",
+          "adapted": "6a3dd484-09ed-4c24-a5e8-67f9fe85df9c"
+        },
+        {
+          "path": "inputs[0].asset_id",
+          "original": "asset-pa-csv",
+          "adapted": "28f80bef-abf4-4ec7-843a-dcde81251e81"
+        },
+        {
+          "path": "brief_version_id",
+          "original": "brief-pa-v1",
+          "adapted": "a05060f8-16c5-442e-9ed2-abeca0446b35"
+        },
+        {
+          "path": "brief_content_hash",
+          "original": "695088adceedcb49d1d494b352f2ee332da98dd953a7b997b42b36b76147854d",
+          "adapted": "f0829bb2f29406a74726485b2aaaa737d7841b77c630e624574c8217aba4753f"
+        }
+      ],
+      "derived_content_hash": "ef5010df316c62db0a43c31098aeb8e83b3aa2926ca354183cee5e30342afcd1",
+      "derived_json_sha256": "35b29964cf5c8f4913e774d9c1bf6cd95408424e671fa4de073f0263a2fd3065",
+      "ui_allocates_version_id_created_at_and_monotonic_version_number": true
+    }
+  ],
+  "order": {
+    "id": "6a3dd484-09ed-4c24-a5e8-67f9fe85df9c",
+    "title": "P6 isolated simulated test user — P-A_dirty_csv",
+    "listing_text": "Fixture exercise only. No live customer approval or delivery.",
+    "created_at": "2026-11-06T21:39:17Z",
+    "updated_at": "2026-11-06T21:39:24Z",
+    "status": "READY",
+    "approval_stage": "COMPLETE",
+    "listing_url": null,
+    "selected_brief_version_id": "a05060f8-16c5-442e-9ed2-abeca0446b35",
+    "selected_transformation_spec_version_id": "32f67268-592c-4024-8dc8-9aebc4705112",
+    "budget": null,
+    "deadline": null,
+    "notes": null
+  },
+  "actual_persisted_brief": {
+    "id": "a05060f8-16c5-442e-9ed2-abeca0446b35",
+    "order_id": "6a3dd484-09ed-4c24-a5e8-67f9fe85df9c",
+    "version_number": 1,
+    "schema_version": "1.1",
+    "content_hash": "f0829bb2f29406a74726485b2aaaa737d7841b77c630e624574c8217aba4753f",
+    "document_json": {
+      "schema_version": "1.1",
+      "version_id": "a05060f8-16c5-442e-9ed2-abeca0446b35",
+      "order_id": "6a3dd484-09ed-4c24-a5e8-67f9fe85df9c",
+      "version_number": 1,
+      "created_at": "2026-11-06T21:39:17Z",
+      "source_refs": [
+        "28f80bef-abf4-4ec7-843a-dcde81251e81"
+      ],
+      "content_hash": "f0829bb2f29406a74726485b2aaaa737d7841b77c630e624574c8217aba4753f",
+      "objective": "Produce a clean UTF-8 CSV of unique customers from an explicitly selected CP1251 source file.",
+      "record_definition": "One row represents one unique customer identified by normalized email.",
+      "scope": {
+        "included": [
+          "All rows decoded from input_dirty.csv using explicitly selected CP1251"
+        ],
+        "excluded": [
+          "Rows with missing customer_name"
+        ],
+        "geography": null,
+        "time_range": null
+      },
+      "inputs_expected": [
+        {
+          "asset_id": "28f80bef-abf4-4ec7-843a-dcde81251e81",
+          "input_type": "LOCAL_CSV",
+          "sheet_name": null
+        }
+      ],
+      "output_contract": {
+        "format": "CSV",
+        "file_name": "customers_clean.csv",
+        "sheet_name": null,
+        "encoding": "UTF-8",
+        "delimiter": ",",
+        "include_header": true,
+        "column_order": [
+          "customer_name",
+          "country",
+          "signup_date",
+          "revenue",
+          "status",
+          "email"
+        ]
+      },
+      "fields": [
+        {
+          "name": "customer_name",
+          "output_name": "Имя клиента",
+          "label": "Customer name",
+          "data_type": "string",
+          "required": true,
+          "nullable": false,
+          "format": null,
+          "allowed_values": null,
+          "min_value": null,
+          "max_value": null,
+          "unique": false,
+          "description": "Normalized customer name."
+        },
+        {
+          "name": "country",
+          "output_name": "Страна",
+          "label": "Country code",
+          "data_type": "string",
+          "required": true,
+          "nullable": false,
+          "format": null,
+          "allowed_values": [
+            "RU",
+            "US",
+            "ES",
+            "DE"
+          ],
+          "min_value": null,
+          "max_value": null,
+          "unique": false,
+          "description": "Uppercase country code."
+        },
+        {
+          "name": "signup_date",
+          "output_name": "Дата регистрации",
+          "label": "Signup date",
+          "data_type": "date",
+          "required": true,
+          "nullable": false,
+          "format": "YYYY-MM-DD",
+          "allowed_values": null,
+          "min_value": null,
+          "max_value": null,
+          "unique": false,
+          "description": "ISO date."
+        },
+        {
+          "name": "revenue",
+          "output_name": "Выручка",
+          "label": "Revenue",
+          "data_type": "decimal",
+          "required": true,
+          "nullable": false,
+          "format": "DECIMAL_DOT",
+          "allowed_values": null,
+          "min_value": 0,
+          "max_value": null,
+          "unique": false,
+          "description": "Non-negative revenue."
+        },
+        {
+          "name": "status",
+          "output_name": "Статус",
+          "label": "Status",
+          "data_type": "string",
+          "required": true,
+          "nullable": false,
+          "format": null,
+          "allowed_values": [
+            "active",
+            "inactive"
+          ],
+          "min_value": null,
+          "max_value": null,
+          "unique": false,
+          "description": "Lowercase status."
+        },
+        {
+          "name": "email",
+          "output_name": "Email",
+          "label": "Email",
+          "data_type": "string",
+          "required": true,
+          "nullable": false,
+          "format": null,
+          "allowed_values": null,
+          "min_value": null,
+          "max_value": null,
+          "unique": true,
+          "description": "Lowercase unique email."
+        }
+      ],
+      "volume_expectation": {
+        "mode": "EXACT",
+        "exact_count": 3,
+        "min_count": null,
+        "max_count": null
+      },
+      "data_quality_expectations": {
+        "empty_result_allowed": false,
+        "unexpected_columns_allowed": false,
+        "column_order_required": true,
+        "duplicate_key": [
+          "email"
+        ]
+      },
+      "acceptance_criteria": [
+        {
+          "schema_version": "1.1",
+          "criterion_id": "PA-AC-001",
+          "name": "Readable CSV",
+          "description": "Result CSV is readable.",
+          "category": "output",
+          "check_mode": "DETERMINISTIC",
+          "severity": "BLOCKER",
+          "target": {
+            "scope": "ARTIFACT",
+            "dataset_id": null,
+            "column": null,
+            "columns": null,
+            "artifact_type": "RESULT_CSV",
+            "metric": null
+          },
+          "operator": "readable",
+          "expected": true,
+          "tolerance": null,
+          "source": "client_answer",
+          "requirement_status": "CONFIRMED"
+        },
+        {
+          "schema_version": "1.1",
+          "criterion_id": "PA-AC-002",
+          "name": "Exact columns",
+          "description": "Internal schema has exactly the agreed ordered technical columns; export headers are the corresponding output_name values.",
+          "category": "schema",
+          "check_mode": "DETERMINISTIC",
+          "severity": "BLOCKER",
+          "target": {
+            "scope": "COLUMNS",
+            "dataset_id": "result",
+            "column": null,
+            "columns": [
+              "customer_name",
+              "country",
+              "signup_date",
+              "revenue",
+              "status",
+              "email"
+            ],
+            "artifact_type": null,
+            "metric": null
+          },
+          "operator": "sequence_equals",
+          "expected": [
+            "customer_name",
+            "country",
+            "signup_date",
+            "revenue",
+            "status",
+            "email"
+          ],
+          "tolerance": null,
+          "source": "client_answer",
+          "requirement_status": "CONFIRMED"
+        },
+        {
+          "schema_version": "1.1",
+          "criterion_id": "PA-AC-003",
+          "name": "Exact rows",
+          "description": "Exactly three rows.",
+          "category": "volume",
+          "check_mode": "DETERMINISTIC",
+          "severity": "ERROR",
+          "target": {
+            "scope": "METRIC",
+            "dataset_id": "result",
+            "column": null,
+            "columns": null,
+            "artifact_type": null,
+            "metric": "row_count"
+          },
+          "operator": "exact_count",
+          "expected": 3,
+          "tolerance": null,
+          "source": "client_answer",
+          "requirement_status": "CONFIRMED"
+        },
+        {
+          "schema_version": "1.1",
+          "criterion_id": "PA-AC-004",
+          "name": "Required names",
+          "description": "No missing customer_name.",
+          "category": "completeness",
+          "check_mode": "DETERMINISTIC",
+          "severity": "BLOCKER",
+          "target": {
+            "scope": "COLUMN",
+            "dataset_id": "result",
+            "column": "customer_name",
+            "columns": null,
+            "artifact_type": null,
+            "metric": null
+          },
+          "operator": "all_non_null",
+          "expected": true,
+          "tolerance": null,
+          "source": "client_answer",
+          "requirement_status": "CONFIRMED"
+        },
+        {
+          "schema_version": "1.1",
+          "criterion_id": "PA-AC-005",
+          "name": "Unique email",
+          "description": "Email is unique.",
+          "category": "uniqueness",
+          "check_mode": "DETERMINISTIC",
+          "severity": "BLOCKER",
+          "target": {
+            "scope": "COLUMN",
+            "dataset_id": "result",
+            "column": "email",
+            "columns": null,
+            "artifact_type": null,
+            "metric": null
+          },
+          "operator": "unique",
+          "expected": true,
+          "tolerance": null,
+          "source": "client_answer",
+          "requirement_status": "CONFIRMED"
+        },
+        {
+          "schema_version": "1.1",
+          "criterion_id": "PA-AC-006",
+          "name": "Date format",
+          "description": "Date is YYYY-MM-DD.",
+          "category": "format",
+          "check_mode": "DETERMINISTIC",
+          "severity": "ERROR",
+          "target": {
+            "scope": "COLUMN",
+            "dataset_id": "result",
+            "column": "signup_date",
+            "columns": null,
+            "artifact_type": null,
+            "metric": null
+          },
+          "operator": "matches_format",
+          "expected": "YYYY-MM-DD",
+          "tolerance": null,
+          "source": "client_answer",
+          "requirement_status": "CONFIRMED"
+        },
+        {
+          "schema_version": "1.1",
+          "criterion_id": "PA-AC-007",
+          "name": "Revenue range",
+          "description": "Revenue is non-negative.",
+          "category": "range",
+          "check_mode": "DETERMINISTIC",
+          "severity": "ERROR",
+          "target": {
+            "scope": "COLUMN",
+            "dataset_id": "result",
+            "column": "revenue",
+            "columns": null,
+            "artifact_type": null,
+            "metric": null
+          },
+          "operator": "min_value",
+          "expected": 0,
+          "tolerance": null,
+          "source": "client_answer",
+          "requirement_status": "CONFIRMED"
+        }
+      ],
+      "assumptions": [
+        {
+          "assumption_id": "pa-assumption-1",
+          "text": "Blank revenue is filled with numeric zero.",
+          "status": "ASSUMED"
+        }
+      ],
+      "open_questions": [],
+      "risks": [
+        {
+          "risk_id": "pa-risk-1",
+          "category": "QUALITY",
+          "severity": "LOW",
+          "description": "Mixed source date and number formats require explicit parsing rules."
+        }
+      ]
+    },
+    "created_at": "2026-11-06T21:39:17Z"
+  },
+  "actual_persisted_spec": {
+    "id": "32f67268-592c-4024-8dc8-9aebc4705112",
+    "order_id": "6a3dd484-09ed-4c24-a5e8-67f9fe85df9c",
+    "version_number": 1,
+    "schema_version": "1.1",
+    "content_hash": "ef5010df316c62db0a43c31098aeb8e83b3aa2926ca354183cee5e30342afcd1",
+    "document_json": {
+      "schema_version": "1.1",
+      "version_id": "32f67268-592c-4024-8dc8-9aebc4705112",
+      "order_id": "6a3dd484-09ed-4c24-a5e8-67f9fe85df9c",
+      "version_number": 1,
+      "brief_version_id": "a05060f8-16c5-442e-9ed2-abeca0446b35",
+      "brief_content_hash": "f0829bb2f29406a74726485b2aaaa737d7841b77c630e624574c8217aba4753f",
+      "created_at": "2026-11-06T21:39:17Z",
+      "content_hash": "ef5010df316c62db0a43c31098aeb8e83b3aa2926ca354183cee5e30342afcd1",
+      "inputs": [
+        {
+          "dataset_id": "raw",
+          "asset_id": "28f80bef-abf4-4ec7-843a-dcde81251e81",
+          "source_type": "LOCAL_CSV",
+          "sheet_name": null,
+          "csv_options": {
+            "encoding": "CP1251",
+            "delimiter": ",",
+            "header_row": 0
+          }
+        }
+      ],
+      "pipeline": [
+        {
+          "schema_version": "1.1",
+          "operation_id": "pa-op-01",
+          "type": "rename",
+          "input_dataset": "raw",
+          "output_dataset": "s01",
+          "params": {
+            "mapping": {
+              "Customer Name": "customer_name",
+              "Country": "country",
+              "Signup Date": "signup_date",
+              "Revenue": "revenue",
+              "Status": "status",
+              "Email": "email"
+            }
+          }
+        },
+        {
+          "schema_version": "1.1",
+          "operation_id": "pa-op-02",
+          "type": "trim",
+          "input_dataset": "s01",
+          "output_dataset": "s02",
+          "params": {
+            "columns": [
+              "customer_name",
+              "country",
+              "revenue",
+              "status",
+              "email"
+            ],
+            "mode": "both"
+          }
+        },
+        {
+          "schema_version": "1.1",
+          "operation_id": "pa-op-03",
+          "type": "change_case",
+          "input_dataset": "s02",
+          "output_dataset": "s03",
+          "params": {
+            "columns": [
+              "customer_name"
+            ],
+            "mode": "title"
+          }
+        },
+        {
+          "schema_version": "1.1",
+          "operation_id": "pa-op-04",
+          "type": "change_case",
+          "input_dataset": "s03",
+          "output_dataset": "s04",
+          "params": {
+            "columns": [
+              "country"
+            ],
+            "mode": "upper"
+          }
+        },
+        {
+          "schema_version": "1.1",
+          "operation_id": "pa-op-05",
+          "type": "change_case",
+          "input_dataset": "s04",
+          "output_dataset": "s05",
+          "params": {
+            "columns": [
+              "status",
+              "email"
+            ],
+            "mode": "lower"
+          }
+        },
+        {
+          "schema_version": "1.1",
+          "operation_id": "pa-op-06",
+          "type": "replace",
+          "input_dataset": "s05",
+          "output_dataset": "s06",
+          "params": {
+            "columns": [
+              "country"
+            ],
+            "mapping": {
+              "UNITED STATES": "US"
+            },
+            "regex": false
+          }
+        },
+        {
+          "schema_version": "1.1",
+          "operation_id": "pa-op-07",
+          "type": "replace",
+          "input_dataset": "s06",
+          "output_dataset": "s07",
+          "params": {
+            "columns": [
+              "revenue"
+            ],
+            "mapping": {
+              "1 234,50": "1234.50",
+              "2,000.00": "2000.00",
+              "900,00": "900.00"
+            },
+            "regex": false
+          }
+        },
+        {
+          "schema_version": "1.1",
+          "operation_id": "pa-op-08",
+          "type": "parse_date",
+          "input_dataset": "s07",
+          "output_dataset": "s08",
+          "params": {
+            "column": "signup_date",
+            "formats": [
+              "DD/MM/YYYY",
+              "YYYY-MM-DD",
+              "DD.MM.YYYY"
+            ],
+            "output_format": "YYYY-MM-DD",
+            "errors": "FAIL"
+          }
+        },
+        {
+          "schema_version": "1.1",
+          "operation_id": "pa-op-09",
+          "type": "parse_number",
+          "input_dataset": "s08",
+          "output_dataset": "s09",
+          "params": {
+            "column": "revenue",
+            "decimal_separator": ".",
+            "thousands_separator": null,
+            "target_type": "decimal",
+            "errors": "FAIL"
+          }
+        },
+        {
+          "schema_version": "1.1",
+          "operation_id": "pa-op-10",
+          "type": "fill_missing",
+          "input_dataset": "s09",
+          "output_dataset": "s10",
+          "params": {
+            "columns": [
+              "revenue"
+            ],
+            "strategy": "constant",
+            "value": 0
+          }
+        },
+        {
+          "schema_version": "1.1",
+          "operation_id": "pa-op-11",
+          "type": "drop_missing",
+          "input_dataset": "s10",
+          "output_dataset": "s11",
+          "params": {
+            "subset": [
+              "customer_name"
+            ],
+            "how": "any"
+          }
+        },
+        {
+          "schema_version": "1.1",
+          "operation_id": "pa-op-12",
+          "type": "deduplicate",
+          "input_dataset": "s11",
+          "output_dataset": "s12",
+          "params": {
+            "subset": [
+              "email"
+            ],
+            "keep": "FIRST"
+          }
+        },
+        {
+          "schema_version": "1.1",
+          "operation_id": "pa-op-13",
+          "type": "sort",
+          "input_dataset": "s12",
+          "output_dataset": "s13",
+          "params": {
+            "by": [
+              "signup_date"
+            ],
+            "ascending": [
+              true
+            ],
+            "nulls": "LAST"
+          }
+        },
+        {
+          "schema_version": "1.1",
+          "operation_id": "pa-op-14",
+          "type": "select_columns",
+          "input_dataset": "s13",
+          "output_dataset": "result",
+          "params": {
+            "columns": [
+              "customer_name",
+              "country",
+              "signup_date",
+              "revenue",
+              "status",
+              "email"
+            ]
+          }
+        }
+      ],
+      "output": {
+        "dataset_id": "result",
+        "format": "CSV",
+        "file_name": "customers_clean.csv",
+        "sheet_name": null,
+        "encoding": "UTF-8",
+        "delimiter": ",",
+        "column_order": [
+          "customer_name",
+          "country",
+          "signup_date",
+          "revenue",
+          "status",
+          "email"
+        ]
+      },
+      "execution_policy": {
+        "fail_fast": true,
+        "allow_partial_output": false,
+        "max_rows": 100000,
+        "max_columns": 200
+      },
+      "provenance_policy": {
+        "record_input_checksum": true,
+        "preserve_source_row_number": false
+      },
+      "expected_schema": [
+        {
+          "name": "customer_name",
+          "output_name": "Имя клиента",
+          "label": "Customer name",
+          "data_type": "string",
+          "required": true,
+          "nullable": false,
+          "format": null,
+          "allowed_values": null,
+          "min_value": null,
+          "max_value": null,
+          "unique": false,
+          "description": "Normalized customer name."
+        },
+        {
+          "name": "country",
+          "output_name": "Страна",
+          "label": "Country code",
+          "data_type": "string",
+          "required": true,
+          "nullable": false,
+          "format": null,
+          "allowed_values": [
+            "RU",
+            "US",
+            "ES",
+            "DE"
+          ],
+          "min_value": null,
+          "max_value": null,
+          "unique": false,
+          "description": "Uppercase country code."
+        },
+        {
+          "name": "signup_date",
+          "output_name": "Дата регистрации",
+          "label": "Signup date",
+          "data_type": "date",
+          "required": true,
+          "nullable": false,
+          "format": "YYYY-MM-DD",
+          "allowed_values": null,
+          "min_value": null,
+          "max_value": null,
+          "unique": false,
+          "description": "ISO date."
+        },
+        {
+          "name": "revenue",
+          "output_name": "Выручка",
+          "label": "Revenue",
+          "data_type": "decimal",
+          "required": true,
+          "nullable": false,
+          "format": "DECIMAL_DOT",
+          "allowed_values": null,
+          "min_value": 0,
+          "max_value": null,
+          "unique": false,
+          "description": "Non-negative revenue."
+        },
+        {
+          "name": "status",
+          "output_name": "Статус",
+          "label": "Status",
+          "data_type": "string",
+          "required": true,
+          "nullable": false,
+          "format": null,
+          "allowed_values": [
+            "active",
+            "inactive"
+          ],
+          "min_value": null,
+          "max_value": null,
+          "unique": false,
+          "description": "Lowercase status."
+        },
+        {
+          "name": "email",
+          "output_name": "Email",
+          "label": "Email",
+          "data_type": "string",
+          "required": true,
+          "nullable": false,
+          "format": null,
+          "allowed_values": null,
+          "min_value": null,
+          "max_value": null,
+          "unique": true,
+          "description": "Lowercase unique email."
+        }
+      ],
+      "acceptance_criteria_ref": [
+        "PA-AC-001",
+        "PA-AC-002",
+        "PA-AC-003",
+        "PA-AC-004",
+        "PA-AC-005",
+        "PA-AC-006",
+        "PA-AC-007"
+      ]
+    },
+    "created_at": "2026-11-06T21:39:17Z",
+    "brief_version_id": "a05060f8-16c5-442e-9ed2-abeca0446b35",
+    "brief_content_hash": "f0829bb2f29406a74726485b2aaaa737d7841b77c630e624574c8217aba4753f"
+  },
+  "approvals": [
+    {
+      "id": "65b5f4ad-b5a0-44bd-92b3-8ab6fce2f06f",
+      "order_id": "6a3dd484-09ed-4c24-a5e8-67f9fe85df9c",
+      "target_type": "TRANSFORMATION_SPEC",
+      "target_version_id": "32f67268-592c-4024-8dc8-9aebc4705112",
+      "target_content_hash": "ef5010df316c62db0a43c31098aeb8e83b3aa2926ca354183cee5e30342afcd1",
+      "context_brief_version_id": "a05060f8-16c5-442e-9ed2-abeca0446b35",
+      "context_brief_content_hash": "f0829bb2f29406a74726485b2aaaa737d7841b77c630e624574c8217aba4753f",
+      "approved_by": "local_user",
+      "approved_at": "2026-11-06T21:39:18Z"
+    },
+    {
+      "id": "96e362fd-7b5f-493c-aa73-1086110734e6",
+      "order_id": "6a3dd484-09ed-4c24-a5e8-67f9fe85df9c",
+      "target_type": "BRIEF",
+      "target_version_id": "a05060f8-16c5-442e-9ed2-abeca0446b35",
+      "target_content_hash": "f0829bb2f29406a74726485b2aaaa737d7841b77c630e624574c8217aba4753f",
+      "context_brief_version_id": null,
+      "context_brief_content_hash": null,
+      "approved_by": "local_user",
+      "approved_at": "2026-11-06T21:39:17Z"
+    }
+  ]
+}

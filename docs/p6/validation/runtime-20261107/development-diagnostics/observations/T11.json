@@ -1,0 +1,14 @@
+{
+  "P-A_dirty_csv": {
+    "health": "blocked",
+    "error": "STORAGE_ERROR",
+    "original_sha256": "c0e3f84d189e0ed177d5e64a183142fe1b923ddb79c6617ebb26edd139658fcb",
+    "mutated_sha256": "3aba4276bb63b3acce00892b7ba8d18fe8cd5972ef790d1b2a27652716c78797"
+  },
+  "P-B_xlsx_sheet": {
+    "health": "blocked",
+    "error": "STORAGE_ERROR",
+    "original_sha256": "d275fa7393e73ef1be7815e83b31b1a710b3f345bb7138c72569b03f66edf80d",
+    "mutated_sha256": "323346fc9e7706e5b18625e86e0d508e4ad25cc4ee3b845d22233a07abd1fdf6"
+  }
+}

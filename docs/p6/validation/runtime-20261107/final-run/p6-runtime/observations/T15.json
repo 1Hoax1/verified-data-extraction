@@ -1,0 +1,84 @@
+{
+  "rerenders": 3,
+  "http_transfers": [
+    {
+      "result": {
+        "bytes": 277,
+        "sha256": "c3b4e1f9a885bcf969cd34a9041951c1bed1abcd6aaba4c4f1f2fcd414d86cc9",
+        "url": "/mock/media/feb9ca32e98c27b803913361265fb557e554bbaea618fae19de93c5d.csv",
+        "status": 200,
+        "content_type": "text/csv",
+        "content_disposition": "attachment; filename=\"customers_clean.csv\""
+      },
+      "report": {
+        "bytes": 10658,
+        "sha256": "3f980b9c9067be37ae04a24362cbe248f0e5c34022aeb713c548f2a8a1350d36",
+        "url": "/mock/media/d8b52c768cbd943d5524dfe517a6eb755fed1f84963811a55e129543.vde-qa-json",
+        "status": 200,
+        "content_type": "application/json; charset=utf-8",
+        "content_disposition": "attachment; filename=\"qa_report_p5-qa-1d7ed4a4-3832-445d-b6a8-78b3e01677ef.json\""
+      }
+    },
+    {
+      "result": {
+        "bytes": 277,
+        "sha256": "c3b4e1f9a885bcf969cd34a9041951c1bed1abcd6aaba4c4f1f2fcd414d86cc9",
+        "url": "/mock/media/feb9ca32e98c27b803913361265fb557e554bbaea618fae19de93c5d.csv",
+        "status": 200,
+        "content_type": "text/csv",
+        "content_disposition": "attachment; filename=\"customers_clean.csv\""
+      },
+      "report": {
+        "bytes": 10658,
+        "sha256": "3f980b9c9067be37ae04a24362cbe248f0e5c34022aeb713c548f2a8a1350d36",
+        "url": "/mock/media/d8b52c768cbd943d5524dfe517a6eb755fed1f84963811a55e129543.vde-qa-json",
+        "status": 200,
+        "content_type": "application/json; charset=utf-8",
+        "content_disposition": "attachment; filename=\"qa_report_p5-qa-1d7ed4a4-3832-445d-b6a8-78b3e01677ef.json\""
+      }
+    },
+    {
+      "result": {
+        "bytes": 277,
+        "sha256": "c3b4e1f9a885bcf969cd34a9041951c1bed1abcd6aaba4c4f1f2fcd414d86cc9",
+        "url": "/mock/media/feb9ca32e98c27b803913361265fb557e554bbaea618fae19de93c5d.csv",
+        "status": 200,
+        "content_type": "text/csv",
+        "content_disposition": "attachment; filename=\"customers_clean.csv\""
+      },
+      "report": {
+        "bytes": 10658,
+        "sha256": "3f980b9c9067be37ae04a24362cbe248f0e5c34022aeb713c548f2a8a1350d36",
+        "url": "/mock/media/d8b52c768cbd943d5524dfe517a6eb755fed1f84963811a55e129543.vde-qa-json",
+        "status": 200,
+        "content_type": "application/json; charset=utf-8",
+        "content_disposition": "attachment; filename=\"qa_report_p5-qa-1d7ed4a4-3832-445d-b6a8-78b3e01677ef.json\""
+      }
+    },
+    {
+      "result": {
+        "bytes": 277,
+        "sha256": "c3b4e1f9a885bcf969cd34a9041951c1bed1abcd6aaba4c4f1f2fcd414d86cc9",
+        "url": "/mock/media/feb9ca32e98c27b803913361265fb557e554bbaea618fae19de93c5d.csv",
+        "status": 200,
+        "content_type": "text/csv",
+        "content_disposition": "attachment; filename=\"customers_clean.csv\""
+      },
+      "report": {
+        "bytes": 10658,
+        "sha256": "3f980b9c9067be37ae04a24362cbe248f0e5c34022aeb713c548f2a8a1350d36",
+        "url": "/mock/media/d8b52c768cbd943d5524dfe517a6eb755fed1f84963811a55e129543.vde-qa-json",
+        "status": 200,
+        "content_type": "application/json; charset=utf-8",
+        "content_disposition": "attachment; filename=\"qa_report_p5-qa-1d7ed4a4-3832-445d-b6a8-78b3e01677ef.json\""
+      }
+    }
+  ],
+  "counts_unchanged": true,
+  "stored_payload_hashes": {
+    "orders/21f40c27-8a4f-4750-a4a0-a98071b6b0fb/input/6aebf350-db55-45f1-8e5e-84181749e440/payload": "c0e3f84d189e0ed177d5e64a183142fe1b923ddb79c6617ebb26edd139658fcb",
+    "orders/21f40c27-8a4f-4750-a4a0-a98071b6b0fb/runs/39489f01-5fa3-425a-8c9f-8437914673a1/artifacts/172b7da4-9cb3-4e2f-9657-882d22274593/payload": "2e02a70bbb96712640966117fbc724de3fe8a27a8db4c049037599bbd6ec3500",
+    "orders/21f40c27-8a4f-4750-a4a0-a98071b6b0fb/runs/39489f01-5fa3-425a-8c9f-8437914673a1/artifacts/p5-final-63a40a5cc11018afe4b1f28618ed28bfd3040e169e8c1f9de87df1cd51e980d0/payload": "c3b4e1f9a885bcf969cd34a9041951c1bed1abcd6aaba4c4f1f2fcd414d86cc9"
+  },
+  "selection_change_clears_snapshot": true
+}

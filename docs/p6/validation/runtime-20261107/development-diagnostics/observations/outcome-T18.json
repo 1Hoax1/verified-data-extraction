@@ -1,0 +1,12 @@
+{
+  "nodeid": "tests/p6/test_acceptance.py::test_T18_successor_scope_audit_and_negative_mutation_classes",
+  "outcome": "failed",
+  "duration_seconds": 9.028353342000628,
+  "properties": [
+    [
+      "p6_id",
+      "P6-T18"
+    ]
+  ],
+  "failure": "tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-66/test_T18_successor_scope_audit0')\n\n    def test_T18_successor_scope_audit_and_negative_mutation_classes(tmp_path):\n        from .scope_audit import audit, negative_probes\n>       result = audit(ROOT)\n                 ^^^^^^^^^^^\n\ntests/p6/test_acceptance.py:517: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n\nroot = PosixPath('/workspace/p6-streamlit-e2e')\n\n    def audit(root, *, authority_root=None):\n        root = Path(root).resolve(); authority = Path(authority_root).resolve() if authority_root else root\n        assert json.loads(regular(root / 'tests/p6/scope_policy_v1.json')) == POLICY, 'P6 policy changed'\n        git(authority, 'merge-base', '--is-ancestor', BASELINE, 'HEAD')\n        git(authority, 'merge-base', '--is-ancestor', START, 'HEAD')\n        base = frozen(str(authority), START)\n        main = frozen(str(authority), BASELINE)\n        assert all(path in base and base[path] == record for path, record in main.items()), 'Start differs from approved main'\n        from scope_policy import verify_governance_document\n        verify_governance_document(root, authority_root=authority if authority != root else None)\n        owned = set(SOURCES) | set(TESTS) | set(DOCS)\n        for path, (mode, blob, raw) in base.items():\n            wanted = expected_app(raw) if path == 'src/vde/app.py' else raw\n            assert regular(root / path, mode) == wanted, 'Protected file changed: ' + path\n            if root == authority:\n                expected = hashlib.sha1(b'blob ' + str(len(wanted)).encode() + b'\\0' + wanted).hexdigest()\n>               assert git(root, 'ls-tree', 'HEAD', '--', path) == f'{mode} blob {expected}\\t{path}\\n'.encode(), 'HEAD differs: ' + path\n                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nE               AssertionError: HEAD differs: src/vde/app.py\n\ntests/p6/scope_audit.py:71: AssertionError"
+}

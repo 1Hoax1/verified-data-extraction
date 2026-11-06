@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="3" skipped="0" tests="20" time="229.741" timestamp="2026-11-06T22:21:49.952250+00:00" hostname="832769dc7e6d"><testcase classname="tests.p6.test_acceptance" name="test_T01_fresh_linux_bootstrap_and_passive_ui" time="0.183"><properties><property name="p6_id" value="P6-T01" /></properties></testcase><testcase classname="tests.p6.test_acceptance" name="test_T02_create_order_form_exact_fields_and_p2_visibility" time="0.041"><properties><property name="p6_id" value="P6-T02" /></properties></testcase><testcase classname="tests.p6.test_acceptance" name="test_T03_invalid_form_retry_idempotency_and_concurrent_conflict" time="0.123"><properties><property name="p6_id" value="P6-T03" /></properties></testcase><testcase classname="tests.p6.test_acceptance" name="test_T04_pa_explicit_two_ui_approvals_and_exact_hashes" time="11.854"><properties><property name="p6_id" value="P6-T04" /></properties></testcase><testcase classname="tests.p6.test_acceptance" name="test_T05_pa_csv_result_and_qa_actual_http_transfer" time="11.719"><properties><property name="p6_id" value="P6-T05" /></properties></testcase><testcase classname="tests.p6.test_acceptance" name="test_T06_pb_explicit_v2_approval_and_typed_warning_oracle" time="9.700"><properties><property name="p6_id" value="P6-T06" /></properties><failure message="AssertionError: ('Real P3 UI allocates a UUID Brief ID; frozen P5 PB-AC-002 special handling requires brief-pb-v1.', ['DQ-010'])&#10;assert ('NEEDS_FIX' == 'READY'&#10;  &#10;  - READY&#10;  + NEEDS_FIX)">pb = &lt;p6.conftest.UIScenario object at 0x7f622c930590&gt;
+
+    def test_T06_pb_explicit_v2_approval_and_typed_warning_oracle(pb):
+        assert pb.spec.version_number == 2
+        with pb.uow() as u:
+            versions = u.specs.list_for_order(pb.order_id)
+            approvals = u.approvals.list_for_order(pb.order_id)
+            artifacts = u.artifacts.list_for_run(pb.run_id)
+        assert len(versions) == 2 and len(approvals) == 2
+        assert next(a for a in approvals if a.target_type == 'TRANSFORMATION_SPEC').target_version_id == pb.spec.id
+        assert all(a.approved_by == 'local_user' for a in approvals)
+        checks = pb.decision.report['deterministic_checks']
+        assert len(checks) == 24
+        dq17 = {c['criterion_id']: c['status'] for c in checks if c['check_id'] == 'DQ-017'}
+        assert dq17 == {'PB-AC-006': 'PASS', 'PB-AC-007': 'PASS'}
+        assert pb.decision.report['warnings']
+        assert any('FORMULA' in json.dumps(w).upper() for w in pb.decision.report['warnings'])
+        assert [a.artifact_type for a in artifacts if a.artifact_type.startswith('RESULT_')] == ['RESULT_XLSX']
+        record('T06', {'versions': [asdict(v) for v in versions], 'approvals': [asdict(a) for a in approvals],
+                       'DQ017': dq17, 'checks': len(checks), 'warnings': pb.decision.report['warnings'],
+                       'adaptations': pb.adaptations, 'observed_order_status': pb.order().status,
+                       'observed_qa_status': pb.decision.report['overall_status'],
+                       'actual_report': pb.decision.report,
+                       'blocking_issues': pb.decision.report['blocking_issues'],
+                       'failed_checks': [c for c in checks if c['status'] == 'FAIL']})
+&gt;       assert pb.order().status == 'READY' and pb.decision.report['overall_status'] == 'PASS_WITH_WARNINGS', (
+            'Real P3 UI allocates a UUID Brief ID; frozen P5 PB-AC-002 special handling requires brief-pb-v1.',
+            pb.decision.report['blocking_issues'])
+E       AssertionError: ('Real P3 UI allocates a UUID Brief ID; frozen P5 PB-AC-002 special handling requires brief-pb-v1.', ['DQ-010'])
+E       assert ('NEEDS_FIX' == 'READY'
+E         
+E         - READY
+E         + NEEDS_FIX)
+
+tests/p6/test_acceptance.py:222: AssertionError</failure></testcase><testcase classname="tests.p6.test_acceptance" name="test_T07_pb_xlsx_and_qa_independent_http_and_18_cells" time="8.976"><properties><property name="p6_id" value="P6-T07" /></properties><failure message="AssertionError: assert ('NEEDS_FIX' == 'READY'&#10;  &#10;  - READY&#10;  + NEEDS_FIX)">pb = &lt;p6.conftest.UIScenario object at 0x7f622c930590&gt;
+download_http = &lt;function download_http.&lt;locals&gt;.fetch at 0x7f622dc76200&gt;
+
+    def test_T07_pb_xlsx_and_qa_independent_http_and_18_cells(pb, download_http):
+        before = pb.snapshot()
+        prepared = pb.prepare_ui()
+        verified_report(pb, prepared)
+        assert prepared.result_name.endswith('.xlsx')
+        assert prepared.result_mime == 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+        book = load_workbook(io.BytesIO(prepared.result_bytes), read_only=True, data_only=False, keep_links=False)
+        try:
+            sheet = book[pb.spec.document_json['output']['sheet_name']]
+            rows = list(sheet.iter_rows())
+            assert len(rows) == 4 and all(len(row) == 6 for row in rows)
+            assert all(cell.data_type != 'f' for row in rows for cell in row)
+            values = [[cell.value for cell in row] for row in rows]
+        finally:
+            book.close()
+        # Frozen P-B expected cells are independent of the exported workbook.
+        golden = load_workbook(pb.source / 'expected_result.xlsx', read_only=True, data_only=False, keep_links=False)
+        try:
+            expected = [[cell.value for cell in row] for row in golden.active.iter_rows()]
+        finally:
+            golden.close()
+        assert values == expected
+        assert sum(len(row) for row in values[1:]) == 18
+        observations = transfer(pb.app, download_http, snapshot_expectation(prepared))
+        assert pb.snapshot() == before
+        record('T07', {'http_transfers': observations, 'decoded_cells': values, 'data_cells': 18,
+                       'observed_qa_status': pb.decision.report['overall_status'], 'result_name': prepared.result_name})
+&gt;       assert pb.order().status == 'READY' and pb.decision.report['overall_status'] == 'PASS_WITH_WARNINGS'
+E       AssertionError: assert ('NEEDS_FIX' == 'READY'
+E         
+E         - READY
+E         + NEEDS_FIX)
+
+tests/p6/test_acceptance.py:254: AssertionError</failure></testcase><testcase classname="tests.p6.test_acceptance" name="test_T08_pd_diagnostic_never_client_ready" time="12.778"><properties><property name="p6_id" value="P6-T08" /></properties></testcase><testcase classname="tests.p6.test_acceptance" name="test_T09_ineligible_states_and_missing_approvals" time="2.593"><properties><property name="p6_id" value="P6-T09" /></properties></testcase><testcase classname="tests.p6.test_acceptance" name="test_T10_restart_intermediate_and_terminal_no_cached_authorization" time="11.347"><properties><property name="p6_id" value="P6-T10" /></properties></testcase><testcase classname="tests.p6.test_acceptance" name="test_T11_corrupt_source_csv_and_xlsx_on_disposable_copies" time="2.965"><properties><property name="p6_id" value="P6-T11" /></properties></testcase><testcase classname="tests.p6.test_acceptance" name="test_T12_corrupt_internal_final_and_snapshot_boundary" time="4.659"><properties><property name="p6_id" value="P6-T12" /></properties></testcase><testcase classname="tests.p6.test_acceptance" name="test_T13_cross_order_and_context_guards_before_artifact_access" time="1.445"><properties><property name="p6_id" value="P6-T13" /></properties></testcase><testcase classname="tests.p6.test_acceptance" name="test_T14_missing_report_artifact_metadata_and_health_fail_closed" time="5.606"><properties><property name="p6_id" value="P6-T14" /></properties></testcase><testcase classname="tests.p6.test_acceptance" name="test_T15_passive_rerenders_reprepare_transfer_and_single_snapshot" time="42.501"><properties><property name="p6_id" value="P6-T15" /></properties></testcase><testcase classname="tests.p6.test_acceptance" name="test_T16_mime_names_deterministic_json_and_unsafe_name_denial" time="9.502"><properties><property name="p6_id" value="P6-T16" /></properties></testcase><testcase classname="tests.p6.test_acceptance" name="test_T17_actual_large_p5_artifact_p6_rss_http_and_resource_denial" time="76.699"><properties><property name="p6_id" value="P6-T17" /></properties></testcase><testcase classname="tests.p6.test_acceptance" name="test_T18_successor_scope_audit_and_negative_mutation_classes" time="15.894"><properties><property name="p6_id" value="P6-T18" /></properties></testcase><testcase classname="tests.p6.test_acceptance" name="test_T19_documented_linux_launch_restart_and_actual_mac_docker" time="0.871"><properties><property name="p6_id" value="P6-T19" /></properties><failure message="AssertionError: NOT_RUN — Mac Docker launch/restart and explicit workflow require actual macOS host evidence; Linux smoke passed. Gate B remains blocked.&#10;assert None">pa = &lt;p6.conftest.UIScenario object at 0x7f622d2425d0&gt;
+copy_workspace = &lt;function copy_workspace.&lt;locals&gt;.make at 0x7f622c490900&gt;
+
+    def test_T19_documented_linux_launch_restart_and_actual_mac_docker(pa, copy_workspace):
+        directory, env = copy_workspace(pa)
+        before = snapshot(directory); files = payload_hashes(directory)
+        readme = (ROOT / 'docs/p6/README_PILOT.md').read_text()
+        assert 'streamlit' in readme and 'docker' in readme.lower() and 'VDE_WORKSPACE' in readme
+        observations = {'observed_host': platform.platform(), 'linux_launches': []}
+        for _ in range(2):
+            with socket.socket() as listener:
+                listener.bind(('127.0.0.1', 0)); port = listener.getsockname()[1]
+            command = [sys.executable, '-m', 'streamlit', 'run', str(ROOT / 'src/vde/app.py'),
+                       '--server.address=127.0.0.1', '--server.port=' + str(port), '--server.headless=true',
+                       '--browser.gatherUsageStats=false']
+            child_env = os.environ.copy(); child_env['VDE_WORKSPACE'] = str(directory)
+            process = subprocess.Popen(command, cwd=ROOT, env=child_env, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+            status = None
+            try:
+                deadline = time.monotonic() + 30
+                while time.monotonic() &lt; deadline:
+                    try:
+                        with urlopen(f'http://127.0.0.1:{port}/_stcore/health', timeout=1) as response:
+                            status = response.status
+                            assert response.read() == b'ok'
+                        break
+                    except OSError:
+                        if process.poll() is not None:
+                            break
+                        time.sleep(0.1)
+                assert status == 200
+            finally:
+                process.terminate()
+                stdout, stderr = process.communicate(timeout=15)
+            observations['linux_launches'].append({'command': command, 'health_http': status,
+                                                    'stdout': stdout, 'stderr': stderr})
+        assert snapshot(directory) == before and payload_hashes(directory) == files
+        observations['persisted_order_run_result_qa_after_restart'] = True
+        mac_path = os.environ.get('P6_MAC_DOCKER_EVIDENCE')
+        if mac_path:
+            mac = json.loads(Path(mac_path).read_text())
+            observations['mac_docker'] = mac
+            assert mac['host_system'] == 'Darwin' and mac['container_system'] == 'Linux'
+            assert mac['launch_http_status'] == 200 and mac['restart_http_status'] == 200
+            assert mac['workspace_persisted'] is True and mac['explicit_ui_workflow_completed'] is True
+            assert mac['commands'] and mac['stdout'] and mac['docker_info']
+        else:
+            observations['mac_docker'] = {'outcome': 'NOT_RUN', 'reason': 'This execution host is Linux; no actual macOS Docker host evidence is available.'}
+        record('T19', observations)
+&gt;       assert mac_path, 'NOT_RUN — Mac Docker launch/restart and explicit workflow require actual macOS host evidence; Linux smoke passed. Gate B remains blocked.'
+E       AssertionError: NOT_RUN — Mac Docker launch/restart and explicit workflow require actual macOS host evidence; Linux smoke passed. Gate B remains blocked.
+E       assert None
+
+tests/p6/test_acceptance.py:573: AssertionError</failure></testcase><testcase classname="tests.p6.test_acceptance" name="test_T20_exact_twenty_id_inventory_and_pending_release_gate" time="0.006"><properties><property name="p6_id" value="P6-T20" /></properties></testcase></testsuite></testsuites>

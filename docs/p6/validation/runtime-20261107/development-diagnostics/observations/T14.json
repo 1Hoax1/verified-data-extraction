@@ -1,0 +1,7 @@
+{
+  "missing_report": "P6_NOT_READY",
+  "artifact_metadata": "STORAGE_ERROR",
+  ".staging": "P6_NOT_READY",
+  "orders": "P6_NOT_READY",
+  "blocked": "STORAGE_ERROR"
+}

@@ -1,0 +1,9 @@
+{
+  "cross_order": {
+    "code": "P6_CROSS_ORDER",
+    "p5_artifact_reads": 0
+  },
+  "approval_hash": "STORAGE_ERROR",
+  "spec_context": "STORAGE_ERROR",
+  "run_context": "STORAGE_ERROR"
+}

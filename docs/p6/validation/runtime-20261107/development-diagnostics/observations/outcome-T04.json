@@ -1,0 +1,12 @@
+{
+  "nodeid": "tests/p6/test_acceptance.py::test_T04_pa_explicit_two_ui_approvals_and_exact_hashes",
+  "outcome": "passed",
+  "duration_seconds": 0.001218552999489475,
+  "properties": [
+    [
+      "p6_id",
+      "P6-T04"
+    ]
+  ],
+  "failure": null
+}

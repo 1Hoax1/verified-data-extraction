@@ -1,0 +1,17 @@
+{
+  "command": [
+    "/workspace/verified-data-extraction/.venv/bin/python",
+    "-m",
+    "p5.stress_probe",
+    "--design-root",
+    "/tmp/pytest-of-agent/pytest-87/p5-design0/P5_Implementation_Design_Pack_v0.2a_candidate",
+    "--directory",
+    "/tmp/pytest-of-agent/pytest-87/test_T72_csv_and_xlsx_100000_b0/oversized",
+    "--format",
+    "CSV",
+    "--negative-oversized"
+  ],
+  "exit_code": 0,
+  "stdout": "{\n  \"result\": \"PASS\",\n  \"negative_case\": \"ACTUAL_100000x200_EXPANDED_TEXT\",\n  \"rows\": 100000,\n  \"columns\": 200,\n  \"P4_internal_bytes\": 299601477,\n  \"P4_internal_unchanged\": true,\n  \"error\": \"EXPORT_FAILED\",\n  \"Order\": \"FAILED\",\n  \"new_final_artifacts\": 0,\n  \"new_qa_reports\": 0,\n  \"safe_preallocation_rejection\": true,\n  \"elapsed_seconds\": 4.13409403499827\n}\n",
+  "stderr": ""
+}

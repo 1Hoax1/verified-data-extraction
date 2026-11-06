@@ -1,0 +1,11 @@
+{
+  "argv": [
+    "/workspace/verified-data-extraction/.venv/bin/python",
+    "-m",
+    "p4.restart_probe",
+    "/tmp/pytest-of-agent/pytest-77/test_T45_kill_before_start_com0/workspace",
+    "before_run_commit"
+  ],
+  "cwd": "/workspace/p6-streamlit-e2e",
+  "exit_code": -9
+}

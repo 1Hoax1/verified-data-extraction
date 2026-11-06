@@ -1,0 +1,12 @@
+{
+  "nodeid": "tests/p6/test_acceptance.py::test_T16_mime_names_deterministic_json_and_unsafe_name_denial",
+  "outcome": "passed",
+  "duration_seconds": 9.500975891998678,
+  "properties": [
+    [
+      "p6_id",
+      "P6-T16"
+    ]
+  ],
+  "failure": null
+}

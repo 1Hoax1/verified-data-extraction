@@ -1,0 +1,77 @@
+{
+  "fixture": "P5-DQ-017-NEG",
+  "result": "PASS",
+  "observed_check": {
+    "schema_version": "1.1",
+    "check_id": "DQ-017",
+    "name": "DQ-017 deterministic check",
+    "status": "FAIL",
+    "severity": "ERROR",
+    "target": {
+      "artifact": null,
+      "dataset_id": null,
+      "column": null,
+      "row_ids": []
+    },
+    "expected": true,
+    "actual": {
+      "allowed": [
+        "RU",
+        "US"
+      ],
+      "values": [
+        "RU",
+        "ZZ"
+      ]
+    },
+    "affected_count": 1,
+    "sample_row_ids": [],
+    "message": "The approved deterministic requirement failed.",
+    "criterion_id": null
+  },
+  "supplemental": [
+    {
+      "isolated_simulated_approval_only": true,
+      "criterion_instances": [
+        {
+          "schema_version": "1.1",
+          "check_id": "DQ-017",
+          "name": "DQ-017 deterministic check",
+          "status": "PASS",
+          "severity": "ERROR",
+          "target": {
+            "artifact": null,
+            "dataset_id": "result",
+            "column": "quantity",
+            "row_ids": []
+          },
+          "expected": 1,
+          "actual": 1,
+          "affected_count": 0,
+          "sample_row_ids": [],
+          "message": "All selected data checked.",
+          "criterion_id": "PB-AC-006"
+        },
+        {
+          "schema_version": "1.1",
+          "check_id": "DQ-017",
+          "name": "DQ-017 deterministic check",
+          "status": "FAIL",
+          "severity": "ERROR",
+          "target": {
+            "artifact": null,
+            "dataset_id": "result",
+            "column": "line_total",
+            "row_ids": []
+          },
+          "expected": 0,
+          "actual": "-20",
+          "affected_count": 1,
+          "sample_row_ids": [],
+          "message": "The approved deterministic requirement failed.",
+          "criterion_id": "PB-AC-007"
+        }
+      ]
+    }
+  ]
+}

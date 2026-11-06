@@ -1,0 +1,12 @@
+{
+  "nodeid": "tests/p6/test_acceptance.py::test_T03_invalid_form_retry_idempotency_and_concurrent_conflict",
+  "outcome": "passed",
+  "duration_seconds": 0.1228940569999395,
+  "properties": [
+    [
+      "p6_id",
+      "P6-T03"
+    ]
+  ],
+  "failure": null
+}

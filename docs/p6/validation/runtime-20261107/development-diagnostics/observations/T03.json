@@ -1,0 +1,20 @@
+{
+  "retained_token": "8e35a0bf-cf53-4a87-bac3-d4d7522ef087",
+  "invalid_submissions": 5,
+  "concurrent_results": [
+    "8e35a0bf-cf53-4a87-bac3-d4d7522ef087",
+    "8e35a0bf-cf53-4a87-bac3-d4d7522ef087"
+  ],
+  "conflict": "P6_ORDER_TOKEN_CONFLICT",
+  "counts": {
+    "orders": 1,
+    "input_assets": 0,
+    "brief_versions": 0,
+    "transformation_spec_versions": 0,
+    "approvals": 0,
+    "execution_runs": 0,
+    "artifacts": 0,
+    "qa_reports": 0,
+    "event_log": 0
+  }
+}

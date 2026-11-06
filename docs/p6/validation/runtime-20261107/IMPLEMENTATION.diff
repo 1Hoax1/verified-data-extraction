@@ -1,0 +1,2458 @@
+diff --git a/docs/p6/README_PILOT.md b/docs/p6/README_PILOT.md
+new file mode 100644
+index 0000000..2aeefb8
+--- /dev/null
++++ b/docs/p6/README_PILOT.md
+@@ -0,0 +1,160 @@
++# Pilot Slice V1 — local operator manual
++
++This manual covers the approved P6 workflow in [Design Pack v0.2](design/P6_DESIGN_PACK_v0.2.md), under [CR-P6-001](decisions/CR-P6-001_OWNER_DECISION_2026-11-06.md). Gate A is owner-closed in the [later direction decision](decisions/P6_DIRECTION_OWNER_DECISION_2026-11-06.md). Implementation validation, Gate B closure, merge and Pilot release are separate decisions. These instructions alone do not certify a release; use the [release checklist](RELEASE_CHECKLIST.md).
++
++**Known integration blocker:** a newly published P-B Brief receives a UUID from the frozen P3 UI, while the frozen P5 PB-AC-002 exception recognizes only the literal ID `brief-pb-v1`. The legally identity-adapted six-column P-B path consequently produces `NEEDS_FIX / FAIL`, not its required `READY / PASS_WITH_WARNINGS`. Preserve that diagnostic result; do not force IDs, change criteria, or deliver it as accepted output. The proposed CR-P6-002 in new validation evidence requests a narrowly reviewed P5 correction. It is not approved or implemented; the existing P5 code remains unchanged.
++
++The supported runtime is Linux, including Linux in Docker Desktop on an Apple Silicon or Intel Mac. Native macOS execution is unsupported: frozen P2 reads Linux `/proc` for resource checks. Use one person, one Streamlit process and one local persistent workspace. The workspace contains confidential input/result bytes and SQLite records; restrict its directory to the operator. SQLite is authoritative for metadata, exact versions, Approvals, Runs and QAReports; controlled workspace files are authoritative for payload bytes. Keep both together on a filesystem supporting SQLite WAL, hard links and file/directory `fsync`.
++
++## Linux installation and launch
++
++Use a writable checkout of the exact package commit selected for validation/release. The owner-start commit is `b93e0ef4ed69343968ff7ae4188d586c0d1485a5`; it contains the approved design, not an implemented release. Record the actual implementation commit, tree and package SHA-256 in the release checklist before distributing a package. Retain `pecs/pilot_slice_v1/` alongside `src/`: the editable installation reads that frozen contract pack from the checkout.
++
++The reproducible toolchain below selects `uv==0.12.19` and Python `3.12.14`. Start in the selected checkout with Python 3 and its `venv` support available. Replace the two absolute paths with private local directories outside the checkout:
++
++```bash
++set -eu
++export VDE_TOOLS=/absolute/local/vde-tools-uv-0.12.19
++export VDE_WORKSPACE=/absolute/local/vde-pilot-workspace
++umask 077
++python3 -m venv "$VDE_TOOLS"
++"$VDE_TOOLS/bin/python" -m pip install 'uv==0.12.19'
++"$VDE_TOOLS/bin/uv" python install 3.12.14
++"$VDE_TOOLS/bin/uv" sync --frozen --python 3.12.14 --extra test
++.venv/bin/python -c 'import sys; assert sys.version_info[:3] == (3, 12, 14); print(sys.version)'
++"$VDE_TOOLS/bin/uv" --version
++"$VDE_TOOLS/bin/uv" pip freeze --python .venv/bin/python
++mkdir -p "$VDE_WORKSPACE"
++chmod 700 "$VDE_WORKSPACE"
++.venv/bin/python -m streamlit run src/vde/app.py \
++  --server.address=127.0.0.1 --server.port=8501 \
++  --server.headless=true --browser.gatherUsageStats=false
++```
++
++Open `http://127.0.0.1:8501`. Initial bootstrap creates `app.sqlite3` and controlled directories inside `VDE_WORKSPACE`; a fresh workspace should show `Storage: ready` and no Orders. Reuse this exact absolute workspace path on every restart. Stop with Ctrl-C and wait for the process to exit before copying or changing the workspace.
++
++`uv sync --frozen` consumes the unchanged `uv.lock`; do not run `uv lock`, upgrade dependencies or edit the lock to make installation succeed. Frozen direct runtime packages are `jsonschema==4.26.0`, `referencing==0.37.0`, `rfc8785==0.1.4`, `streamlit==1.50.0` and `openpyxl==3.1.5`; the test extra is `pytest==8.4.2`. Transitive versions and platform markers come from `uv.lock`. The uv bootstrap tool is separate from application dependencies. Installation needs access to the configured package and Python distribution sources; ingestion and business processing use local files.
++
++## Mac: local Linux container
++
++Install and start Docker Desktop, then open a terminal in the selected checkout. This command supports Docker's native Linux architecture on either Mac CPU family. It mounts the repository read-only at `/source` and the same private host workspace read/write at `/data`. An ephemeral `/tmp/code` copy and `/tmp/vde-venv` let setuptools create editable build metadata without writing to the repository mount. No Dockerfile or repository build script is required.
++
++```bash
++set -eu
++export VDE_REPO="$(pwd -P)"
++export VDE_DATA=/absolute/local/vde-pilot-workspace
++umask 077
++mkdir -p "$VDE_DATA"
++chmod 700 "$VDE_DATA"
++docker run --rm --init --name vde-pilot \
++  --user "$(id -u):$(id -g)" \
++  --publish 127.0.0.1:8501:8501 \
++  --mount "type=bind,source=$VDE_REPO,target=/source,readonly" \
++  --mount "type=bind,source=$VDE_DATA,target=/data" \
++  --env VDE_WORKSPACE=/data \
++  --env UV_CACHE_DIR=/tmp/uv-cache \
++  --env UV_PROJECT_ENVIRONMENT=/tmp/vde-venv \
++  --env UV_PYTHON_DOWNLOADS=never \
++  --workdir /tmp \
++  python:3.12.14-slim-bookworm sh -eu -c '
++    python -c "import sys; assert sys.version_info[:3] == (3, 12, 14)"
++    python -m venv /tmp/vde-tools
++    /tmp/vde-tools/bin/python -m pip install "uv==0.12.19"
++    python -c "import shutil; shutil.copytree(\"/source\", \"/tmp/code\", ignore=shutil.ignore_patterns(\".git\", \".venv\", \".workspace\", \"__pycache__\", \"*.egg-info\"))"
++    cd /tmp/code
++    /tmp/vde-tools/bin/uv sync --frozen --python /usr/local/bin/python3.12 --extra test
++    /tmp/vde-tools/bin/uv --version
++    /tmp/vde-tools/bin/uv pip freeze --python /tmp/vde-venv/bin/python
++    exec /tmp/vde-venv/bin/python -m streamlit run src/vde/app.py \
++      --server.address=0.0.0.0 --server.port=8501 \
++      --server.headless=true --browser.gatherUsageStats=false
++  '
++```
++
++Open `http://127.0.0.1:8501` on the Mac. The `0.0.0.0` address is inside the container; the published host port remains loopback-only. Stop with Ctrl-C, or `docker stop vde-pilot` from another terminal, and wait for exit and automatic removal. Before reusing the name, `docker inspect vde-pilot` must report that no such container exists; removal can finish shortly after `docker stop` returns. Repeat the same command, source checkout and `VDE_DATA` to restart. `/tmp/code`, installed tools, the virtual environment and browser preparation state are disposable; `/data/app.sqlite3` and `/data/orders/` remain on the host. Do not start a second process on that directory. Record the pulled image digest (`docker image inspect python:3.12.14-slim-bookworm --format '{{json .RepoDigests}}'`), Docker/Desktop version, host CPU/OS and actual smoke outcomes in release evidence. A versioned image tag alone is not a recorded image digest or proof of a Mac test.
++
++This is a local Docker Desktop recipe, with no managed-cloud credentials or proxy material. A site requiring an HTTPS proxy or private CA must configure Docker/package tooling with its approved local trust settings; do not disable TLS verification. Failure to pull the exact image or install the frozen lock leaves the container smoke check pending/failed until resolved without changing dependencies. Actual Mac-host execution is required for the Mac portion of P6-T19; Linux-host Docker evidence cannot replace it.
++
++## Explicit operator workflow
++
++1. Confirm fresh storage health is `ready`. In **Create Order**, enter a nonblank title and listing text and explicitly submit the form. Submission creates a DRAFT only. Listing text is retained verbatim; a listing URL is stored as text and is never fetched. Leave unused optional fields empty. A supplied budget must already be finite canonical Decimal text; a deadline must be exact UTC `YYYY-MM-DDTHH:MM:SSZ`. Failed submissions retain the form token; resubmitting identical fields with that token reuses the Order. An explicit new Order uses a new token. Browser loss before successful submission does not provide global content deduplication.
++2. In the original input panel, select that **Existing Order**, choose one **Local CSV or XLSX**, and click **Upload**. Select the **Registered input**. For CSV choose encoding, delimiter and header row; for XLSX explicitly select one **Worksheet**. Click **Preview** and review warnings. Preview is not a QA verdict.
++3. Open **Open manual workflow**, select the same **P3 existing Order** and **P3 registered input**, and set the corresponding CSV options or worksheet. Click **Verify P3 input and preview**, inspect the selected asset ID/checksum/options, then **Begin manual review**. Draft JSON lives only in the browser session until published.
++4. Enter the human-reviewed contract in **Brief JSON draft**. It must refer to this actual input/context and conform to the existing P0 schema. Use **Validate Brief draft**, then **Save new Brief version**. Inspect the published document, version ID, canonical content hash and diff. Only the person authorized to approve the business Brief checks **Confirm this exact Brief ID and hash** and clicks **I approve this Brief version**.
++5. Enter the human-reviewed **TransformationSpec JSON draft**, linked to that exact approved Brief ID/hash and selected input. It must define only existing operations, acceptance criteria and the approved output filename/format. Validate and **Save new TransformationSpec version**. Review its published ID/hash, source selection and Brief link separately. The authorized person checks **Confirm this exact Spec ID, hash and approved Brief context** and clicks **I approve TransformationSpec**. Both immutable Approvals are required. Neither creating an Order, validating JSON, saving a version, nor this manual grants an Approval. Supplied fixture/TEST_ONLY Approvals and automated test-user actions never authorize a real business Order.
++6. Open **Open deterministic transformation**, choose the same **P4 existing Order**, inspect source checksum, input selection, pipeline and original limits, confirm the selection and click **Execute**. Wait for the succeeded Run and note its ID. Rendering or restarting does not execute it.
++7. Open **Open export and QA**, select the same **P5 existing Order** and succeeded Run, then click **Export + deterministic QA**. This is a separate explicit action. Review QA status, blockers, warnings and dataset summary; do not reinterpret deterministic FAIL as success.
++8. In the P6 delivery panel select the intended Order and exact Run. Review the version IDs/hashes, recorded Approval provenance, final artifact format/checksum/size and QA status. Click **Prepare verified download**. After preparation, save the offered result/diagnostic and QA JSON to a private local folder. Compare an independently computed SHA-256 of the saved result with the displayed Artifact/report checksum (`sha256sum /path/to/saved/result.csv` on Linux; `shasum -a 256 /path/to/saved/result.xlsx` on Mac). Retain the matching QAReport with that result. Do not publish an internal path or `P4_INTERNAL` payload.
++
++Use the actual selected IDs in every panel; each original panel has its own selector. The existing P3 JSON editor remains the way to create/review contracts. No ordinary workflow step requires SQLite editing, fixture rewriting, Python calls or workspace file editing. The frozen panels contain historical captions, including the old P3 “P4 execution unavailable” caption; the separate deterministic transformation panel provides the explicit P4 operation.
++
++## Interpreting a prepared download
++
++| Persisted state and verified health | Available output |
++|---|---|
++| `READY` + `PASS` | Approved-format verified CSV/XLSX and matching QAReport. |
++| `READY` + `PASS_WITH_WARNINGS` with zero blockers | The same outputs, with warnings retained for review. |
++| `NEEDS_FIX` + QA `FAIL` | Associated diagnostic result with `_DIAGNOSTIC_NOT_FOR_DELIVERY` before the extension, conspicuous **NOT FOR DELIVERY** labeling, and QAReport. Do not send the diagnostic as an accepted delivery. |
++| Other/inconsistent status, missing approval/report/artifact, or `degraded`/`blocked` | No prepared download; inspect the safe diagnostic and stop the business action. |
++
++Viewing, preparing and transferring P6 downloads are read-only: they create no Artifact, Event, Approval, Run or QAReport and do not rerun QA. QA JSON is deterministic UTF-8 serialization of the existing validated report, linked to the exact Run, versions and final Artifact. CSV uses `text/csv`; XLSX uses `application/vnd.openxmlformats-officedocument.spreadsheetml.sheet`; QA uses `application/json; charset=utf-8`. Only the approved safe output basename/extension is used.
++
++Preparation rereads current ownership/context/health and verifies actual result bytes against both persisted Artifact and QA summary length/hash before retaining an immutable bytes snapshot. Streamlit's download button transfers that prepared copy. It does not reread disk at the last HTTP/browser click. A prepared copy can remain a valid checksum-verified copy even if disk bytes subsequently change; a new prepare must reject corruption. Selection changes, failed subsequent context/health checks, errors, restart or browser session loss invalidate preparation. Prepare again after restart; never treat session state as business authority.
++
++P6 admits downloads within **536870912 bytes (512 MiB) incremental sampled process RSS above preparation baseline**. Its preflight allocation estimate is at least `3 × result_file_size + serialized_QA_bytes + 64 MiB`; it includes the payload, retained snapshot and Streamlit-buffer allowance, and actual RSS is checked during preparation/rebinding. At most one selected run's result and one QA buffer are retained. This is sampled Linux RSS and conservative admission, not OS isolation, a peak-memory guarantee or proof that every nominal maximum export fits. `P6_DOWNLOAD_RESOURCE_LIMIT` exposes no new payload and changes no business/QA state. If an ordinary approved Pilot workload cannot be downloaded, record the actual characteristics and seek a new owner CR; do not reduce the workload silently or declare T17 passed from refusal alone. P5's 100000×200 export success is not P6 browser-download evidence.
++
++For release maintainers, the pinned Streamlit 1.50.0 implementation registers media before sending a download widget. P6 buffers the session's widget messages through `ScriptRunContext._enqueue` until both button bindings pass their RSS check; failure restores prior media coordinates and removes only newly allocated entries using the media manager's private lock/metadata/deletion interfaces. A dedicated internal `.vde-qa-json` MIME lookup extension preserves `application/json; charset=utf-8` on actual HTTP responses while the saved QA filename remains `.json`. These compatibility points require actual HTTP success and failure-injection tests against the frozen version. Do not upgrade Streamlit or infer compatibility from widget inspection alone.
++
++External marketplace messages, client file transfer and billing remain deliberate human actions outside this application. Review the exact saved result and QA before any external delivery. P6 never sends files or messages automatically.
++
++## Stopped-app checkpoint and backup
++
++Stop Streamlit/container and confirm no second process is using the workspace. Keep the complete directory, including SQLite sidecars and payloads, together. Never copy only `app.sqlite3` while the app runs. On Linux, use the installed environment to checkpoint the existing DB before a complete copy:
++
++```bash
++set -eu
++export VDE_WORKSPACE=/absolute/local/vde-pilot-workspace
++export VDE_BACKUP=/absolute/local/vde-pilot-backup-YYYYMMDDTHHMMSSZ
++.venv/bin/python - <<'PY'
++import os
++import sqlite3
++from pathlib import Path
++database = Path(os.environ['VDE_WORKSPACE']) / 'app.sqlite3'
++connection = sqlite3.connect(database.resolve().as_uri() + '?mode=rw', uri=True)
++try:
++    outcome = connection.execute('PRAGMA wal_checkpoint(TRUNCATE)').fetchone()
++    print('checkpoint:', outcome)
++    assert outcome[0] == 0, 'Checkpoint busy: stop every workspace user before backup'
++finally:
++    connection.close()
++PY
++test ! -e "$VDE_BACKUP"
++cp -a "$VDE_WORKSPACE" "$VDE_BACKUP"
++```
++
++For Mac, after `docker stop` and exit, checkpoint the same host directory through Linux, then copy on the host:
++
++```bash
++set -eu
++docker run --rm --user "$(id -u):$(id -g)" \
++  --mount "type=bind,source=$VDE_DATA,target=/data" \
++  python:3.12.14-slim-bookworm python -c \
++  'import sqlite3; c=sqlite3.connect("file:/data/app.sqlite3?mode=rw",uri=True); r=c.execute("PRAGMA wal_checkpoint(TRUNCATE)").fetchone(); c.close(); print(r); assert r[0] == 0'
++export VDE_BACKUP=/absolute/local/vde-pilot-backup-YYYYMMDDTHHMMSSZ
++test ! -e "$VDE_BACKUP"
++cp -a "$VDE_DATA" "$VDE_BACKUP"
++```
++
++Record the package commit/hash and a finite SHA-256 manifest for the backup; verify a restore on a separate disposable directory before relying on it. A backup is a stopped-app filesystem snapshot, not an automatically resumed execution.
++
++## Restart, recovery and rollback
++
++Restart using the same complete workspace and exact selected package. Persisted versions, independent Approvals, Runs, reports and files are reread and verified; unsaved JSON drafts and prepared download buffers must be recreated. No operation is automatically approved, executed, exported, resumed or repaired.
++
++On `degraded` or `blocked`, stop create/execute/export/download actions. Retain the displayed staging/orphan/stale-run/errors and application logs. Stop the app, preserve a complete copy for diagnosis and inspect a disposable copy only. Never update a checksum to match altered bytes, delete orphan/staging files to hide health findings, rewrite an Approval/report, replace missing P-C fixtures, or mark a stale run succeeded. Recovery is detect-only; any reconciliation needs an explicit owner-approved procedure.
++
++For rollback, stop all workspace users and preserve the failing directory unchanged. Select an owner-approved compatible package by its recorded commit/hash. Restore a verified complete stopped-app backup to a new directory, point `VDE_WORKSPACE` (or host `VDE_DATA`) there, and restart that package. Recheck health and the exact persisted context before new manual actions; prepare new downloads. Do not overwrite the only failing workspace or mix a DB from one checkpoint with files from another. No storage migration or automatic repair is introduced by P6.
++
++## Validation limitations
++
++The 13 absent original P-C files remain absent; only available negative guards can run. Original P1–P5 scope tests, including P5-T76, may genuinely fail on the extended P6 inventory; retain their raw failures and classify exact approved scope assertions separately. All behavioral regressions block Gate B. The twenty P6 acceptance IDs in `tests/p6/test_acceptance.py` need runtime evidence on the actual implementation SHA/tree, including independent saved-download readback, corruption/restart probes and actual memory sampling. This manual makes no runtime-PASS claim. Clean Linux and actual Mac Docker smoke results remain pending until their commands and observations are recorded in the release evidence.
+diff --git a/docs/p6/RELEASE_CHECKLIST.md b/docs/p6/RELEASE_CHECKLIST.md
+new file mode 100644
+index 0000000..94e9885
+--- /dev/null
++++ b/docs/p6/RELEASE_CHECKLIST.md
+@@ -0,0 +1,106 @@
++# P6 Pilot release checklist
++
++**Status: PENDING — no Gate B closure, merge or Pilot release is granted by this checklist.** The [owner decision](decisions/P6_DIRECTION_OWNER_DECISION_2026-11-06.md) closes Gate A only; implementation start comes from the separately authorized owner instruction. The approved [design](design/P6_DESIGN_PACK_v0.2.md) and [CR-P6-001](decisions/CR-P6-001_OWNER_DECISION_2026-11-06.md) remain the authority. [README_PILOT.md](README_PILOT.md) is the operator procedure.
++
++Every unchecked item is pending. Enter actual results and evidence only after execution. `NOT RUN`, `FAIL` and a recorded limitation are not PASS. The current documentation-authoring environment is Linux; no Mac-host Docker smoke evidence has been supplied here. P6-T19's Mac requirement is **NOT RUN / PENDING**, and T19 cannot be closed until actual required evidence exists.
++
++**Known P-B blocker:** frozen P5 binds PB-AC-002's approved exception to `brief-pb-v1`; a new P3 UI publication has a UUID and gets DQ-010 FAIL / NEEDS_FIX. P6-T06/T07 must retain their strict required READY/PASS_WITH_WARNINGS assertions. A proposed CR-P6-002 is recorded with the new runtime evidence; no protected P5 fix or fixture/ID workaround is permitted without owner approval. This is a behavioral integration failure, not a historical scope conflict.
++
++## Immutable identity and evidence record
++
++| Required field | Value / evidence |
++|---|---|
++| Frozen main baseline | `0af4a1ff49ccf8fa59c39780d749e15cb5042fc3` |
++| Approved implementation-start feature HEAD | `b93e0ef4ed69343968ff7ae4188d586c0d1485a5` |
++| Approved design Git blob | `50b744540bbac136469565d1f9af57ab81697786` |
++| Approved design SHA-256 | `c4b09611a647524678882c4f0b1d28a6cad1d3b8ff0c0ee0a04b92ca220dd8e0` |
++| Actual tested implementation commit | PENDING — record full SHA, not owner-start HEAD by substitution |
++| Actual tested tree | PENDING — record full tree SHA and worktree cleanliness/inventory |
++| Distributed source package filename and SHA-256 | PENDING — hash the exact archive distributed |
++| Linux distro/kernel/architecture; Python and uv | PENDING — expected Python `3.12.14`, uv `0.12.19` |
++| Mac host OS/CPU; Docker Desktop/Engine; image digest | NOT RUN / PENDING |
++| Frozen `pyproject.toml` / `uv.lock` checksums and installed package inventory | PENDING |
++| Evidence root | PENDING — finite `docs/p6/validation/runtime-*/` directory |
++| Evidence manifest SHA-256 and tested input/output inventories | PENDING |
++| Independent validation reviewer and findings | PENDING |
++| Explicit owner Gate B decision | PENDING — no automatic closure |
++| Separate owner merge decision | NOT AUTHORIZED by this checklist |
++| Separate owner Pilot release decision | NOT AUTHORIZED by this checklist |
++
++Record `git rev-parse HEAD`, `git rev-parse HEAD^{tree}`, exact commands/working directory, UTC timestamps, OS/tool versions, exit codes, stdout/stderr and raw JUnit. For a clean selected commit, an example source-package command is `git archive --format=tar HEAD --output=/absolute/outside/repository/vde-pilot-source.tar`; compute its SHA-256 with `sha256sum` on Linux or `shasum -a 256` on Mac. This archive identifies source bytes; installed dependencies and the actual container image digest need separate records. Archive/evidence production does not certify or publish a release. Never include credential values in logs.
++
++The new acceptance suite and successor audit live under `tests/p6/`; the outer `p6.run_validation` module records their runtime execution and unchanged historical suites. Invoke it from a clean committed selected tree, with actual disposable stress artifacts and evidence outside the repository: `PYTHONPATH=src:tests .venv/bin/python -m p6.run_validation --stress-workspace /absolute/test/stress-workspace --out /absolute/test/p6-validation`. Supply actual platform-smoke evidence only when available; an absent Mac run remains a recorded blocker.
++
++## Scope and dependency admission
++
++- [ ] Verify both remote refs against the owner-authorized SHAs before implementation admission; preserve the ref-query response and time.
++- [ ] Compare every baseline blob and mode against frozen main. Only the four exact added `app.py` lines and the finite 4 runtime + 6 test/audit + 5 documentation paths from CR-P6-001 are admitted; no deletion/reorder of existing app lines.
++- [ ] Preserve approved design/decision bytes, all P0–P5 source/tests/policies/fixtures/evidence, `DECISIONS.md`, G3 pin, schema/migrations and dependency files. Run the P6 successor audit and retain its exact inventory.
++- [ ] On the exact tested tree, complete `uv sync --frozen --python 3.12.14 --extra test` without lock changes; record installed direct and transitive package versions. Direct runtime versions remain jsonschema 4.26.0, referencing 0.37.0, rfc8785 0.1.4, Streamlit 1.50.0 and openpyxl 3.1.5; pytest 8.4.2 is the existing test extra.
++- [ ] Run at least one negative mutation per protected-file class plus forbidden extra paths; retain actual rejections and verify mutation workspace disposal/restoration. No old source/evidence is changed by these probes.
++
++## Mandatory acceptance register
++
++All twenty IDs require actual runtime outcomes on the recorded SHA/tree, raw JUnit and independent oracles. Fill the result/evidence column with exact relative evidence paths and outcomes; do not infer success from test collection or documentation.
++
++| ID | Measurable closure condition | Result / evidence |
++|---|---|---|
++| P6-T01 | Clean Linux install/bootstrap and opened Streamlit: ready, zero Orders/Approvals, CreateOrder present, no automatic business writes. | PENDING |
++| P6-T02 | Explicit valid form creates one exact DRAFT; token=id, equal initial timestamps, null selections, no associated records/events, P2 visibility. | PENDING |
++| P6-T03 | Invalid fields/replays/concurrency/rerenders: no invalid/duplicate rows; exact replay returns same ID, conflict rejected without writes. | PENDING |
++| P6-T04 | P-A explicit isolated UI test-user workflow records both independently reviewed Approvals with exact IDs/hashes/context; P4 disabled before both. | PENDING |
++| P6-T05 | P-A P4/P5 gives READY/PASS and one exact 277-byte golden CSV; saved result hash/readback and QA schema/linkage checked; repeat transfer passive. | PENDING |
++| P6-T06 | P-B Orders worksheet and approved v2 gives READY/PASS_WITH_WARNINGS, 3×6 XLSX, 18 values, no exported formulas, 24 DQ records, separate DQ-017 PB-AC-006/007 PASS, source warning. | PENDING |
++| P6-T07 | Saved P-B XLSX/QA matches Artifact/report hashes, MIME/name, all 18 values and exact links; one production XLSX, no extra production CSV. | PENDING |
++| P6-T08 | P-D gives NEEDS_FIX/FAIL, marked diagnostic `_DIAGNOSTIC_NOT_FOR_DELIVERY` and matching QA; no delivery-ready claim. | PENDING |
++| P6-T09 | Missing Run/DRAFT/FAILED/EXECUTING/missing approvals expose no payload and create no promotion/Approval/Artifact/Event. | PENDING |
++| P6-T10 | Actual Streamlit restart at intermediate P3 and terminal P5 preserves persisted rows/bytes/context; no auto-execute or prepared-session reuse. | PENDING |
++| P6-T11 | Separate disposable CSV/XLSX source corruption is detected; no payload/business writes/repair. | PENDING |
++| P6-T12 | Separate P4_INTERNAL/final corruption blocks future preparation; no exposed new bytes or changed rows/events; prior-snapshot limitation recorded. | PENDING |
++| P6-T13 | Cross-Order Run and mismatched Approval/hash/Spec/Run context rejected before reading/leaking other-Order payload or report details; zero writes. | PENDING |
++| P6-T14 | Missing report, altered metadata, degraded staging/orphan and blocked health disable create/download with detect-only diagnostics. | PENDING |
++| P6-T15 | At least three passive rerenders, re-prepare and repeated browser transfers preserve counts/hashes and retain at most one selected Run's result/report buffers. | PENDING |
++| P6-T16 | Actual CSV/XLSX MIME/name/extension and saved QA deterministic UTF-8/schema/identity checks; unsafe filenames/replay/format blocked. | PENDING |
++| P6-T17 | Actual hashed small and large/admission-refused real artifacts; preflight and sampled RSS recorded; accepted transfer reads correctly; refusal exposes no payload/writes. Mandatory Pilot workload refusal is FAIL pending CR. | PENDING |
++| P6-T18 | Successor exact-tree/mode/whitelist audit plus protected-class mutation negatives; all historical failures retained and individually classified. | PENDING |
++| P6-T19 | Clean Linux and actual Mac Docker commands work; read-only repository/ephemeral build copy and same writable persistent workspace survive restart; UI workflow needs no DB/file edits. | Linux PENDING; Mac NOT RUN / PENDING |
++| P6-T20 | All 20 runtime IDs, commands/JUnit/SHA/tree/manifests and full legacy outcomes/limitations/checklist assembled; owner Gate B remains pending for separate decision. | PENDING |
++
++## Fixture and historical regression evidence
++
++- [ ] Record untouched P-A/P-B/P-D fixture hashes, expected rows/results and exact isolated-workspace setup. Preserve the P-A 277-byte golden and P-D typed QA semantics.
++- [ ] Verify P-B v2 provenance: outer `P5_Codex_Implementation_Handoff_2026-11-05.zip` SHA-256 `3e3a2f6a8e65f500fe5bd281ef805d9229d50b96c50433cdda52cbb4fd6d63e4`, nested supplement SHA-256 `4e08285b00344f2d00a7af89a723a835f931f4bceb768b11ec1aaf637fd0ae18`, and exact v2 specimen. Missing provenance is a blocker, not permission to invent a replacement.
++- [ ] Log allowed test-only Order/InputAsset/version identity substitutions and canonical original/derived hashes. Preserve fixture semantic transformations/goldens. Do not claim the specimen's hash for an adapted payload.
++- [ ] List the thirteen missing original P-C files and actual available negative coverage; no synthetic positive fixture or full-P-C claim.
++- [ ] Separately cite the historical P1–P4 212/212 and P5 76/76 results with their actual tested refs and preserved reports; do not attribute those outcomes to P6.
++- [ ] Execute unchanged P1–P5 suites on the actual P6 tree, including original P5-T76. Retain every raw PASS/FAIL, exact failing assertion, nested subprocess outcome/JUnit and exit code. Only proven owner-approved scope conflicts receive that classification; keep them FAIL, never skip/xfail or false PASS. Other behavioral regressions block Gate B.
++- [ ] Run all mutation/corruption tests in disposable copies, not owner workspace or original fixtures. Detect and prevent test runners' historical evidence writes from altering preserved files.
++
++## Delivery, resource and restart review
++
++- [ ] Verify no view/prepare/download creates or changes business rows/events, QA decisions or workspace files; ownership is checked before artifact access and every new prepare uses current health/context.
++- [ ] Record independent saved-file readback/hash checks for CSV and XLSX and exact QAReport schema/Run/version/Artifact linkage, deterministic serialization and MIME/extension/basename. Widget inspection alone does not replace actual transfer evidence.
++- [ ] On frozen Streamlit 1.50.0, inject failure after the first real media registration and verify that no newly registered URL is published/fetchable and prior valid media remains intact. Cover the private `_enqueue`/media-manager rollback compatibility and dedicated internal QA MIME extension with actual HTTP responses; the saved QA filename remains `.json`.
++- [ ] Verify READY/PASS and READY/PASS_WITH_WARNINGS with zero blockers, and conspicuously marked NEEDS_FIX/FAIL diagnostic behavior. No downloads for inconsistent/nonterminal/unhealthy context.
++- [ ] Measure incremental RSS above pre-preparation baseline against 536870912 bytes. Record artifact size/hash, sampling cadence/observed peak, `3× size + QA bytes + 64 MiB` preflight, rebinding checks, safe refusal and absence of partial payload/writes. No silent limit reduction or P5-stress-as-P6 proof.
++- [ ] Verify one immutable result snapshot and at most one report buffer per selected Run; clear on new preparation, selection/context/health failure, error or session loss. Demonstrate new preparation after actual process restart.
++- [ ] Disclose last-click boundary: the static download button transfers prepared verified bytes; it cannot promise fresh disk verification at the final browser click. Prior bytes can remain valid after later disk corruption; future prepare must fail.
++
++## Operator and platform smoke
++
++- [ ] Record clean Linux commands, OS/kernel, Python 3.12.14, uv 0.12.19, exact package/lock identity, logs and actual UI workflow/restart observations.
++- [ ] Record actual Mac-host OS/CPU, Docker Desktop/Engine, image digest, frozen installation, read-only source mount, ephemeral build environment and writable host workspace. Restart using exactly the same mount and verify SQLite/payload persistence. **NOT RUN until performed on a Mac.**
++- [ ] Confirm native macOS is not claimed supported; frozen Linux `/proc` constraints remain documented. No new dependency, Dockerfile, migration or helper script is required by the manual.
++- [ ] Review both exact published business versions and independent Approvals with the real authorized person for any live Order. Automated isolated-test Approvals/fixture snippets never authorize business delivery.
++- [ ] Complete stopped-app checkpoint/full backup and verify restoration to a disposable new directory with exact package identity. Retain problem workspace/logs; recovery remains detect-only with no silent repair or DB editing.
++- [ ] Demonstrate manual rollback/restart using a separately selected owner-approved compatible package and complete verified checkpoint, without overwriting the only failing copy or mixing database/files from different snapshots.
++- [ ] Confirm only manual external messages/transfer/billing, one local operator/process/workspace, filesystem permissions and all documented limitations. The Pilot slice is not MVP-0 Complete or market-demand validation.
++
++## Separate owner decisions
++
++- [ ] Independent validation review completed against immutable recorded evidence, including every unresolved FAIL/NOT RUN and any CR blocker.
++- [ ] Owner explicitly closes **P6 Gate B: CLOSED / PASS** after required runtime evidence; record decision reference/date. An agent/test runner cannot supply this decision.
++- [ ] Owner separately authorizes merge of the specified commit, if desired. No governance repin is implicit.
++- [ ] Owner separately authorizes Pilot release of the exact package SHA-256 and records unresolved accepted limitations. No approval is inferred from implementation, this checklist, a green subset or a prepared download.
++
++Until those decisions and required runtime checks exist: **P6 Gate B PENDING; merge and Pilot release NOT AUTHORIZED.**
+diff --git a/src/vde/app.py b/src/vde/app.py
+index 6150502..073f44f 100644
+--- a/src/vde/app.py
++++ b/src/vde/app.py
+@@ -17,6 +17,8 @@ elif result.health == "degraded":
+     st.json({"staging": result.recovery.staging, "orphans": result.recovery.orphans, "stale_runs": result.recovery.stale_runs})
+ else:
+     st.success("Local persistence is ready.")
++from vde.p6.ui import order_panel
++order_panel(result)
+ from vde.ingestion.ui import panel
+ panel(result)
+ from vde.workflow.ui import panel as workflow_panel
+@@ -25,3 +27,5 @@ from vde.execution.ui import panel as execution_panel
+ execution_panel(result)
+ from vde.p5.ui import panel as export_qa_panel
+ export_qa_panel(result)
++from vde.p6.ui import delivery_panel
++delivery_panel(result)
+diff --git a/src/vde/p6/__init__.py b/src/vde/p6/__init__.py
+new file mode 100644
+index 0000000..c5997bb
+--- /dev/null
++++ b/src/vde/p6/__init__.py
+@@ -0,0 +1 @@
++"""Pilot Order creation and verified, read-only download controls."""
+diff --git a/src/vde/p6/delivery.py b/src/vde/p6/delivery.py
+new file mode 100644
+index 0000000..cd2834c
+--- /dev/null
++++ b/src/vde/p6/delivery.py
+@@ -0,0 +1,445 @@
++"""Read-only, verified terminal delivery and bounded immutable snapshots.
++
++The browser transfers prepared bytes.  Preparing and subsequent UI renders
++verify current persisted context; a download click is not a disk-read hook.
++"""
++from contextlib import contextmanager
++from dataclasses import asdict, dataclass, field
++import hashlib
++import json
++import logging
++from threading import Event, Lock, Thread
++from time import monotonic
++import unicodedata
++
++from jsonschema.exceptions import ValidationError
++
++from vde.contracts import validate
++from vde.errors import StorageError
++from vde.ingestion.limits import current_rss
++from vde.p5.errors import P5Error
++from vde.p5.service import P5Service
++from vde.persistence.uow import UnitOfWork
++from vde.recovery import recover
++
++
++RSS_LIMIT = 536870912
++RESERVE_BYTES = 64 * 1024 * 1024
++_LOG = logging.getLogger(__name__)
++_MIMES = {
++    'CSV': 'text/csv',
++    'XLSX': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
++}
++
++
++class P6Error(Exception):
++    """UI-only diagnostic; these codes are never P0 ExecutionErrors."""
++
++    def __init__(self, code, reason):
++        self.code, self.reason = code, reason
++        super().__init__(reason)
++
++    def public(self):
++        return dict(code=self.code, message='The requested P6 action is unavailable.',
++                    details={'reason': self.reason[:1000]})
++
++
++def _require(condition, code='P6_INTEGRITY_FAILED', reason='Delivery context is inconsistent.'):
++    if not condition:
++        raise P6Error(code, reason)
++
++
++def _json_bytes(document):
++    # This exact serialization is the P6-C04 contract, not P0 canonical hashing.
++    try:
++        return json.dumps(document, ensure_ascii=False, allow_nan=False,
++                          sort_keys=True, separators=(',', ':')).encode('utf-8')
++    except (ValueError, TypeError, UnicodeError) as exc:
++        raise P6Error('P6_INTEGRITY_FAILED', 'Persisted delivery JSON is invalid.') from exc
++
++
++def _rss(reader):
++    try:
++        return reader()
++    except (OSError, RuntimeError, ValueError) as exc:
++        raise P6Error('STORAGE_ERROR', 'Linux memory measurement is unavailable.') from exc
++
++
++class Budget:
++    """Sample actual Linux RSS across preparation and download-button binding.
++
++    A supplied reader can add a deterministic restriction for tests.  It never
++    replaces the real RSS reader or increases the approved 512 MiB envelope.
++    Sampling is evidence, not OS memory isolation.
++    """
++
++    def __init__(self, limit=RSS_LIMIT, rss_reader=None):
++        self.limit = min(limit, RSS_LIMIT)
++        self.reader = current_rss
++        self.baseline = self.peak = _rss(self.reader)
++        self.extra_reader = rss_reader
++        self.extra_baseline = self.extra_peak = _rss(rss_reader) if rss_reader else None
++        self.started = monotonic()
++        self.samples = 0
++        self.sampling_interval = 0.01
++        self.stopped = Event()
++        self.monitor = None
++        self.lock = Lock()
++        self.failure = None
++        self.characteristics = {}
++        self.resources = {}
++
++    def _sample(self):
++        # Measurement failures must reach the caller; a failed daemon must not
++        # silently turn memory enforcement off.
++        while not self.stopped.wait(self.sampling_interval):
++            try:
++                self._observe()
++            except P6Error as exc:
++                self.failure = exc
++                self.stopped.set()
++
++    def _observe(self):
++        rss = _rss(self.reader)
++        extra = _rss(self.extra_reader) if self.extra_reader else None
++        with self.lock:
++            self.peak = max(self.peak, rss)
++            if extra is not None:
++                self.extra_peak = max(self.extra_peak, extra)
++            self.samples += 1
++        return rss, extra
++
++    def _summary(self):
++        return dict(baseline_rss=self.baseline, peak_rss=self.peak,
++                    incremental_peak_rss=max(0, self.peak - self.baseline),
++                    rss_limit=self.limit, rss_samples=self.samples,
++                    sampling_interval_seconds=self.sampling_interval,
++                    elapsed_seconds=monotonic() - self.started,
++                    **self.characteristics)
++
++    def summary(self):
++        self.resources.update(self._summary())
++        return dict(self.resources)
++
++    def check(self, allocation=0):
++        if self.failure is not None:
++            raise P6Error('STORAGE_ERROR', 'Linux memory measurement is unavailable.') from self.failure
++        rss, extra = self._observe()
++        exceeded = (self.peak - self.baseline > self.limit or
++                    max(0, rss - self.baseline) + allocation > self.limit)
++        if extra is not None:
++            exceeded |= (self.extra_peak - self.extra_baseline > self.limit or
++                         max(0, extra - self.extra_baseline) + allocation > self.limit)
++        self.summary()
++        if exceeded:
++            _LOG.warning('P6_DOWNLOAD_RESOURCE_LIMIT limit=%s result_size=%s report_size=%s '
++                         'estimate=%s incremental_peak=%s', self.limit,
++                         self.characteristics.get('result_size_bytes'),
++                         self.characteristics.get('report_size_bytes'),
++                         self.characteristics.get('estimated_allocation_bytes'),
++                         max(0, self.peak - self.baseline))
++            raise P6Error('P6_DOWNLOAD_RESOURCE_LIMIT', 'Verified download exceeds the memory budget.')
++
++    def preflight(self, result_size, report_size):
++        estimate = 3 * result_size + report_size + RESERVE_BYTES
++        self.characteristics.update(result_size_bytes=result_size, report_size_bytes=report_size,
++                                    estimated_allocation_bytes=estimate)
++        # Frozen P5 read_decision hashes the internal Artifact incrementally;
++        # it does not invoke complete()/read_internal or materialize that file.
++        # The same RSS baseline still covers the entire verification call.
++        self.check(allocation=estimate)
++
++    @contextmanager
++    def binding(self):
++        """Retain the original baseline while Streamlit binds both buffers."""
++        self.check()
++        if self.monitor is not None:
++            raise RuntimeError('Nested P6 memory monitoring is not supported')
++        self.stopped.clear()
++        self.monitor = Thread(target=self._sample, name='p6-rss', daemon=True)
++        self.monitor.start()
++        try:
++            yield self
++            self.check()
++        except MemoryError as exc:
++            _LOG.warning('P6_DOWNLOAD_RESOURCE_LIMIT download buffer allocation failed')
++            raise P6Error('P6_DOWNLOAD_RESOURCE_LIMIT', 'Verified download allocation failed.') from exc
++        finally:
++            self.stopped.set()
++            self.monitor.join()
++            self.monitor = None
++            self._observe()
++            self.summary()
++        self.check()
++
++    def __enter__(self):
++        self._active_binding = self.binding()
++        return self._active_binding.__enter__()
++
++    def __exit__(self, *args):
++        return self._active_binding.__exit__(*args)
++
++
++@dataclass(frozen=True)
++class DeliveryView:
++    order: object
++    run: object
++    decision: object
++    spec: object
++    brief: object
++    approvals: tuple
++    report_record: object
++    result_name: str
++    result_mime: str
++    report_name: str
++    report_mime: str
++    _context_key: str = field(repr=False)
++
++    @property
++    def artifact(self):
++        return self.decision.artifact
++
++    @property
++    def report(self):
++        return self.decision.report
++
++    @property
++    def diagnostic(self):
++        return self.order.status == 'NEEDS_FIX'
++
++    @property
++    def key(self):
++        return (self.order.id, self.run.id, self.artifact.id, self.artifact.checksum,
++                self.report['overall_status'], self.artifact.format)
++
++    @property
++    def context_key(self):
++        return self._context_key
++
++
++@dataclass(frozen=True)
++class Snapshot:
++    key: tuple
++    result_bytes: bytes
++    report_bytes: bytes
++    result_name: str
++    result_mime: str
++    report_name: str
++    report_mime: str
++    resources: dict
++    view: DeliveryView
++    guard: Budget = field(repr=False, compare=False)
++
++    @property
++    def context_key(self):
++        return self.view.context_key
++
++
++@dataclass(frozen=True)
++class _Context:
++    order: object
++    run: object
++    brief: object
++    spec: object
++    approvals: tuple
++    reports: tuple
++    artifacts: tuple
++
++
++def _result_name(file_name, format, diagnostic):
++    _require(format in _MIMES and isinstance(file_name, str) and file_name,
++             reason='The approved output format or name is invalid.')
++    _require(not any(c in '/\\<>:"|?*' or unicodedata.category(c).startswith('C') for c in file_name)
++             and file_name not in ('.', '..') and not file_name.startswith('.')
++             and file_name == file_name.strip() and not file_name.endswith('.'),
++             reason='The approved output filename is unsafe.')
++    extension = '.' + format.lower()
++    _require(file_name.lower().endswith(extension) and len(file_name) > len(extension),
++             reason='The approved output filename has the wrong extension.')
++    stem = file_name[:-len(extension)]
++    return stem + ('_DIAGNOSTIC_NOT_FOR_DELIVERY' if diagnostic else '') + extension
++
++
++class DeliveryService:
++    def __init__(self, env, *, p5_service=None, budget_factory=None):
++        self.env = env
++        self.p5 = p5_service if p5_service is not None else P5Service(env)
++        # An optional factory adds stricter admission; actual RSS is mandatory.
++        self.budget_factory = budget_factory
++
++    def _uow(self):
++        return UnitOfWork(self.env.database, self.env.workspace)
++
++    def _owned(self, order_id, run_id):
++        _require(isinstance(order_id, str) and order_id and isinstance(run_id, str) and run_id,
++                 'P6_NOT_READY', 'Select an existing Order and Run.')
++        with self._uow() as uow:
++            # Establish ownership before recovery, P5 or artifact APIs.  The
++            # nonthrowing queries also keep missing IDs a generic UI diagnostic.
++            exists = uow.connection.execute('SELECT id FROM orders WHERE id=?', (order_id,)).fetchone()
++            row = uow.connection.execute('SELECT order_id FROM execution_runs WHERE id=?', (run_id,)).fetchone()
++            _require(exists is not None and row is not None, 'P6_NOT_READY',
++                     'The selected Order or Run is unavailable.')
++            _require(row['order_id'] == order_id, 'P6_CROSS_ORDER',
++                     'The selected Run does not belong to the selected Order.')
++            return uow.orders.get(order_id), uow.runs.get(run_id)
++
++    def _health(self):
++        report = recover(self.env.database, self.env.workspace)
++        _require(report.health != 'blocked', 'STORAGE_ERROR',
++                 'Local storage is blocked; inspect recovery diagnostics.')
++        _require(report.health == 'ready', 'P6_NOT_READY',
++                 'Local storage recovery must be ready before download.')
++
++    def _context(self, order_id, run_id):
++        # Repeat ownership before loading any linked report or Artifact record.
++        order, run = self._owned(order_id, run_id)
++        with self._uow() as uow:
++            fresh_order, fresh_run = uow.orders.get(order_id), uow.runs.get(run_id)
++            _require((fresh_order, fresh_run) == (order, run) and fresh_run.order_id == order_id)
++            return _Context(fresh_order, fresh_run, uow.briefs.get(run.brief_version_id),
++                            uow.specs.get(run.transformation_spec_version_id),
++                            (uow.approvals.get(run.brief_approval_id),
++                             uow.approvals.get(run.transformation_approval_id)),
++                            tuple(uow.reports.list_for_run(run_id)),
++                            tuple(uow.artifacts.list_for_run(run_id)))
++
++    def _preflight(self, context, budget):
++        _require(len(context.reports) == 1, 'P6_NOT_READY', 'The terminal QAReport is unavailable.')
++        report = context.reports[0].report_json
++        validate(report, 'qa_report')
++        report_bytes = _json_bytes(report)
++        final = [a for a in context.artifacts if a.artifact_type in ('RESULT_CSV', 'RESULT_XLSX')]
++        internal = [a for a in context.artifacts if a.artifact_type == 'P4_INTERNAL']
++        _require(len(final) == len(internal) == 1 and len(context.artifacts) == 2)
++        size, checksum = self.env.workspace.inspect(final[0].workspace_relpath)
++        _require(checksum == final[0].checksum and
++                 (size, checksum) == (report['dataset_summary']['file_size_bytes'],
++                                      report['dataset_summary']['checksum']))
++        budget.preflight(size, len(report_bytes))
++        return report_bytes
++
++    def _read_view(self, order_id, run_id, budget=None):
++        initial = self._owned(order_id, run_id)
++        self._health()
++        _require(initial[0].status in ('READY', 'NEEDS_FIX') and initial[1].status == 'succeeded',
++                 'P6_NOT_READY', 'A terminal verified P5 decision is required.')
++        context = self._context(order_id, run_id)
++        _require((context.order, context.run) == initial)
++        _require(len(context.reports) == 1, 'P6_NOT_READY', 'The terminal QAReport is unavailable.')
++        report_bytes = self._preflight(context, budget) if budget is not None else None
++        try:
++            decision = self.p5.read_decision(run_id)
++        except P5Error as exc:
++            code = ('P6_NOT_READY' if exc.code == 'STATE_INVALID_TRANSITION' else
++                    'P6_DOWNLOAD_RESOURCE_LIMIT' if exc.code == 'EXPORT_FAILED' else
++                    'P6_INTEGRITY_FAILED')
++            raise P6Error(code, 'The persisted P5 decision could not be verified.') from exc
++        except (ValidationError, KeyError, TypeError, ValueError) as exc:
++            # Frozen admission reads persisted JSON; malformed shapes/numbers
++            # are expected corruption cases. Unknown exception types propagate.
++            raise P6Error('P6_INTEGRITY_FAILED', 'Persisted P5 context is malformed.') from exc
++        fresh = self._context(order_id, run_id)
++        _require(fresh == context, reason='Delivery context changed during verification.')
++        _require(len(context.reports) == 1, 'P6_NOT_READY', 'The terminal QAReport is unavailable.')
++        record, artifact, report = context.reports[0], decision.artifact, decision.report
++        validate(report, 'qa_report')
++        output = context.spec.document_json['output']
++        _require((decision.run_id, decision.order_status) == (run_id, context.order.status)
++                 and report == record.report_json
++                 and (report['report_id'], report['run_id'], report['brief_version_id'],
++                      report['transformation_spec_version_id']) ==
++                     (record.report_id, run_id, context.brief.id, context.spec.id)
++                 and artifact is not None and artifact in context.artifacts
++                 and artifact.run_id == run_id
++                 and artifact.format == output['format'] and artifact.format in _MIMES
++                 and artifact.artifact_type == 'RESULT_' + artifact.format
++                 and report['artifacts'] == [dict(artifact_type=artifact.artifact_type,
++                                                 path=artifact.workspace_relpath, checksum=artifact.checksum)]
++                 and report['dataset_summary']['checksum'] == artifact.checksum)
++        overall = report['overall_status']
++        _require((context.order.status == 'READY' and overall in ('PASS', 'PASS_WITH_WARNINGS')
++                  and not report['blocking_issues']) or
++                 (context.order.status == 'NEEDS_FIX' and overall == 'FAIL' and report['blocking_issues']))
++        result_name = _result_name(output['file_name'], artifact.format, context.order.status == 'NEEDS_FIX')
++        controlled_id = self.env.workspace.identifier(record.report_id)
++        context_key = hashlib.sha256(_json_bytes(asdict(context))).hexdigest()
++        view = DeliveryView(context.order, context.run, decision, context.spec, context.brief,
++                            context.approvals, record, result_name, _MIMES[artifact.format],
++                            'qa_report_' + controlled_id + '.json', 'application/json; charset=utf-8', context_key)
++        if budget is not None:
++            budget.check()
++        return view, report_bytes
++
++    def view(self, order_id, run_id):
++        try:
++            return self._read_view(order_id, run_id)[0]
++        except StorageError as exc:
++            raise P6Error('STORAGE_ERROR', 'Local storage could not be verified.') from exc
++        except ValidationError as exc:
++            raise P6Error('P6_INTEGRITY_FAILED', 'Persisted delivery documents are invalid.') from exc
++
++    def prepare(self, order_id, run_id):
++        """Return one result bytes object and one exact report bytes object.
++
++        The UI must clear its previous snapshot before calling and must bind
++        both buttons within ``snapshot.guard.binding()`` before retaining it.
++        """
++        try:
++            budget = Budget()
++            with budget.binding():
++                extra = self.budget_factory() if self.budget_factory is not None else None
++                with _extra_budget(extra):
++                    view, report_bytes = self._read_view(order_id, run_id, budget)
++                    artifact, summary = view.artifact, view.report['dataset_summary']
++                    size, checksum = self.env.workspace.inspect(artifact.workspace_relpath)
++                    _require((size, checksum) == (summary['file_size_bytes'], artifact.checksum)
++                             and checksum == summary['checksum'])
++                    budget.preflight(size, len(report_bytes))
++                    if extra is not None:
++                        extra.check(allocation=3 * size + len(report_bytes) + RESERVE_BYTES)
++                    data = self.env.workspace.read_verified(artifact.workspace_relpath, artifact.checksum, size)
++                    _require(isinstance(data, bytes) and len(data) == size and
++                             hashlib.sha256(data).hexdigest() == summary['checksum'])
++                    budget.check()
++                    # No second full bytes snapshot or repeated QA serialization.
++                    # Verify the context and health afresh before authorizing it.
++                    self._owned(order_id, run_id)
++                    self._health()
++                    fresh = self._context(order_id, run_id)
++                    _require(hashlib.sha256(_json_bytes(asdict(fresh))).hexdigest() == view.context_key,
++                             reason='Delivery context changed during preparation.')
++                    if extra is not None:
++                        extra.check()
++                    budget.check()
++                    snapshot = Snapshot(view.key, data, report_bytes, view.result_name, view.result_mime,
++                                        view.report_name, view.report_mime, budget.resources, view, budget)
++            budget.check()
++            return snapshot
++        except MemoryError as exc:
++            _LOG.warning('P6_DOWNLOAD_RESOURCE_LIMIT allocation failed')
++            raise P6Error('P6_DOWNLOAD_RESOURCE_LIMIT', 'Verified download allocation failed.') from exc
++        except StorageError as exc:
++            raise P6Error('STORAGE_ERROR', 'Local storage could not be verified.') from exc
++        except ValidationError as exc:
++            raise P6Error('P6_INTEGRITY_FAILED', 'Persisted delivery documents are invalid.') from exc
++
++    def verify_snapshot(self, snapshot, order_id, run_id):
++        """Fresh rerender guard; failures require the UI to clear both buffers."""
++        _require(isinstance(snapshot, Snapshot) and snapshot.key[:2] == (order_id, run_id),
++                 'P6_NOT_READY', 'Prepare a snapshot for the selected Order and Run.')
++        view = self.view(order_id, run_id)
++        _require(view.key == snapshot.key and view.context_key == snapshot.context_key,
++                 reason='The prepared delivery context changed.')
++        snapshot.guard.check()
++        return view
++
++
++@contextmanager
++def _extra_budget(budget):
++    """Test admission can only tighten the mandatory actual-RSS budget."""
++    if budget is None:
++        yield
++    else:
++        with budget:
++            yield
+diff --git a/src/vde/p6/orders.py b/src/vde/p6/orders.py
+new file mode 100644
+index 0000000..d521e93
+--- /dev/null
++++ b/src/vde/p6/orders.py
+@@ -0,0 +1,88 @@
++"""An explicit, idempotent DRAFT creation command using the frozen P1 store."""
++from decimal import InvalidOperation
++import re
++from uuid import UUID
++
++from vde.errors import StorageError, utc_now
++from vde.models import OrderRecord
++from vde.persistence.repositories import verify_values
++from vde.persistence.uow import UnitOfWork
++from vde.recovery import recover
++
++from .delivery import P6Error
++
++
++_USER_FIELDS = ("title", "listing_text", "listing_url", "budget", "deadline", "notes")
++_DEADLINE = re.compile(r"[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z")
++_BUDGET = re.compile(r"-?(?:0|[1-9][0-9]*)(?:\.[0-9]*[1-9])?")
++
++
++def _invalid(reason):
++    raise P6Error("P6_INVALID_FORM", reason)
++
++
++def _validated(request_token, *, title, listing_text, listing_url, budget, deadline, notes):
++    if not isinstance(request_token, str):
++        _invalid("The request token must be a canonical UUID4.")
++    try:
++        parsed = UUID(request_token)
++    except (ValueError, AttributeError) as exc:
++        raise P6Error("P6_INVALID_FORM", "The request token must be a canonical UUID4.") from exc
++    if parsed.version != 4 or str(parsed) != request_token:
++        _invalid("The request token must be a canonical UUID4.")
++    if not isinstance(title, str) or not title.strip():
++        _invalid("Enter a nonempty Order title.")
++    if not isinstance(listing_text, str) or not listing_text.strip():
++        _invalid("Enter nonempty listing text.")
++    for name, value in (("listing_url", listing_url), ("budget", budget),
++                        ("deadline", deadline), ("notes", notes)):
++        if value is not None and not isinstance(value, str):
++            _invalid(f"{name} must be text or absent.")
++    if deadline is not None and _DEADLINE.fullmatch(deadline) is None:
++        _invalid("Deadline must be exact UTC YYYY-MM-DDTHH:MM:SSZ.")
++    if budget is not None and _BUDGET.fullmatch(budget) is None:
++        _invalid("Budget must already be finite canonical decimal text.")
++    now = utc_now()
++    record = OrderRecord(request_token, title.strip(), listing_text, now, now,
++                         listing_url=listing_url, budget=budget, deadline=deadline,
++                         notes=notes)
++    try:
++        # Use the authoritative frozen decimal/timestamp rules without changing
++        # the supplied lexical value, rounding, or converting a local time.
++        verify_values(record)
++    except (StorageError, InvalidOperation, ValueError, TypeError, OverflowError) as exc:
++        raise P6Error("P6_INVALID_FORM", "Budget or deadline is not in its required canonical form.") from exc
++    return record
++
++
++class CreateOrderService:
++    def __init__(self, env):
++        self.env = env
++
++    def _healthy(self):
++        if self.env.workspace is None:
++            raise StorageError("Workspace unavailable")
++        if recover(self.env.database, self.env.workspace).health != "ready":
++            raise StorageError("Order creation requires healthy local storage")
++
++    def list(self) -> list[OrderRecord]:
++        """Read current Orders without treating an old bootstrap banner as health."""
++        self._healthy()
++        with UnitOfWork(self.env.database, self.env.workspace) as uow:
++            return uow.orders.list()
++
++    def create(self, request_token, *, title, listing_text, listing_url=None,
++               budget=None, deadline=None, notes=None) -> OrderRecord:
++        record = _validated(request_token, title=title, listing_text=listing_text,
++                            listing_url=listing_url, budget=budget, deadline=deadline,
++                            notes=notes)
++        self._healthy()
++        with UnitOfWork(self.env.database, self.env.workspace) as uow:
++            # A missing get() poisons the frozen UoW. List and insert occur in
++            # this same BEGIN IMMEDIATE transaction, including concurrent replay.
++            prior = next((item for item in uow.orders.list() if item.id == request_token), None)
++            if prior is not None:
++                if any(getattr(prior, name) != getattr(record, name) for name in _USER_FIELDS):
++                    raise P6Error("P6_ORDER_TOKEN_CONFLICT", "This request token already identifies different Order fields.")
++                return prior
++            return uow.orders.add(record)
+diff --git a/src/vde/p6/ui.py b/src/vde/p6/ui.py
+new file mode 100644
+index 0000000..52af6f8
+--- /dev/null
++++ b/src/vde/p6/ui.py
+@@ -0,0 +1,248 @@
++"""Explicit Order submission and passive, immutable-byte delivery controls."""
++from dataclasses import asdict
++import mimetypes
++import sys
++from uuid import uuid4
++
++import streamlit as st
++from streamlit import runtime
++from streamlit.runtime.scriptrunner import get_script_run_ctx
++
++from vde.errors import StorageError
++from vde.persistence.uow import UnitOfWork
++from vde.recovery import recover
++
++from .delivery import DeliveryService, P6Error
++from .orders import CreateOrderService
++
++
++_FORM_FIELDS = ("p6_order_title", "p6_order_listing_text", "p6_order_listing_url",
++                "p6_order_budget", "p6_order_deadline", "p6_order_notes")
++_SNAPSHOT = "p6_delivery_snapshot"
++_SELECTION = "p6_delivery_selection"
++_CONTEXT = "p6_delivery_context_key"
++
++
++def _clear_snapshot():
++    st.session_state.pop(_SNAPSHOT, None)
++    st.session_state.pop(_CONTEXT, None)
++
++
++def _fresh_health(env):
++    if env.workspace is None:
++        raise StorageError("Workspace unavailable")
++    return recover(env.database, env.workspace)
++
++
++def _health_message(report):
++    st.warning(f"Current local storage health: {report.health}. Create and download require ready storage.")
++    if report.errors:
++        for error in report.errors:
++            st.json(error)
++    if report.staging or report.orphans or report.stale_runs:
++        st.json({"staging": report.staging, "orphans": report.orphans,
++                 "stale_runs": report.stale_runs})
++
++
++def _show_error(exc):
++    st.error(exc.code if isinstance(exc, P6Error) else "STORAGE_ERROR")
++    st.json(exc.public())
++
++
++def _reset_form():
++    for key in _FORM_FIELDS:
++        st.session_state.pop(key, None)
++    st.session_state["p6_order_request_token"] = str(uuid4())
++
++
++def order_panel(env):
++    st.subheader("Create Order")
++    st.caption("Submit creates a DRAFT Order. Review, publish and approve Brief and Spec separately in the manual workflow below. Only outer title spaces are trimmed; listing text is stored verbatim.")
++    if st.session_state.pop("p6_order_reset_pending", False):
++        _reset_form()
++    if "p6_order_request_token" not in st.session_state:
++        st.session_state["p6_order_request_token"] = str(uuid4())
++    if st.button("New Order form", key="p6_new_order"):
++        _reset_form()
++    notice = st.session_state.pop("p6_order_created_notice", None)
++    if notice:
++        st.success(f"DRAFT Order created: {notice}")
++    try:
++        health = _fresh_health(env)
++        ready = health.health == "ready"
++        if not ready:
++            _health_message(health)
++        with st.form("p6_order_form"):
++            title = st.text_input("Order title", key="p6_order_title", disabled=not ready)
++            listing_text = st.text_area("Listing text", key="p6_order_listing_text", disabled=not ready)
++            listing_url = st.text_input("Listing URL (optional)", key="p6_order_listing_url", disabled=not ready)
++            budget = st.text_input("Budget (canonical decimal, optional)", key="p6_order_budget", disabled=not ready)
++            deadline = st.text_input("Deadline (UTC YYYY-MM-DDTHH:MM:SSZ, optional)", key="p6_order_deadline", disabled=not ready)
++            notes = st.text_area("Notes (optional)", key="p6_order_notes", disabled=not ready)
++            submitted = st.form_submit_button("Create DRAFT Order", disabled=not ready)
++        if submitted:
++            record = CreateOrderService(env).create(
++                st.session_state["p6_order_request_token"], title=title,
++                listing_text=listing_text, listing_url=listing_url or None,
++                budget=budget or None, deadline=deadline or None, notes=notes or None)
++            st.session_state["p6_last_order_id"] = record.id
++            st.session_state["p6_order_created_notice"] = record.id
++            st.session_state["p6_order_reset_pending"] = True
++            # Rotate only after success. Failed submissions retain their exact
++            # token and form fields; passive rerenders never invoke create().
++            st.rerun()
++    except (P6Error, StorageError) as exc:
++        _show_error(exc)
++
++
++def _display_view(view):
++    report = view.report
++    if view.diagnostic:
++        st.error("NEEDS_FIX — diagnostic result — NOT FOR DELIVERY")
++    else:
++        st.success(f"READY — {report['overall_status']}")
++    st.json({"order_id": view.order.id, "run_id": view.run.id,
++             "order_status": view.order.status, "run_status": view.run.status,
++             "brief_version_id": view.brief.id, "brief_content_hash": view.brief.content_hash,
++             "transformation_spec_version_id": view.spec.id,
++             "transformation_spec_content_hash": view.spec.content_hash,
++             "approvals": [asdict(item) for item in view.approvals],
++             "qa_overall_status": report["overall_status"],
++             "warnings": report["warnings"], "blocker_count": len(report["blocking_issues"]),
++             "row_count": report["dataset_summary"]["row_count"],
++             "column_count": report["dataset_summary"]["column_count"],
++             "artifact_type": view.artifact.artifact_type, "format": view.artifact.format,
++             "checksum": view.artifact.checksum,
++             "file_size_bytes": report["dataset_summary"]["file_size_bytes"]})
++
++
++def _download_buttons(snapshot):
++    """Publish both widget URLs only after their shared RSS guard succeeds.
++
++    Streamlit 1.50 registers downloadable media before enqueueing a widget.
++    Buffer this context's two widget messages and revoke only newly allocated
++    media if binding fails; ordinary orphan cleanup deliberately retains it.
++    These private compatibility points are covered by the P6 HTTP fault probe.
++    """
++    context = get_script_run_ctx()
++    if context is None or not runtime.exists():
++        raise P6Error("STORAGE_ERROR", "Verified download requires an active Streamlit session.")
++    manager = runtime.get_instance().media_file_mgr
++    enqueue = context._enqueue
++    with manager._lock:
++        previous_ids = set(manager._file_metadata)
++        previous_coordinates = dict(manager._files_by_session_and_coord.get(context.session_id, {}))
++    # Streamlit 1.50 derives the URL extension from this standard registry;
++    # Tornado derives the response Content-Type from the same extension. Keep
++    # the exact C04 UTF-8 MIME at both boundaries rather than only in a widget.
++    mimetypes.add_type("application/json; charset=utf-8", ".vde-qa-json")
++    pending = []
++    published = False
++    context._enqueue = pending.append
++    try:
++        with snapshot.guard.binding():
++            st.download_button(
++                "Download diagnostic — NOT FOR DELIVERY" if snapshot.view.diagnostic else "Download verified result",
++                data=snapshot.result_bytes, file_name=snapshot.result_name,
++                mime=snapshot.result_mime, key="p6_download_result")
++            st.download_button("Download QAReport", data=snapshot.report_bytes,
++                               file_name=snapshot.report_name, mime=snapshot.report_mime,
++                               key="p6_download_report")
++        # No payload URL reaches the browser before both buffers have passed
++        # the sampled post-binding check against the preparation baseline.
++        for message in pending:
++            enqueue(message)
++        published = True
++    finally:
++        context._enqueue = enqueue
++        if not published:
++            with manager._lock:
++                current = manager._files_by_session_and_coord.get(context.session_id, {})
++                allocated = set(current.values()) - previous_ids
++                manager._files_by_session_and_coord[context.session_id] = previous_coordinates
++                for file_id in allocated:
++                    if file_id in manager._file_metadata:
++                        manager._delete_file(file_id)
++        pending.clear()
++
++
++def delivery_panel(env):
++    st.subheader("Verified result and QAReport downloads")
++    st.caption("Choose an Order and Run, then prepare a verified copy. Preparation reads and verifies persisted data; the download transfers those immutable bytes. Disk is not rechecked at the final browser click. External delivery is manual.")
++    binding_started = False
++    notice = st.session_state.pop("p6_delivery_error_notice", None)
++    if notice:
++        st.error(notice["code"])
++        st.json(notice)
++    try:
++        health = _fresh_health(env)
++        if health.health != "ready":
++            _clear_snapshot()
++            _health_message(health)
++            return
++        with UnitOfWork(env.database, env.workspace) as uow:
++            orders = uow.orders.list()
++        if not orders:
++            _clear_snapshot()
++            st.info("Create an Order and complete the manual workflow to prepare downloads.")
++            return
++        order_id = st.selectbox("Download Order", [order.id for order in orders],
++                                index=None, key="p6_delivery_order")
++        selection = (str(env.database), order_id, None)
++        if order_id is None:
++            _clear_snapshot()
++            st.session_state[_SELECTION] = selection
++            return
++        with UnitOfWork(env.database, env.workspace) as uow:
++            runs = uow.runs.list_for_order(order_id)
++        if not runs:
++            _clear_snapshot()
++            st.session_state[_SELECTION] = selection
++            st.info("No Run exists for this Order. Continue using the explicit manual panels.")
++            return
++        run_id = st.selectbox("Download Run", [run.id for run in runs],
++                              index=None, key="p6_delivery_run")
++        selection = (str(env.database), order_id, run_id)
++        if st.session_state.get(_SELECTION) != selection:
++            _clear_snapshot()
++        st.session_state[_SELECTION] = selection
++        if run_id is None:
++            return
++        service = DeliveryService(env)
++        # Always repeat the complete read-only decision, even with a prepared
++        # copy. A session key is never authority to expose bytes.
++        view = service.view(order_id, run_id)
++        snapshot = st.session_state.get(_SNAPSHOT)
++        if snapshot is not None and (snapshot.context_key != view.context_key or
++                                     st.session_state.get(_CONTEXT) != view.context_key):
++            _clear_snapshot()
++            snapshot = None
++        _display_view(view)
++        if st.button("Prepare verified download", key="p6_prepare_download"):
++            _clear_snapshot()
++            snapshot = None
++            candidate = service.prepare(order_id, run_id)
++            # Guard against a selection change while the verified bytes were
++            # prepared; the service also rechecks its persisted context.
++            if st.session_state.get(_SELECTION) != selection:
++                raise P6Error("P6_NOT_READY", "Selection changed while preparing the download.")
++            st.session_state[_SNAPSHOT] = candidate
++            st.session_state[_CONTEXT] = candidate.context_key
++            snapshot = candidate
++        if snapshot is not None:
++            binding_started = True
++            _download_buttons(snapshot)
++            st.json({"download_resources": snapshot.resources})
++    except (P6Error, StorageError) as exc:
++        _clear_snapshot()
++        if binding_started:
++            # Start a passive render after revoking the failed binding so no
++            # stale widget registration survives in the current session.
++            st.session_state["p6_delivery_error_notice"] = exc.public()
++            st.rerun()
++        _show_error(exc)
++    finally:
++        # Unexpected errors still propagate for debugging and cannot leave an
++        # authorized session buffer behind.
++        if sys.exc_info()[0] is not None:
++            _clear_snapshot()
+diff --git a/tests/p6/__init__.py b/tests/p6/__init__.py
+new file mode 100644
+index 0000000..a4c479e
+--- /dev/null
++++ b/tests/p6/__init__.py
+@@ -0,0 +1 @@
++"""P6 acceptance: isolated, explicit simulated test-user actions only."""
+diff --git a/tests/p6/conftest.py b/tests/p6/conftest.py
+new file mode 100644
+index 0000000..5789e0a
+--- /dev/null
++++ b/tests/p6/conftest.py
+@@ -0,0 +1,364 @@
++"""Disposable P6 runtime scenarios; never connect to an owner's workspace.
++
++The upload substitution supplies AppTest's unsupported file-uploader input. It
++does not invoke an ingestion/workflow command: the test still clicks the frozen
++Upload, publish, confirmation and approval controls separately.
++"""
++from copy import deepcopy
++from dataclasses import asdict
++import hashlib
++import io
++import json
++import os
++from pathlib import Path
++import re
++import shutil
++import sqlite3
++import subprocess
++import time
++import zipfile
++
++import pytest
++from streamlit.testing.v1 import AppTest
++
++from vde.bootstrap import bootstrap
++from vde.config import Config
++from vde.contracts import content_hash
++from vde.persistence.uow import UnitOfWork
++
++ROOT = Path(__file__).resolve().parents[2]
++FIXTURES = ROOT / 'pecs/pilot_slice_v1/fixtures'
++TABLES = ('orders', 'input_assets', 'brief_versions', 'transformation_spec_versions',
++          'approvals', 'execution_runs', 'artifacts', 'qa_reports', 'event_log')
++
++
++def sha(data):
++    return hashlib.sha256(data).hexdigest()
++
++
++def canonical(document):
++    return json.dumps(document, ensure_ascii=False, allow_nan=False, sort_keys=True,
++                      separators=(',', ':')).encode('utf-8')
++
++
++def record(name, value):
++    directory = Path(os.environ.get('P6_RESULTS_DIR', '/tmp/vde-p6-results')).resolve()
++    assert not directory.is_relative_to(ROOT), 'Runtime observations must be outside the repository'
++    directory.mkdir(parents=True, exist_ok=True)
++    (directory / (name + '.json')).write_text(
++        json.dumps(value, ensure_ascii=False, indent=2, default=str) + '\n', encoding='utf-8')
++
++
++def snapshot(directory):
++    """Independent read-only SQLite observation, including deliberately corrupt DBs."""
++    database = Path(directory) / 'app.sqlite3'
++    with sqlite3.connect('file:' + str(database) + '?mode=ro', uri=True) as connection:
++        connection.row_factory = sqlite3.Row
++        return {table: [dict(row) for row in connection.execute('SELECT * FROM ' + table + ' ORDER BY 1')]
++                for table in TABLES}
++
++
++def payload_hashes(directory):
++    directory = Path(directory)
++    return {p.relative_to(directory).as_posix(): sha(p.read_bytes())
++            for p in sorted(directory.rglob('*')) if p.is_file() and p.name not in
++            {'app.sqlite3', 'app.sqlite3-wal', 'app.sqlite3-shm'}}
++
++
++def mutate_sql(directory, statement, parameters=()):
++    """Offline adversarial mutation ONLY of a disposable test copy."""
++    assert Path(directory).resolve().is_relative_to(Path('/tmp'))
++    with sqlite3.connect(Path(directory) / 'app.sqlite3') as connection:
++        for (name,) in connection.execute("SELECT name FROM sqlite_master WHERE type='trigger'").fetchall():
++            connection.execute('DROP TRIGGER "' + name.replace('"', '""') + '"')
++        connection.execute(statement, parameters)
++
++
++def widget(app, kind, label):
++    matches = [element for element in getattr(app, kind) if element.label == label]
++    assert len(matches) == 1, (kind, label, [e.label for e in getattr(app, kind)],
++                               [e.value for e in app.error], [e.value for e in app.json])
++    return matches[0]
++
++
++def healthy_ui(app):
++    assert not app.exception, [e.message for e in app.exception]
++    return app
++
++
++def new_app(directory):
++    # Environment is bound inside this disposable script rather than inherited
++    # from another test session. The production app itself remains unchanged.
++    script = f'''\nimport os, runpy\nfrom types import SimpleNamespace\nimport streamlit as st\nos.environ['VDE_WORKSPACE'] = {str(directory)!r}\noriginal_uploader = st.file_uploader\ndef simulated_test_upload(*args, **kwargs):\n    uploaded = st.session_state.get('_p6_test_upload')\n    if uploaded is None:\n        return original_uploader(*args, **kwargs)\n    name, raw = uploaded\n    return SimpleNamespace(name=name, size=len(raw), getvalue=lambda: raw)\nst.file_uploader = simulated_test_upload\ntry:\n    runpy.run_path({str(ROOT / 'src/vde/app.py')!r}, run_name='__main__')\nfinally:\n    st.file_uploader = original_uploader\n'''
++    return healthy_ui(AppTest.from_string(script, default_timeout=120).run())
++
++
++@pytest.fixture(scope='session', autouse=True)
++def download_http():
++    """Real loopback GET of Streamlit's prepared media, independent of snapshots."""
++    from streamlit.runtime.memory_media_file_storage import MemoryMediaFileStorage
++    from streamlit.web.server.media_file_handler import MediaFileHandler
++    from tornado.testing import AsyncHTTPTestCase
++    from tornado.web import Application
++    storage = [MemoryMediaFileStorage('/mock/media')]
++    patch = pytest.MonkeyPatch()
++    patch.setattr('streamlit.testing.v1.app_test.MemoryMediaFileStorage', lambda endpoint: storage[0])
++    class DownloadHandler(MediaFileHandler):
++        pass
++    DownloadHandler.initialize_storage(storage[0])
++    class Server(AsyncHTTPTestCase):
++        def get_app(self):
++            return Application([(r'/mock/media/(.*)', DownloadHandler, {'path': ''})])
++    server = Server()
++    server.setUp()
++    def fetch(path):
++        return server.fetch(path)
++    def reset_storage():
++        # A new browser-test transport isolates the allocation-fault probe from
++        # URLs deliberately published by previous successful test sessions.
++        storage[0] = MemoryMediaFileStorage('/mock/media')
++        DownloadHandler.initialize_storage(storage[0])
++        return storage[0]
++    fetch.reset_storage = reset_storage
++    try:
++        yield fetch
++    finally:
++        server.tearDown()
++        patch.undo()
++
++
++class UIScenario:
++    """One isolated UI-created Order and a recorded sequence of user events."""
++
++    def __init__(self, directory, family='P-A_dirty_csv', *, pb_spec=None, execute=True, pause_after_brief=False):
++        self.directory = Path(directory)
++        self.env = bootstrap(Config(self.directory))
++        assert self.env.health == 'ready'
++        self.family = family
++        self.source = FIXTURES / family
++        self.actions = []
++        self.adaptations = []
++        self.app = new_app(self.directory)
++        self.create(title='P6 isolated simulated test user — ' + family,
++                    listing='Fixture exercise only. No live customer approval or delivery.')
++        filename = ('input_orders.xlsx' if family.startswith('P-B') else
++                    'input_problematic.csv' if family.startswith('P-D') else 'input_dirty.csv')
++        self.app.session_state['_p6_test_upload'] = (filename, (self.source / filename).read_bytes())
++        self.app.run()
++        self.click('Upload')
++        del self.app.session_state['_p6_test_upload']
++        with self.uow() as u:
++            assets = u.inputs.list_for_order(self.order_id)
++        assert len(assets) == 1
++        self.asset = assets[0]
++        self.check('Open manual workflow')
++        self.select('P3 registered input', self.asset.id)
++        original_brief = json.loads((self.source / 'brief_version.json').read_text())
++        original_spec = json.loads((self.source / 'transformation_spec_version.json').read_text())
++        selection = original_spec['inputs'][0]
++        if selection['source_type'] == 'LOCAL_CSV':
++            self.select('P3 encoding', selection['csv_options']['encoding'])
++            self.select('P3 delimiter', selection['csv_options']['delimiter'])
++            widget(self.app, 'number_input', 'P3 header row').set_value(selection['csv_options']['header_row']).run()
++        else:
++            self.select('P3 worksheet', selection['sheet_name'])
++        self.click('Verify P3 input and preview')
++        self.click('Begin manual review')
++        self.check('Open deterministic transformation')
++        assert widget(self.app, 'button', 'Execute').disabled
++        brief = self.adapt(original_brief, 'brief_version', self.source / 'brief_version.json')
++        self.set_text('Brief JSON draft', json.dumps(brief))
++        self.click('Validate Brief draft')
++        self.click('Save new Brief version')
++        self.before_brief_approval = self.snapshot()
++        assert len(self.before_brief_approval['approvals']) == 0
++        assert widget(self.app, 'button', 'I approve this Brief version').disabled
++        self.check('Confirm this exact Brief ID and hash')
++        self.click('I approve this Brief version')
++        self.after_brief_approval = self.snapshot()
++        assert len(self.after_brief_approval['approvals']) == 1
++        self.check('Open deterministic transformation')
++        assert widget(self.app, 'button', 'Execute').disabled
++        with self.uow() as u:
++            self.brief = u.briefs.get(u.orders.get(self.order_id).selected_brief_version_id)
++        if pause_after_brief:
++            record('checkpoint-P3', {'actions': self.actions, 'adaptations': self.adaptations,
++                   'persisted_brief': asdict(self.brief), 'snapshot': self.snapshot()})
++            return
++        documents = [(original_spec, self.source / 'transformation_spec_version.json')]
++        if pb_spec is not None:
++            documents.append((pb_spec[0], pb_spec[1]))
++        for document, origin in documents:
++            spec = self.adapt(document, 'transformation_spec_version', origin)
++            self.set_text('TransformationSpec JSON draft', json.dumps(spec))
++            self.click('Validate TransformationSpec draft')
++            self.click('Save new TransformationSpec version')
++        self.before_spec_approval = self.snapshot()
++        assert len(self.before_spec_approval['approvals']) == 1
++        assert widget(self.app, 'button', 'I approve TransformationSpec').disabled
++        self.check('Confirm this exact Spec ID, hash and approved Brief context')
++        self.click('I approve TransformationSpec')
++        self.approved_snapshot = self.snapshot()
++        assert len(self.approved_snapshot['approvals']) == 2
++        with self.uow() as u:
++            self.spec = u.specs.get(u.orders.get(self.order_id).selected_transformation_spec_version_id)
++        self.check('Open deterministic transformation')
++        self.check('I confirm the selected source and pipeline')
++        assert not widget(self.app, 'button', 'Execute').disabled
++        if execute:
++            self.click('Execute')
++            with self.uow() as u:
++                runs = u.runs.list_for_order(self.order_id)
++            assert len(runs) == 1 and runs[0].status == 'succeeded'
++            self.run_id = runs[0].id
++            self.p4_snapshot = self.snapshot()
++            self.check('Open export and QA')
++            self.click('Export + deterministic QA')
++            self.app.run()
++            from vde.p5.service import P5Service
++            self.decision = P5Service(self.env).read_decision(self.run_id)
++        record('fixture-' + family, {'isolated_workspace': str(self.directory),
++               'simulated_test_user_only': True, 'actions': self.actions,
++               'identity_adaptations': self.adaptations, 'order': asdict(self.order()),
++               'actual_persisted_brief': asdict(self.brief), 'actual_persisted_spec': asdict(self.spec),
++               'approvals': self.snapshot()['approvals']})
++
++    def create(self, title, listing, **optional):
++        self.token = self.app.session_state['p6_order_request_token']
++        self.set_text('Order title', title, run=False)
++        self.set_text('Listing text', listing, run=False)
++        labels = {'listing_url': 'Listing URL (optional)', 'budget': 'Budget (canonical decimal, optional)',
++                  'deadline': 'Deadline (UTC YYYY-MM-DDTHH:MM:SSZ, optional)', 'notes': 'Notes (optional)'}
++        for key, value in optional.items():
++            self.set_text(labels[key], value, run=False)
++        self.click('Create DRAFT Order')
++        self.order_id = self.app.session_state['p6_last_order_id']
++        assert self.order_id == self.token
++
++    def adapt(self, original, kind, origin):
++        doc = deepcopy(original)
++        substitutions = []
++        def replace_at(mapping, key, value, path):
++            old = mapping[key]
++            mapping[key] = value
++            substitutions.append({'path': path, 'original': old, 'adapted': value})
++        replace_at(doc, 'order_id', self.order_id, 'order_id')
++        if kind == 'brief_version':
++            replace_at(doc['inputs_expected'][0], 'asset_id', self.asset.id, 'inputs_expected[0].asset_id')
++            replace_at(doc, 'source_refs', [self.asset.id], 'source_refs')
++        else:
++            replace_at(doc['inputs'][0], 'asset_id', self.asset.id, 'inputs[0].asset_id')
++            replace_at(doc, 'brief_version_id', self.brief.id, 'brief_version_id')
++            replace_at(doc, 'brief_content_hash', self.brief.content_hash, 'brief_content_hash')
++        doc['content_hash'] = content_hash(doc, kind)
++        self.adaptations.append({'source': str(origin.relative_to(ROOT)) if origin.is_relative_to(ROOT) else str(origin),
++            'original_file_sha256': sha(origin.read_bytes()), 'original_content_hash': original['content_hash'],
++            'substitutions': substitutions, 'derived_content_hash': doc['content_hash'],
++            'derived_json_sha256': sha(canonical(doc)),
++            'ui_allocates_version_id_created_at_and_monotonic_version_number': True})
++        return doc
++
++    def set_text(self, label, value, run=True):
++        kind = 'text_area' if label in {'Listing text', 'Notes (optional)', 'Brief JSON draft',
++                                      'TransformationSpec JSON draft'} else 'text_input'
++        control = widget(self.app, kind, label).set_value(value)
++        if run:
++            healthy_ui(control.run())
++
++    def click(self, label):
++        control = widget(self.app, 'button', label)
++        assert not control.disabled, label
++        self.actions.append({'action': 'button', 'label': label, 'before_counts': self.counts()})
++        healthy_ui(control.click().run())
++
++    def check(self, label):
++        control = widget(self.app, 'checkbox', label)
++        assert not control.disabled, label
++        self.actions.append({'action': 'checkbox', 'label': label})
++        healthy_ui(control.check().run())
++
++    def select(self, label, value):
++        healthy_ui(widget(self.app, 'selectbox', label).set_value(value).run())
++
++    def uow(self):
++        return UnitOfWork(self.env.database, self.env.workspace)
++
++    def order(self):
++        with self.uow() as u:
++            return u.orders.get(self.order_id)
++
++    def snapshot(self):
++        return snapshot(self.directory)
++
++    def counts(self):
++        return {table: len(rows) for table, rows in self.snapshot().items()}
++
++    def prepare_ui(self):
++        # Delivery selectors are explicit and cannot inherit another session's IDs.
++        self.select('Download Order', self.order_id)
++        self.select('Download Run', self.run_id)
++        self.click('Prepare verified download')
++        return self.app.session_state['p6_delivery_snapshot']
++
++
++@pytest.fixture(scope='session')
++def pb_spec(tmp_path_factory):
++    archive = ROOT / 'docs/p5/handoff/P5_Codex_Implementation_Handoff_2026-11-05.zip'
++    assert sha(archive.read_bytes()) == '3e3a2f6a8e65f500fe5bd281ef805d9229d50b96c50433cdda52cbb4fd6d63e4'
++    with zipfile.ZipFile(archive) as outer:
++        names = [n for n in outer.namelist() if n.endswith('/P5_Gate_A_PB_Supplement_v0.2b_candidate.zip')]
++        assert len(names) == 1
++        nested = outer.read(names[0])
++    assert sha(nested) == '4e08285b00344f2d00a7af89a723a835f931f4bceb768b11ec1aaf637fd0ae18'
++    with zipfile.ZipFile(io.BytesIO(nested)) as inner:
++        names = [n for n in inner.namelist() if n.endswith('/fixtures/P-B_versioned/transformation_spec_version_v2_CANDIDATE.json')]
++        assert len(names) == 1
++        raw = inner.read(names[0])
++    path = tmp_path_factory.mktemp('p6-pb-provenance') / 'transformation_spec_version_v2_CANDIDATE.json'
++    path.write_bytes(raw)
++    return json.loads(raw), path
++
++
++@pytest.fixture(scope='session')
++def pa(tmp_path_factory):
++    return UIScenario(tmp_path_factory.mktemp('p6-pa') / 'workspace')
++
++
++@pytest.fixture(scope='session')
++def pb(tmp_path_factory, pb_spec):
++    return UIScenario(tmp_path_factory.mktemp('p6-pb') / 'workspace', 'P-B_xlsx_sheet', pb_spec=pb_spec)
++
++
++@pytest.fixture(scope='session')
++def pd(tmp_path_factory):
++    return UIScenario(tmp_path_factory.mktemp('p6-pd') / 'workspace', 'P-D_errors_and_qa_blockers')
++
++
++@pytest.fixture
++def copy_workspace(tmp_path):
++    counter = [0]
++    def make(case):
++        counter[0] += 1
++        target = tmp_path / ('disposable-' + str(counter[0]))
++        shutil.copytree(case.directory if hasattr(case, 'directory') else Path(case), target)
++        return target, bootstrap(Config(target))
++    return make
++
++
++def pytest_collection_modifyitems(items):
++    for item in items:
++        if '/p6/' in str(item.path):
++            match = re.match(r'test_T(\d{2})_', item.name)
++            if match:
++                item.user_properties.append(('p6_id', 'P6-T' + match[1]))
++
++
++@pytest.hookimpl(hookwrapper=True)
++def pytest_runtest_makereport(item, call):
++    outcome = yield
++    report = outcome.get_result()
++    if '/p6/' in str(item.path) and report.when == 'call':
++        record('outcome-' + item.name.split('_')[1], {'nodeid': item.nodeid,
++               'outcome': report.outcome, 'duration_seconds': report.duration,
++               'properties': item.user_properties,
++               'failure': str(report.longrepr) if report.failed else None})
+diff --git a/tests/p6/run_validation.py b/tests/p6/run_validation.py
+new file mode 100644
+index 0000000..bac032e
+--- /dev/null
++++ b/tests/p6/run_validation.py
+@@ -0,0 +1,166 @@
++"""Exact-tree P6 validation; legacy pytest failures remain failures in raw evidence."""
++import argparse
++from datetime import datetime, timezone
++import hashlib
++import json
++import os
++from pathlib import Path
++import platform
++import subprocess
++import sys
++import xml.etree.ElementTree as ET
++
++from p5.run_validation import record_command
++from .scope_audit import audit, BASELINE, START
++
++ROOT = Path(__file__).resolve().parents[2]
++
++
++def git(*args):
++    return subprocess.check_output(['git', *args], cwd=ROOT, text=True).strip()
++
++
++
++def classify_legacy(meta, out):
++    """Keep actual failures and prove only the owner-approved P6 scope effects."""
++    from p5.run_validation import junit, legacy_id, validate_inventory
++    cases = meta['testcases']; validate_inventory(cases)
++    known = {'P2-T01', 'P2-T40', 'P3-T50', 'P3-T51', 'P4-T61', 'P4-T62', 'P4-T63'}
++
++    def direct(case):
++        identity = legacy_id(case); reason = case['assertion'] or ''
++        if case['outcome'] != 'failure':
++            return False
++        if identity == 'P2-T01':
++            return ("assert all('create' not in b.label.lower() for b in app.button)" in reason
++                    and 'assert False' in reason and 'test_T01_existing_order_ui' in reason)
++        phrase = ('AssertionError: Unapproved full application paths' if identity == 'P4-T61'
++                  else 'AssertionError: Unapproved application source/module/migration')
++        return identity in {'P2-T40', 'P3-T51', 'P4-T61', 'P4-T62'} and phrase in reason
++
++    child_p2 = out / 'generated/docs/p3/validation/p2-results.xml'
++    nested = junit(child_p2) if child_p2.is_file() else []
++    bad_p2 = [c for c in nested if c['outcome'] != 'pass']
++    p2_proven = (len(nested) == 54 and {legacy_id(c) for c in bad_p2} == {'P2-T01', 'P2-T40'}
++                 and all(direct(c) for c in bad_p2))
++
++    def p3_cascade(case):
++        reason = case['assertion'] or ''
++        return (case['outcome'] == 'failure' and p2_proven and 'assert 1 == 0' in reason
++                and 'test_T01_existing_order_ui' in reason and 'test_T40_scope_dependencies' in reason)
++
++    child_p0_p3 = out / 'nested-P0-P3.junit.xml'
++    nested_all = junit(child_p0_p3) if child_p0_p3.is_file() else []
++    bad_all = [c for c in nested_all if c['outcome'] != 'pass']
++    p0_p3_proven = (len(nested_all) == 148 and {legacy_id(c) for c in bad_all} ==
++                   {'P2-T01', 'P2-T40', 'P3-T50', 'P3-T51'} and all(
++                       p3_cascade(c) if legacy_id(c) == 'P3-T50' else direct(c) for c in bad_all))
++    records = []
++    for case in cases:
++        identity = legacy_id(case); outcome = case['outcome']; proven = direct(case)
++        if identity == 'P3-T50':
++            proven = p3_cascade(case)
++        elif identity == 'P4-T63':
++            proven = outcome == 'failure' and p0_p3_proven and 'assert 1 == 0' in (case['assertion'] or '')
++        category = ('PASS' if outcome == 'pass' else 'EXPECTED_HISTORICAL_SCOPE_CONFLICT'
++                    if identity in known and proven else 'BLOCKING_BEHAVIORAL_REGRESSION')
++        records.append(dict(test_id=identity, pytest_outcome=outcome, classification=category,
++                            exact_assertion=case['assertion']))
++    result = dict(total=len(cases), passed=sum(c['classification'] == 'PASS' for c in records),
++        expected_historical_scope_conflicts=sum(c['classification'] == 'EXPECTED_HISTORICAL_SCOPE_CONFLICT' for c in records),
++        blocking_regressions=sum(c['classification'] == 'BLOCKING_BEHAVIORAL_REGRESSION' for c in records),
++        nested_p2_scope_proven=p2_proven, nested_p0_p3_scope_proven=p0_p3_proven, records=records)
++    (out / 'PHASE_AWARE_CLASSIFICATION.json').write_text(json.dumps(result, indent=2) + '\n')
++    return result
++
++
++def main():
++    p = argparse.ArgumentParser(); p.add_argument('--out', type=Path, required=True)
++    p.add_argument('--stress-workspace', type=Path, required=True)
++    p.add_argument('--linux-smoke', type=Path); p.add_argument('--mac-smoke', type=Path)
++    args = p.parse_args(); out = args.out.resolve()
++    assert not out.exists() and not out.is_relative_to(ROOT)
++    assert not git('status', '--porcelain'), 'Run on a clean committed implementation'
++    out.mkdir(parents=True)
++    commit, tree = git('rev-parse', 'HEAD'), git('rev-parse', 'HEAD^{tree}')
++    before = audit(ROOT)
++    env = os.environ.copy(); env.update(PYTHONPATH=str(ROOT/'src')+os.pathsep+str(ROOT/'tests'),
++        PYTHONDONTWRITEBYTECODE='1', P6_STRESS_WORKSPACE=str(args.stress_workspace.resolve()),
++        P6_VALIDATION_DIR=str(out))
++    if args.linux_smoke: env['P6_LINUX_SMOKE']=str(args.linux_smoke.resolve())
++    if args.mac_smoke: env['P6_MAC_DOCKER_EVIDENCE']=str(args.mac_smoke.resolve())
++    inputs=dict(command=sys.argv, cwd=str(ROOT), tested_commit=commit, tested_tree=tree,
++                P6_STRESS_WORKSPACE=env['P6_STRESS_WORKSPACE'], P6_VALIDATION_DIR=env['P6_VALIDATION_DIR'],
++                P6_RESULTS_DIR=str(out/'p6-runtime/observations'), external_platform_evidence={})
++    stress_db=args.stress_workspace.resolve()/'app.sqlite3'
++    inputs['stress_database_sha256']=hashlib.sha256(stress_db.read_bytes()).hexdigest()
++    for label,path in (('linux_smoke',args.linux_smoke),('mac_smoke',args.mac_smoke)):
++        inputs['external_platform_evidence'][label]=None if path is None else dict(path=str(path.resolve()),sha256=hashlib.sha256(path.read_bytes()).hexdigest())
++    (out/'VALIDATION_INPUTS.json').write_text(json.dumps(inputs,indent=2)+'\n')
++    history = ROOT/'docs/p5/validation/runtime-20261106'
++    historical = {}
++    for label, path, expected in (
++        ('P1_P4', history/'historical-212/results.xml', 212),
++        ('P5', history/'final-run/p5-runtime/results.xml', 76)):
++        cases = list(ET.parse(path).getroot().iter('testcase'))
++        assert len(cases)==expected and all(not any(c.find(t) is not None for t in ('failure','error','skipped')) for c in cases)
++        historical[label]=dict(path=path.relative_to(ROOT).as_posix(), sha256=hashlib.sha256(path.read_bytes()).hexdigest(),
++                               passed=expected, result='PASS_ON_HISTORICAL_TREE_ONLY')
++    historical['P1_P4']['commit']='fd39aa1bed480313504ae8b1f76e77e170cb72ba'
++    historical['P5']['commit']='801cc2ba5db46494eaa93e5b963c3bc2f936ddc2'
++    env['P5_HISTORICAL_JUNIT']=str(history/'historical-212/results.xml')
++    collection = record_command(out/'p6-collection',[sys.executable,'-m','pytest','tests/p6','--collect-only','-q'],env=env)
++    assert collection['exit_code']==0
++    legacy = record_command(out/'legacy-p1-p4',[sys.executable,'-m','pytest','tests/p1','tests/p2','tests/p3','tests/p4','-q'],env=env,pytest=True,legacy_outputs=True)
++    legacy_class = classify_legacy(legacy,out/'legacy-p1-p4')
++    p5 = record_command(out/'legacy-p5',[sys.executable,'-m','pytest','tests/p5','-q'],env=env,pytest=True)
++    p5_records=[]
++    for case in p5.get('testcases',[]):
++        ident=case['properties'].get('p5_id')
++        if case['outcome']=='pass': category='PASS'
++        elif (ident=='P5-T76' and case['outcome']=='failure' and
++              'Protected file changed: src/vde/app.py' in (case['assertion'] or '')):
++            category='EXPECTED_HISTORICAL_SCOPE_CONFLICT'
++        else: category='BLOCKING_BEHAVIORAL_REGRESSION'
++        p5_records.append(dict(test_id=ident,pytest_outcome=case['outcome'],classification=category,exact_assertion=case['assertion']))
++    assert len(p5_records)==76 and {r['test_id'] for r in p5_records}=={f'P5-T{i:02}' for i in range(1,77)}
++    (out/'P5_PHASE_AWARE_CLASSIFICATION.json').write_text(json.dumps(p5_records,indent=2)+'\n')
++    # P6 conftest supports its own observations directory as well as the parent
++    # recorder's P5_RESULTS_DIR. No old test or report is edited.
++    p6_env=env.copy(); p6_env['P6_RESULTS_DIR']=str(out/'p6-runtime/observations')
++    p6=record_command(out/'p6-runtime',[sys.executable,'-m','pytest','tests/p6','-q'],env=p6_env,pytest=True)
++    cases=p6.get('testcases',[])
++    import re
++    ids=[]
++    for case in cases:
++        match=re.search(r'^test_T(\d+)_',case['name']);assert match,case['name']
++        identity='P6-T'+match[1].zfill(2)
++        assert case['properties'].get('p6_id')==identity,'JUnit name/property identity mismatch'
++        ids.append(identity)
++    assert len(ids)==20 and set(ids)=={f'P6-T{i:02}' for i in range(1,21)},ids
++    (out/'P6_TEST_ID_INVENTORY.json').write_text(json.dumps([dict(test_id=i,pytest_outcome=c['outcome'],assertion=c['assertion']) for i,c in zip(ids,cases)],indent=2)+'\n')
++    after=audit(ROOT)
++    invalid_exits=[]
++    for label,phase in (('P1-P4',legacy),('P5',p5)):
++        expected_exit=1 if any(c['outcome'] in ('failure','error') for c in phase['testcases']) else 0
++        if phase['exit_code']!=expected_exit:invalid_exits.append(dict(phase=label,actual=phase['exit_code'],expected=expected_exit))
++    blockers=legacy_class['blocking_regressions']+sum(r['classification']=='BLOCKING_BEHAVIORAL_REGRESSION' for r in p5_records)+len(invalid_exits)
++    result=dict(tested_commit=commit,tested_tree=tree,approved_start=START,main_baseline=BASELINE,
++        platform=platform.platform(),python=sys.version,historical=historical,
++        legacy_p1_p4={k:v for k,v in legacy_class.items() if k!='records'},
++        legacy_p5=dict(total=76,passed=sum(r['classification']=='PASS' for r in p5_records),
++            scope_conflicts=sum(r['classification']=='EXPECTED_HISTORICAL_SCOPE_CONFLICT' for r in p5_records),
++            blocking_regressions=sum(r['classification']=='BLOCKING_BEHAVIORAL_REGRESSION' for r in p5_records),pytest_exit=p5['exit_code']),
++        p6=dict(total=20,passed=sum(c['outcome']=='pass' for c in cases),failed=sum(c['outcome']=='failure' for c in cases),
++                errors=sum(c['outcome']=='error' for c in cases),skipped=sum(c['outcome']=='skipped' for c in cases),pytest_exit=p6['exit_code']),
++        scope_before=before,scope_after=after,blocking_behavioral_regressions=blockers,unexpected_pytest_exits=invalid_exits,
++        mac_docker_smoke='EVIDENCE_PROVIDED' if args.mac_smoke else 'NOT RUN: no macOS host provided',
++        status='READY FOR P6 GATE B REVIEW' if p6['exit_code']==0 and blockers==0 and args.mac_smoke else 'BLOCKED',
++        gate_b='NOT CLOSED',merged=False,pilot_release='NOT AUTHORIZED',completed_at_utc=datetime.now(timezone.utc).isoformat())
++    (out/'VALIDATION_SUMMARY.json').write_text(json.dumps(result,indent=2)+'\n')
++    print(json.dumps(result,indent=2),flush=True)
++    return 0 if result['status']=='READY FOR P6 GATE B REVIEW' else 1
++
++
++if __name__=='__main__':
++    raise SystemExit(main())
+diff --git a/tests/p6/scope_audit.py b/tests/p6/scope_audit.py
+new file mode 100644
+index 0000000..cd3d24f
+--- /dev/null
++++ b/tests/p6/scope_audit.py
+@@ -0,0 +1,164 @@
++"""CR-P6-001 successor audit; no historical policy or authority is rewritten."""
++import ast
++from functools import lru_cache
++import hashlib
++import io
++import json
++from pathlib import Path
++import shutil
++import stat
++import subprocess
++import tarfile
++
++BASELINE = '0af4a1ff49ccf8fa59c39780d749e15cb5042fc3'
++START = 'b93e0ef4ed69343968ff7ae4188d586c0d1485a5'
++SOURCES = tuple('src/vde/p6/' + p for p in ('__init__.py', 'orders.py', 'delivery.py', 'ui.py'))
++TESTS = tuple('tests/p6/' + p for p in ('__init__.py', 'conftest.py', 'test_acceptance.py', 'scope_audit.py', 'scope_policy_v1.json', 'run_validation.py'))
++DOCS = ('docs/p6/README_PILOT.md', 'docs/p6/RELEASE_CHECKLIST.md')
++BEFORE = b'from vde.p6.ui import order_panel\norder_panel(result)\n'
++AFTER = b'from vde.p6.ui import delivery_panel\ndelivery_panel(result)\n'
++POLICY = dict(format='P6_SCOPE_POLICY_V1', baseline=BASELINE, implementation_start=START,
++              source_paths=list(SOURCES), test_paths=list(TESTS), release_paths=list(DOCS),
++              app_insert_before_ingestion=BEFORE.decode(), app_append=AFTER.decode(),
++              evidence_parent='docs/p6/validation/', evidence_directory_prefix='runtime-')
++
++
++def git(root, *args):
++    return subprocess.check_output(['git', '--no-replace-objects', '-C', str(root), *args], stderr=subprocess.PIPE)
++
++
++@lru_cache(maxsize=4)
++def frozen(root, ref):
++    result = {}
++    for item in git(root, 'ls-tree', '-rz', '--full-tree', ref).split(b'\0'):
++        if not item:
++            continue
++        header, path = item.decode().split('\t'); mode, kind, blob = header.split()
++        assert kind == 'blob'
++        result[path] = (mode, blob, git(root, 'cat-file', 'blob', blob))
++    return result
++
++
++def regular(path, mode='100644'):
++    found = path.lstat().st_mode
++    assert stat.S_ISREG(found), 'File type changed: ' + str(path)
++    assert bool(found & 0o111) == (mode == '100755'), 'File mode changed: ' + str(path)
++    return path.read_bytes()
++
++
++def expected_app(raw):
++    needle = b'from vde.ingestion.ui import panel\n'
++    assert raw.count(needle) == 1 and raw.endswith(b'export_qa_panel(result)\n')
++    return raw.replace(needle, BEFORE + needle, 1) + AFTER
++
++
++def audit(root, *, authority_root=None):
++    root = Path(root).resolve(); authority = Path(authority_root).resolve() if authority_root else root
++    assert json.loads(regular(root / 'tests/p6/scope_policy_v1.json')) == POLICY, 'P6 policy changed'
++    git(authority, 'merge-base', '--is-ancestor', BASELINE, 'HEAD')
++    git(authority, 'merge-base', '--is-ancestor', START, 'HEAD')
++    base = frozen(str(authority), START)
++    main = frozen(str(authority), BASELINE)
++    assert all(path in base and base[path] == record for path, record in main.items()), 'Start differs from approved main'
++    from scope_policy import verify_governance_document
++    verify_governance_document(root, authority_root=authority if authority != root else None)
++    owned = set(SOURCES) | set(TESTS) | set(DOCS)
++    for path, (mode, blob, raw) in base.items():
++        wanted = expected_app(raw) if path == 'src/vde/app.py' else raw
++        assert regular(root / path, mode) == wanted, 'Protected file changed: ' + path
++        if root == authority:
++            expected = hashlib.sha1(b'blob ' + str(len(wanted)).encode() + b'\0' + wanted).hexdigest()
++            assert git(root, 'ls-tree', 'HEAD', '--', path) == f'{mode} blob {expected}\t{path}\n'.encode(), 'HEAD differs: ' + path
++            assert git(root, 'ls-files', '--stage', '--', path) == f'{mode} {expected} 0\t{path}\n'.encode(), 'Index differs: ' + path
++    for path in owned:
++        raw = regular(root / path)
++        assert raw == git(authority, 'show', 'HEAD:' + path), 'Owned file differs from committed tree: ' + path
++        if root == authority:
++            blob = hashlib.sha1(b'blob ' + str(len(raw)).encode() + b'\0' + raw).hexdigest()
++            assert git(root, 'ls-files', '--stage', '--', path) == f'100644 {blob} 0\t{path}\n'.encode(), 'Owned index differs: ' + path
++    source_inventory = {p.relative_to(root).as_posix() for p in (root / 'src').rglob('*')
++                        if p.is_file() and '__pycache__' not in p.parts
++                        and not any(part.endswith('.egg-info') for part in p.parts)}
++    assert source_inventory == {p for p in base if p.startswith('src/')} | set(SOURCES), 'Application inventory differs'
++    for path in SOURCES:
++        for node in ast.walk(ast.parse(regular(root / path))):
++            if isinstance(node, ast.Import):
++                assert all(n.name.split('.')[0] not in {'subprocess', 'socket', 'requests', 'sqlite3'} for n in node.names), 'Forbidden runtime backend import'
++            if isinstance(node, ast.ImportFrom) and not node.level:
++                assert node.module.split('.')[0] not in {'subprocess', 'socket', 'requests', 'sqlite3'}, 'Forbidden runtime backend import'
++            if isinstance(node, ast.Call):
++                name = ast.unparse(node.func)
++                assert name not in ('eval', 'exec', 'compile', '__import__'), 'Generated execution forbidden'
++                assert not name.endswith(('.approve_brief', '.approve_spec_and_finish', '.complete')), 'P6 cannot auto-approve or execute'
++                if name.endswith('.execute'):
++                    assert (name.endswith('.connection.execute') and node.args
++                            and isinstance(node.args[0], ast.Constant) and isinstance(node.args[0].value, str)
++                            and node.args[0].value.lstrip().upper().startswith('SELECT ')), 'P6 cannot execute business code or mutate SQL'
++    if root == authority:
++        inventory = set(git(root, 'ls-files', '--cached', '--others', '--exclude-standard', '-z').decode().rstrip('\0').split('\0'))
++    else:
++        inventory = {p.relative_to(root).as_posix() for p in root.rglob('*') if p.is_file() and '__pycache__' not in p.parts}
++    allowed = set(base) | owned
++    evidence = {p for p in inventory if p.startswith('docs/p6/validation/runtime-')}
++    groups = {p.split('/')[3] for p in evidence}
++    for group in groups:
++        prefix = 'docs/p6/validation/' + group + '/'
++        manifest = prefix + 'MANIFEST.sha256'; entries = {}
++        for row in regular(root / manifest).decode().splitlines():
++            digest, path = row.split('  ', 1)
++            assert path.startswith(prefix) and '..' not in Path(path).parts and path != manifest and path not in entries
++            assert hashlib.sha256(regular(root / path)).hexdigest() == digest, 'Evidence checksum differs'
++            entries[path] = digest
++        assert {p for p in evidence if p.startswith(prefix)} == set(entries) | {manifest}, 'Evidence inventory differs'
++    allowed |= evidence
++    assert inventory <= allowed, 'Unapproved files: ' + str(sorted(inventory - allowed))
++    return dict(result='PASS', baseline=BASELINE, implementation_start=START,
++                protected_main_files=len(main), protected_start_files=len(base),
++                new_runtime_files=len(SOURCES), exact_app_additions=4,
++                historical_tests_policies_governance_unchanged=True)
++
++
++def negative_probes(root, directory):
++    root = Path(root); directory = Path(directory); directory.mkdir(parents=True, exist_ok=True)
++    archive = git(root, 'archive', 'HEAD')
++    clean = directory / 'clean-control'
++    with tarfile.open(fileobj=io.BytesIO(archive)) as tar:
++        tar.extractall(clean, filter='data')
++    assert audit(clean, authority_root=root)['result'] == 'PASS', 'Clean extracted control failed'
++    shutil.rmtree(clean)
++    probes = [
++        ('P1_source', 'src/vde/storage.py'), ('P2_source', 'src/vde/ingestion/local.py'),
++        ('P3_source', 'src/vde/workflow/service.py'), ('P4_source', 'src/vde/execution/service.py'),
++        ('P5_source', 'src/vde/p5/service.py'), ('old_test', 'tests/p5/test_acceptance.py'),
++        ('old_policy', 'tests/p5/scope_policy_v1.json'), ('old_audit', 'tests/p5/scope_audit.py'),
++        ('P0_schema', 'pecs/pilot_slice_v1/contracts/qa_report.schema.json'),
++        ('P0_fixture', 'pecs/pilot_slice_v1/fixtures/P-A_dirty_csv/expected_result.csv'),
++        ('dependency', 'pyproject.toml'), ('lock', 'uv.lock'), ('governance', 'DECISIONS.md'),
++        ('active_pin', 'tests/p4/approved_governance_pin_v1.json'),
++        ('migration', 'src/vde/persistence/migrations/999_p6.sql'),
++        ('extra_source', 'src/vde/p6/extra.py'), ('app_extra', 'src/vde/app.py'),
++        ('authority_doc', 'docs/p6/decisions/CR-P6-001_OWNER_DECISION_2026-11-06.md'),
++        ('historical_evidence', 'docs/p5/validation/runtime-20261106/final-run/p5-runtime/results.xml'),
++        ('file_mode', 'src/vde/storage.py'),
++        ('unknown_file', 'p6-unapproved.txt'), ('owned_source', 'src/vde/p6/delivery.py'),
++        ('new_policy', 'tests/p6/scope_policy_v1.json'),
++    ]
++    results = []
++    for label, path in probes:
++        scratch = directory / label
++        with tarfile.open(fileobj=io.BytesIO(archive)) as tar:
++            tar.extractall(scratch, filter='data')
++        target = scratch / path; target.parent.mkdir(parents=True, exist_ok=True)
++        if label == 'file_mode':
++            target.chmod(0o755)
++        else:
++            target.write_bytes((target.read_bytes() if target.exists() else b'') + b'\n# unapproved mutation\n')
++        try:
++            audit(scratch, authority_root=root)
++        except (AssertionError, OSError, subprocess.SubprocessError, ValueError) as exc:
++            results.append(dict(probe=label, result='REJECTED', reason=str(exc)[:500]))
++        else:
++            raise AssertionError('Scope mutation accepted: ' + label)
++        finally:
++            shutil.rmtree(scratch)
++    return results
+diff --git a/tests/p6/scope_policy_v1.json b/tests/p6/scope_policy_v1.json
+new file mode 100644
+index 0000000..43a27fe
+--- /dev/null
++++ b/tests/p6/scope_policy_v1.json
+@@ -0,0 +1,27 @@
++{
++  "app_append": "from vde.p6.ui import delivery_panel\ndelivery_panel(result)\n",
++  "app_insert_before_ingestion": "from vde.p6.ui import order_panel\norder_panel(result)\n",
++  "baseline": "0af4a1ff49ccf8fa59c39780d749e15cb5042fc3",
++  "evidence_directory_prefix": "runtime-",
++  "evidence_parent": "docs/p6/validation/",
++  "format": "P6_SCOPE_POLICY_V1",
++  "implementation_start": "b93e0ef4ed69343968ff7ae4188d586c0d1485a5",
++  "release_paths": [
++    "docs/p6/README_PILOT.md",
++    "docs/p6/RELEASE_CHECKLIST.md"
++  ],
++  "source_paths": [
++    "src/vde/p6/__init__.py",
++    "src/vde/p6/orders.py",
++    "src/vde/p6/delivery.py",
++    "src/vde/p6/ui.py"
++  ],
++  "test_paths": [
++    "tests/p6/__init__.py",
++    "tests/p6/conftest.py",
++    "tests/p6/test_acceptance.py",
++    "tests/p6/scope_audit.py",
++    "tests/p6/scope_policy_v1.json",
++    "tests/p6/run_validation.py"
++  ]
++}
+diff --git a/tests/p6/test_acceptance.py b/tests/p6/test_acceptance.py
+new file mode 100644
+index 0000000..0691e62
+--- /dev/null
++++ b/tests/p6/test_acceptance.py
+@@ -0,0 +1,597 @@
++"""Twenty P6 runtime oracles. A blocked platform check remains a real FAIL."""
++from concurrent.futures import ThreadPoolExecutor
++from dataclasses import asdict
++import io
++import json
++import os
++from pathlib import Path
++import platform
++import shutil
++import socket
++import sqlite3
++import subprocess
++import sys
++import time
++from urllib.request import urlopen
++from uuid import uuid4
++
++from openpyxl import load_workbook
++import pytest
++
++from vde.bootstrap import bootstrap
++from vde.config import Config
++from vde.contracts import content_hash, validate
++from vde.errors import StorageError
++from vde.p6.orders import CreateOrderService, P6Error
++from vde.p6.delivery import DeliveryService
++from .conftest import (ROOT, FIXTURES, TABLES, UIScenario, canonical, healthy_ui,
++                       mutate_sql, new_app, payload_hashes, record, sha, snapshot, widget)
++
++
++def refused(env, order_id, run_id, codes=None):
++    before = snapshot(env.workspace.root)
++    files = payload_hashes(env.workspace.root)
++    with pytest.raises((P6Error, StorageError)) as caught:
++        DeliveryService(env).prepare(order_id, run_id)
++    code = getattr(caught.value, 'code', 'STORAGE_ERROR')
++    if codes:
++        assert code in codes
++    assert snapshot(env.workspace.root) == before
++    assert payload_hashes(env.workspace.root) == files
++    return code
++
++
++def transfer(app, fetch, expected):
++    """Read the actual HTTP response body; never substitute snapshot bytes."""
++    outputs = {}
++    controls = app.get('download_button')
++    assert len(controls) == 2
++    for control in controls:
++        response = fetch(control.proto.url)
++        assert response.code == 200
++        assert int(response.headers['Content-Length']) == len(response.body)
++        name = ('report' if control.label == 'Download QAReport' else 'result')
++        raw, filename, mime = expected[name]
++        assert response.body == raw
++        assert sha(response.body) == sha(raw)
++        assert response.headers['Content-Type'] == mime
++        assert filename in response.headers['Content-Disposition']
++        outputs[name] = {'bytes': len(response.body), 'sha256': sha(response.body),
++                         'url': control.proto.url, 'status': response.code,
++                         'content_type': response.headers['Content-Type'],
++                         'content_disposition': response.headers['Content-Disposition']}
++    return outputs
++
++
++def snapshot_expectation(prepared):
++    return {'result': (prepared.result_bytes, prepared.result_name, prepared.result_mime),
++            'report': (prepared.report_bytes, prepared.report_name, prepared.report_mime)}
++
++
++def verified_report(case, prepared):
++    report = json.loads(prepared.report_bytes.decode('utf-8'))
++    validate(report, 'qa_report')
++    assert prepared.report_bytes == canonical(case.decision.report)
++    assert report['run_id'] == case.run_id
++    assert report['brief_version_id'] == case.brief.id
++    assert report['transformation_spec_version_id'] == case.spec.id
++    assert report['report_id'] == prepared.view.report_record.report_id
++    assert report['dataset_summary']['checksum'] == sha(prepared.result_bytes)
++    assert report['dataset_summary']['file_size_bytes'] == len(prepared.result_bytes)
++    assert report['artifacts'] == case.decision.report['artifacts']
++    assert len(report['artifacts']) == 1
++    return report
++
++
++def test_T01_fresh_linux_bootstrap_and_passive_ui(tmp_path):
++    directory = tmp_path / 'fresh'
++    env = bootstrap(Config(directory))
++    assert platform.system() == 'Linux' and env.health == 'ready'
++    before = snapshot(directory)
++    app = new_app(directory)
++    for _ in range(3):
++        healthy_ui(app.run())
++    assert all(not before[t] for t in TABLES)
++    assert snapshot(directory) == before
++    assert not widget(app, 'button', 'Create DRAFT Order').disabled
++    assert len(app.get('download_button')) == 0
++    record('T01', {'health': env.health, 'platform': platform.platform(), 'before': before,
++                   'after': snapshot(directory), 'passive_rerenders': 3})
++
++
++def test_T02_create_order_form_exact_fields_and_p2_visibility(tmp_path):
++    directory = tmp_path / 'create'
++    bootstrap(Config(directory))
++    app = new_app(directory)
++    token = app.session_state['p6_order_request_token']
++    values = {'Order title': '  Isolated order  ', 'Listing text': '  Exact listing\ntext  ',
++              'Listing URL (optional)': 'https://example.invalid/no-fetch',
++              'Budget (canonical decimal, optional)': '123.45',
++              'Deadline (UTC YYYY-MM-DDTHH:MM:SSZ, optional)': '2026-12-01T12:00:00Z',
++              'Notes (optional)': '  verbatim notes  '}
++    for label, value in values.items():
++        kind = 'text_area' if label in {'Listing text', 'Notes (optional)'} else 'text_input'
++        widget(app, kind, label).set_value(value)
++    healthy_ui(widget(app, 'button', 'Create DRAFT Order').click().run())
++    observed = snapshot(directory)
++    assert len(observed['orders']) == 1
++    order = observed['orders'][0]
++    assert order['id'] == token and order['status'] == 'DRAFT'
++    assert order['title'] == 'Isolated order' and order['listing_text'] == values['Listing text']
++    for key, label in [('listing_url', 'Listing URL (optional)'), ('budget', 'Budget (canonical decimal, optional)'),
++                       ('deadline', 'Deadline (UTC YYYY-MM-DDTHH:MM:SSZ, optional)'), ('notes', 'Notes (optional)')]:
++        assert order[key] == values[label]
++    assert order['created_at'] == order['updated_at']
++    assert all(order[k] is None for k in ('approval_stage', 'selected_brief_version_id',
++                                         'selected_transformation_spec_version_id'))
++    assert all(not observed[t] for t in TABLES if t != 'orders')
++    assert token in widget(app, 'selectbox', 'Existing Order').value
++    record('T02', {'request_token': token, 'submitted': values, 'persisted': order,
++                   'associated_counts': {t: len(observed[t]) for t in TABLES if t != 'orders'}})
++
++
++def test_T03_invalid_form_retry_idempotency_and_concurrent_conflict(tmp_path):
++    directory = tmp_path / 'retry'
++    env = bootstrap(Config(directory))
++    app = new_app(directory)
++    token = app.session_state['p6_order_request_token']
++    for title, budget, deadline in [('', '', ''), ('Valid', '1.00', ''),
++                                    ('Valid', 'NaN', ''), ('Valid', '1e3', ''),
++                                    ('Valid', '', '2026-12-01T12:00:00+00:00')]:
++        widget(app, 'text_input', 'Order title').set_value(title)
++        widget(app, 'text_area', 'Listing text').set_value('Explicit test input')
++        widget(app, 'text_input', 'Budget (canonical decimal, optional)').set_value(budget)
++        widget(app, 'text_input', 'Deadline (UTC YYYY-MM-DDTHH:MM:SSZ, optional)').set_value(deadline)
++        healthy_ui(widget(app, 'button', 'Create DRAFT Order').click().run())
++        assert not snapshot(directory)['orders']
++        assert app.session_state['p6_order_request_token'] == token
++    before = snapshot(directory)
++    app.run(); app.run(); app.run()
++    assert snapshot(directory) == before
++    fields = dict(title='Valid', listing_text='Exact listing', budget='1.5')
++    def create(_):
++        return CreateOrderService(bootstrap(Config(directory))).create(token, **fields)
++    with ThreadPoolExecutor(max_workers=2) as executor:
++        orders = list(executor.map(create, range(2)))
++    assert orders[0].id == orders[1].id == token
++    before = snapshot(directory)
++    assert CreateOrderService(env).create(token, **fields).id == token
++    with pytest.raises(P6Error) as caught:
++        CreateOrderService(env).create(token, title='Conflicting', listing_text='Exact listing', budget='1.5')
++    assert caught.value.code == 'P6_ORDER_TOKEN_CONFLICT'
++    assert snapshot(directory) == before and len(before['orders']) == 1
++    record('T03', {'retained_token': token, 'invalid_submissions': 5, 'concurrent_results': [o.id for o in orders],
++                   'conflict': caught.value.code, 'counts': {k: len(v) for k, v in before.items()}})
++
++
++def test_T04_pa_explicit_two_ui_approvals_and_exact_hashes(pa):
++    assert len(pa.before_brief_approval['approvals']) == 0
++    assert len(pa.after_brief_approval['approvals']) == len(pa.before_spec_approval['approvals']) == 1
++    approvals = pa.approved_snapshot['approvals']
++    assert len(approvals) == 2
++    for approval, version, target in [(next(a for a in approvals if a['target_type'] == 'BRIEF'), pa.brief, 'BRIEF'),
++                                      (next(a for a in approvals if a['target_type'] == 'TRANSFORMATION_SPEC'), pa.spec, 'TRANSFORMATION_SPEC')]:
++        kind = 'brief_version' if target == 'BRIEF' else 'transformation_spec_version'
++        assert approval['target_version_id'] == version.id
++        assert approval['target_content_hash'] == version.content_hash == content_hash(version.document_json, kind)
++        assert approval['approved_by'] == 'local_user'
++    spec_approval = next(a for a in approvals if a['target_type'] == 'TRANSFORMATION_SPEC')
++    assert (spec_approval['context_brief_version_id'], spec_approval['context_brief_content_hash']) == (pa.brief.id, pa.brief.content_hash)
++    labels = [a['label'] for a in pa.actions]
++    assert labels.index('I approve this Brief version') < labels.index('Save new TransformationSpec version')
++    assert labels.index('Confirm this exact Spec ID, hash and approved Brief context') < labels.index('I approve TransformationSpec') < labels.index('Execute')
++    record('T04', {'approvals': approvals, 'explicit_actions': pa.actions, 'adaptations': pa.adaptations})
++
++
++def test_T05_pa_csv_result_and_qa_actual_http_transfer(pa, download_http):
++    assert pa.order().status == 'READY' and pa.decision.report['overall_status'] == 'PASS'
++    before = pa.snapshot()
++    prepared = pa.prepare_ui()
++    golden = (pa.source / 'expected_result.csv').read_bytes()
++    assert len(golden) == 277 and prepared.result_bytes == golden
++    assert sha(golden) == pa.decision.artifact.checksum
++    verified_report(pa, prepared)
++    observations = transfer(pa.app, download_http, snapshot_expectation(prepared))
++    assert pa.snapshot() == before
++    record('T05', {'http_transfers': observations, 'golden_sha256': sha(golden), 'snapshot_key': prepared.key})
++
++
++def test_T06_pb_explicit_v2_approval_and_typed_warning_oracle(pb):
++    assert pb.spec.version_number == 2
++    with pb.uow() as u:
++        versions = u.specs.list_for_order(pb.order_id)
++        approvals = u.approvals.list_for_order(pb.order_id)
++        artifacts = u.artifacts.list_for_run(pb.run_id)
++    assert len(versions) == 2 and len(approvals) == 2
++    assert next(a for a in approvals if a.target_type == 'TRANSFORMATION_SPEC').target_version_id == pb.spec.id
++    assert all(a.approved_by == 'local_user' for a in approvals)
++    checks = pb.decision.report['deterministic_checks']
++    assert len(checks) == 24
++    dq17 = {c['criterion_id']: c['status'] for c in checks if c['check_id'] == 'DQ-017'}
++    assert dq17 == {'PB-AC-006': 'PASS', 'PB-AC-007': 'PASS'}
++    assert pb.decision.report['warnings']
++    assert any('FORMULA' in json.dumps(w).upper() for w in pb.decision.report['warnings'])
++    assert [a.artifact_type for a in artifacts if a.artifact_type.startswith('RESULT_')] == ['RESULT_XLSX']
++    record('T06', {'versions': [asdict(v) for v in versions], 'approvals': [asdict(a) for a in approvals],
++                   'DQ017': dq17, 'checks': len(checks), 'warnings': pb.decision.report['warnings'],
++                   'adaptations': pb.adaptations, 'observed_order_status': pb.order().status,
++                   'observed_qa_status': pb.decision.report['overall_status'],
++                   'actual_report': pb.decision.report,
++                   'blocking_issues': pb.decision.report['blocking_issues'],
++                   'failed_checks': [c for c in checks if c['status'] == 'FAIL']})
++    assert pb.order().status == 'READY' and pb.decision.report['overall_status'] == 'PASS_WITH_WARNINGS', (
++        'Real P3 UI allocates a UUID Brief ID; frozen P5 PB-AC-002 special handling requires brief-pb-v1.',
++        pb.decision.report['blocking_issues'])
++
++
++def test_T07_pb_xlsx_and_qa_independent_http_and_18_cells(pb, download_http):
++    before = pb.snapshot()
++    prepared = pb.prepare_ui()
++    verified_report(pb, prepared)
++    assert prepared.result_name.endswith('.xlsx')
++    assert prepared.result_mime == 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
++    book = load_workbook(io.BytesIO(prepared.result_bytes), read_only=True, data_only=False, keep_links=False)
++    try:
++        sheet = book[pb.spec.document_json['output']['sheet_name']]
++        rows = list(sheet.iter_rows())
++        assert len(rows) == 4 and all(len(row) == 6 for row in rows)
++        assert all(cell.data_type != 'f' for row in rows for cell in row)
++        values = [[cell.value for cell in row] for row in rows]
++    finally:
++        book.close()
++    # Frozen P-B expected cells are independent of the exported workbook.
++    golden = load_workbook(pb.source / 'expected_result.xlsx', read_only=True, data_only=False, keep_links=False)
++    try:
++        expected = [[cell.value for cell in row] for row in golden.active.iter_rows()]
++    finally:
++        golden.close()
++    assert values == expected
++    assert sum(len(row) for row in values[1:]) == 18
++    observations = transfer(pb.app, download_http, snapshot_expectation(prepared))
++    assert pb.snapshot() == before
++    record('T07', {'http_transfers': observations, 'decoded_cells': values, 'data_cells': 18,
++                   'observed_qa_status': pb.decision.report['overall_status'], 'result_name': prepared.result_name})
++    assert pb.order().status == 'READY' and pb.decision.report['overall_status'] == 'PASS_WITH_WARNINGS'
++    assert '_DIAGNOSTIC_NOT_FOR_DELIVERY' not in prepared.result_name
++
++
++def test_T08_pd_diagnostic_never_client_ready(pd, download_http):
++    assert pd.order().status == 'NEEDS_FIX' and pd.decision.report['overall_status'] == 'FAIL'
++    before = pd.snapshot()
++    prepared = pd.prepare_ui()
++    assert '_DIAGNOSTIC_NOT_FOR_DELIVERY.' in prepared.result_name
++    assert prepared.view.diagnostic
++    report = verified_report(pd, prepared)
++    assert report['blocking_issues']
++    controls = pd.app.get('download_button')
++    assert any(c.label == 'Download diagnostic — NOT FOR DELIVERY' for c in controls)
++    assert not any(c.label == 'Download verified result' for c in controls)
++    warnings = [e.value for e in pd.app.warning] + [e.value for e in pd.app.error]
++    assert any('NOT FOR DELIVERY' in w for w in warnings)
++    observations = transfer(pd.app, download_http, snapshot_expectation(prepared))
++    assert pd.snapshot() == before
++    record('T08', {'order_status': pd.order().status, 'QA': report['overall_status'],
++                   'warnings': warnings, 'http_transfers': observations})
++
++
++def test_T09_ineligible_states_and_missing_approvals(pa, tmp_path, copy_workspace):
++    env = bootstrap(Config(tmp_path / 'draft'))
++    order = CreateOrderService(env).create(str(uuid4()), title='Draft', listing_text='No run')
++    observations = {'DRAFT/no_run': refused(env, order.id, str(uuid4()))}
++    for status in ('DRAFT', 'FAILED', 'EXECUTING', 'APPROVED'):
++        directory, copied = copy_workspace(pa)
++        mutate_sql(directory, 'UPDATE orders SET status=? WHERE id=?', (status, pa.order_id))
++        observations[status] = refused(copied, pa.order_id, pa.run_id)
++    directory, copied = copy_workspace(pa)
++    mutate_sql(directory, 'DELETE FROM approvals WHERE target_type=?', ('TRANSFORMATION_SPEC',))
++    observations['missing_approval'] = refused(copied, pa.order_id, pa.run_id)
++    record('T09', observations)
++
++
++def test_T10_restart_intermediate_and_terminal_no_cached_authorization(tmp_path, pa, copy_workspace):
++    intermediate = UIScenario(tmp_path / 'intermediate', execute=False, pause_after_brief=True)
++    before = intermediate.snapshot()
++    restarted = new_app(intermediate.directory)
++    assert intermediate.snapshot() == before and not before['execution_runs']
++    assert len(before['approvals']) == 1 and not before['transformation_spec_versions']
++    assert len(restarted.get('download_button')) == 0
++    directory, env = copy_workspace(pa)
++    first = new_app(directory)
++    widget(first, 'selectbox', 'Download Order').set_value(pa.order_id).run()
++    widget(first, 'selectbox', 'Download Run').set_value(pa.run_id).run()
++    widget(first, 'button', 'Prepare verified download').click().run()
++    assert len(first.get('download_button')) == 2
++    before = snapshot(directory)
++    restarted = new_app(directory)
++    assert snapshot(directory) == before
++    assert 'p6_delivery_snapshot' not in restarted.session_state or restarted.session_state['p6_delivery_snapshot'] is None
++    assert len(restarted.get('download_button')) == 0
++    assert DeliveryService(bootstrap(Config(directory))).view(pa.order_id, pa.run_id).key
++    record('T10', {'intermediate_counts': {k: len(v) for k, v in intermediate.snapshot().items()},
++                   'terminal_counts': {k: len(v) for k, v in before.items()}, 'old_snapshot_reused': False})
++
++
++def test_T11_corrupt_source_csv_and_xlsx_on_disposable_copies(pa, pb, copy_workspace):
++    observations = {}
++    for case in (pa, pb):
++        directory, env = copy_workspace(case)
++        path = directory / case.asset.workspace_relpath
++        original = path.read_bytes()
++        path.write_bytes(original + b'CORRUPTION')
++        before = snapshot(directory)
++        recovered = bootstrap(Config(directory))
++        assert recovered.health == 'blocked'
++        code = refused(env, case.order_id, case.run_id)
++        assert snapshot(directory) == before and path.read_bytes() == original + b'CORRUPTION'
++        app = new_app(directory)
++        assert len(app.get('download_button')) == 0
++        assert widget(app, 'button', 'Create DRAFT Order').disabled
++        observations[case.family] = {'health': recovered.health, 'error': code,
++                                     'original_sha256': sha(original), 'mutated_sha256': sha(path.read_bytes())}
++    record('T11', observations)
++
++
++def test_T12_corrupt_internal_final_and_snapshot_boundary(pa, copy_workspace):
++    observations = []
++    for kind in ('P4_INTERNAL', 'RESULT_CSV'):
++        directory, env = copy_workspace(pa)
++        artifact = next(a for a in snapshot(directory)['artifacts'] if a['artifact_type'] == kind)
++        prepared = DeliveryService(env).prepare(pa.order_id, pa.run_id)
++        verified_bytes = prepared.result_bytes
++        path = directory / artifact['workspace_relpath']
++        path.write_bytes(path.read_bytes() + b'CORRUPT')
++        code = refused(env, pa.order_id, pa.run_id)
++        assert prepared.result_bytes == verified_bytes
++        assert sha(prepared.result_bytes) == pa.decision.artifact.checksum
++        observations.append({'kind': kind, 'new_prepare_error': code, 'old_verified_snapshot_sha256': sha(verified_bytes),
++                             'snapshot_boundary': 'Existing immutable bytes remain the previously verified copy.'})
++    record('T12', observations)
++
++
++def test_T13_cross_order_and_context_guards_before_artifact_access(pa, copy_workspace, monkeypatch):
++    directory, env = copy_workspace(pa)
++    other = CreateOrderService(env).create(str(uuid4()), title='Other', listing_text='Other isolated Order')
++    from vde.p5.service import P5Service
++    calls = []
++    original = P5Service.read_decision
++    def spy(service, run_id):
++        calls.append(run_id)
++        return original(service, run_id)
++    monkeypatch.setattr(P5Service, 'read_decision', spy)
++    code = refused(env, other.id, pa.run_id, {'P6_CROSS_ORDER'})
++    assert calls == []
++    observations = {'cross_order': {'code': code, 'p5_artifact_reads': 0}}
++    mutations = [('approval_hash', 'UPDATE approvals SET target_content_hash=? WHERE target_type=?', ('0'*64, 'TRANSFORMATION_SPEC')),
++                 ('spec_context', 'UPDATE transformation_spec_versions SET brief_content_hash=?', ('1'*64,)),
++                 ('run_context', 'UPDATE execution_runs SET transformation_approval_id=?', (str(uuid4()),))]
++    for label, sql, args in mutations:
++        directory, copied = copy_workspace(pa)
++        mutate_sql(directory, sql, args)
++        observations[label] = refused(copied, pa.order_id, pa.run_id)
++    record('T13', observations)
++
++
++def test_T14_missing_report_artifact_metadata_and_health_fail_closed(pa, copy_workspace):
++    observations = {}
++    for label, sql, args in [('missing_report', 'DELETE FROM qa_reports', ()),
++                             ('artifact_metadata', 'UPDATE artifacts SET checksum=? WHERE artifact_type=?', ('0'*64, 'RESULT_CSV'))]:
++        directory, env = copy_workspace(pa)
++        mutate_sql(directory, sql, args)
++        observations[label] = refused(env, pa.order_id, pa.run_id)
++    for area, filename, expected in [('.staging', 'unfinished', 'degraded'), ('orders', 'orphan.bin', 'degraded')]:
++        directory, env = copy_workspace(pa)
++        (directory / area / filename).write_bytes(b'disposable incomplete work')
++        recovered = bootstrap(Config(directory))
++        assert recovered.health == expected
++        before = snapshot(directory)
++        observations[area] = refused(env, pa.order_id, pa.run_id)
++        with pytest.raises((P6Error, StorageError)):
++            CreateOrderService(env).create(str(uuid4()), title='Blocked', listing_text='Must not persist')
++        app = new_app(directory)
++        assert widget(app, 'button', 'Create DRAFT Order').disabled
++        assert len(app.get('download_button')) == 0 and snapshot(directory) == before
++    directory, env = copy_workspace(pa)
++    mutate_sql(directory, 'UPDATE qa_reports SET overall_status=?', ('FAIL',))
++    assert bootstrap(Config(directory)).health == 'blocked'
++    observations['blocked'] = refused(env, pa.order_id, pa.run_id)
++    record('T14', observations)
++
++
++def test_T15_passive_rerenders_reprepare_transfer_and_single_snapshot(pa, download_http):
++    prepared = pa.prepare_ui()
++    before, files = pa.snapshot(), payload_hashes(pa.directory)
++    transfers = []
++    for _ in range(3):
++        healthy_ui(pa.app.run())
++        transfers.append(transfer(pa.app, download_http, snapshot_expectation(prepared)))
++    previous = prepared
++    prepared = pa.prepare_ui()
++    assert prepared is not previous and prepared.key == previous.key
++    assert isinstance(prepared.result_bytes, bytes) and isinstance(prepared.report_bytes, bytes)
++    state = pa.app.session_state.filtered_state
++    assert sum(v is prepared for v in state.values()) == 1
++    transfers.append(transfer(pa.app, download_http, snapshot_expectation(prepared)))
++    widget(pa.app, 'selectbox', 'Download Run').set_value(None).run()
++    assert pa.app.session_state.filtered_state.get('p6_delivery_snapshot') is None
++    assert len(pa.app.get('download_button')) == 0
++    assert pa.snapshot() == before and payload_hashes(pa.directory) == files
++    record('T15', {'rerenders': 3, 'http_transfers': transfers, 'counts_unchanged': True,
++                   'stored_payload_hashes': files, 'selection_change_clears_snapshot': True})
++
++
++def test_T16_mime_names_deterministic_json_and_unsafe_name_denial(pa, pb, pd, copy_workspace):
++    observations = {}
++    for case in (pa, pb, pd):
++        prepared = DeliveryService(case.env).prepare(case.order_id, case.run_id)
++        report = verified_report(case, prepared)
++        assert prepared.report_name == 'qa_report_' + report['report_id'] + '.json'
++        assert prepared.report_mime == 'application/json; charset=utf-8'
++        assert '/' not in prepared.result_name and '\\' not in prepared.result_name
++        assert not any(ord(c) < 32 for c in prepared.result_name)
++        assert prepared.result_name.endswith('.xlsx' if case is pb else '.csv')
++        if case is not pb:
++            assert prepared.result_mime == 'text/csv'
++        again = DeliveryService(case.env).prepare(case.order_id, case.run_id)
++        assert again.report_bytes == prepared.report_bytes and again.result_bytes == prepared.result_bytes
++        observations[case.family] = {'result_name': prepared.result_name, 'mime': prepared.result_mime,
++                                     'report_name': prepared.report_name, 'report_sha256': sha(prepared.report_bytes)}
++    for name in ('../escape.csv', 'bad\\name.csv', 'bad\nname.csv', 'wrong.xlsx'):
++        directory, env = copy_workspace(pa)
++        with sqlite3.connect(directory / 'app.sqlite3') as connection:
++            raw = connection.execute('SELECT document_json FROM transformation_spec_versions WHERE id=?', (pa.spec.id,)).fetchone()[0]
++        doc = json.loads(raw); doc['output']['file_name'] = name
++        mutate_sql(directory, 'UPDATE transformation_spec_versions SET document_json=? WHERE id=?', (json.dumps(doc), pa.spec.id))
++        observations['unsafe:' + repr(name)] = refused(env, pa.order_id, pa.run_id)
++    record('T16', observations)
++
++
++def test_T17_actual_large_p5_artifact_p6_rss_http_and_resource_denial(tmp_path, download_http, monkeypatch):
++    from vde.p6.delivery import Budget
++    source = Path(os.environ.get('P6_STRESS_WORKSPACE', '/workspace/p6-work/stress-source'))
++    assert source.is_dir(), 'NOT_RUN: actual accepted P5 100000×200 workspace required via P6_STRESS_WORKSPACE'
++    original_files = payload_hashes(source)
++    original_db_sha = sha((source / 'app.sqlite3').read_bytes())
++    directory = tmp_path / 'real-stress-copy'
++    shutil.copytree(source, directory)
++    env = bootstrap(Config(directory))
++    assert env.health == 'ready'
++    persisted = snapshot(directory)
++    finals = [a for a in persisted['artifacts'] if a['artifact_type'] == 'RESULT_CSV']
++    assert len(finals) == 1
++    artifact = finals[0]; run_id = artifact['run_id']
++    order_id = next(r['order_id'] for r in persisted['execution_runs'] if r['id'] == run_id)
++    path = directory / artifact['workspace_relpath']
++    assert path.stat().st_size == 40500998
++    assert sha(path.read_bytes()) == artifact['checksum'] == '353698a4bab0ffc54633cb3fabad7eb404821b5f97dfeb7eb9676dafec4d9239'
++    app = new_app(directory)
++    widget(app, 'selectbox', 'Download Order').set_value(order_id).run()
++    widget(app, 'selectbox', 'Download Run').set_value(run_id).run()
++    healthy_ui(widget(app, 'button', 'Prepare verified download').click().run())
++    prepared = app.session_state['p6_delivery_snapshot']
++    report = json.loads(prepared.report_bytes)
++    assert report['dataset_summary']['row_count'] == 100000
++    assert report['dataset_summary']['column_count'] == 200
++    resources = prepared.resources
++    assert resources['estimated_allocation_bytes'] >= 3 * len(prepared.result_bytes) + len(prepared.report_bytes) + 64 * 1024 * 1024
++    assert resources['incremental_peak_rss'] <= 536870912 and resources['rss_samples'] > 0
++    with prepared.guard.binding():
++        http = transfer(app, download_http, snapshot_expectation(prepared))
++    assert prepared.resources['incremental_peak_rss'] <= 536870912
++    with pytest.raises(P6Error) as caught:
++        DeliveryService(env, budget_factory=lambda: Budget(limit=1)).prepare(order_id, run_id)
++    assert caught.value.code == 'P6_DOWNLOAD_RESOURCE_LIMIT'
++    # Exercise a failure after Streamlit has really registered its first media
++    # object. Clearing only session_state would leave an HTTP-readable payload.
++    import streamlit as st
++    storage = download_http.reset_storage()
++    captured_urls = []
++    original_button = st.download_button
++    def fail_after_registration(*args, **kwargs):
++        result = original_button(*args, **kwargs)
++        if not captured_urls:
++            captured_urls.extend(storage.get_url(file_id) for file_id in storage._files_by_id)
++            raise MemoryError('Deliberate isolated test fault after first real media registration')
++        return result
++    monkeypatch.setattr(st, 'download_button', fail_after_registration)
++    fault_app = new_app(directory)
++    widget(fault_app, 'selectbox', 'Download Order').set_value(order_id).run()
++    widget(fault_app, 'selectbox', 'Download Run').set_value(run_id).run()
++    healthy_ui(widget(fault_app, 'button', 'Prepare verified download').click().run())
++    assert captured_urls
++    assert fault_app.session_state.filtered_state.get('p6_delivery_snapshot') is None
++    assert len(fault_app.get('download_button')) == 0
++    failed_transfers = [{'url': url, 'http_status': download_http(url).code} for url in captured_urls]
++    assert all(t['http_status'] == 404 for t in failed_transfers)
++    monkeypatch.setattr(st, 'download_button', original_button)
++    assert snapshot(directory) == persisted and payload_hashes(source) == original_files
++    assert sha((source / 'app.sqlite3').read_bytes()) == original_db_sha
++    record('T17', {'source_workspace': str(source), 'source_db_sha256': original_db_sha,
++                   'source_payload_hashes': original_files, 'provenance': 'Copied existing P5 generated test workspace; no new Approvals issued.',
++                   'actual_rows': 100000, 'actual_columns': 200, 'actual_result_bytes': path.stat().st_size,
++                   'P6_resources': resources, 'http_transfers': http, 'tightened_budget_denial': caught.value.code,
++                   'post_first_registration_allocation_failure_transfers': failed_transfers})
++
++
++def test_T18_successor_scope_audit_and_negative_mutation_classes(tmp_path):
++    from .scope_audit import audit, negative_probes
++    result = audit(ROOT)
++    probes = negative_probes(ROOT, tmp_path / 'scope-probes')
++    record('T18', {'audit': result, 'negative_probes': probes})
++    assert result.get('result') == 'PASS', result
++    assert probes, 'Negative mutation probes must actually execute'
++    rows = probes if isinstance(probes, list) else probes.get('probes', probes.get('results', []))
++    assert len(rows) >= 6
++    assert all(p.get('result') == 'REJECTED' for p in rows)
++
++
++def test_T19_documented_linux_launch_restart_and_actual_mac_docker(pa, copy_workspace):
++    directory, env = copy_workspace(pa)
++    before = snapshot(directory); files = payload_hashes(directory)
++    readme = (ROOT / 'docs/p6/README_PILOT.md').read_text()
++    assert 'streamlit' in readme and 'docker' in readme.lower() and 'VDE_WORKSPACE' in readme
++    observations = {'observed_host': platform.platform(), 'linux_launches': []}
++    for _ in range(2):
++        with socket.socket() as listener:
++            listener.bind(('127.0.0.1', 0)); port = listener.getsockname()[1]
++        command = [sys.executable, '-m', 'streamlit', 'run', str(ROOT / 'src/vde/app.py'),
++                   '--server.address=127.0.0.1', '--server.port=' + str(port), '--server.headless=true',
++                   '--browser.gatherUsageStats=false']
++        child_env = os.environ.copy(); child_env['VDE_WORKSPACE'] = str(directory)
++        process = subprocess.Popen(command, cwd=ROOT, env=child_env, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
++        status = None
++        try:
++            deadline = time.monotonic() + 30
++            while time.monotonic() < deadline:
++                try:
++                    with urlopen(f'http://127.0.0.1:{port}/_stcore/health', timeout=1) as response:
++                        status = response.status
++                        assert response.read() == b'ok'
++                    break
++                except OSError:
++                    if process.poll() is not None:
++                        break
++                    time.sleep(0.1)
++            assert status == 200
++        finally:
++            process.terminate()
++            stdout, stderr = process.communicate(timeout=15)
++        observations['linux_launches'].append({'command': command, 'health_http': status,
++                                                'stdout': stdout, 'stderr': stderr})
++    assert snapshot(directory) == before and payload_hashes(directory) == files
++    observations['persisted_order_run_result_qa_after_restart'] = True
++    mac_path = os.environ.get('P6_MAC_DOCKER_EVIDENCE')
++    if mac_path:
++        mac = json.loads(Path(mac_path).read_text())
++        observations['mac_docker'] = mac
++        assert mac['host_system'] == 'Darwin' and mac['container_system'] == 'Linux'
++        assert mac['launch_http_status'] == 200 and mac['restart_http_status'] == 200
++        assert mac['workspace_persisted'] is True and mac['explicit_ui_workflow_completed'] is True
++        assert mac['commands'] and mac['stdout'] and mac['docker_info']
++    else:
++        observations['mac_docker'] = {'outcome': 'NOT_RUN', 'reason': 'This execution host is Linux; no actual macOS Docker host evidence is available.'}
++    record('T19', observations)
++    assert mac_path, 'NOT_RUN — Mac Docker launch/restart and explicit workflow require actual macOS host evidence; Linux smoke passed. Gate B remains blocked.'
++
++
++def test_T20_exact_twenty_id_inventory_and_pending_release_gate(request):
++    items = [i for i in request.session.items if str(i.path) == str(Path(__file__))]
++    ids = [dict(i.user_properties).get('p6_id') for i in items]
++    assert sorted(ids) == [f'P6-T{i:02}' for i in range(1, 21)]
++    assert len(ids) == len(set(ids)) == 20
++    checklist = (ROOT / 'docs/p6/RELEASE_CHECKLIST.md').read_text()
++    readme = (ROOT / 'docs/p6/README_PILOT.md').read_text()
++    combined = (checklist + readme).lower()
++    assert 'gate b' in combined and 'pending' in combined
++    for limitation in ('13', 'snapshot', 'mac', '512', 'p5-t76', '212', '76'):
++        assert limitation in combined, limitation
++    assert 'tests/p6' in combined and 'junit' in combined and 'sha' in combined
++    commit = subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=ROOT, text=True).strip()
++    tree = subprocess.check_output(['git', 'rev-parse', 'HEAD^{tree}'], cwd=ROOT, text=True).strip()
++    manifest = {str(p.relative_to(ROOT)): sha(p.read_bytes()) for p in
++                sorted((ROOT / 'src/vde/p6').glob('*.py')) + sorted((ROOT / 'tests/p6').glob('*.py'))}
++    # This is the executable inventory checkpoint. The validation runner adds
++    # completed JUnit/full-regression outcomes and its final evidence manifest
++    # after pytest exits; this test cannot assert its own future report exists.
++    record('T20', {'collected_ids': ids, 'tested_commit': commit, 'tested_tree': tree,
++                   'working_runtime_test_sha256': manifest, 'Gate_B': 'PENDING',
++                   'final_junit_and_regression_manifest': 'Generated by run_validation after this invocation; no recursive test run.'})

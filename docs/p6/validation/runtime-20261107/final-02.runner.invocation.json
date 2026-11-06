@@ -1,0 +1,26 @@
+{
+  "argv": [
+    "/workspace/verified-data-extraction/.venv/bin/python",
+    "-m",
+    "p6.run_validation",
+    "--out",
+    "/workspace/p6-work/final-02",
+    "--stress-workspace",
+    "/workspace/p6-work/stress-source",
+    "--linux-smoke",
+    "/workspace/p6-work/docker-smoke/implementation-deddc2799464-20261107/diagnostic-summary.json"
+  ],
+  "shell_command": "PYTHONPATH=src:tests PYTHONDONTWRITEBYTECODE=1 /workspace/verified-data-extraction/.venv/bin/python -m p6.run_validation --out /workspace/p6-work/final-02 --stress-workspace /workspace/p6-work/stress-source --linux-smoke /workspace/p6-work/docker-smoke/implementation-deddc2799464-20261107/diagnostic-summary.json > /workspace/p6-work/final-02.runner.stdout.txt 2> /workspace/p6-work/final-02.runner.stderr.txt",
+  "cwd": "/workspace/p6-streamlit-e2e",
+  "explicit_environment_overrides": {
+    "PYTHONPATH": "src:tests",
+    "PYTHONDONTWRITEBYTECODE": "1"
+  },
+  "tested_commit": "deddc2799464076227173bd2e4890f552ffe64bf",
+  "tested_tree": "afc4126ccddce4ca4615ac411b1dd6281a98a960",
+  "first_child_started_at_moscow": "2026-11-07T00:58:05.688653+03:00",
+  "run_summary_completed_at_utc": "2026-11-06T22:25:44.858509+00:00",
+  "exit_observed_at_utc": "2026-11-06T22:26:22.338135+00:00",
+  "observed_exit_code": 1,
+  "observation_source": "Original exec session 3066 completed with actual exit_code=1; stdout/stderr preserved verbatim. Outer launch time was not separately recorded, so first-child and summary timestamps are separately labeled."
+}

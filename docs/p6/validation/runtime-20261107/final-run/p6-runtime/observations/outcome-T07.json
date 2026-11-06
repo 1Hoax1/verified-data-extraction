@@ -1,0 +1,12 @@
+{
+  "nodeid": "tests/p6/test_acceptance.py::test_T07_pb_xlsx_and_qa_independent_http_and_18_cells",
+  "outcome": "failed",
+  "duration_seconds": 8.976102537002589,
+  "properties": [
+    [
+      "p6_id",
+      "P6-T07"
+    ]
+  ],
+  "failure": "pb = <p6.conftest.UIScenario object at 0x7f622c930590>\ndownload_http = <function download_http.<locals>.fetch at 0x7f622dc76200>\n\n    def test_T07_pb_xlsx_and_qa_independent_http_and_18_cells(pb, download_http):\n        before = pb.snapshot()\n        prepared = pb.prepare_ui()\n        verified_report(pb, prepared)\n        assert prepared.result_name.endswith('.xlsx')\n        assert prepared.result_mime == 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'\n        book = load_workbook(io.BytesIO(prepared.result_bytes), read_only=True, data_only=False, keep_links=False)\n        try:\n            sheet = book[pb.spec.document_json['output']['sheet_name']]\n            rows = list(sheet.iter_rows())\n            assert len(rows) == 4 and all(len(row) == 6 for row in rows)\n            assert all(cell.data_type != 'f' for row in rows for cell in row)\n            values = [[cell.value for cell in row] for row in rows]\n        finally:\n            book.close()\n        # Frozen P-B expected cells are independent of the exported workbook.\n        golden = load_workbook(pb.source / 'expected_result.xlsx', read_only=True, data_only=False, keep_links=False)\n        try:\n            expected = [[cell.value for cell in row] for row in golden.active.iter_rows()]\n        finally:\n            golden.close()\n        assert values == expected\n        assert sum(len(row) for row in values[1:]) == 18\n        observations = transfer(pb.app, download_http, snapshot_expectation(prepared))\n        assert pb.snapshot() == before\n        record('T07', {'http_transfers': observations, 'decoded_cells': values, 'data_cells': 18,\n                       'observed_qa_status': pb.decision.report['overall_status'], 'result_name': prepared.result_name})\n>       assert pb.order().status == 'READY' and pb.decision.report['overall_status'] == 'PASS_WITH_WARNINGS'\nE       AssertionError: assert ('NEEDS_FIX' == 'READY'\nE         \nE         - READY\nE         + NEEDS_FIX)\n\ntests/p6/test_acceptance.py:254: AssertionError"
+}

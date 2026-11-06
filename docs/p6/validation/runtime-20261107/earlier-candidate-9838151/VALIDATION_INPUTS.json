@@ -1,0 +1,25 @@
+{
+  "command": [
+    "/workspace/p6-streamlit-e2e/tests/p6/run_validation.py",
+    "--out",
+    "/workspace/p6-work/final-01",
+    "--stress-workspace",
+    "/workspace/p6-work/stress-source",
+    "--linux-smoke",
+    "/workspace/p6-work/docker-smoke/implementation-9838151ca50e-20261107/diagnostic-summary.json"
+  ],
+  "cwd": "/workspace/p6-streamlit-e2e",
+  "tested_commit": "9838151ca50e10976c85d087fe17ec0d30ae2fea",
+  "tested_tree": "33eaa0557e136755cda1974a51dc0257ea1db53c",
+  "P6_STRESS_WORKSPACE": "/workspace/p6-work/stress-source",
+  "P6_VALIDATION_DIR": "/workspace/p6-work/final-01",
+  "P6_RESULTS_DIR": "/workspace/p6-work/final-01/p6-runtime/observations",
+  "external_platform_evidence": {
+    "linux_smoke": {
+      "path": "/workspace/p6-work/docker-smoke/implementation-9838151ca50e-20261107/diagnostic-summary.json",
+      "sha256": "5880620b78cc6295eec6802700ae3e9c1af7b63bc589b1029c530fcabcb11224"
+    },
+    "mac_smoke": null
+  },
+  "stress_database_sha256": "72381920bb07102a71a5206790ca7d34841dd0671c8c8f5664acc49dc3f4bc2c"
+}

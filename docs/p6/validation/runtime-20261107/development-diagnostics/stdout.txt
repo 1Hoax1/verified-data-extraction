@@ -1,0 +1,182 @@
+.....FF..........FF.                                                     [100%]
+=================================== FAILURES ===================================
+__________ test_T06_pb_explicit_v2_approval_and_typed_warning_oracle ___________
+
+pb = <p6.conftest.UIScenario object at 0x7f703e71a2a0>
+
+    def test_T06_pb_explicit_v2_approval_and_typed_warning_oracle(pb):
+        assert pb.spec.version_number == 2
+        with pb.uow() as u:
+            versions = u.specs.list_for_order(pb.order_id)
+            approvals = u.approvals.list_for_order(pb.order_id)
+            artifacts = u.artifacts.list_for_run(pb.run_id)
+        assert len(versions) == 2 and len(approvals) == 2
+        assert next(a for a in approvals if a.target_type == 'TRANSFORMATION_SPEC').target_version_id == pb.spec.id
+        assert all(a.approved_by == 'local_user' for a in approvals)
+        checks = pb.decision.report['deterministic_checks']
+        assert len(checks) == 24
+        dq17 = {c['criterion_id']: c['status'] for c in checks if c['check_id'] == 'DQ-017'}
+        assert dq17 == {'PB-AC-006': 'PASS', 'PB-AC-007': 'PASS'}
+        assert pb.decision.report['warnings']
+        assert any('FORMULA' in json.dumps(w).upper() for w in pb.decision.report['warnings'])
+        assert [a.artifact_type for a in artifacts if a.artifact_type.startswith('RESULT_')] == ['RESULT_XLSX']
+        record('T06', {'versions': [asdict(v) for v in versions], 'approvals': [asdict(a) for a in approvals],
+                       'DQ017': dq17, 'checks': len(checks), 'warnings': pb.decision.report['warnings'],
+                       'adaptations': pb.adaptations, 'observed_order_status': pb.order().status,
+                       'observed_qa_status': pb.decision.report['overall_status'],
+                       'actual_report': pb.decision.report,
+                       'blocking_issues': pb.decision.report['blocking_issues'],
+                       'failed_checks': [c for c in checks if c['status'] == 'FAIL']})
+>       assert pb.order().status == 'READY' and pb.decision.report['overall_status'] == 'PASS_WITH_WARNINGS', (
+            'Real P3 UI allocates a UUID Brief ID; frozen P5 PB-AC-002 special handling requires brief-pb-v1.',
+            pb.decision.report['blocking_issues'])
+E       AssertionError: ('Real P3 UI allocates a UUID Brief ID; frozen P5 PB-AC-002 special handling requires brief-pb-v1.', ['DQ-010'])
+E       assert ('NEEDS_FIX' == 'READY'
+E         
+E         - READY
+E         + NEEDS_FIX)
+
+tests/p6/test_acceptance.py:222: AssertionError
+---------------------------- Captured stderr setup -----------------------------
+2026-11-06 21:39:41.291 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+2026-11-06 21:39:41.322 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+____________ test_T07_pb_xlsx_and_qa_independent_http_and_18_cells _____________
+
+pb = <p6.conftest.UIScenario object at 0x7f703e71a2a0>
+download_http = <function download_http.<locals>.fetch at 0x7f703fa6de40>
+
+    def test_T07_pb_xlsx_and_qa_independent_http_and_18_cells(pb, download_http):
+        before = pb.snapshot()
+        prepared = pb.prepare_ui()
+        verified_report(pb, prepared)
+        assert prepared.result_name.endswith('.xlsx')
+        assert prepared.result_mime == 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+        book = load_workbook(io.BytesIO(prepared.result_bytes), read_only=True, data_only=False, keep_links=False)
+        try:
+            sheet = book[pb.spec.document_json['output']['sheet_name']]
+            rows = list(sheet.iter_rows())
+            assert len(rows) == 4 and all(len(row) == 6 for row in rows)
+            assert all(cell.data_type != 'f' for row in rows for cell in row)
+            values = [[cell.value for cell in row] for row in rows]
+        finally:
+            book.close()
+        # Frozen P-B expected cells are independent of the exported workbook.
+        golden = load_workbook(pb.source / 'expected_result.xlsx', read_only=True, data_only=False, keep_links=False)
+        try:
+            expected = [[cell.value for cell in row] for row in golden.active.iter_rows()]
+        finally:
+            golden.close()
+        assert values == expected
+        assert sum(len(row) for row in values[1:]) == 18
+        observations = transfer(pb.app, download_http, snapshot_expectation(prepared))
+        assert pb.snapshot() == before
+        record('T07', {'http_transfers': observations, 'decoded_cells': values, 'data_cells': 18,
+                       'observed_qa_status': pb.decision.report['overall_status'], 'result_name': prepared.result_name})
+>       assert pb.order().status == 'READY' and pb.decision.report['overall_status'] == 'PASS_WITH_WARNINGS'
+E       AssertionError: assert ('NEEDS_FIX' == 'READY'
+E         
+E         - READY
+E         + NEEDS_FIX)
+
+tests/p6/test_acceptance.py:254: AssertionError
+----------------------------- Captured stderr call -----------------------------
+2026-11-06 21:39:59.642 200 GET /mock/media/750aa7056e86e5188d42e9cbd169461d898f410b37230c3d69ad7f3a.xlsx (127.0.0.1) 0.29ms
+2026-11-06 21:39:59.644 200 GET /mock/media/c0fcc2c6199d9acf265833dda6bfb4f4a6516624db1675aab4c756ac.vde-qa-json (127.0.0.1) 0.23ms
+_________ test_T18_successor_scope_audit_and_negative_mutation_classes _________
+
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-66/test_T18_successor_scope_audit0')
+
+    def test_T18_successor_scope_audit_and_negative_mutation_classes(tmp_path):
+        from .scope_audit import audit, negative_probes
+>       result = audit(ROOT)
+                 ^^^^^^^^^^^
+
+tests/p6/test_acceptance.py:517: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+root = PosixPath('/workspace/p6-streamlit-e2e')
+
+    def audit(root, *, authority_root=None):
+        root = Path(root).resolve(); authority = Path(authority_root).resolve() if authority_root else root
+        assert json.loads(regular(root / 'tests/p6/scope_policy_v1.json')) == POLICY, 'P6 policy changed'
+        git(authority, 'merge-base', '--is-ancestor', BASELINE, 'HEAD')
+        git(authority, 'merge-base', '--is-ancestor', START, 'HEAD')
+        base = frozen(str(authority), START)
+        main = frozen(str(authority), BASELINE)
+        assert all(path in base and base[path] == record for path, record in main.items()), 'Start differs from approved main'
+        from scope_policy import verify_governance_document
+        verify_governance_document(root, authority_root=authority if authority != root else None)
+        owned = set(SOURCES) | set(TESTS) | set(DOCS)
+        for path, (mode, blob, raw) in base.items():
+            wanted = expected_app(raw) if path == 'src/vde/app.py' else raw
+            assert regular(root / path, mode) == wanted, 'Protected file changed: ' + path
+            if root == authority:
+                expected = hashlib.sha1(b'blob ' + str(len(wanted)).encode() + b'\0' + wanted).hexdigest()
+>               assert git(root, 'ls-tree', 'HEAD', '--', path) == f'{mode} blob {expected}\t{path}\n'.encode(), 'HEAD differs: ' + path
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E               AssertionError: HEAD differs: src/vde/app.py
+
+tests/p6/scope_audit.py:71: AssertionError
+________ test_T19_documented_linux_launch_restart_and_actual_mac_docker ________
+
+pa = <p6.conftest.UIScenario object at 0x7f703f03e3c0>
+copy_workspace = <function copy_workspace.<locals>.make at 0x7f703e45a200>
+
+    def test_T19_documented_linux_launch_restart_and_actual_mac_docker(pa, copy_workspace):
+        directory, env = copy_workspace(pa)
+        before = snapshot(directory); files = payload_hashes(directory)
+        readme = (ROOT / 'docs/p6/README_PILOT.md').read_text()
+        assert 'streamlit' in readme and 'docker' in readme.lower() and 'VDE_WORKSPACE' in readme
+        observations = {'observed_host': platform.platform(), 'linux_launches': []}
+        for _ in range(2):
+            with socket.socket() as listener:
+                listener.bind(('127.0.0.1', 0)); port = listener.getsockname()[1]
+            command = [sys.executable, '-m', 'streamlit', 'run', str(ROOT / 'src/vde/app.py'),
+                       '--server.address=127.0.0.1', '--server.port=' + str(port), '--server.headless=true',
+                       '--browser.gatherUsageStats=false']
+            child_env = os.environ.copy(); child_env['VDE_WORKSPACE'] = str(directory)
+            process = subprocess.Popen(command, cwd=ROOT, env=child_env, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+            status = None
+            try:
+                deadline = time.monotonic() + 30
+                while time.monotonic() < deadline:
+                    try:
+                        with urlopen(f'http://127.0.0.1:{port}/_stcore/health', timeout=1) as response:
+                            status = response.status
+                            assert response.read() == b'ok'
+                        break
+                    except OSError:
+                        if process.poll() is not None:
+                            break
+                        time.sleep(0.1)
+                assert status == 200
+            finally:
+                process.terminate()
+                stdout, stderr = process.communicate(timeout=15)
+            observations['linux_launches'].append({'command': command, 'health_http': status,
+                                                    'stdout': stdout, 'stderr': stderr})
+        assert snapshot(directory) == before and payload_hashes(directory) == files
+        observations['persisted_order_run_result_qa_after_restart'] = True
+        mac_path = os.environ.get('P6_MAC_DOCKER_EVIDENCE')
+        if mac_path:
+            mac = json.loads(Path(mac_path).read_text())
+            observations['mac_docker'] = mac
+            assert mac['host_system'] == 'Darwin' and mac['container_system'] == 'Linux'
+            assert mac['launch_http_status'] == 200 and mac['restart_http_status'] == 200
+            assert mac['workspace_persisted'] is True and mac['explicit_ui_workflow_completed'] is True
+            assert mac['commands'] and mac['stdout'] and mac['docker_info']
+        else:
+            observations['mac_docker'] = {'outcome': 'NOT_RUN', 'reason': 'This execution host is Linux; no actual macOS Docker host evidence is available.'}
+        record('T19', observations)
+>       assert mac_path, 'NOT_RUN — Mac Docker launch/restart and explicit workflow require actual macOS host evidence; Linux smoke passed. Gate B remains blocked.'
+E       AssertionError: NOT_RUN — Mac Docker launch/restart and explicit workflow require actual macOS host evidence; Linux smoke passed. Gate B remains blocked.
+E       assert None
+
+tests/p6/test_acceptance.py:573: AssertionError
+------- generated xml file: /workspace/p6-work/dev-final-01/results.xml --------
+=========================== short test summary info ============================
+FAILED tests/p6/test_acceptance.py::test_T06_pb_explicit_v2_approval_and_typed_warning_oracle
+FAILED tests/p6/test_acceptance.py::test_T07_pb_xlsx_and_qa_independent_http_and_18_cells
+FAILED tests/p6/test_acceptance.py::test_T18_successor_scope_audit_and_negative_mutation_classes
+FAILED tests/p6/test_acceptance.py::test_T19_documented_linux_launch_restart_and_actual_mac_docker
+4 failed, 16 passed in 223.11s (0:03:43)

@@ -1,0 +1,776 @@
+{
+  "isolated_workspace": "/tmp/pytest-of-agent/pytest-88/p6-pd0/workspace",
+  "simulated_test_user_only": true,
+  "actions": [
+    {
+      "action": "button",
+      "label": "Create DRAFT Order",
+      "before_counts": {
+        "orders": 0,
+        "input_assets": 0,
+        "brief_versions": 0,
+        "transformation_spec_versions": 0,
+        "approvals": 0,
+        "execution_runs": 0,
+        "artifacts": 0,
+        "qa_reports": 0,
+        "event_log": 0
+      }
+    },
+    {
+      "action": "button",
+      "label": "Upload",
+      "before_counts": {
+        "orders": 1,
+        "input_assets": 0,
+        "brief_versions": 0,
+        "transformation_spec_versions": 0,
+        "approvals": 0,
+        "execution_runs": 0,
+        "artifacts": 0,
+        "qa_reports": 0,
+        "event_log": 0
+      }
+    },
+    {
+      "action": "checkbox",
+      "label": "Open manual workflow"
+    },
+    {
+      "action": "button",
+      "label": "Verify P3 input and preview",
+      "before_counts": {
+        "orders": 1,
+        "input_assets": 1,
+        "brief_versions": 0,
+        "transformation_spec_versions": 0,
+        "approvals": 0,
+        "execution_runs": 0,
+        "artifacts": 0,
+        "qa_reports": 0,
+        "event_log": 1
+      }
+    },
+    {
+      "action": "button",
+      "label": "Begin manual review",
+      "before_counts": {
+        "orders": 1,
+        "input_assets": 1,
+        "brief_versions": 0,
+        "transformation_spec_versions": 0,
+        "approvals": 0,
+        "execution_runs": 0,
+        "artifacts": 0,
+        "qa_reports": 0,
+        "event_log": 1
+      }
+    },
+    {
+      "action": "checkbox",
+      "label": "Open deterministic transformation"
+    },
+    {
+      "action": "button",
+      "label": "Validate Brief draft",
+      "before_counts": {
+        "orders": 1,
+        "input_assets": 1,
+        "brief_versions": 0,
+        "transformation_spec_versions": 0,
+        "approvals": 0,
+        "execution_runs": 0,
+        "artifacts": 0,
+        "qa_reports": 0,
+        "event_log": 2
+      }
+    },
+    {
+      "action": "button",
+      "label": "Save new Brief version",
+      "before_counts": {
+        "orders": 1,
+        "input_assets": 1,
+        "brief_versions": 0,
+        "transformation_spec_versions": 0,
+        "approvals": 0,
+        "execution_runs": 0,
+        "artifacts": 0,
+        "qa_reports": 0,
+        "event_log": 2
+      }
+    },
+    {
+      "action": "checkbox",
+      "label": "Confirm this exact Brief ID and hash"
+    },
+    {
+      "action": "button",
+      "label": "I approve this Brief version",
+      "before_counts": {
+        "orders": 1,
+        "input_assets": 1,
+        "brief_versions": 1,
+        "transformation_spec_versions": 0,
+        "approvals": 0,
+        "execution_runs": 0,
+        "artifacts": 0,
+        "qa_reports": 0,
+        "event_log": 3
+      }
+    },
+    {
+      "action": "checkbox",
+      "label": "Open deterministic transformation"
+    },
+    {
+      "action": "button",
+      "label": "Validate TransformationSpec draft",
+      "before_counts": {
+        "orders": 1,
+        "input_assets": 1,
+        "brief_versions": 1,
+        "transformation_spec_versions": 0,
+        "approvals": 1,
+        "execution_runs": 0,
+        "artifacts": 0,
+        "qa_reports": 0,
+        "event_log": 4
+      }
+    },
+    {
+      "action": "button",
+      "label": "Save new TransformationSpec version",
+      "before_counts": {
+        "orders": 1,
+        "input_assets": 1,
+        "brief_versions": 1,
+        "transformation_spec_versions": 0,
+        "approvals": 1,
+        "execution_runs": 0,
+        "artifacts": 0,
+        "qa_reports": 0,
+        "event_log": 4
+      }
+    },
+    {
+      "action": "checkbox",
+      "label": "Confirm this exact Spec ID, hash and approved Brief context"
+    },
+    {
+      "action": "button",
+      "label": "I approve TransformationSpec",
+      "before_counts": {
+        "orders": 1,
+        "input_assets": 1,
+        "brief_versions": 1,
+        "transformation_spec_versions": 1,
+        "approvals": 1,
+        "execution_runs": 0,
+        "artifacts": 0,
+        "qa_reports": 0,
+        "event_log": 5
+      }
+    },
+    {
+      "action": "checkbox",
+      "label": "Open deterministic transformation"
+    },
+    {
+      "action": "checkbox",
+      "label": "I confirm the selected source and pipeline"
+    },
+    {
+      "action": "button",
+      "label": "Execute",
+      "before_counts": {
+        "orders": 1,
+        "input_assets": 1,
+        "brief_versions": 1,
+        "transformation_spec_versions": 1,
+        "approvals": 2,
+        "execution_runs": 0,
+        "artifacts": 0,
+        "qa_reports": 0,
+        "event_log": 6
+      }
+    },
+    {
+      "action": "checkbox",
+      "label": "Open export and QA"
+    },
+    {
+      "action": "button",
+      "label": "Export + deterministic QA",
+      "before_counts": {
+        "orders": 1,
+        "input_assets": 1,
+        "brief_versions": 1,
+        "transformation_spec_versions": 1,
+        "approvals": 2,
+        "execution_runs": 1,
+        "artifacts": 1,
+        "qa_reports": 0,
+        "event_log": 9
+      }
+    }
+  ],
+  "identity_adaptations": [
+    {
+      "source": "pecs/pilot_slice_v1/fixtures/P-D_errors_and_qa_blockers/brief_version.json",
+      "original_file_sha256": "d651dc60a68782490a0e603901043a92ffd1b3a91fe43e8ce3cb5387b7ad1e71",
+      "original_content_hash": "2550598bb5b649b6af9dbe1a5942a7c0e46122b6536e385a69305b99db4f6ea0",
+      "substitutions": [
+        {
+          "path": "order_id",
+          "original": "order-pd",
+          "adapted": "22b633e2-15ac-4c0f-b0f9-cb86a2a446f2"
+        },
+        {
+          "path": "inputs_expected[0].asset_id",
+          "original": "asset-pd-csv",
+          "adapted": "bf537d7f-7bc8-4ab4-935e-bd2a224fe465"
+        },
+        {
+          "path": "source_refs",
+          "original": [
+            "asset-pd-csv"
+          ],
+          "adapted": [
+            "bf537d7f-7bc8-4ab4-935e-bd2a224fe465"
+          ]
+        }
+      ],
+      "derived_content_hash": "ea68259d89acc4353cbc2411e1a013d8ecd44b72a7f5f8ff7f6fdc0e725dbd98",
+      "derived_json_sha256": "1b944dce5682720f1f76397483a4cbc358a9e365209d7c8d5aebc621b2001484",
+      "ui_allocates_version_id_created_at_and_monotonic_version_number": true
+    },
+    {
+      "source": "pecs/pilot_slice_v1/fixtures/P-D_errors_and_qa_blockers/transformation_spec_version.json",
+      "original_file_sha256": "a5f74ff09fa3edbb073cb324e7e2d937ad46eeb41ba43be9cfb6dd561af28587",
+      "original_content_hash": "716e94550cd49972cd9baec5bb131d5733460b13195f6b8976368008cf7c3b08",
+      "substitutions": [
+        {
+          "path": "order_id",
+          "original": "order-pd",
+          "adapted": "22b633e2-15ac-4c0f-b0f9-cb86a2a446f2"
+        },
+        {
+          "path": "inputs[0].asset_id",
+          "original": "asset-pd-csv",
+          "adapted": "bf537d7f-7bc8-4ab4-935e-bd2a224fe465"
+        },
+        {
+          "path": "brief_version_id",
+          "original": "brief-pd-v1",
+          "adapted": "e27ca872-9d4e-4231-8f0e-88dff5b20d06"
+        },
+        {
+          "path": "brief_content_hash",
+          "original": "2550598bb5b649b6af9dbe1a5942a7c0e46122b6536e385a69305b99db4f6ea0",
+          "adapted": "ea68259d89acc4353cbc2411e1a013d8ecd44b72a7f5f8ff7f6fdc0e725dbd98"
+        }
+      ],
+      "derived_content_hash": "e34a9846fd53a18833c3a9bd50893887a07e971b79a671043850dcd2e35cd57a",
+      "derived_json_sha256": "f1fb483113d057f4de36d11ca2bbe39b3e4261a4ef10df345f9b6b738dee28ad",
+      "ui_allocates_version_id_created_at_and_monotonic_version_number": true
+    }
+  ],
+  "order": {
+    "id": "22b633e2-15ac-4c0f-b0f9-cb86a2a446f2",
+    "title": "P6 isolated simulated test user — P-D_errors_and_qa_blockers",
+    "listing_text": "Fixture exercise only. No live customer approval or delivery.",
+    "created_at": "2026-11-06T22:22:32Z",
+    "updated_at": "2026-11-06T22:22:37Z",
+    "status": "NEEDS_FIX",
+    "approval_stage": "COMPLETE",
+    "listing_url": null,
+    "selected_brief_version_id": "e27ca872-9d4e-4231-8f0e-88dff5b20d06",
+    "selected_transformation_spec_version_id": "940cf15d-942d-4c43-bfa7-9d5ef568d8f8",
+    "budget": null,
+    "deadline": null,
+    "notes": null
+  },
+  "actual_persisted_brief": {
+    "id": "e27ca872-9d4e-4231-8f0e-88dff5b20d06",
+    "order_id": "22b633e2-15ac-4c0f-b0f9-cb86a2a446f2",
+    "version_number": 1,
+    "schema_version": "1.1",
+    "content_hash": "ea68259d89acc4353cbc2411e1a013d8ecd44b72a7f5f8ff7f6fdc0e725dbd98",
+    "document_json": {
+      "schema_version": "1.1",
+      "version_id": "e27ca872-9d4e-4231-8f0e-88dff5b20d06",
+      "order_id": "22b633e2-15ac-4c0f-b0f9-cb86a2a446f2",
+      "version_number": 1,
+      "created_at": "2026-11-06T22:22:33Z",
+      "source_refs": [
+        "bf537d7f-7bc8-4ab4-935e-bd2a224fe465"
+      ],
+      "content_hash": "ea68259d89acc4353cbc2411e1a013d8ecd44b72a7f5f8ff7f6fdc0e725dbd98",
+      "objective": "Normalize one local CSV without deleting rows and block READY when deterministic criteria fail.",
+      "record_definition": "One row represents one event record identified by id.",
+      "scope": {
+        "included": [
+          "All three input rows"
+        ],
+        "excluded": [],
+        "geography": null,
+        "time_range": null
+      },
+      "inputs_expected": [
+        {
+          "asset_id": "bf537d7f-7bc8-4ab4-935e-bd2a224fe465",
+          "input_type": "LOCAL_CSV",
+          "sheet_name": null
+        }
+      ],
+      "output_contract": {
+        "format": "CSV",
+        "file_name": "problematic_normalized.csv",
+        "sheet_name": null,
+        "encoding": "UTF-8",
+        "delimiter": ",",
+        "include_header": true,
+        "column_order": [
+          "id",
+          "name",
+          "event_date",
+          "amount"
+        ]
+      },
+      "fields": [
+        {
+          "name": "id",
+          "output_name": "ID",
+          "label": "ID",
+          "data_type": "string",
+          "required": true,
+          "nullable": false,
+          "format": null,
+          "allowed_values": null,
+          "min_value": null,
+          "max_value": null,
+          "unique": true,
+          "description": "Unique ID."
+        },
+        {
+          "name": "name",
+          "output_name": "Название",
+          "label": "Name",
+          "data_type": "string",
+          "required": true,
+          "nullable": false,
+          "format": null,
+          "allowed_values": null,
+          "min_value": null,
+          "max_value": null,
+          "unique": false,
+          "description": "Required name."
+        },
+        {
+          "name": "event_date",
+          "output_name": "Дата события",
+          "label": "Event date",
+          "data_type": "date",
+          "required": true,
+          "nullable": false,
+          "format": "YYYY-MM-DD",
+          "allowed_values": null,
+          "min_value": null,
+          "max_value": null,
+          "unique": false,
+          "description": "Required date."
+        },
+        {
+          "name": "amount",
+          "output_name": "Сумма",
+          "label": "Amount",
+          "data_type": "decimal",
+          "required": true,
+          "nullable": false,
+          "format": "DECIMAL_DOT",
+          "allowed_values": null,
+          "min_value": 0,
+          "max_value": null,
+          "unique": false,
+          "description": "Required amount."
+        }
+      ],
+      "volume_expectation": {
+        "mode": "EXACT",
+        "exact_count": 3,
+        "min_count": null,
+        "max_count": null
+      },
+      "data_quality_expectations": {
+        "empty_result_allowed": false,
+        "unexpected_columns_allowed": false,
+        "column_order_required": true,
+        "duplicate_key": [
+          "id"
+        ]
+      },
+      "acceptance_criteria": [
+        {
+          "schema_version": "1.1",
+          "criterion_id": "PD-AC-001",
+          "name": "Readable CSV",
+          "description": "Result is readable.",
+          "category": "output",
+          "check_mode": "DETERMINISTIC",
+          "severity": "BLOCKER",
+          "target": {
+            "scope": "ARTIFACT",
+            "dataset_id": null,
+            "column": null,
+            "columns": null,
+            "artifact_type": "RESULT_CSV",
+            "metric": null
+          },
+          "operator": "readable",
+          "expected": true,
+          "tolerance": null,
+          "source": "client_answer",
+          "requirement_status": "CONFIRMED"
+        },
+        {
+          "schema_version": "1.1",
+          "criterion_id": "PD-AC-002",
+          "name": "Required name",
+          "description": "No missing name.",
+          "category": "completeness",
+          "check_mode": "DETERMINISTIC",
+          "severity": "BLOCKER",
+          "target": {
+            "scope": "COLUMN",
+            "dataset_id": "result",
+            "column": "name",
+            "columns": null,
+            "artifact_type": null,
+            "metric": null
+          },
+          "operator": "all_non_null",
+          "expected": true,
+          "tolerance": null,
+          "source": "client_answer",
+          "requirement_status": "CONFIRMED"
+        },
+        {
+          "schema_version": "1.1",
+          "criterion_id": "PD-AC-003",
+          "name": "Unique id",
+          "description": "ID is unique.",
+          "category": "uniqueness",
+          "check_mode": "DETERMINISTIC",
+          "severity": "BLOCKER",
+          "target": {
+            "scope": "COLUMN",
+            "dataset_id": "result",
+            "column": "id",
+            "columns": null,
+            "artifact_type": null,
+            "metric": null
+          },
+          "operator": "unique",
+          "expected": true,
+          "tolerance": null,
+          "source": "client_answer",
+          "requirement_status": "CONFIRMED"
+        },
+        {
+          "schema_version": "1.1",
+          "criterion_id": "PD-AC-004",
+          "name": "Valid dates",
+          "description": "Non-null dates use YYYY-MM-DD.",
+          "category": "format",
+          "check_mode": "DETERMINISTIC",
+          "severity": "ERROR",
+          "target": {
+            "scope": "COLUMN",
+            "dataset_id": "result",
+            "column": "event_date",
+            "columns": null,
+            "artifact_type": null,
+            "metric": null
+          },
+          "operator": "matches_format",
+          "expected": "YYYY-MM-DD",
+          "tolerance": null,
+          "source": "client_answer",
+          "requirement_status": "CONFIRMED"
+        },
+        {
+          "schema_version": "1.1",
+          "criterion_id": "PD-AC-005",
+          "name": "No parse nulls",
+          "description": "Date and amount have no nulls.",
+          "category": "completeness",
+          "check_mode": "DETERMINISTIC",
+          "severity": "ERROR",
+          "target": {
+            "scope": "COLUMNS",
+            "dataset_id": "result",
+            "column": null,
+            "columns": [
+              "event_date",
+              "amount"
+            ],
+            "artifact_type": null,
+            "metric": null
+          },
+          "operator": "all_non_null",
+          "expected": true,
+          "tolerance": null,
+          "source": "client_answer",
+          "requirement_status": "CONFIRMED"
+        },
+        {
+          "schema_version": "1.1",
+          "criterion_id": "PD-AC-006",
+          "name": "Exact rows",
+          "description": "All three rows remain.",
+          "category": "volume",
+          "check_mode": "DETERMINISTIC",
+          "severity": "ERROR",
+          "target": {
+            "scope": "METRIC",
+            "dataset_id": "result",
+            "column": null,
+            "columns": null,
+            "artifact_type": null,
+            "metric": "row_count"
+          },
+          "operator": "exact_count",
+          "expected": 3,
+          "tolerance": null,
+          "source": "client_answer",
+          "requirement_status": "CONFIRMED"
+        }
+      ],
+      "assumptions": [
+        {
+          "assumption_id": "pd-assumption-1",
+          "text": "Parse errors become null and are evaluated by QA.",
+          "status": "ASSUMED"
+        }
+      ],
+      "open_questions": [],
+      "risks": [
+        {
+          "risk_id": "pd-risk-1",
+          "category": "QUALITY",
+          "severity": "HIGH",
+          "description": "Input intentionally has duplicates, missing values and parse failures."
+        }
+      ]
+    },
+    "created_at": "2026-11-06T22:22:33Z"
+  },
+  "actual_persisted_spec": {
+    "id": "940cf15d-942d-4c43-bfa7-9d5ef568d8f8",
+    "order_id": "22b633e2-15ac-4c0f-b0f9-cb86a2a446f2",
+    "version_number": 1,
+    "schema_version": "1.1",
+    "content_hash": "e34a9846fd53a18833c3a9bd50893887a07e971b79a671043850dcd2e35cd57a",
+    "document_json": {
+      "schema_version": "1.1",
+      "version_id": "940cf15d-942d-4c43-bfa7-9d5ef568d8f8",
+      "order_id": "22b633e2-15ac-4c0f-b0f9-cb86a2a446f2",
+      "version_number": 1,
+      "brief_version_id": "e27ca872-9d4e-4231-8f0e-88dff5b20d06",
+      "brief_content_hash": "ea68259d89acc4353cbc2411e1a013d8ecd44b72a7f5f8ff7f6fdc0e725dbd98",
+      "created_at": "2026-11-06T22:22:33Z",
+      "content_hash": "e34a9846fd53a18833c3a9bd50893887a07e971b79a671043850dcd2e35cd57a",
+      "inputs": [
+        {
+          "dataset_id": "raw",
+          "asset_id": "bf537d7f-7bc8-4ab4-935e-bd2a224fe465",
+          "source_type": "LOCAL_CSV",
+          "sheet_name": null,
+          "csv_options": {
+            "encoding": "UTF-8",
+            "delimiter": ",",
+            "header_row": 0
+          }
+        }
+      ],
+      "pipeline": [
+        {
+          "schema_version": "1.1",
+          "operation_id": "pd-op-01",
+          "type": "trim",
+          "input_dataset": "raw",
+          "output_dataset": "s01",
+          "params": {
+            "columns": [
+              "id",
+              "name",
+              "event_date",
+              "amount"
+            ],
+            "mode": "both"
+          }
+        },
+        {
+          "schema_version": "1.1",
+          "operation_id": "pd-op-02",
+          "type": "change_case",
+          "input_dataset": "s01",
+          "output_dataset": "s02",
+          "params": {
+            "columns": [
+              "name"
+            ],
+            "mode": "title"
+          }
+        },
+        {
+          "schema_version": "1.1",
+          "operation_id": "pd-op-03",
+          "type": "parse_date",
+          "input_dataset": "s02",
+          "output_dataset": "s03",
+          "params": {
+            "column": "event_date",
+            "formats": [
+              "YYYY-MM-DD"
+            ],
+            "output_format": "YYYY-MM-DD",
+            "errors": "SET_NULL"
+          }
+        },
+        {
+          "schema_version": "1.1",
+          "operation_id": "pd-op-04",
+          "type": "parse_number",
+          "input_dataset": "s03",
+          "output_dataset": "result",
+          "params": {
+            "column": "amount",
+            "decimal_separator": ".",
+            "thousands_separator": null,
+            "target_type": "decimal",
+            "errors": "SET_NULL"
+          }
+        }
+      ],
+      "output": {
+        "dataset_id": "result",
+        "format": "CSV",
+        "file_name": "problematic_normalized.csv",
+        "sheet_name": null,
+        "encoding": "UTF-8",
+        "delimiter": ",",
+        "column_order": [
+          "id",
+          "name",
+          "event_date",
+          "amount"
+        ]
+      },
+      "execution_policy": {
+        "fail_fast": true,
+        "allow_partial_output": false,
+        "max_rows": 100000,
+        "max_columns": 200
+      },
+      "provenance_policy": {
+        "record_input_checksum": true,
+        "preserve_source_row_number": false
+      },
+      "expected_schema": [
+        {
+          "name": "id",
+          "output_name": "ID",
+          "label": "ID",
+          "data_type": "string",
+          "required": true,
+          "nullable": false,
+          "format": null,
+          "allowed_values": null,
+          "min_value": null,
+          "max_value": null,
+          "unique": true,
+          "description": "Unique ID."
+        },
+        {
+          "name": "name",
+          "output_name": "Название",
+          "label": "Name",
+          "data_type": "string",
+          "required": true,
+          "nullable": false,
+          "format": null,
+          "allowed_values": null,
+          "min_value": null,
+          "max_value": null,
+          "unique": false,
+          "description": "Required name."
+        },
+        {
+          "name": "event_date",
+          "output_name": "Дата события",
+          "label": "Event date",
+          "data_type": "date",
+          "required": true,
+          "nullable": false,
+          "format": "YYYY-MM-DD",
+          "allowed_values": null,
+          "min_value": null,
+          "max_value": null,
+          "unique": false,
+          "description": "Required date."
+        },
+        {
+          "name": "amount",
+          "output_name": "Сумма",
+          "label": "Amount",
+          "data_type": "decimal",
+          "required": true,
+          "nullable": false,
+          "format": "DECIMAL_DOT",
+          "allowed_values": null,
+          "min_value": 0,
+          "max_value": null,
+          "unique": false,
+          "description": "Required amount."
+        }
+      ],
+      "acceptance_criteria_ref": [
+        "PD-AC-001",
+        "PD-AC-002",
+        "PD-AC-003",
+        "PD-AC-004",
+        "PD-AC-005",
+        "PD-AC-006"
+      ]
+    },
+    "created_at": "2026-11-06T22:22:33Z",
+    "brief_version_id": "e27ca872-9d4e-4231-8f0e-88dff5b20d06",
+    "brief_content_hash": "ea68259d89acc4353cbc2411e1a013d8ecd44b72a7f5f8ff7f6fdc0e725dbd98"
+  },
+  "approvals": [
+    {
+      "id": "c6663388-a5c6-43fc-ab09-4f5091c573ef",
+      "order_id": "22b633e2-15ac-4c0f-b0f9-cb86a2a446f2",
+      "target_type": "TRANSFORMATION_SPEC",
+      "target_version_id": "940cf15d-942d-4c43-bfa7-9d5ef568d8f8",
+      "target_content_hash": "e34a9846fd53a18833c3a9bd50893887a07e971b79a671043850dcd2e35cd57a",
+      "context_brief_version_id": "e27ca872-9d4e-4231-8f0e-88dff5b20d06",
+      "context_brief_content_hash": "ea68259d89acc4353cbc2411e1a013d8ecd44b72a7f5f8ff7f6fdc0e725dbd98",
+      "approved_by": "local_user",
+      "approved_at": "2026-11-06T22:22:33Z"
+    },
+    {
+      "id": "fd6c3dc0-8753-4d11-b3a5-8124b14606e3",
+      "order_id": "22b633e2-15ac-4c0f-b0f9-cb86a2a446f2",
+      "target_type": "BRIEF",
+      "target_version_id": "e27ca872-9d4e-4231-8f0e-88dff5b20d06",
+      "target_content_hash": "ea68259d89acc4353cbc2411e1a013d8ecd44b72a7f5f8ff7f6fdc0e725dbd98",
+      "context_brief_version_id": null,
+      "context_brief_content_hash": null,
+      "approved_by": "local_user",
+      "approved_at": "2026-11-06T22:22:33Z"
+    }
+  ]
+}

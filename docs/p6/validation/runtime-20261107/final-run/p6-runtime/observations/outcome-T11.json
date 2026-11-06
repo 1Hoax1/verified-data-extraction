@@ -1,0 +1,12 @@
+{
+  "nodeid": "tests/p6/test_acceptance.py::test_T11_corrupt_source_csv_and_xlsx_on_disposable_copies",
+  "outcome": "passed",
+  "duration_seconds": 2.9643987989984453,
+  "properties": [
+    [
+      "p6_id",
+      "P6-T11"
+    ]
+  ],
+  "failure": null
+}

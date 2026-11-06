@@ -1,0 +1,42 @@
+{
+  "observed_host": "Linux-6.18.57-x86_64-with-glibc2.41",
+  "linux_launches": [
+    {
+      "command": [
+        "/workspace/verified-data-extraction/.venv/bin/python",
+        "-m",
+        "streamlit",
+        "run",
+        "/workspace/p6-streamlit-e2e/src/vde/app.py",
+        "--server.address=127.0.0.1",
+        "--server.port=60747",
+        "--server.headless=true",
+        "--browser.gatherUsageStats=false"
+      ],
+      "health_http": 200,
+      "stdout": "\n  You can now view your Streamlit app in your browser.\n\n  URL: http://127.0.0.1:60747\n\n  Stopping...\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "/workspace/verified-data-extraction/.venv/bin/python",
+        "-m",
+        "streamlit",
+        "run",
+        "/workspace/p6-streamlit-e2e/src/vde/app.py",
+        "--server.address=127.0.0.1",
+        "--server.port=54161",
+        "--server.headless=true",
+        "--browser.gatherUsageStats=false"
+      ],
+      "health_http": 200,
+      "stdout": "\n  You can now view your Streamlit app in your browser.\n\n  URL: http://127.0.0.1:54161\n\n  Stopping...\n",
+      "stderr": ""
+    }
+  ],
+  "persisted_order_run_result_qa_after_restart": true,
+  "mac_docker": {
+    "outcome": "NOT_RUN",
+    "reason": "This execution host is Linux; no actual macOS Docker host evidence is available."
+  }
+}

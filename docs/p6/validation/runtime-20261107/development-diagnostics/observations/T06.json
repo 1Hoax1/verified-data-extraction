@@ -1,0 +1,1312 @@
+{
+  "versions": [
+    {
+      "id": "00890901-438c-4726-a401-cf4184d77629",
+      "order_id": "bb53a135-7385-4d2e-9eaf-bf549729fe65",
+      "version_number": 1,
+      "schema_version": "1.1",
+      "content_hash": "fdb684614fa9366bfcf2b8a1e54a318e79c4b22cfae90ad47ecedbdd02a1d201",
+      "document_json": {
+        "schema_version": "1.1",
+        "version_id": "00890901-438c-4726-a401-cf4184d77629",
+        "order_id": "bb53a135-7385-4d2e-9eaf-bf549729fe65",
+        "version_number": 1,
+        "brief_version_id": "953c2b5b-463c-471d-ae93-10a6cc792caa",
+        "brief_content_hash": "eb6067654e43826499aab29b42957dccf4e750508d4d98e77fd6a17e5ab4b3dd",
+        "created_at": "2026-11-06T21:39:42Z",
+        "content_hash": "fdb684614fa9366bfcf2b8a1e54a318e79c4b22cfae90ad47ecedbdd02a1d201",
+        "inputs": [
+          {
+            "dataset_id": "raw",
+            "asset_id": "1ad7bb55-30df-4d66-ae43-cc1e58239fd2",
+            "source_type": "LOCAL_XLSX",
+            "sheet_name": "Orders",
+            "csv_options": null
+          }
+        ],
+        "pipeline": [
+          {
+            "schema_version": "1.1",
+            "operation_id": "pb-op-01",
+            "type": "rename",
+            "input_dataset": "raw",
+            "output_dataset": "s01",
+            "params": {
+              "mapping": {
+                "Order ID": "order_id",
+                "Product": "product",
+                "Quantity": "quantity",
+                "Unit Price": "unit_price",
+                "Order Date": "order_date",
+                "Line Total": "line_total"
+              }
+            }
+          },
+          {
+            "schema_version": "1.1",
+            "operation_id": "pb-op-02",
+            "type": "trim",
+            "input_dataset": "s01",
+            "output_dataset": "s02",
+            "params": {
+              "columns": [
+                "order_id",
+                "product",
+                "order_date"
+              ],
+              "mode": "both"
+            }
+          },
+          {
+            "schema_version": "1.1",
+            "operation_id": "pb-op-03",
+            "type": "change_case",
+            "input_dataset": "s02",
+            "output_dataset": "s03",
+            "params": {
+              "columns": [
+                "product"
+              ],
+              "mode": "title"
+            }
+          },
+          {
+            "schema_version": "1.1",
+            "operation_id": "pb-op-04",
+            "type": "parse_date",
+            "input_dataset": "s03",
+            "output_dataset": "s04",
+            "params": {
+              "column": "order_date",
+              "formats": [
+                "DD.MM.YYYY",
+                "YYYY-MM-DD",
+                "DD/MM/YYYY"
+              ],
+              "output_format": "YYYY-MM-DD",
+              "errors": "FAIL"
+            }
+          },
+          {
+            "schema_version": "1.1",
+            "operation_id": "pb-op-05",
+            "type": "deduplicate",
+            "input_dataset": "s04",
+            "output_dataset": "s05",
+            "params": {
+              "subset": [
+                "order_id"
+              ],
+              "keep": "FIRST"
+            }
+          },
+          {
+            "schema_version": "1.1",
+            "operation_id": "pb-op-06",
+            "type": "sort",
+            "input_dataset": "s05",
+            "output_dataset": "s06",
+            "params": {
+              "by": [
+                "order_date"
+              ],
+              "ascending": [
+                true
+              ],
+              "nulls": "LAST"
+            }
+          },
+          {
+            "schema_version": "1.1",
+            "operation_id": "pb-op-07",
+            "type": "select_columns",
+            "input_dataset": "s06",
+            "output_dataset": "result",
+            "params": {
+              "columns": [
+                "order_id",
+                "product",
+                "quantity",
+                "unit_price",
+                "order_date",
+                "line_total"
+              ]
+            }
+          }
+        ],
+        "output": {
+          "dataset_id": "result",
+          "format": "XLSX",
+          "file_name": "orders_clean.xlsx",
+          "sheet_name": "Data",
+          "encoding": null,
+          "delimiter": null,
+          "column_order": [
+            "order_id",
+            "product",
+            "quantity",
+            "unit_price",
+            "order_date",
+            "line_total"
+          ]
+        },
+        "execution_policy": {
+          "fail_fast": true,
+          "allow_partial_output": false,
+          "max_rows": 100000,
+          "max_columns": 200
+        },
+        "provenance_policy": {
+          "record_input_checksum": true,
+          "preserve_source_row_number": false
+        },
+        "expected_schema": [
+          {
+            "name": "order_id",
+            "output_name": "Номер заказа",
+            "label": "Order ID",
+            "data_type": "string",
+            "required": true,
+            "nullable": false,
+            "format": null,
+            "allowed_values": null,
+            "min_value": null,
+            "max_value": null,
+            "unique": true,
+            "description": "Unique order ID."
+          },
+          {
+            "name": "product",
+            "output_name": "Товар",
+            "label": "Product",
+            "data_type": "string",
+            "required": true,
+            "nullable": false,
+            "format": null,
+            "allowed_values": null,
+            "min_value": null,
+            "max_value": null,
+            "unique": false,
+            "description": "Normalized title."
+          },
+          {
+            "name": "quantity",
+            "output_name": "Количество",
+            "label": "Quantity",
+            "data_type": "integer",
+            "required": true,
+            "nullable": false,
+            "format": "INTEGER",
+            "allowed_values": null,
+            "min_value": 1,
+            "max_value": null,
+            "unique": false,
+            "description": "Positive quantity."
+          },
+          {
+            "name": "unit_price",
+            "output_name": "Цена за единицу",
+            "label": "Unit price",
+            "data_type": "decimal",
+            "required": true,
+            "nullable": false,
+            "format": "DECIMAL_DOT",
+            "allowed_values": null,
+            "min_value": 0,
+            "max_value": null,
+            "unique": false,
+            "description": "Unit price."
+          },
+          {
+            "name": "order_date",
+            "output_name": "Дата заказа",
+            "label": "Order date",
+            "data_type": "date",
+            "required": true,
+            "nullable": false,
+            "format": "YYYY-MM-DD",
+            "allowed_values": null,
+            "min_value": null,
+            "max_value": null,
+            "unique": false,
+            "description": "ISO date."
+          },
+          {
+            "name": "line_total",
+            "output_name": "Сумма строки",
+            "label": "Line total",
+            "data_type": "decimal",
+            "required": true,
+            "nullable": false,
+            "format": "DECIMAL_DOT",
+            "allowed_values": null,
+            "min_value": 0,
+            "max_value": null,
+            "unique": false,
+            "description": "Cached value of the source XLSX formula; no formula is exported."
+          }
+        ],
+        "acceptance_criteria_ref": [
+          "PB-AC-001",
+          "PB-AC-002",
+          "PB-AC-003",
+          "PB-AC-004",
+          "PB-AC-005",
+          "PB-AC-006"
+        ]
+      },
+      "created_at": "2026-11-06T21:39:42Z",
+      "brief_version_id": "953c2b5b-463c-471d-ae93-10a6cc792caa",
+      "brief_content_hash": "eb6067654e43826499aab29b42957dccf4e750508d4d98e77fd6a17e5ab4b3dd"
+    },
+    {
+      "id": "e38a3c8d-a6b4-447d-9e48-dd3a5cac1572",
+      "order_id": "bb53a135-7385-4d2e-9eaf-bf549729fe65",
+      "version_number": 2,
+      "schema_version": "1.1",
+      "content_hash": "2d24803a1705de1a46542860d4542f757d7193e08a945940c1fbf059f9d1bb2a",
+      "document_json": {
+        "schema_version": "1.1",
+        "version_id": "e38a3c8d-a6b4-447d-9e48-dd3a5cac1572",
+        "order_id": "bb53a135-7385-4d2e-9eaf-bf549729fe65",
+        "version_number": 2,
+        "brief_version_id": "953c2b5b-463c-471d-ae93-10a6cc792caa",
+        "brief_content_hash": "eb6067654e43826499aab29b42957dccf4e750508d4d98e77fd6a17e5ab4b3dd",
+        "created_at": "2026-11-06T21:39:42Z",
+        "content_hash": "2d24803a1705de1a46542860d4542f757d7193e08a945940c1fbf059f9d1bb2a",
+        "inputs": [
+          {
+            "dataset_id": "raw",
+            "asset_id": "1ad7bb55-30df-4d66-ae43-cc1e58239fd2",
+            "source_type": "LOCAL_XLSX",
+            "sheet_name": "Orders",
+            "csv_options": null
+          }
+        ],
+        "pipeline": [
+          {
+            "schema_version": "1.1",
+            "operation_id": "pb-op-01",
+            "type": "rename",
+            "input_dataset": "raw",
+            "output_dataset": "s01",
+            "params": {
+              "mapping": {
+                "Order ID": "order_id",
+                "Product": "product",
+                "Quantity": "quantity",
+                "Unit Price": "unit_price",
+                "Order Date": "order_date",
+                "Line Total": "line_total"
+              }
+            }
+          },
+          {
+            "schema_version": "1.1",
+            "operation_id": "pb-op-02",
+            "type": "trim",
+            "input_dataset": "s01",
+            "output_dataset": "s02",
+            "params": {
+              "columns": [
+                "order_id",
+                "product",
+                "order_date"
+              ],
+              "mode": "both"
+            }
+          },
+          {
+            "schema_version": "1.1",
+            "operation_id": "pb-op-03",
+            "type": "change_case",
+            "input_dataset": "s02",
+            "output_dataset": "s03",
+            "params": {
+              "columns": [
+                "product"
+              ],
+              "mode": "title"
+            }
+          },
+          {
+            "schema_version": "1.1",
+            "operation_id": "pb-op-04",
+            "type": "parse_date",
+            "input_dataset": "s03",
+            "output_dataset": "s04",
+            "params": {
+              "column": "order_date",
+              "formats": [
+                "DD.MM.YYYY",
+                "YYYY-MM-DD",
+                "DD/MM/YYYY"
+              ],
+              "output_format": "YYYY-MM-DD",
+              "errors": "FAIL"
+            }
+          },
+          {
+            "schema_version": "1.1",
+            "operation_id": "pb-op-05",
+            "type": "deduplicate",
+            "input_dataset": "s04",
+            "output_dataset": "s05",
+            "params": {
+              "subset": [
+                "order_id"
+              ],
+              "keep": "FIRST"
+            }
+          },
+          {
+            "schema_version": "1.1",
+            "operation_id": "pb-op-06",
+            "type": "sort",
+            "input_dataset": "s05",
+            "output_dataset": "s06",
+            "params": {
+              "by": [
+                "order_date"
+              ],
+              "ascending": [
+                true
+              ],
+              "nulls": "LAST"
+            }
+          },
+          {
+            "schema_version": "1.1",
+            "operation_id": "pb-op-07",
+            "type": "select_columns",
+            "input_dataset": "s06",
+            "output_dataset": "result",
+            "params": {
+              "columns": [
+                "order_id",
+                "product",
+                "quantity",
+                "unit_price",
+                "order_date",
+                "line_total"
+              ]
+            }
+          }
+        ],
+        "output": {
+          "dataset_id": "result",
+          "format": "XLSX",
+          "file_name": "orders_clean.xlsx",
+          "sheet_name": "Data",
+          "encoding": null,
+          "delimiter": null,
+          "column_order": [
+            "order_id",
+            "product",
+            "quantity",
+            "unit_price",
+            "order_date",
+            "line_total"
+          ]
+        },
+        "execution_policy": {
+          "fail_fast": true,
+          "allow_partial_output": false,
+          "max_rows": 100000,
+          "max_columns": 200
+        },
+        "provenance_policy": {
+          "record_input_checksum": true,
+          "preserve_source_row_number": false
+        },
+        "expected_schema": [
+          {
+            "name": "order_id",
+            "output_name": "Номер заказа",
+            "label": "Order ID",
+            "data_type": "string",
+            "required": true,
+            "nullable": false,
+            "format": null,
+            "allowed_values": null,
+            "min_value": null,
+            "max_value": null,
+            "unique": true,
+            "description": "Unique order ID."
+          },
+          {
+            "name": "product",
+            "output_name": "Товар",
+            "label": "Product",
+            "data_type": "string",
+            "required": true,
+            "nullable": false,
+            "format": null,
+            "allowed_values": null,
+            "min_value": null,
+            "max_value": null,
+            "unique": false,
+            "description": "Normalized title."
+          },
+          {
+            "name": "quantity",
+            "output_name": "Количество",
+            "label": "Quantity",
+            "data_type": "integer",
+            "required": true,
+            "nullable": false,
+            "format": "INTEGER",
+            "allowed_values": null,
+            "min_value": 1,
+            "max_value": null,
+            "unique": false,
+            "description": "Positive quantity."
+          },
+          {
+            "name": "unit_price",
+            "output_name": "Цена за единицу",
+            "label": "Unit price",
+            "data_type": "decimal",
+            "required": true,
+            "nullable": false,
+            "format": "DECIMAL_DOT",
+            "allowed_values": null,
+            "min_value": 0,
+            "max_value": null,
+            "unique": false,
+            "description": "Unit price."
+          },
+          {
+            "name": "order_date",
+            "output_name": "Дата заказа",
+            "label": "Order date",
+            "data_type": "date",
+            "required": true,
+            "nullable": false,
+            "format": "YYYY-MM-DD",
+            "allowed_values": null,
+            "min_value": null,
+            "max_value": null,
+            "unique": false,
+            "description": "ISO date."
+          },
+          {
+            "name": "line_total",
+            "output_name": "Сумма строки",
+            "label": "Line total",
+            "data_type": "decimal",
+            "required": true,
+            "nullable": false,
+            "format": "DECIMAL_DOT",
+            "allowed_values": null,
+            "min_value": 0,
+            "max_value": null,
+            "unique": false,
+            "description": "Cached value of the source XLSX formula; no formula is exported."
+          }
+        ],
+        "acceptance_criteria_ref": [
+          "PB-AC-001",
+          "PB-AC-002",
+          "PB-AC-003",
+          "PB-AC-004",
+          "PB-AC-005",
+          "PB-AC-006",
+          "PB-AC-007"
+        ]
+      },
+      "created_at": "2026-11-06T21:39:42Z",
+      "brief_version_id": "953c2b5b-463c-471d-ae93-10a6cc792caa",
+      "brief_content_hash": "eb6067654e43826499aab29b42957dccf4e750508d4d98e77fd6a17e5ab4b3dd"
+    }
+  ],
+  "approvals": [
+    {
+      "id": "dfdbf805-017a-438a-a239-485052710723",
+      "order_id": "bb53a135-7385-4d2e-9eaf-bf549729fe65",
+      "target_type": "BRIEF",
+      "target_version_id": "953c2b5b-463c-471d-ae93-10a6cc792caa",
+      "target_content_hash": "eb6067654e43826499aab29b42957dccf4e750508d4d98e77fd6a17e5ab4b3dd",
+      "context_brief_version_id": null,
+      "context_brief_content_hash": null,
+      "approved_by": "local_user",
+      "approved_at": "2026-11-06T21:39:41Z"
+    },
+    {
+      "id": "4244adf3-afd2-40d9-a9e4-83f4f2dec6c0",
+      "order_id": "bb53a135-7385-4d2e-9eaf-bf549729fe65",
+      "target_type": "TRANSFORMATION_SPEC",
+      "target_version_id": "e38a3c8d-a6b4-447d-9e48-dd3a5cac1572",
+      "target_content_hash": "2d24803a1705de1a46542860d4542f757d7193e08a945940c1fbf059f9d1bb2a",
+      "context_brief_version_id": "953c2b5b-463c-471d-ae93-10a6cc792caa",
+      "context_brief_content_hash": "eb6067654e43826499aab29b42957dccf4e750508d4d98e77fd6a17e5ab4b3dd",
+      "approved_by": "local_user",
+      "approved_at": "2026-11-06T21:39:43Z"
+    }
+  ],
+  "DQ017": {
+    "PB-AC-006": "PASS",
+    "PB-AC-007": "PASS"
+  },
+  "checks": 24,
+  "warnings": [
+    "DQ-023",
+    "XLSX_FORMULA_PRESENT"
+  ],
+  "adaptations": [
+    {
+      "source": "pecs/pilot_slice_v1/fixtures/P-B_xlsx_sheet/brief_version.json",
+      "original_file_sha256": "3998f7946ada335f0f6c47d5d17f2b593989db858627d61a7d9230cea9fa9248",
+      "original_content_hash": "9b7c2b0111360714dfbc9cbdbc755b693b11e067f32771cb226126fdcd1ffb49",
+      "substitutions": [
+        {
+          "path": "order_id",
+          "original": "order-pb",
+          "adapted": "bb53a135-7385-4d2e-9eaf-bf549729fe65"
+        },
+        {
+          "path": "inputs_expected[0].asset_id",
+          "original": "asset-pb-xlsx",
+          "adapted": "1ad7bb55-30df-4d66-ae43-cc1e58239fd2"
+        },
+        {
+          "path": "source_refs",
+          "original": [
+            "asset-pb-xlsx"
+          ],
+          "adapted": [
+            "1ad7bb55-30df-4d66-ae43-cc1e58239fd2"
+          ]
+        }
+      ],
+      "derived_content_hash": "eb6067654e43826499aab29b42957dccf4e750508d4d98e77fd6a17e5ab4b3dd",
+      "derived_json_sha256": "be87418f1bca3db2eabe318b272660406e843823bc3d3338d8ed60d1b047f32e",
+      "ui_allocates_version_id_created_at_and_monotonic_version_number": true
+    },
+    {
+      "source": "pecs/pilot_slice_v1/fixtures/P-B_xlsx_sheet/transformation_spec_version.json",
+      "original_file_sha256": "960a0aa50925b70ef1456e70ac4c6601fd706a3f161c2abc3d1cd08c6e74e6d7",
+      "original_content_hash": "d7c30e08e6d03054d4a15daeb741f64c1f4fef64c225208d98c1659f8e82f2aa",
+      "substitutions": [
+        {
+          "path": "order_id",
+          "original": "order-pb",
+          "adapted": "bb53a135-7385-4d2e-9eaf-bf549729fe65"
+        },
+        {
+          "path": "inputs[0].asset_id",
+          "original": "asset-pb-xlsx",
+          "adapted": "1ad7bb55-30df-4d66-ae43-cc1e58239fd2"
+        },
+        {
+          "path": "brief_version_id",
+          "original": "brief-pb-v1",
+          "adapted": "953c2b5b-463c-471d-ae93-10a6cc792caa"
+        },
+        {
+          "path": "brief_content_hash",
+          "original": "9b7c2b0111360714dfbc9cbdbc755b693b11e067f32771cb226126fdcd1ffb49",
+          "adapted": "eb6067654e43826499aab29b42957dccf4e750508d4d98e77fd6a17e5ab4b3dd"
+        }
+      ],
+      "derived_content_hash": "fdb684614fa9366bfcf2b8a1e54a318e79c4b22cfae90ad47ecedbdd02a1d201",
+      "derived_json_sha256": "aa63bba679a45803e4f133d8b94151a2de84f48c9fdfefe5ab4ca892b1ef11eb",
+      "ui_allocates_version_id_created_at_and_monotonic_version_number": true
+    },
+    {
+      "source": "/tmp/pytest-of-agent/pytest-66/p6-pb-provenance0/transformation_spec_version_v2_CANDIDATE.json",
+      "original_file_sha256": "f6d1149f20eb3bb3d6759662c751d3f03544731e586df0a15733d56a51a9db83",
+      "original_content_hash": "c4f9aa33b341cf703b8edacbe60ba1b8070814dde461b4412407d8535188c9a3",
+      "substitutions": [
+        {
+          "path": "order_id",
+          "original": "order-pb",
+          "adapted": "bb53a135-7385-4d2e-9eaf-bf549729fe65"
+        },
+        {
+          "path": "inputs[0].asset_id",
+          "original": "asset-pb-xlsx",
+          "adapted": "1ad7bb55-30df-4d66-ae43-cc1e58239fd2"
+        },
+        {
+          "path": "brief_version_id",
+          "original": "brief-pb-v1",
+          "adapted": "953c2b5b-463c-471d-ae93-10a6cc792caa"
+        },
+        {
+          "path": "brief_content_hash",
+          "original": "9b7c2b0111360714dfbc9cbdbc755b693b11e067f32771cb226126fdcd1ffb49",
+          "adapted": "eb6067654e43826499aab29b42957dccf4e750508d4d98e77fd6a17e5ab4b3dd"
+        }
+      ],
+      "derived_content_hash": "2d24803a1705de1a46542860d4542f757d7193e08a945940c1fbf059f9d1bb2a",
+      "derived_json_sha256": "42ce08482969acf8a83dd69a0057715b0df4da08918a627ad3e31346ecb7e38f",
+      "ui_allocates_version_id_created_at_and_monotonic_version_number": true
+    }
+  ],
+  "observed_order_status": "NEEDS_FIX",
+  "observed_qa_status": "FAIL",
+  "actual_report": {
+    "schema_version": "1.1",
+    "report_id": "p5-qa-b37df4c9-089c-4fae-8472-7603e1970b76",
+    "run_id": "bef99e48-aa46-4980-b908-3e896a069adf",
+    "brief_version_id": "953c2b5b-463c-471d-ae93-10a6cc792caa",
+    "transformation_spec_version_id": "e38a3c8d-a6b4-447d-9e48-dd3a5cac1572",
+    "generated_at": "2026-11-06T21:39:47Z",
+    "overall_status": "FAIL",
+    "dataset_summary": {
+      "dataset_id": "result",
+      "row_count": 3,
+      "column_count": 6,
+      "columns": [
+        "order_id",
+        "product",
+        "quantity",
+        "unit_price",
+        "order_date",
+        "line_total"
+      ],
+      "output_headers": [
+        "Номер заказа",
+        "Товар",
+        "Количество",
+        "Цена за единицу",
+        "Дата заказа",
+        "Сумма строки"
+      ],
+      "file_size_bytes": 5096,
+      "checksum": "9a7b38ac52fa49407a7fe5a825867d2db8b308c479a14adb465048a3d3ab5f4b"
+    },
+    "deterministic_checks": [
+      {
+        "schema_version": "1.1",
+        "check_id": "DQ-001",
+        "name": "DQ-001 deterministic check",
+        "status": "PASS",
+        "severity": "BLOCKER",
+        "target": {
+          "artifact": null,
+          "dataset_id": null,
+          "column": null,
+          "row_ids": []
+        },
+        "expected": true,
+        "actual": 4338,
+        "affected_count": 0,
+        "sample_row_ids": [],
+        "message": "All selected data checked.",
+        "criterion_id": null
+      },
+      {
+        "schema_version": "1.1",
+        "check_id": "DQ-002",
+        "name": "DQ-002 deterministic check",
+        "status": "PASS",
+        "severity": "BLOCKER",
+        "target": {
+          "artifact": null,
+          "dataset_id": null,
+          "column": null,
+          "row_ids": []
+        },
+        "expected": "d275fa7393e73ef1be7815e83b31b1a710b3f345bb7138c72569b03f66edf80d",
+        "actual": "d275fa7393e73ef1be7815e83b31b1a710b3f345bb7138c72569b03f66edf80d",
+        "affected_count": 0,
+        "sample_row_ids": [],
+        "message": "All selected data checked.",
+        "criterion_id": null
+      },
+      {
+        "schema_version": "1.1",
+        "check_id": "DQ-003",
+        "name": "DQ-003 deterministic check",
+        "status": "PASS",
+        "severity": "BLOCKER",
+        "target": {
+          "artifact": null,
+          "dataset_id": null,
+          "column": null,
+          "row_ids": []
+        },
+        "expected": [
+          "eb6067654e43826499aab29b42957dccf4e750508d4d98e77fd6a17e5ab4b3dd",
+          "2d24803a1705de1a46542860d4542f757d7193e08a945940c1fbf059f9d1bb2a"
+        ],
+        "actual": [
+          "eb6067654e43826499aab29b42957dccf4e750508d4d98e77fd6a17e5ab4b3dd",
+          "2d24803a1705de1a46542860d4542f757d7193e08a945940c1fbf059f9d1bb2a"
+        ],
+        "affected_count": 0,
+        "sample_row_ids": [],
+        "message": "All selected data checked.",
+        "criterion_id": null
+      },
+      {
+        "schema_version": "1.1",
+        "check_id": "DQ-004",
+        "name": "DQ-004 deterministic check",
+        "status": "PASS",
+        "severity": "BLOCKER",
+        "target": {
+          "artifact": null,
+          "dataset_id": null,
+          "column": null,
+          "row_ids": []
+        },
+        "expected": [
+          "change_case",
+          "deduplicate",
+          "drop_columns",
+          "drop_missing",
+          "fill_missing",
+          "parse_date",
+          "parse_number",
+          "rename",
+          "replace",
+          "select_columns",
+          "sort",
+          "trim"
+        ],
+        "actual": [
+          "rename",
+          "trim",
+          "change_case",
+          "parse_date",
+          "deduplicate",
+          "sort",
+          "select_columns"
+        ],
+        "affected_count": 0,
+        "sample_row_ids": [],
+        "message": "All selected data checked.",
+        "criterion_id": null
+      },
+      {
+        "schema_version": "1.1",
+        "check_id": "DQ-005",
+        "name": "DQ-005 deterministic check",
+        "status": "PASS",
+        "severity": "BLOCKER",
+        "target": {
+          "artifact": null,
+          "dataset_id": null,
+          "column": null,
+          "row_ids": []
+        },
+        "expected": [
+          "pb-op-01",
+          "pb-op-02",
+          "pb-op-03",
+          "pb-op-04",
+          "pb-op-05",
+          "pb-op-06",
+          "pb-op-07"
+        ],
+        "actual": [
+          "pb-op-01",
+          "pb-op-02",
+          "pb-op-03",
+          "pb-op-04",
+          "pb-op-05",
+          "pb-op-06",
+          "pb-op-07"
+        ],
+        "affected_count": 0,
+        "sample_row_ids": [],
+        "message": "All selected data checked.",
+        "criterion_id": null
+      },
+      {
+        "schema_version": "1.1",
+        "check_id": "DQ-006",
+        "name": "DQ-006 deterministic check",
+        "status": "PASS",
+        "severity": "BLOCKER",
+        "target": {
+          "artifact": "RESULT_XLSX",
+          "dataset_id": null,
+          "column": null,
+          "row_ids": []
+        },
+        "expected": true,
+        "actual": true,
+        "affected_count": 0,
+        "sample_row_ids": [],
+        "message": "All selected data checked.",
+        "criterion_id": "PB-AC-001"
+      },
+      {
+        "schema_version": "1.1",
+        "check_id": "DQ-007",
+        "name": "DQ-007 deterministic check",
+        "status": "PASS",
+        "severity": "ERROR",
+        "target": {
+          "artifact": null,
+          "dataset_id": null,
+          "column": null,
+          "row_ids": []
+        },
+        "expected": "XLSX",
+        "actual": "XLSX",
+        "affected_count": 0,
+        "sample_row_ids": [],
+        "message": "All selected data checked.",
+        "criterion_id": null
+      },
+      {
+        "schema_version": "1.1",
+        "check_id": "DQ-008",
+        "name": "DQ-008 deterministic check",
+        "status": "PASS",
+        "severity": "BLOCKER",
+        "target": {
+          "artifact": null,
+          "dataset_id": null,
+          "column": null,
+          "row_ids": []
+        },
+        "expected": [
+          "order_id",
+          "product",
+          "quantity",
+          "unit_price",
+          "order_date",
+          "line_total"
+        ],
+        "actual": [
+          "order_id",
+          "product",
+          "quantity",
+          "unit_price",
+          "order_date",
+          "line_total"
+        ],
+        "affected_count": 0,
+        "sample_row_ids": [],
+        "message": "All selected data checked.",
+        "criterion_id": null
+      },
+      {
+        "schema_version": "1.1",
+        "check_id": "DQ-009",
+        "name": "DQ-009 deterministic check",
+        "status": "PASS",
+        "severity": "ERROR",
+        "target": {
+          "artifact": null,
+          "dataset_id": null,
+          "column": null,
+          "row_ids": []
+        },
+        "expected": [
+          "order_id",
+          "product",
+          "quantity",
+          "unit_price",
+          "order_date",
+          "line_total"
+        ],
+        "actual": [
+          "order_id",
+          "product",
+          "quantity",
+          "unit_price",
+          "order_date",
+          "line_total"
+        ],
+        "affected_count": 0,
+        "sample_row_ids": [],
+        "message": "All selected data checked.",
+        "criterion_id": null
+      },
+      {
+        "schema_version": "1.1",
+        "check_id": "DQ-010",
+        "name": "DQ-010 deterministic check",
+        "status": "FAIL",
+        "severity": "BLOCKER",
+        "target": {
+          "artifact": null,
+          "dataset_id": "result",
+          "column": null,
+          "row_ids": []
+        },
+        "expected": [
+          "order_id",
+          "product",
+          "quantity",
+          "unit_price",
+          "order_date"
+        ],
+        "actual": [
+          "order_id",
+          "product",
+          "quantity",
+          "unit_price",
+          "order_date",
+          "line_total"
+        ],
+        "affected_count": 1,
+        "sample_row_ids": [],
+        "message": "The approved deterministic requirement failed.",
+        "criterion_id": "PB-AC-002"
+      },
+      {
+        "schema_version": "1.1",
+        "check_id": "DQ-011",
+        "name": "DQ-011 deterministic check",
+        "status": "PASS",
+        "severity": "ERROR",
+        "target": {
+          "artifact": null,
+          "dataset_id": null,
+          "column": null,
+          "row_ids": []
+        },
+        "expected": "approved typed schema",
+        "actual": {},
+        "affected_count": 0,
+        "sample_row_ids": [],
+        "message": "All selected data checked.",
+        "criterion_id": null
+      },
+      {
+        "schema_version": "1.1",
+        "check_id": "DQ-012",
+        "name": "DQ-012 deterministic check",
+        "status": "PASS",
+        "severity": "BLOCKER",
+        "target": {
+          "artifact": null,
+          "dataset_id": null,
+          "column": null,
+          "row_ids": []
+        },
+        "expected": 0,
+        "actual": {
+          "order_id": 0,
+          "product": 0,
+          "quantity": 0,
+          "unit_price": 0,
+          "order_date": 0,
+          "line_total": 0
+        },
+        "affected_count": 0,
+        "sample_row_ids": [],
+        "message": "All selected data checked.",
+        "criterion_id": null
+      },
+      {
+        "schema_version": "1.1",
+        "check_id": "DQ-013",
+        "name": "DQ-013 deterministic check",
+        "status": "SKIPPED",
+        "severity": "INFO",
+        "target": {
+          "artifact": null,
+          "dataset_id": null,
+          "column": null,
+          "row_ids": []
+        },
+        "expected": null,
+        "actual": null,
+        "affected_count": 0,
+        "sample_row_ids": [],
+        "message": "Not applicable to the approved contract.",
+        "criterion_id": null
+      },
+      {
+        "schema_version": "1.1",
+        "check_id": "DQ-014",
+        "name": "DQ-014 deterministic check",
+        "status": "PASS",
+        "severity": "BLOCKER",
+        "target": {
+          "artifact": null,
+          "dataset_id": "result",
+          "column": "order_id",
+          "row_ids": []
+        },
+        "expected": true,
+        "actual": true,
+        "affected_count": 0,
+        "sample_row_ids": [],
+        "message": "All selected data checked.",
+        "criterion_id": "PB-AC-004"
+      },
+      {
+        "schema_version": "1.1",
+        "check_id": "DQ-015",
+        "name": "DQ-015 deterministic check",
+        "status": "PASS",
+        "severity": "ERROR",
+        "target": {
+          "artifact": null,
+          "dataset_id": "result",
+          "column": "order_date",
+          "row_ids": []
+        },
+        "expected": "YYYY-MM-DD",
+        "actual": {
+          "violations": 0,
+          "rows_checked": 3
+        },
+        "affected_count": 0,
+        "sample_row_ids": [],
+        "message": "All selected data checked.",
+        "criterion_id": "PB-AC-005"
+      },
+      {
+        "schema_version": "1.1",
+        "check_id": "DQ-016",
+        "name": "DQ-016 deterministic check",
+        "status": "PASS",
+        "severity": "ERROR",
+        "target": {
+          "artifact": null,
+          "dataset_id": null,
+          "column": null,
+          "row_ids": []
+        },
+        "expected": "finite exact numeric types",
+        "actual": {},
+        "affected_count": 0,
+        "sample_row_ids": [],
+        "message": "All selected data checked.",
+        "criterion_id": null
+      },
+      {
+        "schema_version": "1.1",
+        "check_id": "DQ-017",
+        "name": "DQ-017 deterministic check",
+        "status": "PASS",
+        "severity": "ERROR",
+        "target": {
+          "artifact": null,
+          "dataset_id": "result",
+          "column": "quantity",
+          "row_ids": []
+        },
+        "expected": 1,
+        "actual": 1,
+        "affected_count": 0,
+        "sample_row_ids": [],
+        "message": "All selected data checked.",
+        "criterion_id": "PB-AC-006"
+      },
+      {
+        "schema_version": "1.1",
+        "check_id": "DQ-017",
+        "name": "DQ-017 deterministic check",
+        "status": "PASS",
+        "severity": "ERROR",
+        "target": {
+          "artifact": null,
+          "dataset_id": "result",
+          "column": "line_total",
+          "row_ids": []
+        },
+        "expected": 0,
+        "actual": "20",
+        "affected_count": 0,
+        "sample_row_ids": [],
+        "message": "All selected data checked.",
+        "criterion_id": "PB-AC-007"
+      },
+      {
+        "schema_version": "1.1",
+        "check_id": "DQ-018",
+        "name": "DQ-018 deterministic check",
+        "status": "PASS",
+        "severity": "ERROR",
+        "target": {
+          "artifact": null,
+          "dataset_id": "result",
+          "column": null,
+          "row_ids": []
+        },
+        "expected": 3,
+        "actual": 3,
+        "affected_count": 0,
+        "sample_row_ids": [],
+        "message": "All selected data checked.",
+        "criterion_id": "PB-AC-003"
+      },
+      {
+        "schema_version": "1.1",
+        "check_id": "DQ-019",
+        "name": "DQ-019 deterministic check",
+        "status": "PASS",
+        "severity": "BLOCKER",
+        "target": {
+          "artifact": null,
+          "dataset_id": null,
+          "column": null,
+          "row_ids": []
+        },
+        "expected": false,
+        "actual": 3,
+        "affected_count": 0,
+        "sample_row_ids": [],
+        "message": "All selected data checked.",
+        "criterion_id": null
+      },
+      {
+        "schema_version": "1.1",
+        "check_id": "DQ-022",
+        "name": "DQ-022 deterministic check",
+        "status": "PASS",
+        "severity": "ERROR",
+        "target": {
+          "artifact": null,
+          "dataset_id": null,
+          "column": null,
+          "row_ids": []
+        },
+        "expected": {
+          "rows": 3,
+          "columns": 6
+        },
+        "actual": {
+          "rows": 3,
+          "columns": 6
+        },
+        "affected_count": 0,
+        "sample_row_ids": [],
+        "message": "All selected data checked.",
+        "criterion_id": null
+      },
+      {
+        "schema_version": "1.1",
+        "check_id": "DQ-023",
+        "name": "DQ-023 deterministic check",
+        "status": "WARN",
+        "severity": "WARNING",
+        "target": {
+          "artifact": null,
+          "dataset_id": null,
+          "column": null,
+          "row_ids": []
+        },
+        "expected": 0,
+        "actual": {
+          "source_formula_cells": 4,
+          "export_formula_cells": 0,
+          "export_errors": 0
+        },
+        "affected_count": 4,
+        "sample_row_ids": [],
+        "message": "All selected data checked.",
+        "criterion_id": null
+      },
+      {
+        "schema_version": "1.1",
+        "check_id": "DQ-024",
+        "name": "DQ-024 deterministic check",
+        "status": "SKIPPED",
+        "severity": "INFO",
+        "target": {
+          "artifact": null,
+          "dataset_id": null,
+          "column": null,
+          "row_ids": []
+        },
+        "expected": {
+          "encoding": "UTF-8",
+          "delimiter": null
+        },
+        "actual": {
+          "encoding": "UTF-8",
+          "delimiter": null
+        },
+        "affected_count": 0,
+        "sample_row_ids": [],
+        "message": "Not applicable to the approved contract.",
+        "criterion_id": null
+      },
+      {
+        "schema_version": "1.1",
+        "check_id": "DQ-025",
+        "name": "DQ-025 deterministic check",
+        "status": "PASS",
+        "severity": "ERROR",
+        "target": {
+          "artifact": null,
+          "dataset_id": null,
+          "column": null,
+          "row_ids": []
+        },
+        "expected": 3,
+        "actual": 3,
+        "affected_count": 0,
+        "sample_row_ids": [],
+        "message": "All selected data checked.",
+        "criterion_id": null
+      }
+    ],
+    "llm_review": {
+      "status": "NOT_APPLICABLE",
+      "reason": "PILOT_SLICE_V1_NO_LLM"
+    },
+    "blocking_issues": [
+      "DQ-010"
+    ],
+    "warnings": [
+      "DQ-023",
+      "XLSX_FORMULA_PRESENT"
+    ],
+    "sampling_manifest": null,
+    "known_limitations": [
+      "Pilot Slice V1: deterministic checks only; no LLM review.",
+      "CSV lexical projection cannot distinguish a typed null from empty text; typed QA uses P4 originals.",
+      "Source XLSX formulas use previously cached values only; no recalculation.",
+      "Resource protection uses sampled RSS; arbitrary maximum-length data may fail closed.",
+      "Local single-process serialization is not distributed locking; no P6 delivery is performed."
+    ],
+    "artifacts": [
+      {
+        "artifact_type": "RESULT_XLSX",
+        "path": "orders/bb53a135-7385-4d2e-9eaf-bf549729fe65/runs/bef99e48-aa46-4980-b908-3e896a069adf/artifacts/p5-final-0f7e2cef7a3ab4a28447f7cbcee9be9ddb15653c3c733f71653f88bdb4a77fea/payload",
+        "checksum": "9a7b38ac52fa49407a7fe5a825867d2db8b308c479a14adb465048a3d3ab5f4b"
+      }
+    ]
+  },
+  "blocking_issues": [
+    "DQ-010"
+  ],
+  "failed_checks": [
+    {
+      "schema_version": "1.1",
+      "check_id": "DQ-010",
+      "name": "DQ-010 deterministic check",
+      "status": "FAIL",
+      "severity": "BLOCKER",
+      "target": {
+        "artifact": null,
+        "dataset_id": "result",
+        "column": null,
+        "row_ids": []
+      },
+      "expected": [
+        "order_id",
+        "product",
+        "quantity",
+        "unit_price",
+        "order_date"
+      ],
+      "actual": [
+        "order_id",
+        "product",
+        "quantity",
+        "unit_price",
+        "order_date",
+        "line_total"
+      ],
+      "affected_count": 1,
+      "sample_row_ids": [],
+      "message": "The approved deterministic requirement failed.",
+      "criterion_id": "PB-AC-002"
+    }
+  ]
+}

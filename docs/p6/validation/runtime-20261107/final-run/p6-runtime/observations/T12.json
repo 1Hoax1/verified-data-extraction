@@ -1,0 +1,14 @@
+[
+  {
+    "kind": "P4_INTERNAL",
+    "new_prepare_error": "STORAGE_ERROR",
+    "old_verified_snapshot_sha256": "c3b4e1f9a885bcf969cd34a9041951c1bed1abcd6aaba4c4f1f2fcd414d86cc9",
+    "snapshot_boundary": "Existing immutable bytes remain the previously verified copy."
+  },
+  {
+    "kind": "RESULT_CSV",
+    "new_prepare_error": "STORAGE_ERROR",
+    "old_verified_snapshot_sha256": "c3b4e1f9a885bcf969cd34a9041951c1bed1abcd6aaba4c4f1f2fcd414d86cc9",
+    "snapshot_boundary": "Existing immutable bytes remain the previously verified copy."
+  }
+]

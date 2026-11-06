@@ -1,0 +1,26 @@
+{
+  "schemas_checked": 20,
+  "positive_validations": 121,
+  "negative_examples_inspected": 24,
+  "manifest_present_matches": 116,
+  "manifest_declared_count": 129,
+  "missing_P_C_originals": [
+    "fixtures/P-C_approval_safety/README.md",
+    "fixtures/P-C_approval_safety/acceptance_criteria.json",
+    "fixtures/P-C_approval_safety/approval_safety_cases.json",
+    "fixtures/P-C_approval_safety/approvals/brief_approval.json",
+    "fixtures/P-C_approval_safety/approvals/transformation_approval.json",
+    "fixtures/P-C_approval_safety/brief_version.json",
+    "fixtures/P-C_approval_safety/errors_checked.json",
+    "fixtures/P-C_approval_safety/expected_qa_report.json",
+    "fixtures/P-C_approval_safety/expected_result.csv",
+    "fixtures/P-C_approval_safety/invalid_manifest.json",
+    "fixtures/P-C_approval_safety/semantic_payloads/brief_payload.json",
+    "fixtures/P-C_approval_safety/semantic_payloads/transformation_payload.json",
+    "fixtures/P-C_approval_safety/transformation_spec_version.json"
+  ],
+  "available_schema_validation": "PASS",
+  "complete_original_P0_pack": "INCOMPLETE_13_MISSING_ORIGINALS",
+  "P_C_full_positive": "BLOCKED_NOT_CLAIMED",
+  "synthetic_supplement_approval": "SCHEMA_VALID_TEST_ONLY_NOT_BUSINESS_AUTHORITY"
+}

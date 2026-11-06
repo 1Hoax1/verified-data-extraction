@@ -1,0 +1,13 @@
+A	docs/p6/README_PILOT.md
+A	docs/p6/RELEASE_CHECKLIST.md
+M	src/vde/app.py
+A	src/vde/p6/__init__.py
+A	src/vde/p6/delivery.py
+A	src/vde/p6/orders.py
+A	src/vde/p6/ui.py
+A	tests/p6/__init__.py
+A	tests/p6/conftest.py
+A	tests/p6/run_validation.py
+A	tests/p6/scope_audit.py
+A	tests/p6/scope_policy_v1.json
+A	tests/p6/test_acceptance.py

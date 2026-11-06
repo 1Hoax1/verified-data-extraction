@@ -1,0 +1,27 @@
+{
+  "P3-F40": {
+    "actions": [
+      "begin_manual_review",
+      "publish_brief",
+      "approve_brief",
+      "publish_spec",
+      "approve_spec_and_finish",
+      "inspect_no_execution"
+    ],
+    "driver_layers": [
+      "P3_API",
+      "P3_API",
+      "P3_API",
+      "P3_API",
+      "P3_API",
+      "UI_DRIVER"
+    ],
+    "expected": "NO_EXECUTION_RUN",
+    "initial_profile": "draft",
+    "initial_state_verified": true,
+    "no_execution_artifacts_qa": true,
+    "partial_business_writes_on_rejection": null,
+    "public_errors": [],
+    "result": "PASS"
+  }
+}

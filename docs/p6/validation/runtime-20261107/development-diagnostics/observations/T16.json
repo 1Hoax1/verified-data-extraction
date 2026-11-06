@@ -1,0 +1,24 @@
+{
+  "P-A_dirty_csv": {
+    "result_name": "customers_clean.csv",
+    "mime": "text/csv",
+    "report_name": "qa_report_p5-qa-f1f97579-e488-4164-b56e-6937a939c82a.json",
+    "report_sha256": "862d5a4d4ecedb0ac1f91de4709af5d57604f5b76b920c28231cd30647bbfa71"
+  },
+  "P-B_xlsx_sheet": {
+    "result_name": "orders_clean_DIAGNOSTIC_NOT_FOR_DELIVERY.xlsx",
+    "mime": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+    "report_name": "qa_report_p5-qa-b37df4c9-089c-4fae-8472-7603e1970b76.json",
+    "report_sha256": "ed64ecbf0e9774fe18dbae85d7ffcda5ed8b34f7056932b88618e60db7f21635"
+  },
+  "P-D_errors_and_qa_blockers": {
+    "result_name": "problematic_normalized_DIAGNOSTIC_NOT_FOR_DELIVERY.csv",
+    "mime": "text/csv",
+    "report_name": "qa_report_p5-qa-6b4f6ae4-d363-49f1-bb4e-cc747857a492.json",
+    "report_sha256": "55ae79da5b29ad9d34e8ca336d7706eea37f3980e54ae29cd55d6cb5018c6a37"
+  },
+  "unsafe:'../escape.csv'": "STORAGE_ERROR",
+  "unsafe:'bad\\\\name.csv'": "STORAGE_ERROR",
+  "unsafe:'bad\\nname.csv'": "STORAGE_ERROR",
+  "unsafe:'wrong.xlsx'": "STORAGE_ERROR"
+}
