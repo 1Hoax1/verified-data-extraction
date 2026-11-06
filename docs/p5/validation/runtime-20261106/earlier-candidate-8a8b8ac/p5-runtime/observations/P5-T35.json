@@ -1,0 +1,28 @@
+{
+  "fixture": "P5-DQ-018-POS",
+  "result": "PASS",
+  "observed_check": {
+    "schema_version": "1.1",
+    "check_id": "DQ-018",
+    "name": "DQ-018 deterministic check",
+    "status": "PASS",
+    "severity": "ERROR",
+    "target": {
+      "artifact": null,
+      "dataset_id": null,
+      "column": null,
+      "row_ids": []
+    },
+    "expected": true,
+    "actual": {
+      "mode": "EXACT",
+      "expected": 3,
+      "actual": 3
+    },
+    "affected_count": 0,
+    "sample_row_ids": [],
+    "message": "All selected data checked.",
+    "criterion_id": null
+  },
+  "supplemental": []
+}

@@ -1,0 +1,110 @@
+{
+  "status": "STATIC_V02A_NUMERIC_PASS",
+  "numeric_fixture_cases": {
+    "total": 26,
+    "csv_positive": 11,
+    "csv_negative": 4,
+    "xlsx_positive": 6,
+    "xlsx_negative": 5
+  },
+  "P0_CSV_golden_numeric_projection": {
+    "P-A": {
+      "byte_size": 277,
+      "sha256": "c3b4e1f9a885bcf969cd34a9041951c1bed1abcd6aaba4c4f1f2fcd414d86cc9",
+      "byte_for_byte_numeric_projection": "PASS"
+    },
+    "P-B": {
+      "byte_size": 245,
+      "sha256": "1e9449a8ff90f0cac9d62ba94b3d6e812dd565f85e9dd91fb2b48b6cbbf4d3c6",
+      "byte_for_byte_numeric_projection": "PASS"
+    }
+  },
+  "actual_test_only_openpyxl_roundtrip": [
+    {
+      "case_id": "XLSX-P01",
+      "eligible": true,
+      "actual_python_type": "int",
+      "actual_value": "10",
+      "stored_xml_lexeme": "10",
+      "compare_pass": true
+    },
+    {
+      "case_id": "XLSX-P02",
+      "eligible": true,
+      "actual_python_type": "float",
+      "actual_value": "15.5",
+      "stored_xml_lexeme": "15.5",
+      "compare_pass": true
+    },
+    {
+      "case_id": "XLSX-P03",
+      "eligible": true,
+      "actual_python_type": "float",
+      "actual_value": "0.1",
+      "stored_xml_lexeme": "0.1",
+      "compare_pass": true
+    },
+    {
+      "case_id": "XLSX-P04",
+      "eligible": true,
+      "actual_python_type": "int",
+      "actual_value": "42",
+      "stored_xml_lexeme": "42",
+      "compare_pass": true
+    },
+    {
+      "case_id": "XLSX-P05",
+      "eligible": true,
+      "actual_python_type": "int",
+      "actual_value": "2000",
+      "stored_xml_lexeme": "2000",
+      "compare_pass": true
+    },
+    {
+      "case_id": "XLSX-P06",
+      "eligible": true,
+      "actual_python_type": "int",
+      "actual_value": "20",
+      "stored_xml_lexeme": "20",
+      "compare_pass": true
+    },
+    {
+      "case_id": "XLSX-N01",
+      "eligible": false,
+      "actual_python_type": "int",
+      "actual_value": "9007199254740992",
+      "stored_xml_lexeme": "9007199254740992",
+      "compare_pass": false
+    },
+    {
+      "case_id": "XLSX-N02",
+      "eligible": false,
+      "actual_python_type": "float",
+      "actual_value": "123456789012345.7",
+      "stored_xml_lexeme": "123456789012345.7",
+      "compare_pass": false
+    }
+  ],
+  "manifest": "PASS 60/60",
+  "proposal": "P5-Q03/P5-Q04 PROPOSED",
+  "P5_runtime": "NOT_RUN",
+  "P5_full_regression": "NOT_RUN",
+  "Gate_A": "NOT_PASSED",
+  "mutations_rejected": [
+    "decimal10_changed_to_integer_lexeme",
+    "decimal2000_lost_dot_zero",
+    "integer10_wrong_dot_zero",
+    "locale_decimal_comma_accepted",
+    "negative_oracle_masquerades_as_positive",
+    "unsafe_signed64_alleged_roundtrip_error",
+    "safe_15p5_alleged_preflight_failure",
+    "unsafe_decimal_declared_positive",
+    "noncanonical_decimal_tag",
+    "test_id_invented",
+    "xlsx_xml_numeric_lexeme_mutation",
+    "xlsx_reopened_numeric_mutation",
+    "xlsx_numeric_as_text_mutation",
+    "xlsx_signed64_rounding_mutation"
+  ],
+  "mutation_count": 14
+}

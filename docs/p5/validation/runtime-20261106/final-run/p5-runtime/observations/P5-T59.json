@@ -1,0 +1,7 @@
+{
+  "result": "PASS",
+  "forged_admission": "REJECTED_NO_WRITES",
+  "available_PC_files": 10,
+  "missing_PC_files": 13,
+  "full_PC_positive": "BLOCKED"
+}

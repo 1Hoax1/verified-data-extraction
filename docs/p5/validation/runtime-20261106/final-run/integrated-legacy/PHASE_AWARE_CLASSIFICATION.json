@@ -1,0 +1,1280 @@
+{
+  "total": 212,
+  "passed": 206,
+  "expected_historical_scope_conflicts": 6,
+  "blocking_regressions": 0,
+  "records": [
+    {
+      "test_id": "P1-T01",
+      "pytest_outcome": "pass",
+      "classification": "PASS",
+      "exact_assertion": ""
+    },
+    {
+      "test_id": "P1-T02",
+      "pytest_outcome": "pass",
+      "classification": "PASS",
+      "exact_assertion": ""
+    },
+    {
+      "test_id": "P1-T03",
+      "pytest_outcome": "pass",
+      "classification": "PASS",
+      "exact_assertion": ""
+    },
+    {
+      "test_id": "P1-T04",
+      "pytest_outcome": "pass",
+      "classification": "PASS",
+      "exact_assertion": ""
+    },
+    {
+      "test_id": "P1-T05",
+      "pytest_outcome": "pass",
+      "classification": "PASS",
+      "exact_assertion": ""
+    },
+    {
+      "test_id": "P1-T06",
+      "pytest_outcome": "pass",
+      "classification": "PASS",
+      "exact_assertion": ""
+    },
+    {
+      "test_id": "P1-T07",
+      "pytest_outcome": "pass",
+      "classification": "PASS",
+      "exact_assertion": ""
+    },
+    {
+      "test_id": "P1-T08",
+      "pytest_outcome": "pass",
+      "classification": "PASS",
+      "exact_assertion": ""
+    },
+    {
+      "test_id": "P1-T09",
+      "pytest_outcome": "pass",
+      "classification": "PASS",
+      "exact_assertion": ""
+    },
+    {
+      "test_id": "P1-T10",
+      "pytest_outcome": "pass",
+      "classification": "PASS",
+      "exact_assertion": ""
+    },
+    {
+      "test_id": "P1-T11",
+      "pytest_outcome": "pass",
+      "classification": "PASS",
+      "exact_assertion": ""
+    },
+    {
+      "test_id": "P1-T12",
+      "pytest_outcome": "pass",
+      "classification": "PASS",
+      "exact_assertion": ""
+    },
+    {
+      "test_id": "P1-T13",
+      "pytest_outcome": "pass",
+      "classification": "PASS",
+      "exact_assertion": ""
+    },
+    {
+      "test_id": "P1-T14",
+      "pytest_outcome": "pass",
+      "classification": "PASS",
+      "exact_assertion": ""
+    },
+    {
+      "test_id": "P1-T15",
+      "pytest_outcome": "pass",
+      "classification": "PASS",
+      "exact_assertion": ""
+    },
+    {
+      "test_id": "P1-T16",
+      "pytest_outcome": "pass",
+      "classification": "PASS",
+      "exact_assertion": ""
+    },
+    {
+      "test_id": "P1-T17",
+      "pytest_outcome": "pass",
+      "classification": "PASS",
+      "exact_assertion": ""
+    },
+    {
+      "test_id": "P1-T18",
+      "pytest_outcome": "pass",
+      "classification": "PASS",
+      "exact_assertion": ""
+    },
+    {
+      "test_id": "P1-T19",
+      "pytest_outcome": "pass",
+      "classification": "PASS",
+      "exact_assertion": ""
+    },
+    {
+      "test_id": "P1-T20",
+      "pytest_outcome": "pass",
+      "classification": "PASS",
+      "exact_assertion": ""
+    },
+    {
+      "test_id": "P1-T21",
+      "pytest_outcome": "pass",
+      "classification": "PASS",
+      "exact_assertion": ""
+    },
+    {
+      "test_id": "P1-T22",
+      "pytest_outcome": "pass",
+      "classification": "PASS",
+      "exact_assertion": ""
+    },
+    {
+      "test_id": "P1-T23",
+      "pytest_outcome": "pass",
+      "classification": "PASS",
+      "exact_assertion": ""
+    },
+    {
+      "test_id": "P1-T24",
+      "pytest_outcome": "pass",
+      "classification": "PASS",
+      "exact_assertion": ""
+    },
+    {
+      "test_id": "P1-T25",
+      "pytest_outcome": "pass",
+      "classification": "PASS",
+      "exact_assertion": ""
+    },
+    {
+      "test_id": "P1-T26",
+      "pytest_outcome": "pass",
+      "classification": "PASS",
+      "exact_assertion": ""
+    },
+    {
+      "test_id": "P1-T27",
+      "pytest_outcome": "pass",
+      "classification": "PASS",
+      "exact_assertion": ""
+    },
+    {
+      "test_id": "P1-T28",
+      "pytest_outcome": "pass",
+      "classification": "PASS",
+      "exact_assertion": ""
+    },
+    {
+      "test_id": "P1-T29",
+      "pytest_outcome": "pass",
+      "classification": "PASS",
+      "exact_assertion": ""
+    },
+    {
+      "test_id": "P1-T30",
+      "pytest_outcome": "pass",
+      "classification": "PASS",
+      "exact_assertion": ""
+    },
+    {
+      "test_id": "P1-T31",
+      "pytest_outcome": "pass",
+      "classification": "PASS",
+      "exact_assertion": ""
+    },
+    {
+      "test_id": "P1-T32",
+      "pytest_outcome": "pass",
+      "classification": "PASS",
+      "exact_assertion": ""
+    },
+    {
+      "test_id": "P1-T33",
+      "pytest_outcome": "pass",
+      "classification": "PASS",
+      "exact_assertion": ""
+    },
+    {
+      "test_id": "P1-T34",
+      "pytest_outcome": "pass",
+      "classification": "PASS",
+      "exact_assertion": ""
+    },
+    {
+      "test_id": "P1-T35",
+      "pytest_outcome": "pass",
+      "classification": "PASS",
+      "exact_assertion": ""
+    },
+    {
+      "test_id": "P1-T36",
+      "pytest_outcome": "pass",
+      "classification": "PASS",
+      "exact_assertion": ""
+    },
+    {
+      "test_id": "P1-T37",
+      "pytest_outcome": "pass",
+      "classification": "PASS",
+      "exact_assertion": ""
+    },
+    {
+      "test_id": "P1-T38",
+      "pytest_outcome": "pass",
+      "classification": "PASS",
+      "exact_assertion": ""
+    },
+    {
+      "test_id": "P1-T39",
+      "pytest_outcome": "pass",
+      "classification": "PASS",
+      "exact_assertion": ""
+    },
+    {
+      "test_id": "P1-T40",
+      "pytest_outcome": "pass",
+      "classification": "PASS",
+      "exact_assertion": ""
+    },
+    {
+      "test_id": "P1-T41",
+      "pytest_outcome": "pass",
+      "classification": "PASS",
+      "exact_assertion": ""
+    },
+    {
+      "test_id": "P1-T42",
+      "pytest_outcome": "pass",
+      "classification": "PASS",
+      "exact_assertion": ""
+    },
+    {
+      "test_id": "P2-T01",
+      "pytest_outcome": "pass",
+      "classification": "PASS",
+      "exact_assertion": ""
+    },
+    {
+      "test_id": "P2-T02",
+      "pytest_outcome": "pass",
+      "classification": "PASS",
+      "exact_assertion": ""
+    },
+    {
+      "test_id": "P2-T03",
+      "pytest_outcome": "pass",
+      "classification": "PASS",
+      "exact_assertion": ""
+    },
+    {
+      "test_id": "P2-T04",
+      "pytest_outcome": "pass",
+      "classification": "PASS",
+      "exact_assertion": ""
+    },
+    {
+      "test_id": "P2-T05",
+      "pytest_outcome": "pass",
+      "classification": "PASS",
+      "exact_assertion": ""
+    },
+    {
+      "test_id": "P2-T06",
+      "pytest_outcome": "pass",
+      "classification": "PASS",
+      "exact_assertion": ""
+    },
+    {
+      "test_id": "P2-T07",
+      "pytest_outcome": "pass",
+      "classification": "PASS",
+      "exact_assertion": ""
+    },
+    {
+      "test_id": "P2-T08",
+      "pytest_outcome": "pass",
+      "classification": "PASS",
+      "exact_assertion": ""
+    },
+    {
+      "test_id": "P2-T09",
+      "pytest_outcome": "pass",
+      "classification": "PASS",
+      "exact_assertion": ""
+    },
+    {
+      "test_id": "P2-T10",
+      "pytest_outcome": "pass",
+      "classification": "PASS",
+      "exact_assertion": ""
+    },
+    {
+      "test_id": "P2-T11",
+      "pytest_outcome": "pass",
+      "classification": "PASS",
+      "exact_assertion": ""
+    },
+    {
+      "test_id": "P2-T12",
+      "pytest_outcome": "pass",
+      "classification": "PASS",
+      "exact_assertion": ""
+    },
+    {
+      "test_id": "P2-T13",
+      "pytest_outcome": "pass",
+      "classification": "PASS",
+      "exact_assertion": ""
+    },
+    {
+      "test_id": "P2-T14",
+      "pytest_outcome": "pass",
+      "classification": "PASS",
+      "exact_assertion": ""
+    },
+    {
+      "test_id": "P2-T15",
+      "pytest_outcome": "pass",
+      "classification": "PASS",
+      "exact_assertion": ""
+    },
+    {
+      "test_id": "P2-T16",
+      "pytest_outcome": "pass",
+      "classification": "PASS",
+      "exact_assertion": ""
+    },
+    {
+      "test_id": "P2-T17",
+      "pytest_outcome": "pass",
+      "classification": "PASS",
+      "exact_assertion": ""
+    },
+    {
+      "test_id": "P2-T18",
+      "pytest_outcome": "pass",
+      "classification": "PASS",
+      "exact_assertion": ""
+    },
+    {
+      "test_id": "P2-T19",
+      "pytest_outcome": "pass",
+      "classification": "PASS",
+      "exact_assertion": ""
+    },
+    {
+      "test_id": "P2-T20",
+      "pytest_outcome": "pass",
+      "classification": "PASS",
+      "exact_assertion": ""
+    },
+    {
+      "test_id": "P2-T21",
+      "pytest_outcome": "pass",
+      "classification": "PASS",
+      "exact_assertion": ""
+    },
+    {
+      "test_id": "P2-T22",
+      "pytest_outcome": "pass",
+      "classification": "PASS",
+      "exact_assertion": ""
+    },
+    {
+      "test_id": "P2-T23",
+      "pytest_outcome": "pass",
+      "classification": "PASS",
+      "exact_assertion": ""
+    },
+    {
+      "test_id": "P2-T24",
+      "pytest_outcome": "pass",
+      "classification": "PASS",
+      "exact_assertion": ""
+    },
+    {
+      "test_id": "P2-T25",
+      "pytest_outcome": "pass",
+      "classification": "PASS",
+      "exact_assertion": ""
+    },
+    {
+      "test_id": "P2-T26",
+      "pytest_outcome": "pass",
+      "classification": "PASS",
+      "exact_assertion": ""
+    },
+    {
+      "test_id": "P2-T27",
+      "pytest_outcome": "pass",
+      "classification": "PASS",
+      "exact_assertion": ""
+    },
+    {
+      "test_id": "P2-T28",
+      "pytest_outcome": "pass",
+      "classification": "PASS",
+      "exact_assertion": ""
+    },
+    {
+      "test_id": "P2-T29",
+      "pytest_outcome": "pass",
+      "classification": "PASS",
+      "exact_assertion": ""
+    },
+    {
+      "test_id": "P2-T30",
+      "pytest_outcome": "pass",
+      "classification": "PASS",
+      "exact_assertion": ""
+    },
+    {
+      "test_id": "P2-T31",
+      "pytest_outcome": "pass",
+      "classification": "PASS",
+      "exact_assertion": ""
+    },
+    {
+      "test_id": "P2-T32",
+      "pytest_outcome": "pass",
+      "classification": "PASS",
+      "exact_assertion": ""
+    },
+    {
+      "test_id": "P2-T33",
+      "pytest_outcome": "pass",
+      "classification": "PASS",
+      "exact_assertion": ""
+    },
+    {
+      "test_id": "P2-T34",
+      "pytest_outcome": "pass",
+      "classification": "PASS",
+      "exact_assertion": ""
+    },
+    {
+      "test_id": "P2-T35",
+      "pytest_outcome": "pass",
+      "classification": "PASS",
+      "exact_assertion": ""
+    },
+    {
+      "test_id": "P2-T36",
+      "pytest_outcome": "pass",
+      "classification": "PASS",
+      "exact_assertion": ""
+    },
+    {
+      "test_id": "P2-T37",
+      "pytest_outcome": "pass",
+      "classification": "PASS",
+      "exact_assertion": ""
+    },
+    {
+      "test_id": "P2-T38",
+      "pytest_outcome": "pass",
+      "classification": "PASS",
+      "exact_assertion": ""
+    },
+    {
+      "test_id": "P2-T39",
+      "pytest_outcome": "pass",
+      "classification": "PASS",
+      "exact_assertion": ""
+    },
+    {
+      "test_id": "P2-T40",
+      "pytest_outcome": "failure",
+      "classification": "EXPECTED_HISTORICAL_SCOPE_CONFLICT",
+      "exact_assertion": "env = BootstrapResult(workspace=<vde.workspace.Workspace object at 0x7ffbcbf17b60>, recovery=RecoveryReport(errors=[], staging=[], orphans=[], stale_runs=[]))\ntmp_path = PosixPath('/tmp/pytest-of-agent/pytest-48/test_T40_scope_dependencies0')\n\n    def test_T40_scope_dependencies(env, tmp_path):\n        from scope_policy import audit_application, audit_repository_paths\n        baseline_project = subprocess.check_output(['git', 'show', '129300728c446b82eaeafe1068e27339eb7176dd:pyproject.toml'], cwd=ROOT, text=True)\n        baseline_lock = subprocess.check_output(['git', 'show', '129300728c446b82eaeafe1068e27339eb7176dd:uv.lock'], cwd=ROOT, text=True)\n>       audit_application(ROOT, baseline_project, baseline_lock)\n\ntests/p2/test_p2.py:467: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n\nroot = PosixPath('/workspace/p5-export-deterministic-qa')\nbaseline_pyproject = '[build-system]\\nrequires = [\"setuptools>=77\"]\\nbuild-backend = \"setuptools.build_meta\"\\n\\n[project]\\nname = \"verified...= [\"migrations/*.sql\"]\\n\\n[tool.pytest.ini_options]\\ntestpaths = [\"tests/p1\"]\\npythonpath = [\"src\"]\\naddopts = \"-ra\"\\n'\nbaseline_lock = 'version = 1\\nrevision = 3\\nrequires-python = \">=3.11\"\\nresolution-markers = [\\n    \"python_full_version >= \\'3.12\\'\",...e1454315171103c6a30961236f508b9b623eae470268bbcc6a22f\", size = 79067, upload-time = \"2024-11-01T14:07:11.845Z\" },\\n]\\n'\n\n    def audit_application(root, baseline_pyproject, baseline_lock, *, phase='p2'):\n        \"\"\"Fail closed on new paths/imports/calls/workflows/deps/migrations.\n    \n        This is a static regression gate and reviewed source boundary, not a proof\n        against deliberately obfuscated semantics inside an already permitted call.\n        \"\"\"\n        root = Path(root)\n        policy = json.loads(POLICY.read_text())\n        approved_p3 = json.loads(P3_POLICY.read_text())\n        approved_p4 = json.loads(P4_POLICY.read_text())\n        actual_paths = {p.relative_to(root).as_posix() for p in (root / 'src').rglob('*')\n                        if p.is_file() and '__pycache__' not in p.parts and not any(part.endswith('.egg-info') for part in p.parts)}\n        # CR-P4-001: only enumerated P4-owned files are admitted; P4-T62 audits\n        # their complete contents. Historical source and negative checks remain.\n>       assert actual_paths == set(approved_p3['source_paths']) | set(approved_p4['p4_source_paths']), 'Unapproved application source/module/migration'\n               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nE       AssertionError: Unapproved application source/module/migration\n\ntests/scope_policy.py:144: AssertionError"
+    },
+    {
+      "test_id": "P2-T41",
+      "pytest_outcome": "pass",
+      "classification": "PASS",
+      "exact_assertion": ""
+    },
+    {
+      "test_id": "P2-T42",
+      "pytest_outcome": "pass",
+      "classification": "PASS",
+      "exact_assertion": ""
+    },
+    {
+      "test_id": "P2-T43",
+      "pytest_outcome": "pass",
+      "classification": "PASS",
+      "exact_assertion": ""
+    },
+    {
+      "test_id": "P2-T44",
+      "pytest_outcome": "pass",
+      "classification": "PASS",
+      "exact_assertion": ""
+    },
+    {
+      "test_id": "P2-T45",
+      "pytest_outcome": "pass",
+      "classification": "PASS",
+      "exact_assertion": ""
+    },
+    {
+      "test_id": "P2-T46",
+      "pytest_outcome": "pass",
+      "classification": "PASS",
+      "exact_assertion": ""
+    },
+    {
+      "test_id": "P2-T47",
+      "pytest_outcome": "pass",
+      "classification": "PASS",
+      "exact_assertion": ""
+    },
+    {
+      "test_id": "P2-T48",
+      "pytest_outcome": "pass",
+      "classification": "PASS",
+      "exact_assertion": ""
+    },
+    {
+      "test_id": "P2-T49",
+      "pytest_outcome": "pass",
+      "classification": "PASS",
+      "exact_assertion": ""
+    },
+    {
+      "test_id": "P2-T50",
+      "pytest_outcome": "pass",
+      "classification": "PASS",
+      "exact_assertion": ""
+    },
+    {
+      "test_id": "P2-T51",
+      "pytest_outcome": "pass",
+      "classification": "PASS",
+      "exact_assertion": ""
+    },
+    {
+      "test_id": "P2-T52",
+      "pytest_outcome": "pass",
+      "classification": "PASS",
+      "exact_assertion": ""
+    },
+    {
+      "test_id": "P2-T53",
+      "pytest_outcome": "pass",
+      "classification": "PASS",
+      "exact_assertion": ""
+    },
+    {
+      "test_id": "P2-T54",
+      "pytest_outcome": "pass",
+      "classification": "PASS",
+      "exact_assertion": ""
+    },
+    {
+      "test_id": "P3-T01",
+      "pytest_outcome": "pass",
+      "classification": "PASS",
+      "exact_assertion": ""
+    },
+    {
+      "test_id": "P3-T02",
+      "pytest_outcome": "pass",
+      "classification": "PASS",
+      "exact_assertion": ""
+    },
+    {
+      "test_id": "P3-T03",
+      "pytest_outcome": "pass",
+      "classification": "PASS",
+      "exact_assertion": ""
+    },
+    {
+      "test_id": "P3-T04",
+      "pytest_outcome": "pass",
+      "classification": "PASS",
+      "exact_assertion": ""
+    },
+    {
+      "test_id": "P3-T05",
+      "pytest_outcome": "pass",
+      "classification": "PASS",
+      "exact_assertion": ""
+    },
+    {
+      "test_id": "P3-T06",
+      "pytest_outcome": "pass",
+      "classification": "PASS",
+      "exact_assertion": ""
+    },
+    {
+      "test_id": "P3-T07",
+      "pytest_outcome": "pass",
+      "classification": "PASS",
+      "exact_assertion": ""
+    },
+    {
+      "test_id": "P3-T08",
+      "pytest_outcome": "pass",
+      "classification": "PASS",
+      "exact_assertion": ""
+    },
+    {
+      "test_id": "P3-T09",
+      "pytest_outcome": "pass",
+      "classification": "PASS",
+      "exact_assertion": ""
+    },
+    {
+      "test_id": "P3-T10",
+      "pytest_outcome": "pass",
+      "classification": "PASS",
+      "exact_assertion": ""
+    },
+    {
+      "test_id": "P3-T11",
+      "pytest_outcome": "pass",
+      "classification": "PASS",
+      "exact_assertion": ""
+    },
+    {
+      "test_id": "P3-T12",
+      "pytest_outcome": "pass",
+      "classification": "PASS",
+      "exact_assertion": ""
+    },
+    {
+      "test_id": "P3-T13",
+      "pytest_outcome": "pass",
+      "classification": "PASS",
+      "exact_assertion": ""
+    },
+    {
+      "test_id": "P3-T14",
+      "pytest_outcome": "pass",
+      "classification": "PASS",
+      "exact_assertion": ""
+    },
+    {
+      "test_id": "P3-T15",
+      "pytest_outcome": "pass",
+      "classification": "PASS",
+      "exact_assertion": ""
+    },
+    {
+      "test_id": "P3-T16",
+      "pytest_outcome": "pass",
+      "classification": "PASS",
+      "exact_assertion": ""
+    },
+    {
+      "test_id": "P3-T17",
+      "pytest_outcome": "pass",
+      "classification": "PASS",
+      "exact_assertion": ""
+    },
+    {
+      "test_id": "P3-T18",
+      "pytest_outcome": "pass",
+      "classification": "PASS",
+      "exact_assertion": ""
+    },
+    {
+      "test_id": "P3-T19",
+      "pytest_outcome": "pass",
+      "classification": "PASS",
+      "exact_assertion": ""
+    },
+    {
+      "test_id": "P3-T20",
+      "pytest_outcome": "pass",
+      "classification": "PASS",
+      "exact_assertion": ""
+    },
+    {
+      "test_id": "P3-T21",
+      "pytest_outcome": "pass",
+      "classification": "PASS",
+      "exact_assertion": ""
+    },
+    {
+      "test_id": "P3-T22",
+      "pytest_outcome": "pass",
+      "classification": "PASS",
+      "exact_assertion": ""
+    },
+    {
+      "test_id": "P3-T23",
+      "pytest_outcome": "pass",
+      "classification": "PASS",
+      "exact_assertion": ""
+    },
+    {
+      "test_id": "P3-T24",
+      "pytest_outcome": "pass",
+      "classification": "PASS",
+      "exact_assertion": ""
+    },
+    {
+      "test_id": "P3-T25",
+      "pytest_outcome": "pass",
+      "classification": "PASS",
+      "exact_assertion": ""
+    },
+    {
+      "test_id": "P3-T26",
+      "pytest_outcome": "pass",
+      "classification": "PASS",
+      "exact_assertion": ""
+    },
+    {
+      "test_id": "P3-T27",
+      "pytest_outcome": "pass",
+      "classification": "PASS",
+      "exact_assertion": ""
+    },
+    {
+      "test_id": "P3-T28",
+      "pytest_outcome": "pass",
+      "classification": "PASS",
+      "exact_assertion": ""
+    },
+    {
+      "test_id": "P3-T29",
+      "pytest_outcome": "pass",
+      "classification": "PASS",
+      "exact_assertion": ""
+    },
+    {
+      "test_id": "P3-T30",
+      "pytest_outcome": "pass",
+      "classification": "PASS",
+      "exact_assertion": ""
+    },
+    {
+      "test_id": "P3-T31",
+      "pytest_outcome": "pass",
+      "classification": "PASS",
+      "exact_assertion": ""
+    },
+    {
+      "test_id": "P3-T32",
+      "pytest_outcome": "pass",
+      "classification": "PASS",
+      "exact_assertion": ""
+    },
+    {
+      "test_id": "P3-T33",
+      "pytest_outcome": "pass",
+      "classification": "PASS",
+      "exact_assertion": ""
+    },
+    {
+      "test_id": "P3-T34",
+      "pytest_outcome": "pass",
+      "classification": "PASS",
+      "exact_assertion": ""
+    },
+    {
+      "test_id": "P3-T35",
+      "pytest_outcome": "pass",
+      "classification": "PASS",
+      "exact_assertion": ""
+    },
+    {
+      "test_id": "P3-T36",
+      "pytest_outcome": "pass",
+      "classification": "PASS",
+      "exact_assertion": ""
+    },
+    {
+      "test_id": "P3-T37",
+      "pytest_outcome": "pass",
+      "classification": "PASS",
+      "exact_assertion": ""
+    },
+    {
+      "test_id": "P3-T38",
+      "pytest_outcome": "pass",
+      "classification": "PASS",
+      "exact_assertion": ""
+    },
+    {
+      "test_id": "P3-T39",
+      "pytest_outcome": "pass",
+      "classification": "PASS",
+      "exact_assertion": ""
+    },
+    {
+      "test_id": "P3-T40",
+      "pytest_outcome": "pass",
+      "classification": "PASS",
+      "exact_assertion": ""
+    },
+    {
+      "test_id": "P3-T41",
+      "pytest_outcome": "pass",
+      "classification": "PASS",
+      "exact_assertion": ""
+    },
+    {
+      "test_id": "P3-T42",
+      "pytest_outcome": "pass",
+      "classification": "PASS",
+      "exact_assertion": ""
+    },
+    {
+      "test_id": "P3-T43",
+      "pytest_outcome": "pass",
+      "classification": "PASS",
+      "exact_assertion": ""
+    },
+    {
+      "test_id": "P3-T44",
+      "pytest_outcome": "pass",
+      "classification": "PASS",
+      "exact_assertion": ""
+    },
+    {
+      "test_id": "P3-T45",
+      "pytest_outcome": "pass",
+      "classification": "PASS",
+      "exact_assertion": ""
+    },
+    {
+      "test_id": "P3-T46",
+      "pytest_outcome": "pass",
+      "classification": "PASS",
+      "exact_assertion": ""
+    },
+    {
+      "test_id": "P3-T47",
+      "pytest_outcome": "pass",
+      "classification": "PASS",
+      "exact_assertion": ""
+    },
+    {
+      "test_id": "P3-T48",
+      "pytest_outcome": "pass",
+      "classification": "PASS",
+      "exact_assertion": ""
+    },
+    {
+      "test_id": "P3-T49",
+      "pytest_outcome": "pass",
+      "classification": "PASS",
+      "exact_assertion": ""
+    },
+    {
+      "test_id": "P3-T50",
+      "pytest_outcome": "failure",
+      "classification": "EXPECTED_HISTORICAL_SCOPE_CONFLICT",
+      "exact_assertion": "def test_T50_p2_regression():\n>       regression('p2', 54)\n\ntests/p3/test_p3.py:484: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n\nphase = 'p2', count = 54\n\n    def regression(phase, count):\n        output = ROOT / 'docs/p3/validation'\n        historical = ROOT / 'docs/p2/validation'\n        originals = {p: p.read_bytes() for p in historical.iterdir() if p.is_file()}\n        command = [sys.executable, '-m', 'pytest', 'tests/' + phase, '-q', '--junitxml=' + str(output / (phase + '-results.xml'))]\n        try:\n            proc = subprocess.run(command, cwd=ROOT, capture_output=True, text=True)\n            (output / (phase + '-run.log')).write_text('COMMAND ' + json.dumps(command) + '\\n' + proc.stdout + proc.stderr)\n            if phase == 'p2':\n                for name in ['fixture-verification.json', 'rss-csv.json', 'rss-xlsx.json']:\n                    shutil.copy(historical / name, output / name)\n        finally:\n            for path, data in originals.items(): path.write_bytes(data)\n            for path in historical.iterdir():\n                if path.is_file() and path not in originals: path.unlink()\n>       assert proc.returncode == 0, proc.stdout + proc.stderr\nE       AssertionError: .......................................F..............                   [100%]\nE         =================================== FAILURES ===================================\nE         _________________________ test_T40_scope_dependencies __________________________\nE         \nE         env = BootstrapResult(workspace=<vde.workspace.Workspace object at 0x7f755ae8d160>, recovery=RecoveryReport(errors=[], staging=[], orphans=[], stale_runs=[]))\nE         tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-51/test_T40_scope_dependencies0')\nE         \nE             def test_T40_scope_dependencies(env, tmp_path):\nE                 from scope_policy import audit_application, audit_repository_paths\nE                 baseline_project = subprocess.check_output(['git', 'show', '129300728c446b82eaeafe1068e27339eb7176dd:pyproject.toml'], cwd=ROOT, text=True)\nE                 baseline_lock = subprocess.check_output(['git', 'show', '129300728c446b82eaeafe1068e27339eb7176dd:uv.lock'], cwd=ROOT, text=True)\nE         >       audit_application(ROOT, baseline_project, baseline_lock)\nE         \nE         tests/p2/test_p2.py:467: \nE         _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \nE         \nE         root = PosixPath('/workspace/p5-export-deterministic-qa')\nE         baseline_pyproject = '[build-system]\\nrequires = [\"setuptools>=77\"]\\nbuild-backend = \"setuptools.build_meta\"\\n\\n[project]\\nname = \"verified...= [\"migrations/*.sql\"]\\n\\n[tool.pytest.ini_options]\\ntestpaths = [\"tests/p1\"]\\npythonpath = [\"src\"]\\naddopts = \"-ra\"\\n'\nE         baseline_lock = 'version = 1\\nrevision = 3\\nrequires-python = \">=3.11\"\\nresolution-markers = [\\n    \"python_full_version >= \\'3.12\\'\",...e1454315171103c6a30961236f508b9b623eae470268bbcc6a22f\", size = 79067, upload-time = \"2024-11-01T14:07:11.845Z\" },\\n]\\n'\nE         \nE             def audit_application(root, baseline_pyproject, baseline_lock, *, phase='p2'):\nE                 \"\"\"Fail closed on new paths/imports/calls/workflows/deps/migrations.\nE             \nE                 This is a static regression gate and reviewed source boundary, not a proof\nE                 against deliberately obfuscated semantics inside an already permitted call.\nE                 \"\"\"\nE                 root = Path(root)\nE                 policy = json.loads(POLICY.read_text())\nE                 approved_p3 = json.loads(P3_POLICY.read_text())\nE                 approved_p4 = json.loads(P4_POLICY.read_text())\nE                 actual_paths = {p.relative_to(root).as_posix() for p in (root / 'src').rglob('*')\nE                                 if p.is_file() and '__pycache__' not in p.parts and not any(part.endswith('.egg-info') for part in p.parts)}\nE                 # CR-P4-001: only enumerated P4-owned files are admitted; P4-T62 audits\nE                 # their complete contents. Historical source and negative checks remain.\nE         >       assert actual_paths == set(approved_p3['source_paths']) | set(approved_p4['p4_source_paths']), 'Unapproved application source/module/migration'\nE                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nE         E       AssertionError: Unapproved application source/module/migration\nE         \nE         tests/scope_policy.py:144: AssertionError\nE         - generated xml file: /workspace/p5-export-deterministic-qa/docs/p3/validation/p2-results.xml -\nE         =========================== short test summary info ============================\nE         FAILED tests/p2/test_p2.py::test_T40_scope_dependencies - AssertionError: Una...\nE         1 failed, 53 passed in 25.47s\nE         \nE       assert 1 == 0\nE        +  where 1 = CompletedProcess(args=['/workspace/verified-data-extraction/.venv/bin/python', '-m', 'pytest', 'tests/p2', '-q', '--ju...tests/p2/test_p2.py::test_T40_scope_dependencies - AssertionError: Una...\\n1 failed, 53 passed in 25.47s\\n', stderr='').returncode\n\ntests/p3/test_p3.py:473: AssertionError"
+    },
+    {
+      "test_id": "P3-T51",
+      "pytest_outcome": "failure",
+      "classification": "EXPECTED_HISTORICAL_SCOPE_CONFLICT",
+      "exact_assertion": "p3_pack = PosixPath('/tmp/pytest-of-agent/pytest-48/p3-approved0/P3_Implementation_Pack_v1.0_APPROVED')\ntmp_path = PosixPath('/tmp/pytest-of-agent/pytest-48/test_T51_whole_application_sco0')\nmonkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7ffbcc1645f0>\n\n    def test_T51_whole_application_scope(p3_pack, tmp_path, monkeypatch):\n        from scope_policy import audit_application, audit_repository_paths\n        base_project = subprocess.check_output(['git', 'show', '129300728c446b82eaeafe1068e27339eb7176dd:pyproject.toml'], cwd=ROOT, text=True)\n        base_lock = subprocess.check_output(['git', 'show', '129300728c446b82eaeafe1068e27339eb7176dd:uv.lock'], cwd=ROOT, text=True)\n>       audit_application(ROOT, base_project, base_lock, phase='p3')\n\ntests/p3/test_p3.py:491: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n\nroot = PosixPath('/workspace/p5-export-deterministic-qa')\nbaseline_pyproject = '[build-system]\\nrequires = [\"setuptools>=77\"]\\nbuild-backend = \"setuptools.build_meta\"\\n\\n[project]\\nname = \"verified...= [\"migrations/*.sql\"]\\n\\n[tool.pytest.ini_options]\\ntestpaths = [\"tests/p1\"]\\npythonpath = [\"src\"]\\naddopts = \"-ra\"\\n'\nbaseline_lock = 'version = 1\\nrevision = 3\\nrequires-python = \">=3.11\"\\nresolution-markers = [\\n    \"python_full_version >= \\'3.12\\'\",...e1454315171103c6a30961236f508b9b623eae470268bbcc6a22f\", size = 79067, upload-time = \"2024-11-01T14:07:11.845Z\" },\\n]\\n'\n\n    def audit_application(root, baseline_pyproject, baseline_lock, *, phase='p2'):\n        \"\"\"Fail closed on new paths/imports/calls/workflows/deps/migrations.\n    \n        This is a static regression gate and reviewed source boundary, not a proof\n        against deliberately obfuscated semantics inside an already permitted call.\n        \"\"\"\n        root = Path(root)\n        policy = json.loads(POLICY.read_text())\n        approved_p3 = json.loads(P3_POLICY.read_text())\n        approved_p4 = json.loads(P4_POLICY.read_text())\n        actual_paths = {p.relative_to(root).as_posix() for p in (root / 'src').rglob('*')\n                        if p.is_file() and '__pycache__' not in p.parts and not any(part.endswith('.egg-info') for part in p.parts)}\n        # CR-P4-001: only enumerated P4-owned files are admitted; P4-T62 audits\n        # their complete contents. Historical source and negative checks remain.\n>       assert actual_paths == set(approved_p3['source_paths']) | set(approved_p4['p4_source_paths']), 'Unapproved application source/module/migration'\n               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nE       AssertionError: Unapproved application source/module/migration\n\ntests/scope_policy.py:144: AssertionError"
+    },
+    {
+      "test_id": "P3-T52",
+      "pytest_outcome": "pass",
+      "classification": "PASS",
+      "exact_assertion": ""
+    },
+    {
+      "test_id": "P4-T01",
+      "pytest_outcome": "pass",
+      "classification": "PASS",
+      "exact_assertion": ""
+    },
+    {
+      "test_id": "P4-T02",
+      "pytest_outcome": "pass",
+      "classification": "PASS",
+      "exact_assertion": ""
+    },
+    {
+      "test_id": "P4-T03",
+      "pytest_outcome": "pass",
+      "classification": "PASS",
+      "exact_assertion": ""
+    },
+    {
+      "test_id": "P4-T04",
+      "pytest_outcome": "pass",
+      "classification": "PASS",
+      "exact_assertion": ""
+    },
+    {
+      "test_id": "P4-T05",
+      "pytest_outcome": "pass",
+      "classification": "PASS",
+      "exact_assertion": ""
+    },
+    {
+      "test_id": "P4-T06",
+      "pytest_outcome": "pass",
+      "classification": "PASS",
+      "exact_assertion": ""
+    },
+    {
+      "test_id": "P4-T07",
+      "pytest_outcome": "pass",
+      "classification": "PASS",
+      "exact_assertion": ""
+    },
+    {
+      "test_id": "P4-T08",
+      "pytest_outcome": "pass",
+      "classification": "PASS",
+      "exact_assertion": ""
+    },
+    {
+      "test_id": "P4-T09",
+      "pytest_outcome": "pass",
+      "classification": "PASS",
+      "exact_assertion": ""
+    },
+    {
+      "test_id": "P4-T10",
+      "pytest_outcome": "pass",
+      "classification": "PASS",
+      "exact_assertion": ""
+    },
+    {
+      "test_id": "P4-T11",
+      "pytest_outcome": "pass",
+      "classification": "PASS",
+      "exact_assertion": ""
+    },
+    {
+      "test_id": "P4-T12",
+      "pytest_outcome": "pass",
+      "classification": "PASS",
+      "exact_assertion": ""
+    },
+    {
+      "test_id": "P4-T13",
+      "pytest_outcome": "pass",
+      "classification": "PASS",
+      "exact_assertion": ""
+    },
+    {
+      "test_id": "P4-T14",
+      "pytest_outcome": "pass",
+      "classification": "PASS",
+      "exact_assertion": ""
+    },
+    {
+      "test_id": "P4-T15",
+      "pytest_outcome": "pass",
+      "classification": "PASS",
+      "exact_assertion": ""
+    },
+    {
+      "test_id": "P4-T16",
+      "pytest_outcome": "pass",
+      "classification": "PASS",
+      "exact_assertion": ""
+    },
+    {
+      "test_id": "P4-T17",
+      "pytest_outcome": "pass",
+      "classification": "PASS",
+      "exact_assertion": ""
+    },
+    {
+      "test_id": "P4-T18",
+      "pytest_outcome": "pass",
+      "classification": "PASS",
+      "exact_assertion": ""
+    },
+    {
+      "test_id": "P4-T19",
+      "pytest_outcome": "pass",
+      "classification": "PASS",
+      "exact_assertion": ""
+    },
+    {
+      "test_id": "P4-T20",
+      "pytest_outcome": "pass",
+      "classification": "PASS",
+      "exact_assertion": ""
+    },
+    {
+      "test_id": "P4-T21",
+      "pytest_outcome": "pass",
+      "classification": "PASS",
+      "exact_assertion": ""
+    },
+    {
+      "test_id": "P4-T22",
+      "pytest_outcome": "pass",
+      "classification": "PASS",
+      "exact_assertion": ""
+    },
+    {
+      "test_id": "P4-T23",
+      "pytest_outcome": "pass",
+      "classification": "PASS",
+      "exact_assertion": ""
+    },
+    {
+      "test_id": "P4-T24",
+      "pytest_outcome": "pass",
+      "classification": "PASS",
+      "exact_assertion": ""
+    },
+    {
+      "test_id": "P4-T25",
+      "pytest_outcome": "pass",
+      "classification": "PASS",
+      "exact_assertion": ""
+    },
+    {
+      "test_id": "P4-T26",
+      "pytest_outcome": "pass",
+      "classification": "PASS",
+      "exact_assertion": ""
+    },
+    {
+      "test_id": "P4-T27",
+      "pytest_outcome": "pass",
+      "classification": "PASS",
+      "exact_assertion": ""
+    },
+    {
+      "test_id": "P4-T28",
+      "pytest_outcome": "pass",
+      "classification": "PASS",
+      "exact_assertion": ""
+    },
+    {
+      "test_id": "P4-T29",
+      "pytest_outcome": "pass",
+      "classification": "PASS",
+      "exact_assertion": ""
+    },
+    {
+      "test_id": "P4-T30",
+      "pytest_outcome": "pass",
+      "classification": "PASS",
+      "exact_assertion": ""
+    },
+    {
+      "test_id": "P4-T31",
+      "pytest_outcome": "pass",
+      "classification": "PASS",
+      "exact_assertion": ""
+    },
+    {
+      "test_id": "P4-T32",
+      "pytest_outcome": "pass",
+      "classification": "PASS",
+      "exact_assertion": ""
+    },
+    {
+      "test_id": "P4-T33",
+      "pytest_outcome": "pass",
+      "classification": "PASS",
+      "exact_assertion": ""
+    },
+    {
+      "test_id": "P4-T34",
+      "pytest_outcome": "pass",
+      "classification": "PASS",
+      "exact_assertion": ""
+    },
+    {
+      "test_id": "P4-T35",
+      "pytest_outcome": "pass",
+      "classification": "PASS",
+      "exact_assertion": ""
+    },
+    {
+      "test_id": "P4-T36",
+      "pytest_outcome": "pass",
+      "classification": "PASS",
+      "exact_assertion": ""
+    },
+    {
+      "test_id": "P4-T37",
+      "pytest_outcome": "pass",
+      "classification": "PASS",
+      "exact_assertion": ""
+    },
+    {
+      "test_id": "P4-T38",
+      "pytest_outcome": "pass",
+      "classification": "PASS",
+      "exact_assertion": ""
+    },
+    {
+      "test_id": "P4-T39",
+      "pytest_outcome": "pass",
+      "classification": "PASS",
+      "exact_assertion": ""
+    },
+    {
+      "test_id": "P4-T40",
+      "pytest_outcome": "pass",
+      "classification": "PASS",
+      "exact_assertion": ""
+    },
+    {
+      "test_id": "P4-T41",
+      "pytest_outcome": "pass",
+      "classification": "PASS",
+      "exact_assertion": ""
+    },
+    {
+      "test_id": "P4-T42",
+      "pytest_outcome": "pass",
+      "classification": "PASS",
+      "exact_assertion": ""
+    },
+    {
+      "test_id": "P4-T43",
+      "pytest_outcome": "pass",
+      "classification": "PASS",
+      "exact_assertion": ""
+    },
+    {
+      "test_id": "P4-T44",
+      "pytest_outcome": "pass",
+      "classification": "PASS",
+      "exact_assertion": ""
+    },
+    {
+      "test_id": "P4-T45",
+      "pytest_outcome": "pass",
+      "classification": "PASS",
+      "exact_assertion": ""
+    },
+    {
+      "test_id": "P4-T46",
+      "pytest_outcome": "pass",
+      "classification": "PASS",
+      "exact_assertion": ""
+    },
+    {
+      "test_id": "P4-T47",
+      "pytest_outcome": "pass",
+      "classification": "PASS",
+      "exact_assertion": ""
+    },
+    {
+      "test_id": "P4-T48",
+      "pytest_outcome": "pass",
+      "classification": "PASS",
+      "exact_assertion": ""
+    },
+    {
+      "test_id": "P4-T49",
+      "pytest_outcome": "pass",
+      "classification": "PASS",
+      "exact_assertion": ""
+    },
+    {
+      "test_id": "P4-T50",
+      "pytest_outcome": "pass",
+      "classification": "PASS",
+      "exact_assertion": ""
+    },
+    {
+      "test_id": "P4-T51",
+      "pytest_outcome": "pass",
+      "classification": "PASS",
+      "exact_assertion": ""
+    },
+    {
+      "test_id": "P4-T52",
+      "pytest_outcome": "pass",
+      "classification": "PASS",
+      "exact_assertion": ""
+    },
+    {
+      "test_id": "P4-T53",
+      "pytest_outcome": "pass",
+      "classification": "PASS",
+      "exact_assertion": ""
+    },
+    {
+      "test_id": "P4-T54",
+      "pytest_outcome": "pass",
+      "classification": "PASS",
+      "exact_assertion": ""
+    },
+    {
+      "test_id": "P4-T55",
+      "pytest_outcome": "pass",
+      "classification": "PASS",
+      "exact_assertion": ""
+    },
+    {
+      "test_id": "P4-T56",
+      "pytest_outcome": "pass",
+      "classification": "PASS",
+      "exact_assertion": ""
+    },
+    {
+      "test_id": "P4-T57",
+      "pytest_outcome": "pass",
+      "classification": "PASS",
+      "exact_assertion": ""
+    },
+    {
+      "test_id": "P4-T58",
+      "pytest_outcome": "pass",
+      "classification": "PASS",
+      "exact_assertion": ""
+    },
+    {
+      "test_id": "P4-T59",
+      "pytest_outcome": "pass",
+      "classification": "PASS",
+      "exact_assertion": ""
+    },
+    {
+      "test_id": "P4-T60",
+      "pytest_outcome": "pass",
+      "classification": "PASS",
+      "exact_assertion": ""
+    },
+    {
+      "test_id": "P4-T61",
+      "pytest_outcome": "failure",
+      "classification": "EXPECTED_HISTORICAL_SCOPE_CONFLICT",
+      "exact_assertion": "tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-48/test_T61_forbidden_scope0')\n\n    def test_T61_forbidden_scope(tmp_path):\n        from .scope_audit import audit_p4, audit_snippet\n>       audit_p4(ROOT)\n\ntests/p4/test_execution.py:727: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n\nroot = PosixPath('/workspace/p5-export-deterministic-qa')\n\n    def audit_p4(root, *, authority_root=None):\n        policy = json.loads(POLICY.read_text())\n        frozen_baseline(root, authority_root=authority_root)\n        actual = {p.relative_to(root).as_posix() for p in (root/'src').rglob('*') if p.is_file()\n                  and '__pycache__' not in p.parts and not any(n.endswith('.egg-info') for n in p.parts)}\n>       assert actual == set(policy['source_sha256']), 'Unapproved full application paths'\n               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nE       AssertionError: Unapproved full application paths\n\ntests/p4/scope_audit.py:51: AssertionError"
+    },
+    {
+      "test_id": "P4-T62",
+      "pytest_outcome": "failure",
+      "classification": "EXPECTED_HISTORICAL_SCOPE_CONFLICT",
+      "exact_assertion": "tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-48/test_T62_whole_application_sco0')\nmonkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7ffbcb1ffc50>\n\n    def test_T62_whole_application_scope_CR_P4_001(tmp_path, monkeypatch):\n        from .scope_audit import audit_p4, negative_repository_probes, governance_repository_probes\n        from scope_policy import audit_application\n        base_project = subprocess.check_output(['git','show','129300728c446b82eaeafe1068e27339eb7176dd:pyproject.toml'],cwd=ROOT,text=True)\n        base_lock = subprocess.check_output(['git','show','129300728c446b82eaeafe1068e27339eb7176dd:uv.lock'],cwd=ROOT,text=True)\n>       audit_application(ROOT, base_project, base_lock, phase='p3')\n\ntests/p4/test_execution.py:741: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n\nroot = PosixPath('/workspace/p5-export-deterministic-qa')\nbaseline_pyproject = '[build-system]\\nrequires = [\"setuptools>=77\"]\\nbuild-backend = \"setuptools.build_meta\"\\n\\n[project]\\nname = \"verified...= [\"migrations/*.sql\"]\\n\\n[tool.pytest.ini_options]\\ntestpaths = [\"tests/p1\"]\\npythonpath = [\"src\"]\\naddopts = \"-ra\"\\n'\nbaseline_lock = 'version = 1\\nrevision = 3\\nrequires-python = \">=3.11\"\\nresolution-markers = [\\n    \"python_full_version >= \\'3.12\\'\",...e1454315171103c6a30961236f508b9b623eae470268bbcc6a22f\", size = 79067, upload-time = \"2024-11-01T14:07:11.845Z\" },\\n]\\n'\n\n    def audit_application(root, baseline_pyproject, baseline_lock, *, phase='p2'):\n        \"\"\"Fail closed on new paths/imports/calls/workflows/deps/migrations.\n    \n        This is a static regression gate and reviewed source boundary, not a proof\n        against deliberately obfuscated semantics inside an already permitted call.\n        \"\"\"\n        root = Path(root)\n        policy = json.loads(POLICY.read_text())\n        approved_p3 = json.loads(P3_POLICY.read_text())\n        approved_p4 = json.loads(P4_POLICY.read_text())\n        actual_paths = {p.relative_to(root).as_posix() for p in (root / 'src').rglob('*')\n                        if p.is_file() and '__pycache__' not in p.parts and not any(part.endswith('.egg-info') for part in p.parts)}\n        # CR-P4-001: only enumerated P4-owned files are admitted; P4-T62 audits\n        # their complete contents. Historical source and negative checks remain.\n>       assert actual_paths == set(approved_p3['source_paths']) | set(approved_p4['p4_source_paths']), 'Unapproved application source/module/migration'\n               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nE       AssertionError: Unapproved application source/module/migration\n\ntests/scope_policy.py:144: AssertionError"
+    },
+    {
+      "test_id": "P4-T63",
+      "pytest_outcome": "failure",
+      "classification": "EXPECTED_HISTORICAL_SCOPE_CONFLICT",
+      "exact_assertion": "p4_pack = PosixPath('/tmp/pytest-of-agent/pytest-48/p4-approved0/P4_Implementation_Pack_v1.0_APPROVED')\ntmp_path = PosixPath('/tmp/pytest-of-agent/pytest-48/test_T63_frozen_regression_evi0')\n\n    def test_T63_frozen_regression_evidence_and_p0(p4_pack, tmp_path):\n        from .scope_audit import frozen_baseline\n        frozen_baseline(ROOT)\n        from p3.driver import verify_vectors\n        assert verify_vectors() == 'CONTENT_HASH_EQUAL'\n        # Execute the specified regressions here as well as in the final combined\n        # run. This is the approved T63 action, not merely test-definition counting.\n        xml = tmp_path/'p0-p3-regression.xml'\n        command = [sys.executable, '-m', 'pytest', 'tests/p1', 'tests/p2', 'tests/p3', '-q', '--junitxml='+str(xml)]\n        proc = subprocess.run(command, cwd=ROOT, capture_output=True, text=True, env=child_environment())\n        record_process('T63-p0-p3-regression', proc, command)\n>       assert proc.returncode == 0, proc.stdout+proc.stderr\nE       AssertionError: ........................................................................ [ 48%]\nE         .........F.............................................................. [ 97%]\nE         .FF.                                                                     [100%]\nE         =================================== FAILURES ===================================\nE         _________________________ test_T40_scope_dependencies __________________________\nE         \nE         env = BootstrapResult(workspace=<vde.workspace.Workspace object at 0x7f47af2b42c0>, recovery=RecoveryReport(errors=[], staging=[], orphans=[], stale_runs=[]))\nE         tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-53/test_T40_scope_dependencies0')\nE         \nE             def test_T40_scope_dependencies(env, tmp_path):\nE                 from scope_policy import audit_application, audit_repository_paths\nE                 baseline_project = subprocess.check_output(['git', 'show', '129300728c446b82eaeafe1068e27339eb7176dd:pyproject.toml'], cwd=ROOT, text=True)\nE                 baseline_lock = subprocess.check_output(['git', 'show', '129300728c446b82eaeafe1068e27339eb7176dd:uv.lock'], cwd=ROOT, text=True)\nE         >       audit_application(ROOT, baseline_project, baseline_lock)\nE         \nE         tests/p2/test_p2.py:467: \nE         _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \nE         \nE         root = PosixPath('/workspace/p5-export-deterministic-qa')\nE         baseline_pyproject = '[build-system]\\nrequires = [\"setuptools>=77\"]\\nbuild-backend = \"setuptools.build_meta\"\\n\\n[project]\\nname = \"verified...= [\"migrations/*.sql\"]\\n\\n[tool.pytest.ini_options]\\ntestpaths = [\"tests/p1\"]\\npythonpath = [\"src\"]\\naddopts = \"-ra\"\\n'\nE         baseline_lock = 'version = 1\\nrevision = 3\\nrequires-python = \">=3.11\"\\nresolution-markers = [\\n    \"python_full_version >= \\'3.12\\'\",...e1454315171103c6a30961236f508b9b623eae470268bbcc6a22f\", size = 79067, upload-time = \"2024-11-01T14:07:11.845Z\" },\\n]\\n'\nE         \nE             def audit_application(root, baseline_pyproject, baseline_lock, *, phase='p2'):\nE                 \"\"\"Fail closed on new paths/imports/calls/workflows/deps/migrations.\nE             \nE                 This is a static regression gate and reviewed source boundary, not a proof\nE                 against deliberately obfuscated semantics inside an already permitted call.\nE                 \"\"\"\nE                 root = Path(root)\nE                 policy = json.loads(POLICY.read_text())\nE                 approved_p3 = json.loads(P3_POLICY.read_text())\nE                 approved_p4 = json.loads(P4_POLICY.read_text())\nE                 actual_paths = {p.relative_to(root).as_posix() for p in (root / 'src').rglob('*')\nE                                 if p.is_file() and '__pycache__' not in p.parts and not any(part.endswith('.egg-info') for part in p.parts)}\nE                 # CR-P4-001: only enumerated P4-owned files are admitted; P4-T62 audits\nE                 # their complete contents. Historical source and negative checks remain.\nE         >       assert actual_paths == set(approved_p3['source_paths']) | set(approved_p4['p4_source_paths']), 'Unapproved application source/module/migration'\nE                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nE         E       AssertionError: Unapproved application source/module/migration\nE         \nE         tests/scope_policy.py:144: AssertionError\nE         ____________________________ test_T50_p2_regression ____________________________\nE         \nE             def test_T50_p2_regression():\nE         >       regression('p2', 54)\nE         \nE         tests/p3/test_p3.py:484: \nE         _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \nE         \nE         phase = 'p2', count = 54\nE         \nE             def regression(phase, count):\nE                 output = ROOT / 'docs/p3/validation'\nE                 historical = ROOT / 'docs/p2/validation'\nE                 originals = {p: p.read_bytes() for p in historical.iterdir() if p.is_file()}\nE                 command = [sys.executable, '-m', 'pytest', 'tests/' + phase, '-q', '--junitxml=' + str(output / (phase + '-results.xml'))]\nE                 try:\nE                     proc = subprocess.run(command, cwd=ROOT, capture_output=True, text=True)\nE                     (output / (phase + '-run.log')).write_text('COMMAND ' + json.dumps(command) + '\\n' + proc.stdout + proc.stderr)\nE                     if phase == 'p2':\nE                         for name in ['fixture-verification.json', 'rss-csv.json', 'rss-xlsx.json']:\nE                             shutil.copy(historical / name, output / name)\nE                 finally:\nE                     for path, data in originals.items(): path.write_bytes(data)\nE                     for path in historical.iterdir():\nE                         if path.is_file() and path not in originals: path.unlink()\nE         >       assert proc.returncode == 0, proc.stdout + proc.stderr\nE         E       AssertionError: .......................................F..............                   [100%]\nE         E         =================================== FAILURES ===================================\nE         E         _________________________ test_T40_scope_dependencies __________________________\nE         E         \nE         E         env = BootstrapResult(workspace=<vde.workspace.Workspace object at 0x7f1aff739cd0>, recovery=RecoveryReport(errors=[], staging=[], orphans=[], stale_runs=[]))\nE         E         tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-56/test_T40_scope_dependencies0')\nE         E         \nE         E             def test_T40_scope_dependencies(env, tmp_path):\nE         E                 from scope_policy import audit_application, audit_repository_paths\nE         E                 baseline_project = subprocess.check_output(['git', 'show', '129300728c446b82eaeafe1068e27339eb7176dd:pyproject.toml'], cwd=ROOT, text=True)\nE         E                 baseline_lock = subprocess.check_output(['git', 'show', '129300728c446b82eaeafe1068e27339eb7176dd:uv.lock'], cwd=ROOT, text=True)\nE         E         >       audit_application(ROOT, baseline_project, baseline_lock)\nE         E         \nE         E         tests/p2/test_p2.py:467: \nE         E         _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \nE         E         \nE         E         root = PosixPath('/workspace/p5-export-deterministic-qa')\nE         E         baseline_pyproject = '[build-system]\\nrequires = [\"setuptools>=77\"]\\nbuild-backend = \"setuptools.build_meta\"\\n\\n[project]\\nname = \"verified...= [\"migrations/*.sql\"]\\n\\n[tool.pytest.ini_options]\\ntestpaths = [\"tests/p1\"]\\npythonpath = [\"src\"]\\naddopts = \"-ra\"\\n'\nE         E         baseline_lock = 'version = 1\\nrevision = 3\\nrequires-python = \">=3.11\"\\nresolution-markers = [\\n    \"python_full_version >= \\'3.12\\'\",...e1454315171103c6a30961236f508b9b623eae470268bbcc6a22f\", size = 79067, upload-time = \"2024-11-01T14:07:11.845Z\" },\\n]\\n'\nE         E         \nE         E             def audit_application(root, baseline_pyproject, baseline_lock, *, phase='p2'):\nE         E                 \"\"\"Fail closed on new paths/imports/calls/workflows/deps/migrations.\nE         E             \nE         E                 This is a static regression gate and reviewed source boundary, not a proof\nE         E                 against deliberately obfuscated semantics inside an already permitted call.\nE         E                 \"\"\"\nE         E                 root = Path(root)\nE         E                 policy = json.loads(POLICY.read_text())\nE         E                 approved_p3 = json.loads(P3_POLICY.read_text())\nE         E                 approved_p4 = json.loads(P4_POLICY.read_text())\nE         E                 actual_paths = {p.relative_to(root).as_posix() for p in (root / 'src').rglob('*')\nE         E                                 if p.is_file() and '__pycache__' not in p.parts and not any(part.endswith('.egg-info') for part in p.parts)}\nE         E                 # CR-P4-001: only enumerated P4-owned files are admitted; P4-T62 audits\nE         E                 # their complete contents. Historical source and negative checks remain.\nE         E         >       assert actual_paths == set(approved_p3['source_paths']) | set(approved_p4['p4_source_paths']), 'Unapproved application source/module/migration'\nE         E                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nE         E         E       AssertionError: Unapproved application source/module/migration\nE         E         \nE         E         tests/scope_policy.py:144: AssertionError\nE         E         - generated xml file: /workspace/p5-export-deterministic-qa/docs/p3/validation/p2-results.xml -\nE         E         =========================== short test summary info ============================\nE         E         FAILED tests/p2/test_p2.py::test_T40_scope_dependencies - AssertionError: Una...\nE         E         1 failed, 53 passed in 25.26s\nE         E         \nE         E       assert 1 == 0\nE         E        +  where 1 = CompletedProcess(args=['/workspace/verified-data-extraction/.venv/bin/python', '-m', 'pytest', 'tests/p2', '-q', '--ju...tests/p2/test_p2.py::test_T40_scope_dependencies - AssertionError: Una...\\n1 failed, 53 passed in 25.26s\\n', stderr='').returncode\nE         \nE         tests/p3/test_p3.py:473: AssertionError\nE         _______________________ test_T51_whole_application_scope _______________________\nE         \nE         p3_pack = PosixPath('/tmp/pytest-of-agent/pytest-53/p3-approved0/P3_Implementation_Pack_v1.0_APPROVED')\nE         tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-53/test_T51_whole_application_sco0')\nE         monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f47af3577d0>\nE         \nE             def test_T51_whole_application_scope(p3_pack, tmp_path, monkeypatch):\nE                 from scope_policy import audit_application, audit_repository_paths\nE                 base_project = subprocess.check_output(['git', 'show', '129300728c446b82eaeafe1068e27339eb7176dd:pyproject.toml'], cwd=ROOT, text=True)\nE                 base_lock = subprocess.check_output(['git', 'show', '129300728c446b82eaeafe1068e27339eb7176dd:uv.lock'], cwd=ROOT, text=True)\nE         >       audit_application(ROOT, base_project, base_lock, phase='p3')\nE         \nE         tests/p3/test_p3.py:491: \nE         _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \nE         \nE         root = PosixPath('/workspace/p5-export-deterministic-qa')\nE         baseline_pyproject = '[build-system]\\nrequires = [\"setuptools>=77\"]\\nbuild-backend = \"setuptools.build_meta\"\\n\\n[project]\\nname = \"verified...= [\"migrations/*.sql\"]\\n\\n[tool.pytest.ini_options]\\ntestpaths = [\"tests/p1\"]\\npythonpath = [\"src\"]\\naddopts = \"-ra\"\\n'\nE         baseline_lock = 'version = 1\\nrevision = 3\\nrequires-python = \">=3.11\"\\nresolution-markers = [\\n    \"python_full_version >= \\'3.12\\'\",...e1454315171103c6a30961236f508b9b623eae470268bbcc6a22f\", size = 79067, upload-time = \"2024-11-01T14:07:11.845Z\" },\\n]\\n'\nE         \nE             def audit_application(root, baseline_pyproject, baseline_lock, *, phase='p2'):\nE                 \"\"\"Fail closed on new paths/imports/calls/workflows/deps/migrations.\nE             \nE                 This is a static regression gate and reviewed source boundary, not a proof\nE                 against deliberately obfuscated semantics inside an already permitted call.\nE                 \"\"\"\nE                 root = Path(root)\nE                 policy = json.loads(POLICY.read_text())\nE                 approved_p3 = json.loads(P3_POLICY.read_text())\nE                 approved_p4 = json.loads(P4_POLICY.read_text())\nE                 actual_paths = {p.relative_to(root).as_posix() for p in (root / 'src').rglob('*')\nE                                 if p.is_file() and '__pycache__' not in p.parts and not any(part.endswith('.egg-info') for part in p.parts)}\nE                 # CR-P4-001: only enumerated P4-owned files are admitted; P4-T62 audits\nE                 # their complete contents. Historical source and negative checks remain.\nE         >       assert actual_paths == set(approved_p3['source_paths']) | set(approved_p4['p4_source_paths']), 'Unapproved application source/module/migration'\nE                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nE         E       AssertionError: Unapproved application source/module/migration\nE         \nE         tests/scope_policy.py:144: AssertionError\nE         - generated xml file: /tmp/pytest-of-agent/pytest-48/test_T63_frozen_regression_evi0/p0-p3-regression.xml -\nE         =========================== short test summary info ============================\nE         FAILED tests/p2/test_p2.py::test_T40_scope_dependencies - AssertionError: Una...\nE         FAILED tests/p3/test_p3.py::test_T50_p2_regression - AssertionError: ...........\nE         FAILED tests/p3/test_p3.py::test_T51_whole_application_scope - AssertionError...\nE         3 failed, 145 passed in 84.40s (0:01:24)\nE         \nE       assert 1 == 0\nE        +  where 1 = CompletedProcess(args=['/workspace/verified-data-extraction/.venv/bin/python', '-m', 'pytest', 'tests/p1', 'tests/p2',...st_p3.py::test_T51_whole_application_scope - AssertionError...\\n3 failed, 145 passed in 84.40s (0:01:24)\\n', stderr='').returncode\n\ntests/p4/test_execution.py:758: AssertionError"
+    },
+    {
+      "test_id": "P4-T64",
+      "pytest_outcome": "pass",
+      "classification": "PASS",
+      "exact_assertion": ""
+    }
+  ]
+}

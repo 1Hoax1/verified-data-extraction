@@ -1,0 +1,26 @@
+{
+  "P-A.actual-result.csv": {
+    "sha256": "c3b4e1f9a885bcf969cd34a9041951c1bed1abcd6aaba4c4f1f2fcd414d86cc9",
+    "size_bytes": 277
+  },
+  "P-B.actual-result.xlsx": {
+    "sha256": "bbabe19fefd24fbadff9326fe96be8addff97a1a38216cb002ab478d47a5f4a3",
+    "size_bytes": 5096
+  },
+  "P-B.TEST-ONLY-projection.csv": {
+    "sha256": "1e9449a8ff90f0cac9d62ba94b3d6e812dd565f85e9dd91fb2b48b6cbbf4d3c6",
+    "size_bytes": 245
+  },
+  "P-D.actual-diagnostic.csv": {
+    "sha256": "ab2c047b0c4024f49a4db8de1cf6f649e2c2caa45aca6db2241fe71174bf9737",
+    "size_bytes": 118
+  },
+  "P-A.original-P4-INTERNAL.json": {
+    "sha256": "2e02a70bbb96712640966117fbc724de3fe8a27a8db4c049037599bbd6ec3500",
+    "size_bytes": 513
+  },
+  "P-B.original-P4-INTERNAL.json": {
+    "sha256": "3ebed54a3c2d5a62ef971c0ce1d604c32efd77d38c1b93b59496ad2d92156578",
+    "size_bytes": 613
+  }
+}

@@ -1,0 +1,3 @@
+............                                                             [100%]
+----------- generated xml file: /workspace/p5-resume-work/dev-05.xml -----------
+12 passed, 64 deselected in 47.23s

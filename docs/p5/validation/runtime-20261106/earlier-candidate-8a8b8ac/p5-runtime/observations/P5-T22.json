@@ -1,0 +1,34 @@
+{
+  "fixture": "P5-DQ-011-NEG",
+  "result": "PASS",
+  "observed_check": {
+    "schema_version": "1.1",
+    "check_id": "DQ-011",
+    "name": "DQ-011 deterministic check",
+    "status": "FAIL",
+    "severity": "ERROR",
+    "target": {
+      "artifact": null,
+      "dataset_id": null,
+      "column": null,
+      "row_ids": []
+    },
+    "expected": true,
+    "actual": {
+      "type": "integer",
+      "values": [
+        "12"
+      ]
+    },
+    "affected_count": 1,
+    "sample_row_ids": [],
+    "message": "The approved deterministic requirement failed.",
+    "criterion_id": null
+  },
+  "supplemental": [
+    {
+      "CR_P5_003": "PASS",
+      "all_other_conversions": "FORBIDDEN"
+    }
+  ]
+}

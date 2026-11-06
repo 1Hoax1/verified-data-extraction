@@ -1,0 +1,33 @@
+{
+  "fixture": "P5-DQ-008-POS",
+  "result": "PASS",
+  "observed_check": {
+    "schema_version": "1.1",
+    "check_id": "DQ-008",
+    "name": "DQ-008 deterministic check",
+    "status": "PASS",
+    "severity": "BLOCKER",
+    "target": {
+      "artifact": null,
+      "dataset_id": null,
+      "column": null,
+      "row_ids": []
+    },
+    "expected": true,
+    "actual": {
+      "required": [
+        "id",
+        "amount"
+      ],
+      "present": [
+        "id",
+        "amount"
+      ]
+    },
+    "affected_count": 0,
+    "sample_row_ids": [],
+    "message": "All selected data checked.",
+    "criterion_id": null
+  },
+  "supplemental": []
+}

@@ -1,0 +1,6 @@
+{
+  "result": "PASS",
+  "real_schema_count": 20,
+  "original_PB_contradictions": "PRESERVED",
+  "synthetic_approval_is_business_authority": false
+}

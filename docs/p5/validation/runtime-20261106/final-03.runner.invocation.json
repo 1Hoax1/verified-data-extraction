@@ -1,0 +1,27 @@
+{
+  "command": [
+    "/workspace/verified-data-extraction/.venv/bin/python",
+    "-m",
+    "p5.run_validation",
+    "--historical-run",
+    "/workspace/p5-resume-work/historical-runs/full-01",
+    "--out",
+    "/workspace/p5-resume-work/final-03"
+  ],
+  "shell_command": "PATH=/workspace/verified-data-extraction/.venv/bin:$PATH PYTHONPATH=src:tests PYTHONDONTWRITEBYTECODE=1 python -m p5.run_validation --historical-run /workspace/p5-resume-work/historical-runs/full-01 --out /workspace/p5-resume-work/final-03 > /workspace/p5-resume-work/final-03.runner.stdout.txt 2> /workspace/p5-resume-work/final-03.runner.stderr.txt",
+  "cwd": "/workspace/p5-export-deterministic-qa",
+  "environment_overrides": {
+    "PATH_prefix": "/workspace/verified-data-extraction/.venv/bin",
+    "PYTHONPATH": "src:tests",
+    "PYTHONDONTWRITEBYTECODE": "1"
+  },
+  "first_phase_started_at_moscow": "2026-11-06T17:31:17.119762+03:00",
+  "runner_completed_at_moscow": "2026-11-06T17:55:15.936554+03:00",
+  "process_exit_code_observed_from_exec_session": 0,
+  "tool_session_id": 9074,
+  "exit_observed_at_utc": "2026-11-06T14:55:59.030996+00:00",
+  "tested_commit": "801cc2ba5db46494eaa93e5b963c3bc2f936ddc2",
+  "tested_tree": "2fc4b0dee77c6040cddf9831aecd253e9aa96a9b",
+  "stdout_file": "final-03.runner.stdout.txt",
+  "stderr_file": "final-03.runner.stderr.txt"
+}

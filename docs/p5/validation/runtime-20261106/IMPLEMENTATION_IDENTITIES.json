@@ -1,0 +1,16 @@
+{
+  "owner_start": "820245fc544fc66c393db548151e6d281e03d414",
+  "owner_start_tree": "f1be4a53f1317d6f8b911f03a6e4188d5ec6be2b",
+  "tested_commit": "801cc2ba5db46494eaa93e5b963c3bc2f936ddc2",
+  "tested_tree": "2fc4b0dee77c6040cddf9831aecd253e9aa96a9b",
+  "parent": "8a8b8ace8944acacc24ba1e33a29f700d5e5b334",
+  "branch": "feature/p5-export-deterministic-qa",
+  "commits_since_owner_start": [
+    "801cc2ba5db46494eaa93e5b963c3bc2f936ddc2 8a8b8ace8944acacc24ba1e33a29f700d5e5b334 test(p5): use closed replace parameters in resource negative",
+    "8a8b8ace8944acacc24ba1e33a29f700d5e5b334 e857fc802b6caf81351b65c7fce4ee2f555b00b7 fix(p5): verify terminal criterion bindings and exact ratio boundaries",
+    "e857fc802b6caf81351b65c7fce4ee2f555b00b7 e332519fb10dfb72717876d2cbe502f23b1be54a fix(p5): enforce retry and readback invariants and classify nested scope conflicts",
+    "e332519fb10dfb72717876d2cbe502f23b1be54a 20e78e55c8f461d01b9671c475ba7fa98ae0a745 feat(p5): add exact CSV XLSX export and deterministic QA",
+    "20e78e55c8f461d01b9671c475ba7fa98ae0a745 820245fc544fc66c393db548151e6d281e03d414 docs(p5): record approved v0.2c exact numeric projection addendum"
+  ],
+  "source_diff_sha256": "6107390886feff686a2a2719c610ef457fa94de3a7492d548c522a87c5db9d1b"
+}

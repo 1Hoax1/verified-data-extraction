@@ -1,0 +1,91 @@
+{
+  "result": "PASS",
+  "successor_scope_mutations": [
+    {
+      "probe": "protected_runtime",
+      "result": "REJECTED",
+      "reason": "Protected file changed: src/vde/storage.py"
+    },
+    {
+      "probe": "historical_test",
+      "result": "REJECTED",
+      "reason": "Protected file changed: tests/p2/test_p2.py"
+    },
+    {
+      "probe": "P0_schema",
+      "result": "REJECTED",
+      "reason": "Protected file changed: pecs/pilot_slice_v1/contracts/qa_report.schema.json"
+    },
+    {
+      "probe": "P0_fixture",
+      "result": "REJECTED",
+      "reason": "Protected file changed: pecs/pilot_slice_v1/fixtures/P-A_dirty_csv/expected_result.csv"
+    },
+    {
+      "probe": "migration",
+      "result": "REJECTED",
+      "reason": "Application source inventory differs"
+    },
+    {
+      "probe": "dependency",
+      "result": "REJECTED",
+      "reason": "Protected file changed: pyproject.toml"
+    },
+    {
+      "probe": "DECISIONS",
+      "result": "REJECTED",
+      "reason": "Unapproved governance document: copied document bytes"
+    },
+    {
+      "probe": "governance_pin",
+      "result": "REJECTED",
+      "reason": "Protected file changed: tests/p4/approved_governance_pin_v1.json"
+    },
+    {
+      "probe": "old_policy",
+      "result": "REJECTED",
+      "reason": "Protected file changed: tests/p4/scope_allowlist_v1.json"
+    },
+    {
+      "probe": "new_source",
+      "result": "REJECTED",
+      "reason": "Application source inventory differs"
+    },
+    {
+      "probe": "unknown_P5_source",
+      "result": "REJECTED",
+      "reason": "Application source inventory differs"
+    },
+    {
+      "probe": "network_import",
+      "result": "REJECTED",
+      "reason": "Forbidden P5 import: src/vde/p5/service.py"
+    },
+    {
+      "probe": "arbitrary_execution",
+      "result": "REJECTED",
+      "reason": "Dynamic execution forbidden"
+    },
+    {
+      "probe": "new_operation",
+      "result": "REJECTED",
+      "reason": "Unapproved execution/operation/schema change"
+    },
+    {
+      "probe": "app_auto_trigger",
+      "result": "REJECTED",
+      "reason": "Protected file changed: src/vde/app.py"
+    },
+    {
+      "probe": "policy_expansion",
+      "result": "REJECTED",
+      "reason": "P5 policy closed contents differ"
+    },
+    {
+      "probe": "unapproved_file",
+      "result": "REJECTED",
+      "reason": "Unapproved repository files: ['unapproved-document.txt']"
+    }
+  ],
+  "ambiguous_final_result": "REJECTED_NO_WRITES"
+}

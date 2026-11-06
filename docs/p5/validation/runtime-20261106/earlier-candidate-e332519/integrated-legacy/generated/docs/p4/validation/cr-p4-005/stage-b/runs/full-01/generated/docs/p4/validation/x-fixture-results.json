@@ -1,0 +1,271 @@
+{
+  "P4-X01": {
+    "admission_no_writes_or_io": true,
+    "result": "PASS"
+  },
+  "P4-X02": {
+    "admission_no_writes_or_io": true,
+    "result": "PASS"
+  },
+  "P4-X03": {
+    "admission_no_writes_or_io": true,
+    "result": "PASS"
+  },
+  "P4-X04": {
+    "admission_no_writes_or_io": true,
+    "result": "PASS"
+  },
+  "P4-X05": {
+    "foreign_asset_no_writes_or_io": true,
+    "result": "PASS"
+  },
+  "P4-X06": {
+    "health": "blocked",
+    "result": "PASS",
+    "writes": "FORBIDDEN"
+  },
+  "P4-X07": {
+    "health_after_restart": "ready",
+    "new_artifact_rows": 0,
+    "order_status": "FAILED",
+    "p4_eventlog_delta": 2,
+    "public_error": {
+      "category": "TRANSFORMATION",
+      "code": "COLUMN_NOT_FOUND",
+      "column": "Customer Name",
+      "created_at": "2026-11-01T20:49:50Z",
+      "dataset_id": "raw",
+      "details": {
+        "reason": "Required column absent"
+      },
+      "error_id": "612f7246-d5e6-40d7-b3d3-8bf51b459d5f",
+      "message": "Deterministic transformation rejected.",
+      "operation_id": "pa-op-01",
+      "order_id": "order-pa",
+      "retryable": false,
+      "row_ids": [],
+      "run_id": "fbba8bef-7acb-4dba-baa6-ca567848de11",
+      "schema_version": "1.1",
+      "severity": "BLOCKER",
+      "source_id": "asset-pa-csv",
+      "stage": "PREFLIGHT"
+    },
+    "result": "PASS",
+    "run_status": "failed"
+  },
+  "P4-X08": {
+    "health_after_restart": "ready",
+    "new_artifact_rows": 0,
+    "order_status": "FAILED",
+    "p4_eventlog_delta": 2,
+    "public_error": {
+      "category": "TRANSFORMATION",
+      "code": "COLUMN_COLLISION",
+      "column": null,
+      "created_at": "2026-11-01T20:49:33Z",
+      "dataset_id": "raw",
+      "details": {
+        "reason": "Rename output collision"
+      },
+      "error_id": "ea5fe237-cca9-4a3f-94ff-19fe55c36be6",
+      "message": "Deterministic transformation rejected.",
+      "operation_id": "pa-op-01",
+      "order_id": "order-pa",
+      "retryable": false,
+      "row_ids": [],
+      "run_id": "bcff40c6-a628-4438-ae6c-5ffc6a87456b",
+      "schema_version": "1.1",
+      "severity": "BLOCKER",
+      "source_id": "asset-pa-csv",
+      "stage": "TRANSFORMATION"
+    },
+    "result": "PASS",
+    "run_status": "failed"
+  },
+  "P4-X09": {
+    "health_after_restart": "ready",
+    "new_artifact_rows": 0,
+    "order_status": "FAILED",
+    "p4_eventlog_delta": 2,
+    "public_error": {
+      "category": "TRANSFORMATION",
+      "code": "PARSE_FAILED",
+      "column": "signup_date",
+      "created_at": "2026-11-01T20:49:34Z",
+      "dataset_id": "s07",
+      "details": {
+        "reason": "P4_PARSE_FAILED",
+        "value": "bad-date"
+      },
+      "error_id": "0d06e701-ba6f-4760-9209-ba0e1e4db430",
+      "message": "Deterministic transformation rejected.",
+      "operation_id": "pa-op-08",
+      "order_id": "order-pa",
+      "retryable": false,
+      "row_ids": [
+        "2"
+      ],
+      "run_id": "81681413-424d-4ac2-9dea-826054baa0d3",
+      "schema_version": "1.1",
+      "severity": "BLOCKER",
+      "source_id": "asset-pa-csv",
+      "stage": "TRANSFORMATION"
+    },
+    "result": "PASS",
+    "run_status": "failed"
+  },
+  "P4-X10": {
+    "health_after_restart": "ready",
+    "new_artifact_rows": 0,
+    "order_status": "FAILED",
+    "p4_eventlog_delta": 2,
+    "public_error": {
+      "category": "TRANSFORMATION",
+      "code": "PARSE_FAILED",
+      "column": "revenue",
+      "created_at": "2026-11-01T20:49:51Z",
+      "dataset_id": "s08",
+      "details": {
+        "reason": "P4_PARSE_FAILED",
+        "value": "not-a-number"
+      },
+      "error_id": "cfd0d3ec-2de1-4c6a-a47c-4b752ddb34b0",
+      "message": "Deterministic transformation rejected.",
+      "operation_id": "pa-op-09",
+      "order_id": "order-pa",
+      "retryable": false,
+      "row_ids": [
+        "2"
+      ],
+      "run_id": "d5f55520-e49a-4da8-8457-cb642e5e5216",
+      "schema_version": "1.1",
+      "severity": "BLOCKER",
+      "source_id": "asset-pa-csv",
+      "stage": "TRANSFORMATION"
+    },
+    "result": "PASS",
+    "run_status": "failed"
+  },
+  "P4-X11": {
+    "no_p4_writes": true,
+    "preapproval_rejection": "INVALID_OPERATION",
+    "result": "PASS"
+  },
+  "P4-X12": {
+    "no_p4_writes": true,
+    "preapproval_rejection": "INVALID_PARAMETER",
+    "result": "PASS"
+  },
+  "P4-X13": {
+    "approval_ids_unchanged": true,
+    "approval_stage": "COMPLETE",
+    "automatic_retry_observed": false,
+    "checkpoint": "before_run_commit",
+    "child_exit_code": -9,
+    "health_after_restart": "ready",
+    "new_artifact_rows": 0,
+    "new_orphan_files": 0,
+    "new_run_rows": 0,
+    "order_status": "APPROVED",
+    "p4_eventlog_delta": 0,
+    "p5_handoff_eligible": false,
+    "recovery_stale_run_count": 0,
+    "result": "PASS",
+    "run_status": null,
+    "source_unchanged": true
+  },
+  "P4-X14": {
+    "approval_ids_unchanged": true,
+    "approval_stage": "COMPLETE",
+    "automatic_retry_observed": false,
+    "checkpoint": "after_run_commit",
+    "child_exit_code": -9,
+    "health_after_restart": "degraded",
+    "new_artifact_rows": 0,
+    "new_orphan_files": 0,
+    "new_run_rows": 1,
+    "order_status": "EXECUTING",
+    "p4_eventlog_delta": 1,
+    "p5_handoff_eligible": false,
+    "recovery_stale_run_count": 1,
+    "result": "PASS",
+    "run_status": "running",
+    "source_unchanged": true
+  },
+  "P4-X15": {
+    "approval_ids_unchanged": true,
+    "approval_stage": "COMPLETE",
+    "automatic_retry_observed": false,
+    "checkpoint": "mid_pipeline",
+    "child_exit_code": -9,
+    "health_after_restart": "degraded",
+    "new_artifact_rows": 0,
+    "new_orphan_files": 0,
+    "new_run_rows": 1,
+    "order_status": "EXECUTING",
+    "p4_eventlog_delta": 1,
+    "p5_handoff_eligible": false,
+    "recovery_stale_run_count": 1,
+    "result": "PASS",
+    "run_status": "running",
+    "source_unchanged": true
+  },
+  "P4-X16": {
+    "approval_ids_unchanged": true,
+    "approval_stage": "COMPLETE",
+    "automatic_retry_observed": false,
+    "checkpoint": "after_promotion_before_metadata",
+    "child_exit_code": -9,
+    "health_after_restart": "degraded",
+    "new_artifact_rows": 0,
+    "new_orphan_files": 1,
+    "new_run_rows": 1,
+    "order_status": "EXECUTING",
+    "p4_eventlog_delta": 1,
+    "p5_handoff_eligible": false,
+    "recovery_stale_run_count": 1,
+    "result": "PASS",
+    "run_status": "running",
+    "source_unchanged": true
+  },
+  "P4-X17": {
+    "approval_ids_unchanged": true,
+    "approval_stage": "COMPLETE",
+    "automatic_retry_observed": false,
+    "checkpoint": "after_success_commit",
+    "child_exit_code": -9,
+    "health_after_restart": "ready",
+    "new_artifact_rows": 1,
+    "new_orphan_files": 0,
+    "new_run_rows": 1,
+    "order_status": "EXECUTING",
+    "p4_eventlog_delta": 3,
+    "p5_handoff_eligible": true,
+    "recovery_stale_run_count": 0,
+    "result": "PASS",
+    "run_status": "succeeded",
+    "source_unchanged": true
+  },
+  "P4-X18": {
+    "approval_ids_unchanged": true,
+    "approval_stage": "COMPLETE",
+    "automatic_retry_observed": false,
+    "checkpoint": "event_insert_failure",
+    "child_exit_code": 0,
+    "health_after_restart": "degraded",
+    "new_artifact_rows": 0,
+    "new_orphan_files": 1,
+    "new_run_rows": 1,
+    "order_status": "EXECUTING",
+    "p4_eventlog_delta": 1,
+    "p5_handoff_eligible": false,
+    "recovery_stale_run_count": 1,
+    "result": "PASS",
+    "run_status": "running",
+    "source_unchanged": true
+  },
+  "P4-X19": {
+    "passive_render_writes": 0,
+    "result": "PASS"
+  }
+}

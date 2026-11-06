@@ -1,0 +1,7 @@
+{
+  "result": "PASS",
+  "external_historical_junit": "/workspace/p5-resume-work/historical-runs/full-01/results.xml",
+  "historical_tests": 212,
+  "P5_unique_definitions": 76,
+  "nested_full_pytest_invocations": 0
+}

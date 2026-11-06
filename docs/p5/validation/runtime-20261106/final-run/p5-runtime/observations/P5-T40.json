@@ -1,0 +1,39 @@
+{
+  "fixture": "P5-DQ-022-NEG",
+  "result": "PASS",
+  "observed_check": {
+    "schema_version": "1.1",
+    "check_id": "DQ-022",
+    "name": "DQ-022 deterministic check",
+    "status": "FAIL",
+    "severity": "ERROR",
+    "target": {
+      "artifact": null,
+      "dataset_id": null,
+      "column": null,
+      "row_ids": []
+    },
+    "expected": true,
+    "actual": {
+      "before": [
+        3,
+        6
+      ],
+      "after": [
+        3,
+        5
+      ]
+    },
+    "affected_count": 1,
+    "sample_row_ids": [],
+    "message": "The approved deterministic requirement failed.",
+    "criterion_id": null
+  },
+  "supplemental": [
+    {
+      "full_PB_readback_cells": 18,
+      "real_P5_result_published": false,
+      "numeric_csv_cases": 15
+    }
+  ]
+}
