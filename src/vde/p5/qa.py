@@ -435,7 +435,7 @@ def evaluate_observation(check_id, evidence, *, applicable=True):
     elif check_id == 'DQ-012':
         ok = all(not missing(v) for row in evidence['rows'] for v in row)
     elif check_id == 'DQ-013':
-        ok = Fraction(evidence['null_count'],evidence['row_count'] or 1) <= Fraction(evidence['max_ratio'])
+        ok = Fraction(evidence['null_count'],evidence['row_count'] or 1) <= Fraction(str(evidence['max_ratio']))
     elif check_id == 'DQ-014':
         tokens = [row_bytes(row) for row in evidence['rows']]
         ok = len(tokens) == len(set(tokens))

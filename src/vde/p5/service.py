@@ -80,6 +80,7 @@ class P5Service:
                 and checksum == artifact.checksum
                 and summary['columns'] == list(context.projection.columns)
                 and summary['output_headers'] == list(context.projection.headers)
+                and summary['column_count'] == len(context.projection.columns)
                 and summary['row_count'] == context.run.metrics_json['row_count']
                 and report['overall_status'] == overall(report['deterministic_checks'])
                 and context.order.status == ('NEEDS_FIX' if report['overall_status']=='FAIL' else 'READY'),
@@ -88,11 +89,22 @@ class P5Service:
         checks = report['deterministic_checks']
         approved = {c['criterion_id'] for c in context.brief.document_json['acceptance_criteria']}
         approved &= set(context.spec.document_json['acceptance_criteria_ref'])
+        expected_criteria={c['criterion_id']:c for c in context.brief.document_json['acceptance_criteria']
+                           if c['criterion_id'] in approved and c['requirement_status']!='NOT_APPLICABLE'}
+        from .qa import criterion_dq,json_value
         require(set(c['check_id'] for c in checks)==set(IDS) and
                 len({(c['check_id'],c['criterion_id']) for c in checks})==len(checks) and
                 all(c['criterion_id'] is None or c['criterion_id'] in approved for c in checks) and
+                {c['criterion_id'] for c in checks if c['criterion_id']} == set(expected_criteria) and
                 all(c['check_id'] in CONDITIONAL for c in checks if c['status']=='SKIPPED'),
                 'STORAGE_ERROR', 'Terminal QA coverage differs')
+        for check in checks:
+            if check['criterion_id'] is not None:
+                criterion=expected_criteria[check['criterion_id']]
+                require(check['check_id']==criterion_dq(criterion) and check['expected']==json_value(criterion['expected']) and
+                        check['severity']==criterion['severity'] and
+                        check['target']['column']==criterion['target']['column'],
+                        'STORAGE_ERROR','Terminal criterion binding differs')
         with self._uow() as uow:
             events=[e for e in uow.events.list_for_run(context.run.id) if e.event_type=='P5_QA_COMPLETED']
         require(len(events)==1 and events[0].payload_json['report_id']==report['report_id'] and

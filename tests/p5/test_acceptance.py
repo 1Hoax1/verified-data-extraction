@@ -52,6 +52,9 @@ def test_deterministic_check(case,tmp_path,design,monkeypatch):
     validate(result,'qa_check_result')
     number=int(case['test_id'][-2:])
     supplemental=[]
+    if number==25:
+        assert evaluate_observation('DQ-013',dict(null_count=3,row_count=10,max_ratio=0.3))['status']=='PASS'
+        assert evaluate_observation('DQ-013',dict(null_count=4,row_count=10,max_ratio=0.3))['status']=='FAIL'
     if number in (19,20):
         a=Scenario(tmp_path/'pb','P-B_xlsx_sheet')
         context=P5Service(a.env).inspect(a.run_id,a.order())
