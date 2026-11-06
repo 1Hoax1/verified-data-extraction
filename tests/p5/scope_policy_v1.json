@@ -1,0 +1,38 @@
+{
+  "addendum_commit": "20e78e55c8f461d01b9671c475ba7fa98ae0a745",
+  "app_integration": "from vde.p5.ui import panel as export_qa_panel\nexport_qa_panel(result)\n",
+  "authority": "Owner-approved P5 Gate A; CR-P5-001/002/003; no historical policy changes",
+  "document_paths": [
+    "docs/p5/design_addenda/P5_DESIGN_ADDENDUM_v0.2c_CR_P5_003.md",
+    "docs/p5/implementation/README.md",
+    "docs/p5/implementation/TEST_PLAN_TRACEABILITY.md"
+  ],
+  "evidence_root": "docs/p5/validation/runtime-20261106/",
+  "format": "P5_SCOPE_POLICY_V1",
+  "historical_regression_base": "fd39aa1bed480313504ae8b1f76e77e170cb72ba",
+  "implementation_start": "820245fc544fc66c393db548151e6d281e03d414",
+  "source_paths": [
+    "src/vde/p5/__init__.py",
+    "src/vde/p5/budget.py",
+    "src/vde/p5/contract.py",
+    "src/vde/p5/errors.py",
+    "src/vde/p5/export.py",
+    "src/vde/p5/project.py",
+    "src/vde/p5/qa.py",
+    "src/vde/p5/report.py",
+    "src/vde/p5/roundtrip.py",
+    "src/vde/p5/service.py",
+    "src/vde/p5/ui.py"
+  ],
+  "test_paths": [
+    "tests/p5/__init__.py",
+    "tests/p5/conftest.py",
+    "tests/p5/support.py",
+    "tests/p5/test_acceptance.py",
+    "tests/p5/scope_audit.py",
+    "tests/p5/scope_policy_v1.json",
+    "tests/p5/restart_probe.py",
+    "tests/p5/stress_probe.py",
+    "tests/p5/run_validation.py"
+  ]
+}
