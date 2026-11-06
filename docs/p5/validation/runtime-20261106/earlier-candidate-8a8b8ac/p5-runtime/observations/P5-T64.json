@@ -1,0 +1,7 @@
+{
+  "result": "PASS",
+  "preflight_rejections": 5,
+  "separate_numeric_guard_mutations": 4,
+  "actual_service_preflight_and_bypass": 6,
+  "changed_CSV": "REJECTED"
+}

@@ -1,0 +1,159 @@
+........................................................................ [ 48%]
+.........F.............................................................. [ 97%]
+.FF.                                                                     [100%]
+=================================== FAILURES ===================================
+_________________________ test_T40_scope_dependencies __________________________
+
+env = BootstrapResult(workspace=<vde.workspace.Workspace object at 0x7ff8459a4e60>, recovery=RecoveryReport(errors=[], staging=[], orphans=[], stale_runs=[]))
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-28/test_T40_scope_dependencies0')
+
+    def test_T40_scope_dependencies(env, tmp_path):
+        from scope_policy import audit_application, audit_repository_paths
+        baseline_project = subprocess.check_output(['git', 'show', '129300728c446b82eaeafe1068e27339eb7176dd:pyproject.toml'], cwd=ROOT, text=True)
+        baseline_lock = subprocess.check_output(['git', 'show', '129300728c446b82eaeafe1068e27339eb7176dd:uv.lock'], cwd=ROOT, text=True)
+>       audit_application(ROOT, baseline_project, baseline_lock)
+
+tests/p2/test_p2.py:467: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+root = PosixPath('/workspace/p5-export-deterministic-qa')
+baseline_pyproject = '[build-system]\nrequires = ["setuptools>=77"]\nbuild-backend = "setuptools.build_meta"\n\n[project]\nname = "verified...= ["migrations/*.sql"]\n\n[tool.pytest.ini_options]\ntestpaths = ["tests/p1"]\npythonpath = ["src"]\naddopts = "-ra"\n'
+baseline_lock = 'version = 1\nrevision = 3\nrequires-python = ">=3.11"\nresolution-markers = [\n    "python_full_version >= \'3.12\'",...e1454315171103c6a30961236f508b9b623eae470268bbcc6a22f", size = 79067, upload-time = "2024-11-01T14:07:11.845Z" },\n]\n'
+
+    def audit_application(root, baseline_pyproject, baseline_lock, *, phase='p2'):
+        """Fail closed on new paths/imports/calls/workflows/deps/migrations.
+    
+        This is a static regression gate and reviewed source boundary, not a proof
+        against deliberately obfuscated semantics inside an already permitted call.
+        """
+        root = Path(root)
+        policy = json.loads(POLICY.read_text())
+        approved_p3 = json.loads(P3_POLICY.read_text())
+        approved_p4 = json.loads(P4_POLICY.read_text())
+        actual_paths = {p.relative_to(root).as_posix() for p in (root / 'src').rglob('*')
+                        if p.is_file() and '__pycache__' not in p.parts and not any(part.endswith('.egg-info') for part in p.parts)}
+        # CR-P4-001: only enumerated P4-owned files are admitted; P4-T62 audits
+        # their complete contents. Historical source and negative checks remain.
+>       assert actual_paths == set(approved_p3['source_paths']) | set(approved_p4['p4_source_paths']), 'Unapproved application source/module/migration'
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AssertionError: Unapproved application source/module/migration
+
+tests/scope_policy.py:144: AssertionError
+____________________________ test_T50_p2_regression ____________________________
+
+    def test_T50_p2_regression():
+>       regression('p2', 54)
+
+tests/p3/test_p3.py:484: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+phase = 'p2', count = 54
+
+    def regression(phase, count):
+        output = ROOT / 'docs/p3/validation'
+        historical = ROOT / 'docs/p2/validation'
+        originals = {p: p.read_bytes() for p in historical.iterdir() if p.is_file()}
+        command = [sys.executable, '-m', 'pytest', 'tests/' + phase, '-q', '--junitxml=' + str(output / (phase + '-results.xml'))]
+        try:
+            proc = subprocess.run(command, cwd=ROOT, capture_output=True, text=True)
+            (output / (phase + '-run.log')).write_text('COMMAND ' + json.dumps(command) + '\n' + proc.stdout + proc.stderr)
+            if phase == 'p2':
+                for name in ['fixture-verification.json', 'rss-csv.json', 'rss-xlsx.json']:
+                    shutil.copy(historical / name, output / name)
+        finally:
+            for path, data in originals.items(): path.write_bytes(data)
+            for path in historical.iterdir():
+                if path.is_file() and path not in originals: path.unlink()
+>       assert proc.returncode == 0, proc.stdout + proc.stderr
+E       AssertionError: .......................................F..............                   [100%]
+E         =================================== FAILURES ===================================
+E         _________________________ test_T40_scope_dependencies __________________________
+E         
+E         env = BootstrapResult(workspace=<vde.workspace.Workspace object at 0x7efcb1103800>, recovery=RecoveryReport(errors=[], staging=[], orphans=[], stale_runs=[]))
+E         tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-31/test_T40_scope_dependencies0')
+E         
+E             def test_T40_scope_dependencies(env, tmp_path):
+E                 from scope_policy import audit_application, audit_repository_paths
+E                 baseline_project = subprocess.check_output(['git', 'show', '129300728c446b82eaeafe1068e27339eb7176dd:pyproject.toml'], cwd=ROOT, text=True)
+E                 baseline_lock = subprocess.check_output(['git', 'show', '129300728c446b82eaeafe1068e27339eb7176dd:uv.lock'], cwd=ROOT, text=True)
+E         >       audit_application(ROOT, baseline_project, baseline_lock)
+E         
+E         tests/p2/test_p2.py:467: 
+E         _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+E         
+E         root = PosixPath('/workspace/p5-export-deterministic-qa')
+E         baseline_pyproject = '[build-system]\nrequires = ["setuptools>=77"]\nbuild-backend = "setuptools.build_meta"\n\n[project]\nname = "verified...= ["migrations/*.sql"]\n\n[tool.pytest.ini_options]\ntestpaths = ["tests/p1"]\npythonpath = ["src"]\naddopts = "-ra"\n'
+E         baseline_lock = 'version = 1\nrevision = 3\nrequires-python = ">=3.11"\nresolution-markers = [\n    "python_full_version >= \'3.12\'",...e1454315171103c6a30961236f508b9b623eae470268bbcc6a22f", size = 79067, upload-time = "2024-11-01T14:07:11.845Z" },\n]\n'
+E         
+E             def audit_application(root, baseline_pyproject, baseline_lock, *, phase='p2'):
+E                 """Fail closed on new paths/imports/calls/workflows/deps/migrations.
+E             
+E                 This is a static regression gate and reviewed source boundary, not a proof
+E                 against deliberately obfuscated semantics inside an already permitted call.
+E                 """
+E                 root = Path(root)
+E                 policy = json.loads(POLICY.read_text())
+E                 approved_p3 = json.loads(P3_POLICY.read_text())
+E                 approved_p4 = json.loads(P4_POLICY.read_text())
+E                 actual_paths = {p.relative_to(root).as_posix() for p in (root / 'src').rglob('*')
+E                                 if p.is_file() and '__pycache__' not in p.parts and not any(part.endswith('.egg-info') for part in p.parts)}
+E                 # CR-P4-001: only enumerated P4-owned files are admitted; P4-T62 audits
+E                 # their complete contents. Historical source and negative checks remain.
+E         >       assert actual_paths == set(approved_p3['source_paths']) | set(approved_p4['p4_source_paths']), 'Unapproved application source/module/migration'
+E                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E         E       AssertionError: Unapproved application source/module/migration
+E         
+E         tests/scope_policy.py:144: AssertionError
+E         - generated xml file: /workspace/p5-export-deterministic-qa/docs/p3/validation/p2-results.xml -
+E         =========================== short test summary info ============================
+E         FAILED tests/p2/test_p2.py::test_T40_scope_dependencies - AssertionError: Una...
+E         1 failed, 53 passed in 24.56s
+E         
+E       assert 1 == 0
+E        +  where 1 = CompletedProcess(args=['/workspace/verified-data-extraction/.venv/bin/python', '-m', 'pytest', 'tests/p2', '-q', '--ju...tests/p2/test_p2.py::test_T40_scope_dependencies - AssertionError: Una...\n1 failed, 53 passed in 24.56s\n', stderr='').returncode
+
+tests/p3/test_p3.py:473: AssertionError
+_______________________ test_T51_whole_application_scope _______________________
+
+p3_pack = PosixPath('/tmp/pytest-of-agent/pytest-28/p3-approved0/P3_Implementation_Pack_v1.0_APPROVED')
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-28/test_T51_whole_application_sco0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7ff844ca7080>
+
+    def test_T51_whole_application_scope(p3_pack, tmp_path, monkeypatch):
+        from scope_policy import audit_application, audit_repository_paths
+        base_project = subprocess.check_output(['git', 'show', '129300728c446b82eaeafe1068e27339eb7176dd:pyproject.toml'], cwd=ROOT, text=True)
+        base_lock = subprocess.check_output(['git', 'show', '129300728c446b82eaeafe1068e27339eb7176dd:uv.lock'], cwd=ROOT, text=True)
+>       audit_application(ROOT, base_project, base_lock, phase='p3')
+
+tests/p3/test_p3.py:491: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+root = PosixPath('/workspace/p5-export-deterministic-qa')
+baseline_pyproject = '[build-system]\nrequires = ["setuptools>=77"]\nbuild-backend = "setuptools.build_meta"\n\n[project]\nname = "verified...= ["migrations/*.sql"]\n\n[tool.pytest.ini_options]\ntestpaths = ["tests/p1"]\npythonpath = ["src"]\naddopts = "-ra"\n'
+baseline_lock = 'version = 1\nrevision = 3\nrequires-python = ">=3.11"\nresolution-markers = [\n    "python_full_version >= \'3.12\'",...e1454315171103c6a30961236f508b9b623eae470268bbcc6a22f", size = 79067, upload-time = "2024-11-01T14:07:11.845Z" },\n]\n'
+
+    def audit_application(root, baseline_pyproject, baseline_lock, *, phase='p2'):
+        """Fail closed on new paths/imports/calls/workflows/deps/migrations.
+    
+        This is a static regression gate and reviewed source boundary, not a proof
+        against deliberately obfuscated semantics inside an already permitted call.
+        """
+        root = Path(root)
+        policy = json.loads(POLICY.read_text())
+        approved_p3 = json.loads(P3_POLICY.read_text())
+        approved_p4 = json.loads(P4_POLICY.read_text())
+        actual_paths = {p.relative_to(root).as_posix() for p in (root / 'src').rglob('*')
+                        if p.is_file() and '__pycache__' not in p.parts and not any(part.endswith('.egg-info') for part in p.parts)}
+        # CR-P4-001: only enumerated P4-owned files are admitted; P4-T62 audits
+        # their complete contents. Historical source and negative checks remain.
+>       assert actual_paths == set(approved_p3['source_paths']) | set(approved_p4['p4_source_paths']), 'Unapproved application source/module/migration'
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AssertionError: Unapproved application source/module/migration
+
+tests/scope_policy.py:144: AssertionError
+- generated xml file: /tmp/pytest-of-agent/pytest-23/test_T63_frozen_regression_evi0/p0-p3-regression.xml -
+=========================== short test summary info ============================
+FAILED tests/p2/test_p2.py::test_T40_scope_dependencies - AssertionError: Una...
+FAILED tests/p3/test_p3.py::test_T50_p2_regression - AssertionError: ...........
+FAILED tests/p3/test_p3.py::test_T51_whole_application_scope - AssertionError...
+3 failed, 145 passed in 84.66s (0:01:24)

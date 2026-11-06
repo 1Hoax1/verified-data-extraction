@@ -1,0 +1,4 @@
+........................................................................ [ 94%]
+....                                                                     [100%]
+- generated xml file: /workspace/p5-resume-work/final-03/p5-runtime/results.xml -
+76 passed in 1075.70s (0:17:55)

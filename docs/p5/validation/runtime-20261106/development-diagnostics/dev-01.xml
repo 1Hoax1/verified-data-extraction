@@ -1,0 +1,420 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="8" skipped="0" tests="74" time="44.673" timestamp="2026-11-06T13:19:10.443912+00:00" hostname="832769dc7e6d"><testcase classname="tests.p5.test_acceptance" name="test_deterministic_check[P5-T01]" time="0.131"><properties><property name="p5_id" value="P5-T01" /></properties></testcase><testcase classname="tests.p5.test_acceptance" name="test_deterministic_check[P5-T02]" time="0.001"><properties><property name="p5_id" value="P5-T02" /></properties></testcase><testcase classname="tests.p5.test_acceptance" name="test_deterministic_check[P5-T03]" time="0.001"><properties><property name="p5_id" value="P5-T03" /></properties></testcase><testcase classname="tests.p5.test_acceptance" name="test_deterministic_check[P5-T04]" time="0.001"><properties><property name="p5_id" value="P5-T04" /></properties></testcase><testcase classname="tests.p5.test_acceptance" name="test_deterministic_check[P5-T05]" time="0.001"><properties><property name="p5_id" value="P5-T05" /></properties></testcase><testcase classname="tests.p5.test_acceptance" name="test_deterministic_check[P5-T06]" time="0.001"><properties><property name="p5_id" value="P5-T06" /></properties></testcase><testcase classname="tests.p5.test_acceptance" name="test_deterministic_check[P5-T07]" time="0.001"><properties><property name="p5_id" value="P5-T07" /></properties></testcase><testcase classname="tests.p5.test_acceptance" name="test_deterministic_check[P5-T08]" time="0.001"><properties><property name="p5_id" value="P5-T08" /></properties></testcase><testcase classname="tests.p5.test_acceptance" name="test_deterministic_check[P5-T09]" time="0.001"><properties><property name="p5_id" value="P5-T09" /></properties></testcase><testcase classname="tests.p5.test_acceptance" name="test_deterministic_check[P5-T10]" time="0.001"><properties><property name="p5_id" value="P5-T10" /></properties></testcase><testcase classname="tests.p5.test_acceptance" name="test_deterministic_check[P5-T11]" time="0.001"><properties><property name="p5_id" value="P5-T11" /></properties></testcase><testcase classname="tests.p5.test_acceptance" name="test_deterministic_check[P5-T12]" time="0.001"><properties><property name="p5_id" value="P5-T12" /></properties></testcase><testcase classname="tests.p5.test_acceptance" name="test_deterministic_check[P5-T13]" time="0.001"><properties><property name="p5_id" value="P5-T13" /></properties></testcase><testcase classname="tests.p5.test_acceptance" name="test_deterministic_check[P5-T14]" time="0.001"><properties><property name="p5_id" value="P5-T14" /></properties></testcase><testcase classname="tests.p5.test_acceptance" name="test_deterministic_check[P5-T15]" time="0.001"><properties><property name="p5_id" value="P5-T15" /></properties></testcase><testcase classname="tests.p5.test_acceptance" name="test_deterministic_check[P5-T16]" time="0.001"><properties><property name="p5_id" value="P5-T16" /></properties></testcase><testcase classname="tests.p5.test_acceptance" name="test_deterministic_check[P5-T17]" time="0.001"><properties><property name="p5_id" value="P5-T17" /></properties></testcase><testcase classname="tests.p5.test_acceptance" name="test_deterministic_check[P5-T18]" time="0.001"><properties><property name="p5_id" value="P5-T18" /></properties></testcase><testcase classname="tests.p5.test_acceptance" name="test_deterministic_check[P5-T47]" time="0.001"><properties><property name="p5_id" value="P5-T47" /></properties></testcase><testcase classname="tests.p5.test_acceptance" name="test_deterministic_check[P5-T19]" time="0.879"><properties><property name="p5_id" value="P5-T19" /></properties></testcase><testcase classname="tests.p5.test_acceptance" name="test_deterministic_check[P5-T20]" time="0.886"><properties><property name="p5_id" value="P5-T20" /></properties></testcase><testcase classname="tests.p5.test_acceptance" name="test_deterministic_check[P5-T48]" time="0.002"><properties><property name="p5_id" value="P5-T48" /></properties></testcase><testcase classname="tests.p5.test_acceptance" name="test_deterministic_check[P5-T21]" time="0.002"><properties><property name="p5_id" value="P5-T21" /></properties></testcase><testcase classname="tests.p5.test_acceptance" name="test_deterministic_check[P5-T22]" time="0.001"><properties><property name="p5_id" value="P5-T22" /></properties></testcase><testcase classname="tests.p5.test_acceptance" name="test_deterministic_check[P5-T23]" time="0.001"><properties><property name="p5_id" value="P5-T23" /></properties></testcase><testcase classname="tests.p5.test_acceptance" name="test_deterministic_check[P5-T24]" time="0.001"><properties><property name="p5_id" value="P5-T24" /></properties></testcase><testcase classname="tests.p5.test_acceptance" name="test_deterministic_check[P5-T25]" time="0.001"><properties><property name="p5_id" value="P5-T25" /></properties></testcase><testcase classname="tests.p5.test_acceptance" name="test_deterministic_check[P5-T26]" time="0.001"><properties><property name="p5_id" value="P5-T26" /></properties></testcase><testcase classname="tests.p5.test_acceptance" name="test_deterministic_check[P5-T49]" time="0.001"><properties><property name="p5_id" value="P5-T49" /></properties></testcase><testcase classname="tests.p5.test_acceptance" name="test_deterministic_check[P5-T27]" time="0.001"><properties><property name="p5_id" value="P5-T27" /></properties></testcase><testcase classname="tests.p5.test_acceptance" name="test_deterministic_check[P5-T28]" time="0.001"><properties><property name="p5_id" value="P5-T28" /></properties></testcase><testcase classname="tests.p5.test_acceptance" name="test_deterministic_check[P5-T29]" time="0.001"><properties><property name="p5_id" value="P5-T29" /></properties></testcase><testcase classname="tests.p5.test_acceptance" name="test_deterministic_check[P5-T30]" time="0.001"><properties><property name="p5_id" value="P5-T30" /></properties></testcase><testcase classname="tests.p5.test_acceptance" name="test_deterministic_check[P5-T50]" time="0.001"><properties><property name="p5_id" value="P5-T50" /></properties></testcase><testcase classname="tests.p5.test_acceptance" name="test_deterministic_check[P5-T31]" time="0.001"><properties><property name="p5_id" value="P5-T31" /></properties></testcase><testcase classname="tests.p5.test_acceptance" name="test_deterministic_check[P5-T32]" time="0.001"><properties><property name="p5_id" value="P5-T32" /></properties></testcase><testcase classname="tests.p5.test_acceptance" name="test_deterministic_check[P5-T51]" time="0.001"><properties><property name="p5_id" value="P5-T51" /></properties></testcase><testcase classname="tests.p5.test_acceptance" name="test_deterministic_check[P5-T33]" time="1.679"><properties><property name="p5_id" value="P5-T33" /></properties><failure message="AssertionError: assert (1 == 1 and '20' == 20)">case = {'action': 'evaluate exactly DQ-017 on case setup; separate from persisted orchestration', 'case_id': 'P5-DQ-017-POS',...U', 'US'], 'values': ['RU', 'US']}, 'affected_count': 0, 'blocking': False, 'must_not_publish_READY': False, ...}, ...}
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-20/test_deterministic_check_P5_T33')
+design = {'base': PosixPath('/tmp/pytest-of-agent/pytest-20/p5-design0/P5_Implementation_Design_Pack_v0.2a_candidate'), 'handof...off_2026-11-05'), 'pb': PosixPath('/tmp/pytest-of-agent/pytest-20/p5-design0/P5_Gate_A_PB_Supplement_v0.2b_candidate')}
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x7f6a2db3a240&gt;
+
+    @pytest.mark.parametrize('case',dq_cases(),ids=lambda c:c['test_id'])
+    def test_deterministic_check(case,tmp_path,design,monkeypatch):
+        # The independent immutable pack supplies input observations and expected
+        # status/count, never production output copied back into its own oracle.
+        observation=deepcopy(case['setup'].get('dataset',{}))
+        result=evaluate_observation(case['check_id'],observation,applicable=case['kind']!='NOT_APPLICABLE')
+        expected=case['expected']
+        for key in ('status','severity','affected_count'):
+            assert result[key]==expected[key],(case['case_id'],key,result)
+        if 'actual' in expected:assert result['actual']==expected['actual']
+        assert (result['status']=='FAIL' and result['severity'] in ('BLOCKER','ERROR'))==expected['blocking']
+        validate(result,'qa_check_result')
+        number=int(case['test_id'][-2:])
+        supplemental=[]
+        if number in (19,20):
+            a=Scenario(tmp_path/'pb','P-B_xlsx_sheet')
+            context=P5Service(a.env).inspect(a.run_id,a.order())
+            c=next(c for c in context.brief.document_json['acceptance_criteria'] if c['criterion_id']=='PB-AC-002')
+            p=context.projection
+            if number==20:
+                columns=list(p.columns);columns[2],columns[3]=columns[3],columns[2];p=replace(p,columns=tuple(columns))
+            f=SimpleNamespace(projection=p)
+            r=criterion_result(c,f,{},context)
+            assert r['status']==('PASS' if number==19 else 'FAIL')
+            assert len(p.columns)==6
+            assert not predicate('sequence_equals',list(context.projection.columns),c['expected'])
+            generic=deepcopy(c);generic['criterion_id']='OTHER-AC-002'
+            assert criterion_result(generic,f,{},context)['status']=='FAIL'
+            supplemental.append({'PB_AC002_status':r['status'],'full_column_count':6,'generic_sequence_equals':'UNCHANGED'})
+        if number in (21,22,31,32):
+            decimal=projection_for(['decimal']);integer=projection_for(['integer'])
+            if number in (21,31):
+                values=[0,-1,10,9007199254740991,9007199254740992,9007199254740993,-(2**63),2**63-1]
+                with localcontext() as ctx:
+                    ctx.prec=3
+                    for original in values:
+                        raw=(original,);wide=semantic_row(raw,decimal)
+                        assert type(wide[0]) is Decimal and wide[0]==Decimal(original)
+                        assert raw==(original,) and type(raw[0]) is int
+                        assert typed(wide[0],'decimal') and csv_cell(wide[0])==str(original)+'.0'
+                        strict=semantic_row(raw,integer)
+                        assert type(strict[0]) is int and csv_cell(strict[0])==str(original)
+            else:
+                for original in ('10','',None,True,False,10.0):
+                    projected=semantic_row((original,),decimal)[0]
+                    assert type(projected) is type(original) and projected==original
+                    assert not typed(projected,'decimal')
+                assert not typed(semantic_row((Decimal('10'),),integer)[0],'integer')
+                for token in ({'type':'integer','value':'01'},{'type':'integer','value':'9223372036854775808'},
+                              {'type':'decimal','value':'10.00'},10.0,10):
+                    with pytest.raises(ExecutionError):decode_cell(token,expected_type='integer')
+                with pytest.raises(P5Error):semantic_row((2**63,),decimal)
+            supplemental.append({'CR_P5_003':'PASS','all_other_conversions':'FORBIDDEN'})
+        if number in (33,34):
+            raw=None
+            if number==34:
+                raw=modify_xlsx((ROOT/'pecs/pilot_slice_v1/fixtures/P-B_xlsx_sheet/input_orders.xlsx').read_bytes(),'F2','-20')
+            a=Scenario(tmp_path/'ranges','P-B_xlsx_sheet',change=pb_v2,raw=raw)
+            d=a.complete()
+            scoped={c['criterion_id']:c for c in checks(d,'DQ-017') if c['criterion_id']}
+            assert set(scoped)=={'PB-AC-006','PB-AC-007'}
+            assert scoped['PB-AC-006']['target']['column']=='quantity' and scoped['PB-AC-006']['status']=='PASS'
+            assert scoped['PB-AC-007']['target']['column']=='line_total'
+            assert scoped['PB-AC-007']['status']==('PASS' if number==33 else 'FAIL')
+            if number==33:
+&gt;               assert scoped['PB-AC-006']['actual']==1 and scoped['PB-AC-007']['actual']==20
+E               AssertionError: assert (1 == 1 and '20' == 20)
+
+tests/p5/test_acceptance.py:106: AssertionError</failure></testcase><testcase classname="tests.p5.test_acceptance" name="test_deterministic_check[P5-T34]" time="1.548"><properties><property name="p5_id" value="P5-T34" /></properties></testcase><testcase classname="tests.p5.test_acceptance" name="test_deterministic_check[P5-T52]" time="0.001"><properties><property name="p5_id" value="P5-T52" /></properties></testcase><testcase classname="tests.p5.test_acceptance" name="test_deterministic_check[P5-T35]" time="0.001"><properties><property name="p5_id" value="P5-T35" /></properties></testcase><testcase classname="tests.p5.test_acceptance" name="test_deterministic_check[P5-T36]" time="0.001"><properties><property name="p5_id" value="P5-T36" /></properties></testcase><testcase classname="tests.p5.test_acceptance" name="test_deterministic_check[P5-T37]" time="0.001"><properties><property name="p5_id" value="P5-T37" /></properties></testcase><testcase classname="tests.p5.test_acceptance" name="test_deterministic_check[P5-T38]" time="0.001"><properties><property name="p5_id" value="P5-T38" /></properties></testcase><testcase classname="tests.p5.test_acceptance" name="test_deterministic_check[P5-T39]" time="0.987"><properties><property name="p5_id" value="P5-T39" /></properties><failure message="KeyError: 'test_id'">case = {'case_id': 'CSV-N04', 'existing_test_id': 'P5-T40', 'kind': 'decimal', 'mutated_csv_field': '2000', ...}
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-20/test_deterministic_check_P5_T39')
+design = {'base': PosixPath('/tmp/pytest-of-agent/pytest-20/p5-design0/P5_Implementation_Design_Pack_v0.2a_candidate'), 'handof...off_2026-11-05'), 'pb': PosixPath('/tmp/pytest-of-agent/pytest-20/p5-design0/P5_Gate_A_PB_Supplement_v0.2b_candidate')}
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x7f6a2d9a40b0&gt;
+
+    @pytest.mark.parametrize('case',dq_cases(),ids=lambda c:c['test_id'])
+    def test_deterministic_check(case,tmp_path,design,monkeypatch):
+        # The independent immutable pack supplies input observations and expected
+        # status/count, never production output copied back into its own oracle.
+        observation=deepcopy(case['setup'].get('dataset',{}))
+        result=evaluate_observation(case['check_id'],observation,applicable=case['kind']!='NOT_APPLICABLE')
+        expected=case['expected']
+        for key in ('status','severity','affected_count'):
+            assert result[key]==expected[key],(case['case_id'],key,result)
+        if 'actual' in expected:assert result['actual']==expected['actual']
+        assert (result['status']=='FAIL' and result['severity'] in ('BLOCKER','ERROR'))==expected['blocking']
+        validate(result,'qa_check_result')
+        number=int(case['test_id'][-2:])
+        supplemental=[]
+        if number in (19,20):
+            a=Scenario(tmp_path/'pb','P-B_xlsx_sheet')
+            context=P5Service(a.env).inspect(a.run_id,a.order())
+            c=next(c for c in context.brief.document_json['acceptance_criteria'] if c['criterion_id']=='PB-AC-002')
+            p=context.projection
+            if number==20:
+                columns=list(p.columns);columns[2],columns[3]=columns[3],columns[2];p=replace(p,columns=tuple(columns))
+            f=SimpleNamespace(projection=p)
+            r=criterion_result(c,f,{},context)
+            assert r['status']==('PASS' if number==19 else 'FAIL')
+            assert len(p.columns)==6
+            assert not predicate('sequence_equals',list(context.projection.columns),c['expected'])
+            generic=deepcopy(c);generic['criterion_id']='OTHER-AC-002'
+            assert criterion_result(generic,f,{},context)['status']=='FAIL'
+            supplemental.append({'PB_AC002_status':r['status'],'full_column_count':6,'generic_sequence_equals':'UNCHANGED'})
+        if number in (21,22,31,32):
+            decimal=projection_for(['decimal']);integer=projection_for(['integer'])
+            if number in (21,31):
+                values=[0,-1,10,9007199254740991,9007199254740992,9007199254740993,-(2**63),2**63-1]
+                with localcontext() as ctx:
+                    ctx.prec=3
+                    for original in values:
+                        raw=(original,);wide=semantic_row(raw,decimal)
+                        assert type(wide[0]) is Decimal and wide[0]==Decimal(original)
+                        assert raw==(original,) and type(raw[0]) is int
+                        assert typed(wide[0],'decimal') and csv_cell(wide[0])==str(original)+'.0'
+                        strict=semantic_row(raw,integer)
+                        assert type(strict[0]) is int and csv_cell(strict[0])==str(original)
+            else:
+                for original in ('10','',None,True,False,10.0):
+                    projected=semantic_row((original,),decimal)[0]
+                    assert type(projected) is type(original) and projected==original
+                    assert not typed(projected,'decimal')
+                assert not typed(semantic_row((Decimal('10'),),integer)[0],'integer')
+                for token in ({'type':'integer','value':'01'},{'type':'integer','value':'9223372036854775808'},
+                              {'type':'decimal','value':'10.00'},10.0,10):
+                    with pytest.raises(ExecutionError):decode_cell(token,expected_type='integer')
+                with pytest.raises(P5Error):semantic_row((2**63,),decimal)
+            supplemental.append({'CR_P5_003':'PASS','all_other_conversions':'FORBIDDEN'})
+        if number in (33,34):
+            raw=None
+            if number==34:
+                raw=modify_xlsx((ROOT/'pecs/pilot_slice_v1/fixtures/P-B_xlsx_sheet/input_orders.xlsx').read_bytes(),'F2','-20')
+            a=Scenario(tmp_path/'ranges','P-B_xlsx_sheet',change=pb_v2,raw=raw)
+            d=a.complete()
+            scoped={c['criterion_id']:c for c in checks(d,'DQ-017') if c['criterion_id']}
+            assert set(scoped)=={'PB-AC-006','PB-AC-007'}
+            assert scoped['PB-AC-006']['target']['column']=='quantity' and scoped['PB-AC-006']['status']=='PASS'
+            assert scoped['PB-AC-007']['target']['column']=='line_total'
+            assert scoped['PB-AC-007']['status']==('PASS' if number==33 else 'FAIL')
+            if number==33:
+                assert scoped['PB-AC-006']['actual']==1 and scoped['PB-AC-007']['actual']==20
+            else:assert d.order_status=='NEEDS_FIX'
+            supplemental.append({'isolated_simulated_approval_only':True,'criterion_instances':list(scoped.values())})
+        if number in (39,40):
+            a=Scenario(tmp_path/'roundtrip','P-B_xlsx_sheet',change=pb_v2)
+            context=P5Service(a.env).inspect(a.run_id,a.order())
+            _,raw=ExecutionService(a.env).read_result(a.run_id)
+            path=tmp_path/'test-only.xlsx'
+            with Budget() as budget:
+                write(path,context.projection,semantic_rows(raw,context),budget)
+                if number==40:path.write_bytes(modify_xlsx(path.read_bytes(),'F2','21'))
+                if number==39:
+                    proof=verify(path,context.projection,semantic_rows(raw,context),budget)
+                    assert (proof['rows'],proof['columns'],proof['cells'])==(3,6,18)
+                else:
+                    with pytest.raises(P5Error,match='Numeric value changed'):verify(path,context.projection,semantic_rows(raw,context),budget)
+            numeric=load(design['base']/'fixtures/v02a_numeric_cases.json')
+            for case in numeric['csv_positive']:
+                value=decode_cell({'type':case['kind'],'value':case['p4_canonical_value']})
+                assert csv_cell(value)==case['expected_csv_field']
+            for case in numeric['csv_negative']:
+                value=decode_cell({'type':case['kind'],'value':case['p4_canonical_value']})
+                assert csv_cell(value)!=case['mutated_csv_field']
+            assert a.delta()==dict(artifacts=0,qa_reports=0,event_log=0,approvals=0,execution_runs=0)
+            supplemental.append({'full_PB_readback_cells':18,'real_P5_result_published':False,'numeric_csv_cases':15})
+&gt;       record(case['test_id'],{'fixture':case['case_id'],'result':'PASS','observed_check':result,'supplemental':supplemental})
+               ^^^^^^^^^^^^^^^
+E       KeyError: 'test_id'
+
+tests/p5/test_acceptance.py:131: KeyError</failure></testcase><testcase classname="tests.p5.test_acceptance" name="test_deterministic_check[P5-T40]" time="0.990"><properties><property name="p5_id" value="P5-T40" /></properties><failure message="KeyError: 'test_id'">case = {'case_id': 'CSV-N04', 'existing_test_id': 'P5-T40', 'kind': 'decimal', 'mutated_csv_field': '2000', ...}
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-20/test_deterministic_check_P5_T43')
+design = {'base': PosixPath('/tmp/pytest-of-agent/pytest-20/p5-design0/P5_Implementation_Design_Pack_v0.2a_candidate'), 'handof...off_2026-11-05'), 'pb': PosixPath('/tmp/pytest-of-agent/pytest-20/p5-design0/P5_Gate_A_PB_Supplement_v0.2b_candidate')}
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x7f6a2d9ca690&gt;
+
+    @pytest.mark.parametrize('case',dq_cases(),ids=lambda c:c['test_id'])
+    def test_deterministic_check(case,tmp_path,design,monkeypatch):
+        # The independent immutable pack supplies input observations and expected
+        # status/count, never production output copied back into its own oracle.
+        observation=deepcopy(case['setup'].get('dataset',{}))
+        result=evaluate_observation(case['check_id'],observation,applicable=case['kind']!='NOT_APPLICABLE')
+        expected=case['expected']
+        for key in ('status','severity','affected_count'):
+            assert result[key]==expected[key],(case['case_id'],key,result)
+        if 'actual' in expected:assert result['actual']==expected['actual']
+        assert (result['status']=='FAIL' and result['severity'] in ('BLOCKER','ERROR'))==expected['blocking']
+        validate(result,'qa_check_result')
+        number=int(case['test_id'][-2:])
+        supplemental=[]
+        if number in (19,20):
+            a=Scenario(tmp_path/'pb','P-B_xlsx_sheet')
+            context=P5Service(a.env).inspect(a.run_id,a.order())
+            c=next(c for c in context.brief.document_json['acceptance_criteria'] if c['criterion_id']=='PB-AC-002')
+            p=context.projection
+            if number==20:
+                columns=list(p.columns);columns[2],columns[3]=columns[3],columns[2];p=replace(p,columns=tuple(columns))
+            f=SimpleNamespace(projection=p)
+            r=criterion_result(c,f,{},context)
+            assert r['status']==('PASS' if number==19 else 'FAIL')
+            assert len(p.columns)==6
+            assert not predicate('sequence_equals',list(context.projection.columns),c['expected'])
+            generic=deepcopy(c);generic['criterion_id']='OTHER-AC-002'
+            assert criterion_result(generic,f,{},context)['status']=='FAIL'
+            supplemental.append({'PB_AC002_status':r['status'],'full_column_count':6,'generic_sequence_equals':'UNCHANGED'})
+        if number in (21,22,31,32):
+            decimal=projection_for(['decimal']);integer=projection_for(['integer'])
+            if number in (21,31):
+                values=[0,-1,10,9007199254740991,9007199254740992,9007199254740993,-(2**63),2**63-1]
+                with localcontext() as ctx:
+                    ctx.prec=3
+                    for original in values:
+                        raw=(original,);wide=semantic_row(raw,decimal)
+                        assert type(wide[0]) is Decimal and wide[0]==Decimal(original)
+                        assert raw==(original,) and type(raw[0]) is int
+                        assert typed(wide[0],'decimal') and csv_cell(wide[0])==str(original)+'.0'
+                        strict=semantic_row(raw,integer)
+                        assert type(strict[0]) is int and csv_cell(strict[0])==str(original)
+            else:
+                for original in ('10','',None,True,False,10.0):
+                    projected=semantic_row((original,),decimal)[0]
+                    assert type(projected) is type(original) and projected==original
+                    assert not typed(projected,'decimal')
+                assert not typed(semantic_row((Decimal('10'),),integer)[0],'integer')
+                for token in ({'type':'integer','value':'01'},{'type':'integer','value':'9223372036854775808'},
+                              {'type':'decimal','value':'10.00'},10.0,10):
+                    with pytest.raises(ExecutionError):decode_cell(token,expected_type='integer')
+                with pytest.raises(P5Error):semantic_row((2**63,),decimal)
+            supplemental.append({'CR_P5_003':'PASS','all_other_conversions':'FORBIDDEN'})
+        if number in (33,34):
+            raw=None
+            if number==34:
+                raw=modify_xlsx((ROOT/'pecs/pilot_slice_v1/fixtures/P-B_xlsx_sheet/input_orders.xlsx').read_bytes(),'F2','-20')
+            a=Scenario(tmp_path/'ranges','P-B_xlsx_sheet',change=pb_v2,raw=raw)
+            d=a.complete()
+            scoped={c['criterion_id']:c for c in checks(d,'DQ-017') if c['criterion_id']}
+            assert set(scoped)=={'PB-AC-006','PB-AC-007'}
+            assert scoped['PB-AC-006']['target']['column']=='quantity' and scoped['PB-AC-006']['status']=='PASS'
+            assert scoped['PB-AC-007']['target']['column']=='line_total'
+            assert scoped['PB-AC-007']['status']==('PASS' if number==33 else 'FAIL')
+            if number==33:
+                assert scoped['PB-AC-006']['actual']==1 and scoped['PB-AC-007']['actual']==20
+            else:assert d.order_status=='NEEDS_FIX'
+            supplemental.append({'isolated_simulated_approval_only':True,'criterion_instances':list(scoped.values())})
+        if number in (39,40):
+            a=Scenario(tmp_path/'roundtrip','P-B_xlsx_sheet',change=pb_v2)
+            context=P5Service(a.env).inspect(a.run_id,a.order())
+            _,raw=ExecutionService(a.env).read_result(a.run_id)
+            path=tmp_path/'test-only.xlsx'
+            with Budget() as budget:
+                write(path,context.projection,semantic_rows(raw,context),budget)
+                if number==40:path.write_bytes(modify_xlsx(path.read_bytes(),'F2','21'))
+                if number==39:
+                    proof=verify(path,context.projection,semantic_rows(raw,context),budget)
+                    assert (proof['rows'],proof['columns'],proof['cells'])==(3,6,18)
+                else:
+                    with pytest.raises(P5Error,match='Numeric value changed'):verify(path,context.projection,semantic_rows(raw,context),budget)
+            numeric=load(design['base']/'fixtures/v02a_numeric_cases.json')
+            for case in numeric['csv_positive']:
+                value=decode_cell({'type':case['kind'],'value':case['p4_canonical_value']})
+                assert csv_cell(value)==case['expected_csv_field']
+            for case in numeric['csv_negative']:
+                value=decode_cell({'type':case['kind'],'value':case['p4_canonical_value']})
+                assert csv_cell(value)!=case['mutated_csv_field']
+            assert a.delta()==dict(artifacts=0,qa_reports=0,event_log=0,approvals=0,execution_runs=0)
+            supplemental.append({'full_PB_readback_cells':18,'real_P5_result_published':False,'numeric_csv_cases':15})
+&gt;       record(case['test_id'],{'fixture':case['case_id'],'result':'PASS','observed_check':result,'supplemental':supplemental})
+               ^^^^^^^^^^^^^^^
+E       KeyError: 'test_id'
+
+tests/p5/test_acceptance.py:131: KeyError</failure></testcase><testcase classname="tests.p5.test_acceptance" name="test_deterministic_check[P5-T41]" time="0.001"><properties><property name="p5_id" value="P5-T41" /></properties></testcase><testcase classname="tests.p5.test_acceptance" name="test_deterministic_check[P5-T42]" time="0.001"><properties><property name="p5_id" value="P5-T42" /></properties></testcase><testcase classname="tests.p5.test_acceptance" name="test_deterministic_check[P5-T53]" time="0.001"><properties><property name="p5_id" value="P5-T53" /></properties></testcase><testcase classname="tests.p5.test_acceptance" name="test_deterministic_check[P5-T43]" time="0.001"><properties><property name="p5_id" value="P5-T43" /></properties></testcase><testcase classname="tests.p5.test_acceptance" name="test_deterministic_check[P5-T44]" time="0.001"><properties><property name="p5_id" value="P5-T44" /></properties></testcase><testcase classname="tests.p5.test_acceptance" name="test_deterministic_check[P5-T54]" time="0.001"><properties><property name="p5_id" value="P5-T54" /></properties></testcase><testcase classname="tests.p5.test_acceptance" name="test_deterministic_check[P5-T45]" time="0.001"><properties><property name="p5_id" value="P5-T45" /></properties></testcase><testcase classname="tests.p5.test_acceptance" name="test_deterministic_check[P5-T46]" time="0.001"><properties><property name="p5_id" value="P5-T46" /></properties></testcase><testcase classname="tests.p5.test_acceptance" name="test_T55_pa_actual_golden" time="2.410"><properties><property name="p5_id" value="P5-T55" /></properties></testcase><testcase classname="tests.p5.test_acceptance" name="test_T56_pb_actual_six_column_xlsx" time="1.739"><properties><property name="p5_id" value="P5-T56" /></properties><failure message="openpyxl.utils.exceptions.InvalidFileException: openpyxl does not support  file format, please check you can open it with Excel first. Supported formats are: .xlsx,.xlsm,.xltx,.xltm">tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-20/test_T56_pb_actual_six_column_0')
+design = {'base': PosixPath('/tmp/pytest-of-agent/pytest-20/p5-design0/P5_Implementation_Design_Pack_v0.2a_candidate'), 'handof...off_2026-11-05'), 'pb': PosixPath('/tmp/pytest-of-agent/pytest-20/p5-design0/P5_Gate_A_PB_Supplement_v0.2b_candidate')}
+
+    def test_T56_pb_actual_six_column_xlsx(tmp_path,design):
+        a=Scenario(tmp_path,'P-B_xlsx_sheet',change=pb_v2)
+        with a.uow() as u:
+            spec=u.specs.get(a.handoff.transformation_spec_version_id)
+            assert spec.version_number==2 and len(u.specs.list_for_order(a.order_id))==2
+            assert spec.content_hash==load(design['pb']/'fixtures/P-B_versioned/transformation_spec_version_v2_CANDIDATE.json')['content_hash']
+        d=a.complete();assert_completed(a,d,'READY','PASS_WITH_WARNINGS')
+        assert len(d.report['deterministic_checks'])==24 and 'XLSX_FORMULA_PRESENT' in d.report['warnings']
+        assert d.report['dataset_summary']['column_count']==6 and d.report['dataset_summary']['row_count']==3
+&gt;       book=load_workbook(a.env.workspace.path(d.artifact.workspace_relpath),read_only=True,data_only=False)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/p5/test_acceptance.py:157: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../verified-data-extraction/.venv/lib/python3.12/site-packages/openpyxl/reader/excel.py:346: in load_workbook
+    reader = ExcelReader(filename, read_only, keep_vba,
+../verified-data-extraction/.venv/lib/python3.12/site-packages/openpyxl/reader/excel.py:123: in __init__
+    self.archive = _validate_archive(fn)
+                   ^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+filename = PosixPath('/tmp/pytest-of-agent/pytest-20/test_T56_pb_actual_six_column_0/workspace/orders/order-pb/runs/e9fee443-abbd-41d6-934e-6048133b37bd/artifacts/p5-final-f4c7a5249fe89dec52cf6ad348b209cf523e5c9a1f01542964324ac90d3e9def/payload')
+
+    def _validate_archive(filename):
+        """
+        Does a first check whether filename is a string or a file-like
+        object. If it is a string representing a filename, a check is done
+        for supported formats by checking the given file-extension. If the
+        file-extension is not in SUPPORTED_FORMATS an InvalidFileException
+        will raised. Otherwise the filename (resp. file-like object) will
+        forwarded to zipfile.ZipFile returning a ZipFile-Instance.
+        """
+        is_file_like = hasattr(filename, 'read')
+        if not is_file_like:
+            file_format = os.path.splitext(filename)[-1].lower()
+            if file_format not in SUPPORTED_FORMATS:
+                if file_format == '.xls':
+                    msg = ('openpyxl does not support the old .xls file format, '
+                           'please use xlrd to read this file, or convert it to '
+                           'the more recent .xlsx file format.')
+                elif file_format == '.xlsb':
+                    msg = ('openpyxl does not support binary format .xlsb, '
+                           'please convert this file to .xlsx format if you want '
+                           'to open it with openpyxl')
+                else:
+                    msg = ('openpyxl does not support %s file format, '
+                           'please check you can open '
+                           'it with Excel first. '
+                           'Supported formats are: %s') % (file_format,
+                                                           ','.join(SUPPORTED_FORMATS))
+&gt;               raise InvalidFileException(msg)
+E               openpyxl.utils.exceptions.InvalidFileException: openpyxl does not support  file format, please check you can open it with Excel first. Supported formats are: .xlsx,.xlsm,.xltx,.xltm
+
+../verified-data-extraction/.venv/lib/python3.12/site-packages/openpyxl/reader/excel.py:93: InvalidFileException</failure></testcase><testcase classname="tests.p5.test_acceptance" name="test_T57_pb_csv_is_test_projection_only" time="0.948"><properties><property name="p5_id" value="P5-T57" /></properties></testcase><testcase classname="tests.p5.test_acceptance" name="test_T58_pd_diagnostic_csv_and_typed_failures" time="1.155"><properties><property name="p5_id" value="P5-T58" /></properties></testcase><testcase classname="tests.p5.test_acceptance" name="test_T59_forged_approval_and_available_pc" time="0.953"><properties><property name="p5_id" value="P5-T59" /></properties></testcase><testcase classname="tests.p5.test_acceptance" name="test_T60_missing_required_column_fails_without_dummy_report" time="1.565"><properties><property name="p5_id" value="P5-T60" /></properties></testcase><testcase classname="tests.p5.test_acceptance" name="test_T61_duplicate_id_blocks_ready" time="0.466"><properties><property name="p5_id" value="P5-T61" /></properties></testcase><testcase classname="tests.p5.test_acceptance" name="test_T62_parse_null_preserved_and_warned" time="1.499"><properties><property name="p5_id" value="P5-T62" /></properties></testcase><testcase classname="tests.p5.test_acceptance" name="test_T63_writer_failure_and_csv_injection" time="3.260"><properties><property name="p5_id" value="P5-T63" /></properties><failure message="Failed: DID NOT RAISE &lt;class 'vde.p5.errors.P5Error'&gt;">tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-20/test_T63_writer_failure_and_cs0')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x7f6a2d98bce0&gt;
+
+    def test_T63_writer_failure_and_csv_injection(tmp_path,monkeypatch):
+        a=Scenario(tmp_path/'io')
+        with monkeypatch.context() as patch:
+            def broken(*args,**kwargs):raise OSError('Injected writer failure')
+            patch.setattr('vde.p5.service.writer.write',broken)
+            with pytest.raises(P5Error) as err:a.complete()
+        assert err.value.code=='EXPORT_FAILED' and a.order().status=='FAILED'
+        assert a.delta()['artifacts']==0 and a.delta()['qa_reports']==0 and a.delta()['event_log']==1
+        for index,text in enumerate(('=SUM(1,1)',' +1','\t-2','\u2003\x01@calc')):
+            # Quoting/escaping is done solely to form the input fixture. The source
+            # cell itself must remain unchanged and must be rejected at export.
+            import csv
+            s=io.StringIO(newline='');csv.writer(s,lineterminator='\n').writerows([['id'],[text]])
+            b=Scenario(tmp_path/str(index),raw=s.getvalue().encode(),change=simple_change([field()],rows=1))
+&gt;           with pytest.raises(P5Error) as caught:b.complete()
+                 ^^^^^^^^^^^^^^^^^^^^^^
+E           Failed: DID NOT RAISE &lt;class 'vde.p5.errors.P5Error'&gt;
+
+tests/p5/test_acceptance.py:258: Failed</failure></testcase><testcase classname="tests.p5.test_acceptance" name="test_T64_precision_and_independent_numeric_guards" time="3.255"><properties><property name="p5_id" value="P5-T64" /></properties></testcase><testcase classname="tests.p5.test_acceptance" name="test_T65_corrupt_internal_storage_blocks_without_writes" time="1.345"><properties><property name="p5_id" value="P5-T65" /></properties></testcase><testcase classname="tests.p5.test_acceptance" name="test_T66_wrong_context_and_missing_pb_reference" time="2.841"><properties><property name="p5_id" value="P5-T66" /></properties></testcase><testcase classname="tests.p5.test_acceptance" name="test_T67_repeat_and_competing_calls_do_not_duplicate" time="3.613"><properties><property name="p5_id" value="P5-T67" /></properties></testcase><testcase classname="tests.p5.test_acceptance" name="test_T68_orphan_after_promotion_detect_only" time="1.033"><properties><property name="p5_id" value="P5-T68" /></properties><failure message="AssertionError: ('artifact_promoted', '', &quot;/workspace/verified-data-extraction/.venv/bin/python: Error while finding module specification for 'p5.restart_probe' (ModuleNotFoundError: No module named 'p5')&#10;  &quot;)&#10;assert 1 == -&lt;Signals.SIGKILL: 9&gt;&#10; +  where 1 = CompletedProcess(args=['/workspace/verified-data-extraction/.venv/bin/python', '-m', 'p5.restart_probe', '/tmp/pytest-...python: Error while finding module specification for 'p5.restart_probe' (ModuleNotFoundError: No module named 'p5')\n&quot;).returncode&#10; +  and   &lt;Signals.SIGKILL: 9&gt; = signal.SIGKILL">tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-20/test_T68_orphan_after_promotio0')
+
+    def test_T68_orphan_after_promotion_detect_only(tmp_path):
+&gt;       a,env,before=crash_case(tmp_path,'artifact_promoted')
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/p5/test_acceptance.py:353: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-20/test_T68_orphan_after_promotio0')
+stage = 'artifact_promoted'
+
+    def crash_case(tmp_path,stage):
+        a=Scenario(tmp_path)
+        command=[sys.executable,'-m','p5.restart_probe',str(a.env.workspace.root),a.run_id,stage]
+        child=subprocess.run(command,cwd=ROOT,capture_output=True,text=True)
+&gt;       assert child.returncode==-signal.SIGKILL,(stage,child.stdout,child.stderr)
+E       AssertionError: ('artifact_promoted', '', "/workspace/verified-data-extraction/.venv/bin/python: Error while finding module specification for 'p5.restart_probe' (ModuleNotFoundError: No module named 'p5')
+E         ")
+E       assert 1 == -&lt;Signals.SIGKILL: 9&gt;
+E        +  where 1 = CompletedProcess(args=['/workspace/verified-data-extraction/.venv/bin/python', '-m', 'p5.restart_probe', '/tmp/pytest-...python: Error while finding module specification for 'p5.restart_probe' (ModuleNotFoundError: No module named 'p5')\n").returncode
+E        +  and   &lt;Signals.SIGKILL: 9&gt; = signal.SIGKILL
+
+tests/p5/test_acceptance.py:345: AssertionError</failure></testcase><testcase classname="tests.p5.test_acceptance" name="test_T69_committed_artifact_reused_after_sigkill" time="0.972"><properties><property name="p5_id" value="P5-T69" /></properties><failure message="AssertionError: ('after_artifact_commit', '', &quot;/workspace/verified-data-extraction/.venv/bin/python: Error while finding module specification for 'p5.restart_probe' (ModuleNotFoundError: No module named 'p5')&#10;  &quot;)&#10;assert 1 == -&lt;Signals.SIGKILL: 9&gt;&#10; +  where 1 = CompletedProcess(args=['/workspace/verified-data-extraction/.venv/bin/python', '-m', 'p5.restart_probe', '/tmp/pytest-...python: Error while finding module specification for 'p5.restart_probe' (ModuleNotFoundError: No module named 'p5')\n&quot;).returncode&#10; +  and   &lt;Signals.SIGKILL: 9&gt; = signal.SIGKILL">tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-20/test_T69_committed_artifact_re0')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x7f6a2cf91af0&gt;
+
+    def test_T69_committed_artifact_reused_after_sigkill(tmp_path,monkeypatch):
+&gt;       a,env,before=crash_case(tmp_path,'after_artifact_commit')
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/p5/test_acceptance.py:362: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-20/test_T69_committed_artifact_re0')
+stage = 'after_artifact_commit'
+
+    def crash_case(tmp_path,stage):
+        a=Scenario(tmp_path)
+        command=[sys.executable,'-m','p5.restart_probe',str(a.env.workspace.root),a.run_id,stage]
+        child=subprocess.run(command,cwd=ROOT,capture_output=True,text=True)
+&gt;       assert child.returncode==-signal.SIGKILL,(stage,child.stdout,child.stderr)
+E       AssertionError: ('after_artifact_commit', '', "/workspace/verified-data-extraction/.venv/bin/python: Error while finding module specification for 'p5.restart_probe' (ModuleNotFoundError: No module named 'p5')
+E         ")
+E       assert 1 == -&lt;Signals.SIGKILL: 9&gt;
+E        +  where 1 = CompletedProcess(args=['/workspace/verified-data-extraction/.venv/bin/python', '-m', 'p5.restart_probe', '/tmp/pytest-...python: Error while finding module specification for 'p5.restart_probe' (ModuleNotFoundError: No module named 'p5')\n").returncode
+E        +  and   &lt;Signals.SIGKILL: 9&gt; = signal.SIGKILL
+
+tests/p5/test_acceptance.py:345: AssertionError</failure></testcase><testcase classname="tests.p5.test_acceptance" name="test_T70_report_transaction_rolls_back_and_retry_reuses" time="3.561"><properties><property name="p5_id" value="P5-T70" /></properties></testcase><testcase classname="tests.p5.test_acceptance" name="test_T71_terminal_commit_survives_restart_read_only" time="1.019"><properties><property name="p5_id" value="P5-T71" /></properties><failure message="AssertionError: ('after_report_commit', '', &quot;/workspace/verified-data-extraction/.venv/bin/python: Error while finding module specification for 'p5.restart_probe' (ModuleNotFoundError: No module named 'p5')&#10;  &quot;)&#10;assert 1 == -&lt;Signals.SIGKILL: 9&gt;&#10; +  where 1 = CompletedProcess(args=['/workspace/verified-data-extraction/.venv/bin/python', '-m', 'p5.restart_probe', '/tmp/pytest-...python: Error while finding module specification for 'p5.restart_probe' (ModuleNotFoundError: No module named 'p5')\n&quot;).returncode&#10; +  and   &lt;Signals.SIGKILL: 9&gt; = signal.SIGKILL">tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-20/test_T71_terminal_commit_survi0')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x7f6a2cf75250&gt;
+
+    def test_T71_terminal_commit_survives_restart_read_only(tmp_path,monkeypatch):
+&gt;       a,env,before=crash_case(tmp_path,'after_report_commit')
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/p5/test_acceptance.py:390: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-20/test_T71_terminal_commit_survi0')
+stage = 'after_report_commit'
+
+    def crash_case(tmp_path,stage):
+        a=Scenario(tmp_path)
+        command=[sys.executable,'-m','p5.restart_probe',str(a.env.workspace.root),a.run_id,stage]
+        child=subprocess.run(command,cwd=ROOT,capture_output=True,text=True)
+&gt;       assert child.returncode==-signal.SIGKILL,(stage,child.stdout,child.stderr)
+E       AssertionError: ('after_report_commit', '', "/workspace/verified-data-extraction/.venv/bin/python: Error while finding module specification for 'p5.restart_probe' (ModuleNotFoundError: No module named 'p5')
+E         ")
+E       assert 1 == -&lt;Signals.SIGKILL: 9&gt;
+E        +  where 1 = CompletedProcess(args=['/workspace/verified-data-extraction/.venv/bin/python', '-m', 'p5.restart_probe', '/tmp/pytest-...python: Error while finding module specification for 'p5.restart_probe' (ModuleNotFoundError: No module named 'p5')\n").returncode
+E        +  and   &lt;Signals.SIGKILL: 9&gt; = signal.SIGKILL
+
+tests/p5/test_acceptance.py:345: AssertionError</failure></testcase><testcase classname="tests.p5.test_acceptance" name="test_T73_external_historical_212_and_76_inventory" time="0.012"><properties><property name="p5_id" value="P5-T73" /></properties></testcase><testcase classname="tests.p5.test_acceptance" name="test_T74_real_p0_schemas_and_immutable_pb_specimen" time="0.012"><properties><property name="p5_id" value="P5-T74" /></properties></testcase><testcase classname="tests.p5.test_acceptance" name="test_T75_streamlit_explicit_action_and_passive_rerender" time="5.389"><properties><property name="p5_id" value="P5-T75" /></properties></testcase></testsuite></testsuites>

@@ -1,0 +1,2924 @@
+diff --git a/docs/p5/design_addenda/P5_DESIGN_ADDENDUM_v0.2c_CR_P5_003.md b/docs/p5/design_addenda/P5_DESIGN_ADDENDUM_v0.2c_CR_P5_003.md
+new file mode 100644
+index 0000000..d62eb93
+--- /dev/null
++++ b/docs/p5/design_addenda/P5_DESIGN_ADDENDUM_v0.2c_CR_P5_003.md
+@@ -0,0 +1,40 @@
++# P5 Design Addendum v0.2c — CR-P5-003 exact semantic widening
++
++Version: **0.2c**, 2026-11-06. Status: **OWNER-APPROVED RULE / IMPLEMENTATION AUTHORIZED; runtime validation pending**.
++
++Authority: [CR-P5-003 owner decision](../decisions/CR-P5-003_OWNER_APPROVAL_2026-11-06.md) at immutable commit `820245fc544fc66c393db548151e6d281e03d414`, explicitly approved in the Main Managing Chat. The historical [proposal](../../change_requests/CR-P5-003_PROPOSED.md) and its failed admission evidence remain unchanged. This technical addendum records the authorized rule; it does not supply a P3 business Approval or close a release gate.
++
++## Precedence and unchanged inputs
++
++Apply Design Pack v0.2a and P-B Supplement v0.2b as approved by the owner. This addendum takes precedence **only** over the affected Q03 runtime-type dispatch and DQ-011/DQ-016 strict decimal-type wording where a verified canonical signed64 integer occupies an approved decimal field. All other Q01–Q08 requirements, CR-P5-001 and the phase-aware CR-P5-002 protocol remain binding. The original ZIP bytes and manifests are unchanged.
++
++- Design v0.2a ZIP SHA-256: `a351fb55c5ea3d442cc3ff3e3facc7a09c426569aad476fb713f8f09f10ca3ac`.
++- Supplement v0.2b ZIP SHA-256: `4e08285b00344f2d00a7af89a723a835f931f4bceb768b11ec1aaf637fd0ae18`.
++- Historical regression base: `fd39aa1bed480313504ae8b1f76e77e170cb72ba`; existing governance authority and implementation baseline are unchanged.
++
++## Normative algorithm
++
++1. Revalidate the exact approved Order/Run/Brief/TransformationSpecVersion/Approval/source context and canonical P4_INTERNAL_V2 bytes using existing P1/P3/P4 guards. Original scalar tags must pass canonical spelling, signed64 bounds and finite-Decimal checks **before projection**. No type is guessed from source text or JSON numbers.
++2. Build a separate row-local P5 semantic view, in approved `Spec.output.column_order`. For the immutable selected Spec's `expected_schema[].data_type == "decimal"` only, if `type(original) is int`, construct **`Decimal(original)`** exactly. Existing finite Decimal stays Decimal. Preserve null, empty text and every other original value without conversion. No float intermediate, rounding, quantization or context-dependent normalization is permitted.
++3. All other field types retain strict typing. Decimal→integer, bool→integer, string→number, float recovery and any other new conversion remain forbidden. An invalid value may be represented in a diagnostic export, but its typed DQ failure remains authoritative; it must never acquire QA PASS by coercion.
++4. DQ-011/DQ-016 use the exact projected view for the approved decimal field, with original canonical P4 data/type evidence still accessible through the immutable internal Artifact. DQ-017, numeric export and full readback compare the same exact semantic view. Null/empty checks use the unchanged null/empty values. Preserve P4 bytes, tags, checksum, metrics, Run and artifact history.
++5. Q03 CSV spelling is unchanged **after** projection: integer fields use exact integer ASCII; decimal fields use canonical finite Decimal coefficient plus `.0` for integral Decimal. Thus integer field `10` emits `10`, decimal field receiving original integer `10` emits `10.0`. No original display scale is recovered.
++6. XLSX preserves 15-significant-digit/conservative magnitude admission, explicit text cells, independent XML numeric-lexeme and openpyxl readback checks. Exact widening never authorizes unsafe XLSX precision, numeric-as-text substitution or formula interpretation. Existing fail-closed codes and state rules remain unchanged.
++7. No implicit NFC, trim, case change or other transformation of data strings. Only the already approved output-header metadata normalization is applicable.
++
++## Acceptance and traceability
++
++| Requirement | Existing test IDs / evidence |
++|---|---|
++| Exact signed64→Decimal only in approved decimal field; strict negative conversions | P5-T21/T22, T31/T32, T64 |
++| Actual unchanged P4 P-A zero tag produces full 277-byte CSV golden | P5-T39/T40, T55 |
++| Actual P-B integer price/total tags; six columns, 18 cells, two approved criterion instances in isolated v2 test context | P5-T33/T34, T56/T57 |
++| P-D nulls/duplicates remain FAIL→NEEDS_FIX with diagnostic CSV | P5-T58/T61/T62 |
++| Signed64 extrema, 2^53 boundaries, Decimal precision and XLSX rejection | P5-T39/T40, T64 |
++| P4 bytes/tag/checksum, contracts/tests/migrations/dependencies/governance frozen | P5-T73/T76; successor P5 audit and mutations |
++| Real CSV and XLSX 100000×200 successes, full 20M-cell comparisons and sampled RSS ≤536870912 each | P5-T72 |
++| Complete 76 runtime IDs, separate historical 212 base and integrated compatibility outcomes | CR-P5-002 external validation runner |
++
++P-A and P-B production must consume actual P4 output, not regenerated Decimal tags or synthetic replacements. P-B production remains one RESULT_XLSX; CSV remains test-only projection. PB-AC-007 needs its exact new Spec and real local-user Approval in live use; isolated simulated approvals never grant live authority. Original missing P-C files remain explicitly unavailable. No P0–P4 edits, dependency or migration changes, governance repin, merge or P6 are authorized.
++
++This addendum was saved and committed before implementing the newly approved numeric rule. P5 Gate B remains owner-controlled and NOT_PASSED until a separate owner decision.
+diff --git a/docs/p5/implementation/README.md b/docs/p5/implementation/README.md
+new file mode 100644
+index 0000000..becfc38
+--- /dev/null
++++ b/docs/p5/implementation/README.md
+@@ -0,0 +1,29 @@
++# P5 — Export and deterministic QA
++
++Owner-authorized implementation under Design Pack v0.2a, P-B Supplement v0.2b, Q01–Q08, CR-P5-001/002 and the [v0.2c numeric addendum](../design_addenda/P5_DESIGN_ADDENDUM_v0.2c_CR_P5_003.md). Original source ZIPs and P0–P4 tests/contracts stay immutable. This document does not close P5 Gate B or authorize merge/P6.
++
++`P5Service(env).complete(run_id, expected_order)` is an explicit local action after successful P4 transformation. It verifies source bytes, exact immutable Brief/Spec/Approval links and canonical P4_INTERNAL_V2. Only decimal fields in the approved Spec get exact integer→Decimal semantic projection. P4 bytes, tags, checksum and Run stay unchanged. Wrong type/null/range/uniqueness remains visible to deterministic QA; no arbitrary parsing, Unicode data normalization or LLM override is performed.
++
++One approved-format result is written to bounded scratch, fully reopened and checked before publication. CSV uses strict UTF-8/LF, approved dialect and exact lexical projection; formula-like strings fail closed. XLSX uses explicit text cells, conservative numeric admission and independent XML/openpyxl comparisons; no numeric-as-text fallback. P1 stores an extensionless opaque `payload`, so XLSX readback opens a binary stream rather than inferring a filename extension.
++
++The existing P1 Artifact+Event commit and a separate QAReport+Order+completion-Event UoW are preserved. A deterministic Artifact ID and bounded process-local locks prevent local double publication. Explicit retry verifies/reuses a committed final Artifact; an orphan or blocked/degraded workspace is detect-only. A terminal repeat verifies the existing report/artifact read-only; CAS is retained for every mutating transaction. QA FAIL yields NEEDS_FIX and a clearly diagnostic file. Pre-publication export/roundtrip failure yields FAILED when a safe failure transaction is possible. Report-transaction abort leaves EXECUTING with one committed Artifact eligible for explicit reuse. P4 Run remains succeeded.
++
++The Streamlit integration adds one explicit Export + deterministic QA action; passive renders do not start it. Download/delivery workflow is P6 and is absent.
++
++## Validation protocol
++
++The historical 212 tests run unchanged at `fd39aa1bed480313504ae8b1f76e77e170cb72ba`. On the actual committed P5 tree, ALL old tests run separately. Only precise old whole-application scope assertions caused by approved P5 are recorded as EXPECTED_HISTORICAL_SCOPE_CONFLICT; they remain pytest failures, never PASS/skip/xfail. Any behavioral regression blocks. The successor P5 audit freezes all existing files at owner start commit `820245fc544fc66c393db548151e6d281e03d414`, permits only its finite P5 paths and exact two-line app append, and retains G3 governance verification. New evidence needs its own finite SHA-256 manifest under the specified new root. No old audit/pin is changed.
++
++Run on a clean committed P5 checkout with existing pinned dependencies:
++
++```bash
++PYTHONPATH=src:tests python -m p5.run_validation \
++  --historical-run /absolute/path/to/fresh-historical-212-run \
++  --out /absolute/path/outside-repository/p5-validation
++```
++
++The historical run must include actual JUnit and `command-environment.json` for that exact base, with all 212 IDs and unchanged-source/evidence checks. A preserved example runner is `docs/p5/validation/implementation-admission-20261106/historical_recorder.py`; record any absolute worktree/output-path adaptation separately. The outer P5 runner records exact implementation commit/tree, commands/environment, stdout/stderr/JUnit and all 76 P5 IDs; it captures/restores old tests' generated evidence without rewriting historical reports. Test-only stress runs use two distinct simulated approved Orders, both from the pinned 100000×200 CSV source, with independently approved CSV/XLSX output formats. Both actual outputs and all 20M cells per output are checked. This does not claim a 100000×200 XLSX ingestion benchmark. An additional actual expanded-text 100000×200 P4 result proves bounded P5 preallocation rejection. Sampled RSS is measured, not hard OS isolation; no new hard P5 time SLA is asserted.
++
++P-B v2 positives are isolated tests with simulated local-user workflow actions. Supplied TEST_ONLY/future Approval is not imported as live authority. Actual business operation still needs its own exact real Approval. Thirteen original P-C manifest files remain missing; only available negatives are supported. No complete P-C positive, Windows durability or arbitrary worst-case resource success is claimed.
++
++The integrated legacy probe also records cascaded scope failures: P3-T50 invokes P2-T40, and P4-T63 invokes the corresponding P1–P3 regressions. Classification checks their actual nested JUnit and exact scope assertions; it does not exempt arbitrary nested failures. A failed P5 Run is never resurrected after another P4 execution. The UI's terminal view uses the verified read-only decision API, and reuses extensionless stored XLSX bytes through a binary reader. Nullable trailing XLSX cells retain their logical header-defined width; physical out-of-contract columns are rejected. Both Brief and Spec field domains/uniqueness remain enforced. Temporary workbook XML is cleaned after failed staging as well as after success.
+diff --git a/docs/p5/implementation/TEST_PLAN_TRACEABILITY.md b/docs/p5/implementation/TEST_PLAN_TRACEABILITY.md
+new file mode 100644
+index 0000000..6c008c9
+--- /dev/null
++++ b/docs/p5/implementation/TEST_PLAN_TRACEABILITY.md
+@@ -0,0 +1,26 @@
++# P5 runtime test traceability
++
++The immutable handoff defines 76 IDs. The original Design v0.2a and Supplement v0.2b remain under the unchanged source handoff ZIP; v0.2c CR-P5-003 changes only the authorized numeric boundary. All runtime assertions use actual computed observations. TEST_ONLY fixture or approval records are never business authority.
++
++| IDs | Execution and oracles |
++|---|---|
++| T01–T46 | 23 DQ positive/negative pairs from the immutable external `dq_cases.json`; exact status/severity/affected_count/actual/schema. Additional actual service/readback cases cover P-B local order semantics, integer/decimal positive/negative conversions, two range criteria, six-column/all-cell numeric roundtrip. Shared pure predicates also evaluate actual runtime observations. |
++| T47–T54 | Eight explicit not-applicable CheckResult instances are SKIPPED/INFO; each pytest acceptance test itself must PASS, with no pytest skip/xfail. |
++| T55 | Actual P4 P-A → exact 277-byte CSV golden + PASS; P4 bytes and Run unchanged; additional NFD Unicode/quoting/newline preservation. |
++| T56 | Actual P-B new immutable v2 Spec with isolated exact simulated Approval → one XLSX 3×6, 18 cells, 24 results and cached-formula warning; explicit formula-like text remains text. |
++| T57 | Actual P-B semantic rows → exact 245-byte CSV projection in test scratch only; no second production Artifact. |
++| T58 | Actual P-D → exact diagnostic CSV, lexical readback PASS, typed DQ-011/012/014 FAIL, QA_BLOCKER and NEEDS_FIX. |
++| T59/T66 | Forged Approval/wrong selected context fail before writes; published P-C schema negatives and exact 10-available/13-missing inventory; old P-B Spec does not authorize criterion 007. |
++| T60 | Missing required output column → safe FAILED, no fabricated final Artifact/report. |
++| T61/T62 | Real duplicates and parse SET_NULL → deterministic blockers; approved parse warning does not hide an actual wrong date; null/empty lexical policy remains distinct from typed QA. |
++| T63/T64 | Writer errors; dangerous CSV strings after whitespace/C0 prefixes; actual numeric precision preflight and bypass/readback failures; full signed64 CSV boundaries in integer and decimal fields; XML/reader/type mutations; XLSX text capacity; changed staged CSV. |
++| T65 | Corrupt referenced internal bytes → blocked storage and zero business writes. |
++| T67 | Two competing initial calls and terminal repeats → one Artifact/report; later calls read-only. |
++| T68–T71 | Actual SIGKILL before metadata/after Artifact/after final commit; orphan detect-only, committed Artifact reuse, report-UoW rollback and read-only terminal restart. |
++| T72 | Separate actual CSV/XLSX 100000×200 successes, each full 20M-cell independent comparison and sampled incremental RSS ≤512MiB; separate actual full-shape expanded-text refusal plus forced-budget control. No replacement of either success with a safe failure. |
++| T73 | External actual 212 historical JUnit/complete IDs plus 76 P5 definitions; no recursive whole-suite invocation. Actual collected IDs/outcomes independently checked by outer runner. |
++| T74 | Real P0 schemas and supplied immutable report specimens; duplicate DQ-ID/criterion multiplicity; original contradictory P-B golden and missing ref remain recorded. |
++| T75 | Actual Streamlit AppTest click once, passive rerender twice, no duplicate records. |
++| T76 | Successor whole-application audit with protected files/HEAD/index/modes/governance; finite P5 paths; negative code/test/schema/fixture/migration/dependency/pin/policy/import/dynamic-execution/operation/UI/file probes; ambiguous final Artifact rejection. |
++
++The runner reports three separate result families: historical 212 at frozen base, unchanged legacy compatibility on actual P5 tree (including exact scope-only failures), and actual P5 T01–T76. It never claims an integrated 288/288 PASS without that actual outcome. Detailed commands, observations, failures, limitations and hashes belong to new validation evidence; this definition document is not a runtime PASS claim.
+diff --git a/src/vde/app.py b/src/vde/app.py
+index adf75e1..6150502 100644
+--- a/src/vde/app.py
++++ b/src/vde/app.py
+@@ -23,3 +23,5 @@ from vde.workflow.ui import panel as workflow_panel
+ workflow_panel(result)
+ from vde.execution.ui import panel as execution_panel
+ execution_panel(result)
++from vde.p5.ui import panel as export_qa_panel
++export_qa_panel(result)
+diff --git a/src/vde/p5/__init__.py b/src/vde/p5/__init__.py
+new file mode 100644
+index 0000000..7a5a45b
+--- /dev/null
++++ b/src/vde/p5/__init__.py
+@@ -0,0 +1,4 @@
++"""Owner-triggered, single-format export and deterministic Pilot QA."""
++from .service import P5Service
++
++__all__ = ['P5Service']
+diff --git a/src/vde/p5/budget.py b/src/vde/p5/budget.py
+new file mode 100644
+index 0000000..f9a4929
+--- /dev/null
++++ b/src/vde/p5/budget.py
+@@ -0,0 +1,43 @@
++"""Sampled local RSS budget; a measured envelope, not process isolation."""
++from threading import Event, Thread
++from time import monotonic
++from vde.ingestion.limits import current_rss
++from .errors import require
++
++
++class Budget:
++    def __init__(self, limit=536870912, rss_reader=current_rss):
++        self.limit, self.reader = limit, rss_reader
++        self.baseline = self.peak = rss_reader()
++        self.started, self.samples = monotonic(), 0
++        self.stopped = Event()
++        self.monitor = Thread(target=self._sample, daemon=True)
++
++    def _sample(self):
++        while not self.stopped.wait(0.01):
++            self.peak = max(self.peak, self.reader())
++            self.samples += 1
++
++    def __enter__(self):
++        self.check()
++        self.monitor.start()
++        return self
++
++    def __exit__(self, *args):
++        self.stopped.set()
++        self.monitor.join()
++        self.peak = max(self.peak, self.reader())
++
++    def check(self, allocation=0):
++        self.peak = max(self.peak, self.reader())
++        self.samples += 1
++        require(self.peak-self.baseline <= self.limit and
++                self.reader()-self.baseline+allocation <= self.limit,
++                'EXPORT_FAILED', 'P5 incremental RSS budget exceeded')
++
++    def summary(self):
++        return dict(baseline_rss=self.baseline, peak_rss=self.peak,
++                    incremental_peak_rss=self.peak-self.baseline,
++                    rss_limit=self.limit, rss_samples=self.samples,
++                    sampling_interval_seconds=0.01,
++                    elapsed_seconds=monotonic()-self.started)
+diff --git a/src/vde/p5/contract.py b/src/vde/p5/contract.py
+new file mode 100644
+index 0000000..12c9a47
+--- /dev/null
++++ b/src/vde/p5/contract.py
+@@ -0,0 +1,132 @@
++"""Read-only exact P1/P3/P4 admission. No invented or imported Approvals."""
++from dataclasses import dataclass
++from datetime import datetime, timezone
++import hashlib
++from types import SimpleNamespace
++from jsonschema.exceptions import ValidationError
++from vde.contracts import content_hash, validate
++from vde.execution.service import ExecutionService
++from vde.execution.wire import REVISION, iter_payload
++from vde.persistence.uow import UnitOfWork
++from vde.recovery import recover
++from vde.workflow.validation import validate_spec
++from vde.workflow.errors import WorkflowError
++from .errors import P5Error, require
++from .project import describe, semantic_row
++
++
++@dataclass(frozen=True)
++class Context:
++    order: object
++    run: object
++    brief: object
++    spec: object
++    asset: object
++    internal: object
++    artifacts: tuple
++    reports: tuple
++    projection: object
++
++
++def health(env):
++    require(recover(env.database, env.workspace).health == 'ready',
++            'STORAGE_ERROR', 'Workspace is blocked or degraded; no P5 writes')
++
++
++def admit(uow, env, run_id, expected_order=None, *, projection_required=True):
++    run = uow.runs.get(run_id)
++    order = uow.orders.get(run.order_id)
++    terminal_context = (expected_order is not None and order.status in ('READY','NEEDS_FIX') and
++                        (expected_order.id,expected_order.selected_brief_version_id,
++                         expected_order.selected_transformation_spec_version_id,expected_order.approval_stage) ==
++                        (order.id,order.selected_brief_version_id,
++                         order.selected_transformation_spec_version_id,'COMPLETE'))
++    require(expected_order is None or order == expected_order or terminal_context,
++            'STATE_INVALID_TRANSITION', 'Stale P5 Order snapshot')
++    require(run.status == 'succeeded' and order.status in ('EXECUTING', 'READY', 'NEEDS_FIX')
++            and order.approval_stage == 'COMPLETE', 'STATE_INVALID_TRANSITION', 'P5 requires a succeeded P4 Run and eligible Order')
++    require(not any(e.event_type=='P5_FAILED' for e in uow.events.list_for_run(run_id)),
++            'STATE_INVALID_TRANSITION','A failed P5 attempt requires a fresh verified P4 Run, not resurrection of the old Run')
++    require((order.selected_brief_version_id, order.selected_transformation_spec_version_id) ==
++            (run.brief_version_id, run.transformation_spec_version_id),
++            'VERSION_INCOMPATIBLE', 'Selected versions differ from P4 Run')
++    brief, spec = uow.briefs.get(run.brief_version_id), uow.specs.get(run.transformation_spec_version_id)
++    require(brief.order_id == spec.order_id == order.id and
++            (spec.brief_version_id, spec.brief_content_hash) == (brief.id, brief.content_hash),
++            'VERSION_INCOMPATIBLE', 'Spec exact Brief context differs')
++    require(content_hash(brief.document_json, 'brief_version') == brief.content_hash and
++            content_hash(spec.document_json, 'transformation_spec_version') == spec.content_hash,
++            'APPROVAL_HASH_MISMATCH', 'Semantic version hash differs')
++    ba, sa = uow.approvals.get(run.brief_approval_id), uow.approvals.get(run.transformation_approval_id)
++    require((ba.order_id, ba.target_type, ba.target_version_id, ba.target_content_hash,
++             ba.context_brief_version_id, ba.context_brief_content_hash) ==
++            (order.id, 'BRIEF', brief.id, brief.content_hash, None, None),
++            'APPROVAL_HASH_MISMATCH', 'Exact Brief Approval differs')
++    require((sa.order_id, sa.target_type, sa.target_version_id, sa.target_content_hash,
++             sa.context_brief_version_id, sa.context_brief_content_hash) ==
++            (order.id, 'TRANSFORMATION_SPEC', spec.id, spec.content_hash, brief.id, brief.content_hash),
++            'APPROVAL_HASH_MISMATCH', 'Exact Spec Approval differs')
++    for approval in (ba, sa):
++        require(approval.approved_by == 'local_user' and
++                datetime.fromisoformat(approval.approved_at.replace('Z', '+00:00')) <= datetime.now(timezone.utc),
++                'APPROVAL_MISSING', 'Actual local-user Approval required; future synthetic record is not authority')
++    validate(brief.document_json, 'brief_version')
++    source = spec.document_json['inputs'][0]
++    asset = uow.inputs.get(source['asset_id'])
++    require(asset.order_id == order.id and 0 < asset.size_bytes <= 100000000,
++            'VERSION_INCOMPATIBLE', 'Run source differs from Order')
++    snapshot = dict(asset_id=asset.id, source_byte_sha256=asset.byte_sha256,
++                    input_selection={k: source[k] for k in ('source_type', 'sheet_name', 'csv_options')},
++                    brief_content_hash=brief.content_hash, transformation_content_hash=spec.content_hash)
++    require(run.input_snapshot_json == snapshot and run.metrics_json['source'] == snapshot,
++            'VERSION_INCOMPATIBLE', 'P4 input snapshot differs from exact approved source')
++    selection = SimpleNamespace(asset_id=asset.id, order_id=order.id, source_type=source['source_type'],
++                                selection={k: source[k] for k in ('sheet_name', 'csv_options')})
++    try:
++        validated = validate_spec(spec.document_json, order, (brief, ba), selection)
++        require(validated == spec.document_json, 'APPROVAL_HASH_MISMATCH', 'Spec would require mutation')
++    except WorkflowError as exc:
++        raise P5Error(exc.code, exc.reason) from exc
++    size, digest = env.workspace.inspect(asset.workspace_relpath)
++    require((size, digest) == (asset.size_bytes, asset.byte_sha256), 'STORAGE_ERROR', 'Source bytes differ')
++    artifacts = tuple(uow.artifacts.list_for_run(run_id))
++    internals = [a for a in artifacts if a.artifact_type == 'P4_INTERNAL']
++    require(len(internals) == 1, 'STORAGE_ERROR', 'Exactly one internal P4 Artifact required')
++    internal, metrics = internals[0], run.metrics_json
++    require(internal.format == metrics['format_revision'] == REVISION and
++            internal.checksum == metrics['logical_result_checksum'] and
++            metrics['dataset_id'] == spec.document_json['output']['dataset_id'],
++            'SCHEMA_MISMATCH', 'P4 internal identity differs')
++    projection = describe(brief.document_json, spec.document_json, metrics['columns']) if projection_required else None
++    require(env.workspace.inspect(internal.workspace_relpath)[1] == internal.checksum,
++            'STORAGE_ERROR', 'P4 Artifact bytes differ')
++    reports = tuple(uow.reports.list_for_run(run_id))
++    require(len(reports) <= 1, 'STORAGE_ERROR', 'Ambiguous P5 reports')
++    return Context(order, run, brief, spec, asset, internal, artifacts, reports, projection)
++
++
++def read_internal(env, context, budget):
++    final = [a for a in context.artifacts if a != context.internal]
++    size, _ = env.workspace.inspect(context.internal.workspace_relpath)
++    # P4's frozen decoder temporarily holds a second bytes slice.
++    budget.check(allocation=size*2)
++    if not final:
++        handle, data = ExecutionService(env).read_result(context.run.id)
++        require((handle.artifact_id, handle.checksum, handle.row_count) ==
++                (context.internal.id, context.internal.checksum, context.run.metrics_json['row_count']),
++                'SCHEMA_MISMATCH', 'P4 verified delivery differs')
++    else:
++        # P4 read_result intentionally accepts only its own single Artifact.
++        # Retry with an already committed P5 result rechecks the same immutable
++        # P4 object directly, rather than changing the frozen P4 API.
++        data = env.workspace.read_verified(context.internal.workspace_relpath, context.internal.checksum)
++        count = sum(1 for _ in rows(data, context))
++        require(count == context.run.metrics_json['row_count'], 'SCHEMA_MISMATCH', 'P4 row count differs')
++    budget.check()
++    return data
++
++
++def rows(data, context):
++    original = iter_payload(data, expected_columns=context.projection.columns,
++                            dataset_id=context.projection.output['dataset_id'])
++    return (semantic_row(row, context.projection) for row in original)
+diff --git a/src/vde/p5/errors.py b/src/vde/p5/errors.py
+new file mode 100644
+index 0000000..9ba5d88
+--- /dev/null
++++ b/src/vde/p5/errors.py
+@@ -0,0 +1,36 @@
++"""P5 diagnostics use only the existing P0 public error vocabulary."""
++from uuid import uuid4
++from vde.contracts import validate
++from vde.errors import utc_now
++
++
++class P5Error(Exception):
++    def __init__(self, code, reason):
++        self.code, self.reason = code, reason
++        super().__init__(reason)
++
++    def public(self, *, order_id=None, run_id=None):
++        category, stage = {
++            'EXPORT_FAILED': ('EXPORT', 'EXPORT'),
++            'ROUNDTRIP_MISMATCH': ('EXPORT', 'ROUNDTRIP'),
++            'QA_BLOCKER': ('QA', 'QA'),
++            'STORAGE_ERROR': ('STORAGE', 'STORAGE'),
++            'STATE_INVALID_TRANSITION': ('STATE', 'ORDER'),
++            'APPROVAL_MISSING': ('APPROVAL', 'APPROVAL'),
++            'APPROVAL_HASH_MISMATCH': ('APPROVAL', 'APPROVAL'),
++            'VERSION_INCOMPATIBLE': ('APPROVAL', 'APPROVAL'),
++        }.get(self.code, ('VALIDATION', 'PREFLIGHT'))
++        record = dict(schema_version='1.1', error_id=str(uuid4()), code=self.code,
++                      category=category, severity='BLOCKER', stage=stage,
++                      message='Export or deterministic QA rejected.',
++                      details={'reason': self.reason[:1000]}, order_id=order_id,
++                      run_id=run_id, source_id=None, operation_id=None,
++                      dataset_id=None, column=None, row_ids=[], retryable=False,
++                      created_at=utc_now())
++        validate(record, 'execution_error')
++        return record
++
++
++def require(condition, code, reason):
++    if not condition:
++        raise P5Error(code, reason)
+diff --git a/src/vde/p5/export.py b/src/vde/p5/export.py
+new file mode 100644
+index 0000000..07eaf04
+--- /dev/null
++++ b/src/vde/p5/export.py
+@@ -0,0 +1,79 @@
++"""Single approved-format staging; strings never become spreadsheet formulas."""
++import csv
++from pathlib import Path
++from datetime import date, datetime, time
++from decimal import Decimal
++from openpyxl import Workbook
++from openpyxl.cell import WriteOnlyCell
++from .errors import P5Error, require
++from .project import csv_cell, safe_csv_string, numeric_preflight
++
++
++def text_cell(sheet, text):
++    # Force the actual OpenXML cell type after assignment, including '=...'.
++    require(len(text) <= 32767, 'EXPORT_FAILED', 'XLSX text exceeds cell capacity')
++    cell = WriteOnlyCell(sheet, value=text)
++    cell.data_type = 's'
++    return cell
++
++
++def xlsx_value(sheet, value):
++    if type(value) is str:
++        return text_cell(sheet, value)
++    if type(value) in (int, Decimal):
++        numeric_preflight(value)
++        return value
++    if value is None or type(value) is bool:
++        return value
++    if type(value) in (date, datetime, time):
++        # ISO text is the approved date format, not an implicit Excel serial.
++        return text_cell(sheet, value.isoformat().replace('+00:00', 'Z'))
++    raise P5Error('EXPORT_FAILED', 'Unsupported XLSX scalar')
++
++
++def write(path, projection, rows, budget, observe=lambda row: None):
++    output, count = projection.output, 0
++    try:
++        if output['format'] == 'CSV':
++            require(output['encoding'] == 'UTF-8' and output['delimiter'] in (',', ';', '\t'),
++                    'EXPORT_FAILED', 'Unsupported approved CSV dialect')
++            with path.open('x', encoding='utf-8', errors='strict', newline='') as stream:
++                writer = csv.writer(stream, delimiter=output['delimiter'], lineterminator='\n')
++                writer.writerow([safe_csv_string(s) for s in projection.headers])
++                for count, row in enumerate(rows, 1):
++                    require(len(row) == len(projection.columns) and count <= 100000,
++                            'SCHEMA_MISMATCH', 'Export row shape exceeds Pilot')
++                    writer.writerow([csv_cell(v) for v in row])
++                    observe(row)
++                    if count % 100 == 0:
++                        budget.check()
++                        require(stream.tell() <= budget.limit, 'EXPORT_FAILED', 'Output exceeds bounded P1 bytes capacity')
++                stream.flush()
++        else:
++            workbook = Workbook(write_only=True)
++            sheet = workbook.create_sheet(output['sheet_name'])
++            try:
++                sheet.append([text_cell(sheet, h) for h in projection.headers])
++                for count, row in enumerate(rows, 1):
++                    require(len(row) == len(projection.columns) and count <= 100000,
++                            'SCHEMA_MISMATCH', 'Export row shape exceeds Pilot')
++                    sheet.append([xlsx_value(sheet, value) for value in row])
++                    observe(row)
++                    if count % 100 == 0:
++                        budget.check()
++                workbook.save(path)
++            finally:
++                # Close write-only generators on failed staging too.
++                try:
++                    if not sheet.closed:
++                        sheet.close()
++                finally:
++                    workbook.close()
++                    if sheet._writer is not None and Path(sheet._writer.out).exists():
++                        sheet._writer.cleanup()
++        budget.check()
++        return count
++    except P5Error:
++        raise
++    except (OSError, ValueError, TypeError, UnicodeError, OverflowError) as exc:
++        raise P5Error('EXPORT_FAILED', 'Writer could not produce faithful output') from exc
+diff --git a/src/vde/p5/project.py b/src/vde/p5/project.py
+new file mode 100644
+index 0000000..ce7a96d
+--- /dev/null
++++ b/src/vde/p5/project.py
+@@ -0,0 +1,99 @@
++"""Exact typed projection: only approved header metadata is normalized."""
++from dataclasses import dataclass
++from datetime import date, datetime, time
++from decimal import Decimal
++import unicodedata
++from vde.execution.wire import decimal_text
++from .errors import require
++
++
++@dataclass(frozen=True)
++class Projection:
++    columns: tuple
++    headers: tuple
++    fields: tuple
++    output: dict
++
++
++def describe(brief, spec, columns):
++    output = spec['output']
++    names = tuple(output['column_order'])
++    require(tuple(columns) == names and tuple(brief['output_contract']['column_order']) == names,
++            'SCHEMA_MISMATCH', 'P4/Brief/Spec ordered columns differ')
++    fields = {f['name']: f for f in spec['expected_schema']}
++    brief_fields = {f['name']: f for f in brief['fields']}
++    require(set(fields) == set(brief_fields) == set(names), 'SCHEMA_MISMATCH', 'Missing or extra approved field')
++    headers = []
++    for name in names:
++        field, original = fields[name], brief_fields[name]
++        header = unicodedata.normalize('NFC', field['output_name'].strip())
++        require(header == field['output_name'] == original['output_name'],
++                'SCHEMA_MISMATCH', 'Unprepared approved header metadata')
++        require(all(field[k] == original[k] for k in ('data_type', 'required', 'nullable')),
++                'SCHEMA_MISMATCH', 'Brief and Spec typed schema differ')
++        headers.append(header)
++    require(len(set(headers)) == len(headers), 'COLUMN_COLLISION', 'Colliding output headers')
++    for key in ('format', 'file_name', 'sheet_name', 'encoding', 'delimiter'):
++        require(output[key] == brief['output_contract'][key], 'SCHEMA_MISMATCH', 'Brief/Spec output differs')
++    require(brief['output_contract']['include_header'] is True, 'SCHEMA_MISMATCH', 'Pilot requires a header')
++    require(output['format'] in ('CSV', 'XLSX'), 'EXPORT_FAILED', 'Unsupported approved output format')
++    require(output['file_name'].lower().endswith('.'+output['format'].lower()),
++            'EXPORT_FAILED', 'Output filename extension differs')
++    return Projection(names, tuple(headers), tuple(fields[n] for n in names), output)
++
++
++def safe_csv_string(value):
++    # Do not rewrite strings. CSV quoting does not disable spreadsheet formulas.
++    position = 0
++    while position < len(value) and (value[position].isspace() or ord(value[position]) < 32
++                                     or 127 <= ord(value[position]) <= 159):
++        position += 1
++    significant = value[position:]
++    require(not significant.startswith(('=', '+', '-', '@')), 'EXPORT_FAILED', 'Unsafe spreadsheet formula string in CSV')
++    return value
++
++
++def semantic_row(values, projection):
++    """CR-P5-003: one exact, schema-directed widening; originals stay intact.
++
++    The caller has already decoded/validated the original canonical P4 tags.
++    Do not parse text or modify the original row, wire bytes or stored history.
++    """
++    require(len(values) == len(projection.fields), 'SCHEMA_MISMATCH', 'Semantic row shape differs')
++    result = []
++    for value, field in zip(values, projection.fields):
++        if type(value) is int:
++            require(-(2**63) <= value < 2**63, 'SCHEMA_MISMATCH', 'Integer outside signed64')
++            if field['data_type'] == 'decimal':
++                value = Decimal(value)
++        result.append(value)
++    return tuple(result)
++
++
++def csv_cell(value):
++    if value is None:
++        return ''
++    if type(value) is str:
++        value.encode('utf-8', errors='strict')
++        return safe_csv_string(value)
++    if type(value) is bool:
++        return 'true' if value else 'false'
++    if type(value) is int:
++        require(-(2**63) <= value < 2**63, 'EXPORT_FAILED', 'Integer outside signed64')
++        return str(value)
++    if type(value) is Decimal:
++        text = decimal_text(value)
++        return text if '.' in text else text+'.0'
++    if type(value) in (date, datetime, time):
++        return value.isoformat().replace('+00:00', 'Z')
++    require(False, 'EXPORT_FAILED', 'Unsupported typed scalar')
++
++
++def numeric_preflight(value):
++    if type(value) is int:
++        require(abs(value) <= 999999999999999, 'EXPORT_FAILED', 'XLSX integer exceeds conservative 15-digit bound')
++    elif type(value) is Decimal:
++        require(value.is_finite(), 'EXPORT_FAILED', 'Nonfinite Decimal')
++        text = decimal_text(value).lstrip('-').replace('.', '').lstrip('0').rstrip('0')
++        require(len(text) <= 15 and value.copy_abs() < Decimal('1000000000000000'),
++                'EXPORT_FAILED', 'XLSX Decimal exceeds conservative exactness bound')
+diff --git a/src/vde/p5/qa.py b/src/vde/p5/qa.py
+new file mode 100644
+index 0000000..5a457c1
+--- /dev/null
++++ b/src/vde/p5/qa.py
+@@ -0,0 +1,465 @@
++"""The 23 Pilot DQ checks, full-row facts and exact criterion instances."""
++from datetime import date, datetime, time
++from decimal import Decimal
++from collections import Counter
++from fractions import Fraction
++import hashlib
++from jsonschema.exceptions import ValidationError
++from vde.contracts import validate
++from vde.execution.wire import row_bytes
++from vde.workflow.validation import OPERATIONS
++from .errors import require
++
++IDS = tuple(f'DQ-{i:03}' for i in (*range(1, 20), 22, 23, 24, 25))
++CONDITIONAL = frozenset(('DQ-009', 'DQ-010', 'DQ-013', 'DQ-015', 'DQ-016', 'DQ-017', 'DQ-023', 'DQ-024'))
++BLOCKERS = frozenset(('DQ-001', 'DQ-002', 'DQ-003', 'DQ-004', 'DQ-005', 'DQ-006', 'DQ-008', 'DQ-012', 'DQ-014', 'DQ-019'))
++
++
++def missing(value):
++    return value is None or type(value) is str and value == ''
++
++
++def typed(value, kind, nullable=False):
++    if value is None:
++        return nullable
++    if kind in ('string', 'url'):
++        return type(value) is str
++    if kind == 'integer':
++        return type(value) is int and -(2**63) <= value < 2**63
++    if kind == 'decimal':
++        return type(value) is Decimal and value.is_finite()
++    if kind == 'boolean':
++        return type(value) is bool
++    if kind == 'date':
++        return type(value) is date
++    if kind == 'datetime':
++        return type(value) is datetime and value.tzinfo is not None and value.utcoffset().total_seconds() == 0 and value.microsecond == 0
++    return False
++
++
++def comparable(expected, value):
++    if type(value) is Decimal or type(value) is int and type(expected) in (float, str):
++        return Decimal(str(expected))
++    if type(value) is date and type(expected) is str:
++        return date.fromisoformat(expected)
++    if type(value) is datetime and type(expected) is str:
++        return datetime.fromisoformat(expected.replace('Z', '+00:00'))
++    return expected
++
++
++def predicate(operator, actual, expected):
++    """Closed P0 operators. Unsupported comparisons fail; no eval or repair."""
++    try:
++        if operator in ('exists', 'readable', 'all_non_null', 'unique'):
++            return actual is True
++        if operator == 'absent':
++            return actual is False
++        if operator in ('equals', 'checksum_equals', 'type_equals', 'sequence_equals', 'exact_count'):
++            return type(actual) is type(expected) and actual == expected
++        if operator == 'not_equals':
++            return type(actual) is not type(expected) or actual != expected
++        if operator == 'set_equals':
++            return set(actual) == set(expected)
++        if operator == 'set_contains':
++            return set(expected) <= set(actual)
++        if operator in ('in_set', 'not_in_set'):
++            contained = any(type(actual) is type(v) and actual == v or
++                            type(actual) in (int, Decimal) and type(v) in (int, float) and
++                            type(actual) is not bool and Decimal(str(actual)) == Decimal(str(v)) for v in expected)
++            return contained if operator == 'in_set' else not contained
++        if operator in ('min_value', 'min_count', 'min_ratio'):
++            return actual is not None and type(actual) is not bool and actual >= comparable(expected, actual)
++        if operator in ('max_value', 'max_count', 'max_ratio'):
++            return actual is not None and type(actual) is not bool and actual <= comparable(expected, actual)
++        if operator == 'between_inclusive':
++            return actual is not None and comparable(expected['min'], actual) <= actual <= comparable(expected['max'], actual)
++        if operator == 'matches_format':
++            return ((expected == 'YYYY-MM-DD' and type(actual) is date) or
++                    (expected == 'ISO_8601' and typed(actual, 'datetime')) or
++                    (expected == 'INTEGER' and typed(actual, 'integer')) or
++                    (expected == 'DECIMAL_DOT' and typed(actual, 'decimal')))
++    except (ValueError, TypeError, ArithmeticError):
++        return False
++    return False
++
++
++def document(check_id, ok, *, expected=True, actual=None, count=None,
++             samples=(), applicable=True, warning=False, criterion=None, column=None):
++    require(check_id in IDS, 'SCHEMA_MISMATCH', 'Unapproved DQ ID')
++    require(applicable or check_id in CONDITIONAL, 'SCHEMA_MISMATCH', 'Mandatory DQ cannot be skipped')
++    status = 'SKIPPED' if not applicable else 'WARN' if warning and ok else 'PASS' if ok else 'FAIL'
++    severity = 'INFO' if not applicable else 'WARNING' if warning and ok else (
++        criterion['severity'] if criterion else 'BLOCKER' if check_id in BLOCKERS else 'ERROR')
++    target = criterion['target'] if criterion else {}
++    result = dict(schema_version='1.1', check_id=check_id, name=check_id+' deterministic check',
++                  status=status, severity=severity,
++                  target=dict(artifact=target.get('artifact_type'), dataset_id=target.get('dataset_id'),
++                              column=column or target.get('column'), row_ids=[]),
++                  expected=json_value(expected), actual=json_value(actual),
++                  affected_count=0 if not applicable else (count if count is not None else int(not ok)),
++                  sample_row_ids=list(dict.fromkeys(str(v) for v in samples))[:10],
++                  message='Not applicable to the approved contract.' if not applicable else
++                          'All selected data checked.' if ok else 'The approved deterministic requirement failed.',
++                  criterion_id=criterion['criterion_id'] if criterion else None)
++    validate(result, 'qa_check_result')
++    return result
++
++
++def json_value(value):
++    if type(value) is Decimal:
++        return str(value)
++    if type(value) in (date, datetime, time):
++        return value.isoformat().replace('+00:00', 'Z')
++    if isinstance(value, (list, tuple)):
++        return [json_value(v) for v in value]
++    if isinstance(value, dict):
++        return {k: json_value(v) for k, v in value.items()}
++    return value
++
++
++class Facts:
++    """One row at a time; bounded samples, exact typed uniqueness keys."""
++    def __init__(self, projection, brief, spec, budget):
++        self.projection, self.brief, self.spec, self.budget = projection, brief, spec, budget
++        self.count = 0
++        self.nulls, self.bad_types, self.bad_dates, self.bad_numbers, self.bad_domains = (Counter() for _ in range(5))
++        self.samples, self.minimum, self.maximum = {}, {}, {}
++        self.criteria = [c for c in brief['acceptance_criteria']
++                         if c['criterion_id'] in spec['acceptance_criteria_ref'] and c['requirement_status'] != 'NOT_APPLICABLE']
++        self.brief_fields = {f['name']:f for f in brief['fields']}
++        self.domains = {}
++        for f in projection.fields:
++            rules=[]
++            for definition in (f,self.brief_fields[f['name']]):
++                for key,operator in (('allowed_values','in_set'),('min_value','min_value'),('max_value','max_value')):
++                    rule=(operator,definition[key])
++                    if definition[key] is not None and rule not in rules:
++                        rules.append(rule)
++            self.domains[f['name']]=rules
++        keys = [tuple(brief['data_quality_expectations']['duplicate_key'] or ())]
++        keys.extend((f['name'],) for f in projection.fields if f['unique'] or self.brief_fields[f['name']]['unique'])
++        keys.extend(tuple(c['target'].get('columns') or [c['target']['column']])
++                    for c in self.criteria if c['operator'] == 'unique' and
++                    (c['target'].get('columns') or c['target']['column']))
++        self.keys = {k: set() for k in keys if k}
++        self.duplicates = Counter()
++        self.criterion_bad = Counter()
++
++    def observe(self, row):
++        self.count += 1
++        values = dict(zip(self.projection.columns, row))
++        for f, value in zip(self.projection.fields, row):
++            name = f['name']
++            if missing(value):
++                self.nulls[name] += 1
++            if not typed(value, f['data_type'], f['nullable']):
++                self.bad_types[name] += 1
++            if not missing(value):
++                if f['data_type'] in ('date', 'datetime') and (not typed(value, f['data_type']) or
++                        any(d['format'] is not None and not predicate('matches_format',value,d['format'])
++                            for d in (f,self.brief_fields[name]))):
++                    self.bad_dates[name] += 1
++                if f['data_type'] in ('integer', 'decimal') and not typed(value, f['data_type']):
++                    self.bad_numbers[name] += 1
++                domain = all(predicate(operator,value,expected) for operator,expected in self.domains[name])
++                if not domain:
++                    self.bad_domains[name] += 1
++                if type(value) in (int, Decimal, date, datetime, str):
++                    try:
++                        self.minimum[name] = min(self.minimum.get(name, value), value)
++                        self.maximum[name] = max(self.maximum.get(name, value), value)
++                    except TypeError:
++                        pass
++            if missing(value) or not typed(value, f['data_type'], f['nullable']):
++                sample = self.samples.setdefault(name, [])
++                if len(sample) < 10:
++                    sample.append(str(self.count))
++        for key, seen in self.keys.items():
++            # Store exact canonical bytes, not hashes whose collisions could
++            # create false duplicates. RSS guards bound this optional state.
++            token = row_bytes(tuple(values[n] for n in key))
++            if token in seen:
++                self.duplicates[key] += 1
++            else:
++                seen.add(token)
++        for c in self.criteria:
++            if c['target']['column'] and c['operator'] in (
++                    'in_set', 'not_in_set', 'between_inclusive', 'min_value', 'max_value',
++                    'equals', 'not_equals', 'matches_format', 'type_equals'):
++                value = values[c['target']['column']]
++                actual = (c['expected'] if typed(value, c['expected']) else None) if c['operator'] == 'type_equals' else value
++                if not (c['operator']=='matches_format' and missing(value)) and not predicate(c['operator'], actual, c['expected']):
++                    self.criterion_bad[c['criterion_id']] += 1
++        if self.count % 100 == 0:
++            self.budget.check()
++
++
++def criterion_dq(c):
++    op, metric = c['operator'], c['target']['metric']
++    if metric in ('null_count', 'null_ratio'):
++        return 'DQ-013'
++    if metric == 'input_checksum':
++        return 'DQ-002'
++    if metric == 'output_checksum':
++        return 'DQ-007'
++    if op in ('sequence_equals', 'set_equals', 'set_contains') and c['target']['scope'] == 'COLUMNS':
++        return 'DQ-010'
++    if op in ('exists', 'absent') and c['target']['scope'] in ('COLUMN', 'COLUMNS'):
++        return 'DQ-008'
++    if op in ('readable', 'exists', 'absent') and c['target']['scope'] == 'ARTIFACT':
++        return 'DQ-006'
++    if op == 'all_non_null':
++        return 'DQ-012'
++    if op == 'unique':
++        return 'DQ-014'
++    if op == 'type_equals':
++        return 'DQ-011'
++    if op == 'matches_format':
++        return 'DQ-015' if c['expected'] not in ('INTEGER', 'DECIMAL_DOT') else 'DQ-016'
++    if metric in ('row_count', 'column_count', 'duplicate_count', 'unique_count', 'parse_error_count'):
++        return 'DQ-018'
++    return 'DQ-017'
++
++
++def criterion_result(c, facts, export, context):
++    op, target, expected = c['operator'], c['target'], c['expected']
++    column, columns = target['column'], list(facts.projection.columns)
++    dq = criterion_dq(c)
++    bad = None
++    if target['scope'] == 'ARTIFACT':
++        present = target['artifact_type'] in (None, 'RESULT_'+facts.projection.output['format'])
++        actual = present and export['readable'] if op == 'readable' else present
++    elif op == 'all_non_null':
++        selected = target['columns'] or ([column] if column else columns)
++        bad = sum(facts.nulls[name] for name in selected)
++        actual = bad == 0
++    elif op == 'unique':
++        key = tuple(target['columns'] or [column])
++        bad = facts.duplicates[key]
++        actual = bad == 0
++    elif target['scope'] == 'COLUMNS':
++        actual = (all(n in columns for n in target['columns']) if op=='exists' else
++                  any(n in columns for n in target['columns']) if op=='absent' else columns)
++        # The sole, explicitly approved exception. Generic sequence_equals is
++        # still exact for every other criterion and every other Brief.
++        if (context.brief.id == 'brief-pb-v1' and c['criterion_id'] == 'PB-AC-002' and
++                tuple(columns) == ('order_id','product','quantity','unit_price','order_date','line_total') and
++                expected == target['columns'] == ['order_id','product','quantity','unit_price','order_date']):
++            actual = [n for n in columns if n in target['columns']]
++    elif target['metric'] in ('null_count', 'null_ratio'):
++        if column is None:
++            return document(dq,False,expected=expected,actual='A per-column null threshold is required',criterion=c)
++        actual = facts.nulls[column] if target['metric'] == 'null_count' else (
++            Decimal(facts.nulls[column])/Decimal(facts.count) if facts.count else Decimal(0))
++        # Decimal integer products avoid rounded division at threshold boundaries.
++        if target['metric'] == 'null_ratio' and op in ('min_ratio', 'max_ratio'):
++            ratio = Fraction(facts.nulls[column],facts.count or 1)
++            threshold = Fraction(str(expected))
++            ok = ratio >= threshold if op == 'min_ratio' else ratio <= threshold
++            return document(dq, ok, expected=expected, actual=dict(null_count=facts.nulls[column],row_count=facts.count), criterion=c)
++    elif target['metric']:
++        metric = target['metric']
++        actual = {'row_count':facts.count, 'column_count':len(columns),
++                  'duplicate_count':sum(facts.duplicates.values()),
++                  'unique_count':facts.count-sum(facts.duplicates.values()),
++                  'parse_error_count':sum(a['parse_failed_count'] for a in context.run.metrics_json['operation_audit']),
++                  'input_checksum':context.asset.byte_sha256,
++                  'output_checksum':export['checksum']}.get(metric)
++    elif column and op == 'exists':
++        actual = column in columns
++    elif column and op == 'absent':
++        actual = column in columns
++    elif column:
++        bad = facts.criterion_bad[c['criterion_id']]
++        actual = (facts.minimum if op == 'min_value' else facts.maximum).get(column)
++        ok = bad == 0
++        return document(dq, ok, expected=expected, actual=actual if op in ('min_value', 'max_value') else
++                        {'violations':bad,'rows_checked':facts.count}, count=bad, criterion=c, samples=facts.samples.get(column, ()))
++    else:
++        actual = None
++    ok = predicate(op, actual, expected)
++    return document(dq, ok, expected=expected, actual=actual, count=bad, criterion=c)
++
++
++def evaluate_all(context, facts, export):
++    b, s, m = context.brief.document_json, context.spec.document_json, context.run.metrics_json
++    p, q = facts.projection, b['data_quality_expectations']
++    audit, criteria = m['operation_audit'], facts.criteria
++    expected_ops = [o['operation_id'] for o in s['pipeline']]
++    audited_ops = [a['operation_id'] for a in audit]
++    audit_matches = expected_ops == audited_ops and all(
++        all(a[k] == op[k] for k in ('type','input_dataset','output_dataset'))
++        for a,op in zip(audit,s['pipeline']))
++    valid_ops = True
++    try:
++        for op in s['pipeline']:
++            if op['type'] not in OPERATIONS:
++                valid_ops = False
++            else:
++                validate(op, op['type'])
++    except (ValidationError, KeyError):
++        valid_ops = False
++    dates = [f['name'] for f in p.fields if f['data_type'] in ('date', 'datetime')]
++    numbers = [f['name'] for f in p.fields if f['data_type'] in ('integer', 'decimal')]
++    required = [f['name'] for f in p.fields if f['required'] or not f['nullable']]
++    ranged = [name for name,rules in facts.domains.items() if rules]
++    volume = b['volume_expectation']
++    volume_ok = volume['mode'] == 'NONE' or (volume['mode'] == 'EXACT' and facts.count == volume['exact_count']) or (
++        volume['mode'] == 'RANGE' and volume['min_count'] <= facts.count <= volume['max_count'])
++    deletions = sum(a['deleted_rows'] for a in audit)
++    chain_ok = bool(audit) and all(a['deleted_rows'] == a['input_rows']-a['output_rows'] >= 0 for a in audit)
++    chain_ok &= all(a['output_rows'] == z['input_rows'] for a,z in zip(audit,audit[1:]))
++    chain_ok &= all(a['deleted_rows'] == 0 or a['type'] in ('drop_missing','deduplicate') for a in audit)
++    chain_ok &= bool(audit) and audit[0]['input_rows']-deletions == facts.count == audit[-1]['output_rows']
++    warnings = m.get('warnings', [])
++    source_formulas = sum(w.get('affected_count', w.get('count', 1)) for w in warnings
++                          if (w.get('code') if type(w) is dict else w) == 'XLSX_FORMULA_PRESENT')
++    parse_errors = sum(a['parse_failed_count'] for a in audit if a['type'] == 'parse_date')
++    definitions = {
++        'DQ-001': (True, True, context.asset.size_bytes, 0),
++        'DQ-002': (True, context.asset.byte_sha256, m['source']['source_byte_sha256'], 0),
++        'DQ-003': (True, [context.brief.content_hash,context.spec.content_hash], [context.brief.content_hash,context.spec.content_hash], 0),
++        'DQ-004': (valid_ops, sorted(OPERATIONS), [o['type'] for o in s['pipeline']], int(not valid_ops)),
++        'DQ-005': (audit_matches, expected_ops, audited_ops if audit_matches else {'operation_ids':audited_ops,'bindings':[dict(type=a['type'],input_dataset=a['input_dataset'],output_dataset=a['output_dataset']) for a in audit]}, int(not audit_matches)),
++        'DQ-006': (export['readable'], True, export['readable'], int(not export['readable'])),
++        'DQ-007': (True, p.output['format'], p.output['format'], 0),
++        'DQ-008': (set(required) <= set(p.columns), required, list(p.columns), len(set(required)-set(p.columns))),
++        'DQ-009': (set(p.columns) == set(s['output']['column_order']), s['output']['column_order'], list(p.columns), 0),
++        'DQ-010': (list(p.columns) == s['output']['column_order'], s['output']['column_order'], list(p.columns), 0),
++        'DQ-011': (not sum(facts.bad_types.values()), 'approved typed schema', dict(facts.bad_types), sum(facts.bad_types.values())),
++        'DQ-012': (not sum(facts.nulls[n] for n in required), 0, {n:facts.nulls[n] for n in required}, sum(facts.nulls[n] for n in required)),
++        'DQ-013': (True, None, None, 0),
++        'DQ-014': (not sum(facts.duplicates.values()), 0, {','.join(k):v for k,v in facts.duplicates.items()}, sum(facts.duplicates.values())),
++        'DQ-015': (not sum(facts.bad_dates.values()), 'approved date formats', dict(facts.bad_dates), parse_errors or sum(facts.bad_dates.values())),
++        'DQ-016': (not sum(facts.bad_numbers.values()), 'finite exact numeric types', dict(facts.bad_numbers), sum(facts.bad_numbers.values())),
++        'DQ-017': (not sum(facts.bad_domains.values()), 'approved domains and bounds', dict(facts.bad_domains), sum(facts.bad_domains.values())),
++        'DQ-018': (volume_ok, volume, facts.count, int(not volume_ok)),
++        'DQ-019': (facts.count > 0 or q['empty_result_allowed'], q['empty_result_allowed'], facts.count, int(not facts.count and not q['empty_result_allowed'])),
++        'DQ-022': (export['exact'] and export['rows'] == facts.count and export['columns'] == len(p.columns),
++                   dict(rows=facts.count,columns=len(p.columns)), dict(rows=export['rows'],columns=export['columns']), int(not export['exact'])),
++        'DQ-023': (not export['formulas'] and not export['errors'], 0,
++                   dict(source_formula_cells=source_formulas,export_formula_cells=export['formulas'],export_errors=export['errors']),
++                   export['formulas']+export['errors'] or source_formulas),
++        'DQ-024': (export['exact'], dict(encoding='UTF-8',delimiter=p.output['delimiter']),
++                   dict(encoding='UTF-8',delimiter=p.output['delimiter']), int(not export['exact'])),
++        'DQ-025': (chain_ok, audit[0]['input_rows']-deletions if audit else None, facts.count, int(not chain_ok)),
++    }
++    # Shared pure DQ predicates operate on actual collected observations. No
++    # fixture or precomputed expected status is consulted by the runtime.
++    observations = {
++        'DQ-001':dict(result=True),
++        'DQ-002':dict(expected=context.asset.byte_sha256,actual=m['source']['source_byte_sha256']),
++        'DQ-004':dict(ops=[o['type'] for o in s['pipeline']],all_valid=valid_ops),
++        'DQ-005':dict(approved=expected_ops,audited=audited_ops,binding_valid=audit_matches),
++        'DQ-006':dict(well_formed=export['readable']),
++        'DQ-008':dict(required=required,present=list(p.columns)),
++        'DQ-009':dict(allowed=s['output']['column_order'],actual=list(p.columns)),
++        'DQ-010':dict(expected=s['output']['column_order'],actual=list(p.columns)),
++        'DQ-019':dict(empty_allowed=q['empty_result_allowed'],row_count=facts.count),
++        'DQ-022':dict(before=[facts.count,len(p.columns)],after=[export['rows'],export['columns']],all_cells_equal=export['exact']),
++        'DQ-023':dict(source_formula_cells=source_formulas,export_formula_cells=export['formulas'],export_errors=export['errors']),
++        'DQ-024':dict(utf8_valid=True,quotes_valid=export['exact'],delimiter=p.output['delimiter']),
++    }
++    for dq, observed in observations.items():
++        if dq == 'DQ-024' and p.output['format'] != 'CSV':
++            continue
++        measured = evaluate_observation(dq,observed)
++        _, expected, actual, count = definitions[dq]
++        definitions[dq] = (measured['status'] != 'FAIL',expected,actual,count)
++    applicable = {'DQ-009':not q['unexpected_columns_allowed'],
++                  'DQ-010':q['column_order_required'] or any(c['operator']=='sequence_equals' for c in criteria),
++                  'DQ-013':any(criterion_dq(c)=='DQ-013' for c in criteria),
++                  'DQ-015':bool(dates) or any(criterion_dq(c)=='DQ-015' for c in criteria),
++                  'DQ-016':bool(numbers), 'DQ-017':bool(ranged) or any(criterion_dq(c)=='DQ-017' for c in criteria),
++                  'DQ-023':p.output['format']=='XLSX' or bool(source_formulas), 'DQ-024':p.output['format']=='CSV'}
++    results = []
++    for dq in IDS:
++        scoped = [c for c in criteria if criterion_dq(c) == dq]
++        ok, expected, actual, count = definitions[dq]
++        warning = dq == 'DQ-023' and source_formulas > 0 or dq == 'DQ-015' and parse_errors > 0
++        # Structural guarantees stay independent of an individual criterion.
++        # Passing criteria replace the global row only when that independent
++        # structural check passes. Otherwise retain a separate explicit FAIL.
++        if not scoped or not ok or warning:
++            results.append(document(dq, ok, expected=expected,
++                                    actual=actual,count=count, applicable=applicable.get(dq, True), warning=warning))
++        results.extend(criterion_result(c, facts, export, context) for c in scoped)
++    require(set(c['check_id'] for c in results) == set(IDS) and len(results) <= 100,
++            'SCHEMA_MISMATCH', 'Incomplete or oversized deterministic check coverage')
++    require(len({(r['check_id'],r['criterion_id']) for r in results}) == len(results),
++            'SCHEMA_MISMATCH', 'Duplicate scoped DQ instance')
++    return results
++
++
++def evaluate_observation(check_id, evidence, *, applicable=True):
++    """Pure DQ predicate for independently collected observations.
++
++    Admission and readers collect these observations; this function neither
++    grants approval nor writes a report. It also supports isolated DQ fixtures.
++    """
++    from vde.execution.wire import decode_cell
++    from vde.execution.errors import ExecutionError
++    def values():
++        result = []
++        for value in evidence['values']:
++            try:
++                result.append(decode_cell(value) if type(value) is dict else value)
++            except ExecutionError:
++                result.append(object())
++        return result
++    ok, warning, count = True, False, None
++    if not applicable:
++        return document(check_id, True, applicable=False)
++    if check_id == 'DQ-001':
++        ok = evidence['result'] is True
++    elif check_id == 'DQ-002':
++        ok = evidence['expected'] == evidence['actual']
++    elif check_id == 'DQ-003':
++        ok = all(evidence[k] is True for k in ('brief','spec','hashes'))
++    elif check_id == 'DQ-004':
++        ok = evidence['all_valid'] is True and all(op in OPERATIONS for op in evidence['ops'])
++    elif check_id == 'DQ-005':
++        ok = evidence['approved'] == evidence['audited'] and evidence.get('binding_valid',True)
++    elif check_id == 'DQ-006':
++        ok = evidence['well_formed'] is True
++    elif check_id == 'DQ-007':
++        ok = evidence['expected'] == evidence['actual']
++    elif check_id == 'DQ-008':
++        ok = set(evidence['required']) <= set(evidence['present'])
++    elif check_id == 'DQ-009':
++        ok = set(evidence['allowed']) == set(evidence['actual'])
++    elif check_id == 'DQ-010':
++        ok = predicate('sequence_equals',evidence['actual'],evidence['expected'])
++    elif check_id in ('DQ-011','DQ-016'):
++        ok = all(typed(v,evidence['type']) for v in values())
++    elif check_id == 'DQ-012':
++        ok = all(not missing(v) for row in evidence['rows'] for v in row)
++    elif check_id == 'DQ-013':
++        ok = Fraction(evidence['null_count'],evidence['row_count'] or 1) <= Fraction(str(evidence['max_ratio']))
++    elif check_id == 'DQ-014':
++        tokens = [row_bytes(row) for row in evidence['rows']]
++        ok = len(tokens) == len(set(tokens))
++    elif check_id == 'DQ-015':
++        try:
++            ok = all(date.fromisoformat(v).isoformat()==v for v in evidence['values']) and evidence['format']=='YYYY-MM-DD'
++        except (ValueError,TypeError):
++            ok = False
++    elif check_id == 'DQ-017':
++        ok = all(predicate('in_set',v,evidence['allowed']) for v in values())
++    elif check_id == 'DQ-018':
++        ok = evidence['mode']=='NONE' or evidence['mode']=='EXACT' and evidence['expected']==evidence['actual']
++    elif check_id == 'DQ-019':
++        ok = evidence['empty_allowed'] or evidence['row_count']>0
++    elif check_id == 'DQ-022':
++        ok = evidence['before']==evidence['after'] and evidence.get('all_cells_equal',True)
++    elif check_id == 'DQ-023':
++        ok = not evidence['export_formula_cells'] and not evidence['export_errors']
++        warning = ok and bool(evidence['source_formula_cells'])
++        count = evidence['source_formula_cells'] if warning else int(not ok)
++    elif check_id == 'DQ-024':
++        ok = evidence['utf8_valid'] and evidence['quotes_valid'] and evidence['delimiter'] in (',',';','\t')
++    elif check_id == 'DQ-025':
++        ok = evidence['input_rows']-sum(evidence['removed'])==evidence['result_rows'] and all(v>=0 for v in evidence['removed'])
++    else:
++        require(False,'SCHEMA_MISMATCH','Unknown deterministic check')
++    return document(check_id,bool(ok),actual=evidence,count=count,warning=warning)
+diff --git a/src/vde/p5/report.py b/src/vde/p5/report.py
+new file mode 100644
+index 0000000..9625f57
+--- /dev/null
++++ b/src/vde/p5/report.py
+@@ -0,0 +1,44 @@
++"""P0-schema report mapping from computed checks and verified final bytes."""
++from uuid import uuid4
++from vde.contracts import validate
++from vde.errors import utc_now
++from .qa import IDS, CONDITIONAL
++from .errors import require
++
++
++def overall(checks):
++    if any(c['status']=='FAIL' and c['severity'] in ('BLOCKER','ERROR') for c in checks):
++        return 'FAIL'
++    if any(c['status'] in ('WARN','FAIL') for c in checks):
++        return 'PASS_WITH_WARNINGS'
++    return 'PASS'
++
++
++def build(context, artifact, export, checks):
++    require(set(c['check_id'] for c in checks) == set(IDS) and
++            all(c['check_id'] in CONDITIONAL for c in checks if c['status']=='SKIPPED'),
++            'SCHEMA_MISMATCH', 'Mandatory deterministic QA coverage is incomplete')
++    blocking = list(dict.fromkeys(c['check_id'] for c in checks
++                                 if c['status']=='FAIL' and c['severity'] in ('BLOCKER','ERROR')))
++    warnings = list(dict.fromkeys(c['check_id'] for c in checks if c['status']=='WARN' or
++                                  c['status']=='FAIL' and c['severity'] not in ('BLOCKER','ERROR')))
++    if any(c['check_id']=='DQ-023' and c['status']=='WARN' for c in checks):
++        warnings.append('XLSX_FORMULA_PRESENT')
++    doc = dict(schema_version='1.1',report_id='p5-qa-'+str(uuid4()),run_id=context.run.id,
++               brief_version_id=context.brief.id,transformation_spec_version_id=context.spec.id,
++               generated_at=utc_now(),overall_status=overall(checks),
++               dataset_summary=dict(dataset_id=context.projection.output['dataset_id'],
++                                    row_count=export['rows'],column_count=export['columns'],
++                                    columns=list(context.projection.columns),output_headers=export['headers'],
++                                    file_size_bytes=export['size'],checksum=export['checksum']),
++               deterministic_checks=checks,llm_review=dict(status='NOT_APPLICABLE',reason='PILOT_SLICE_V1_NO_LLM'),
++               blocking_issues=blocking,warnings=warnings,sampling_manifest=None,
++               known_limitations=[
++                   'Pilot Slice V1: deterministic checks only; no LLM review.',
++                   'CSV lexical projection cannot distinguish a typed null from empty text; typed QA uses P4 originals.',
++                   'Source XLSX formulas use previously cached values only; no recalculation.',
++                   'Resource protection uses sampled RSS; arbitrary maximum-length data may fail closed.',
++                   'Local single-process serialization is not distributed locking; no P6 delivery is performed.'],
++               artifacts=[dict(artifact_type=artifact.artifact_type,path=artifact.workspace_relpath,checksum=artifact.checksum)])
++    validate(doc,'qa_report')
++    return doc
+diff --git a/src/vde/p5/roundtrip.py b/src/vde/p5/roundtrip.py
+new file mode 100644
+index 0000000..90fe29f
+--- /dev/null
++++ b/src/vde/p5/roundtrip.py
+@@ -0,0 +1,147 @@
++"""Independent full-table readback, including raw XML numeric lexemes."""
++import csv
++from decimal import Decimal, InvalidOperation
++from itertools import zip_longest
++from math import isfinite
++import hashlib
++from pathlib import PurePosixPath
++import zipfile
++from xml.etree import ElementTree as ET
++from openpyxl import load_workbook
++from openpyxl.utils.cell import coordinate_from_string, column_index_from_string
++from .errors import P5Error, require
++from .project import csv_cell
++
++MISSING = object()
++NS = '{http://schemas.openxmlformats.org/spreadsheetml/2006/main}'
++
++
++def file_identity(path):
++    digest, size = hashlib.sha256(), 0
++    with path.open('rb') as stream:
++        for chunk in iter(lambda: stream.read(1024*1024), b''):
++            digest.update(chunk)
++            size += len(chunk)
++    return size, digest.hexdigest()
++
++
++def xml_rows(path):
++    # P5 writes exactly one sheet. Resolve its actual workbook relationship;
++    # never assume a package's sheet filename from a user-provided path.
++    with zipfile.ZipFile(path) as archive:
++        workbook = ET.fromstring(archive.read('xl/workbook.xml'))
++        sheets = workbook.find(NS+'sheets')
++        require(len(sheets) == 1, 'ROUNDTRIP_MISMATCH', 'Unexpected worksheet count')
++        rid = sheets[0].get('{http://schemas.openxmlformats.org/officeDocument/2006/relationships}id')
++        rels = ET.fromstring(archive.read('xl/_rels/workbook.xml.rels'))
++        for relpath in archive.namelist():
++            if relpath.endswith('.rels'):
++                require(all(r.get('TargetMode') != 'External' for r in ET.fromstring(archive.read(relpath))),
++                        'ROUNDTRIP_MISMATCH', 'External XLSX relationship forbidden')
++        rel = next(r for r in rels if r.get('Id') == rid)
++        target = rel.get('Target')
++        require(rel.get('TargetMode') != 'External' and '..' not in PurePosixPath(target).parts,
++                'ROUNDTRIP_MISMATCH', 'Unsafe worksheet relationship')
++        name = target.lstrip('/') if target.startswith('/') else 'xl/'+target
++        with archive.open(name) as stream:
++            for event, node in ET.iterparse(stream, events=('end',)):
++                if node.tag == NS+'row':
++                    cells = {}
++                    for cell in node:
++                        value = cell.find(NS+'v')
++                        kind = 'f' if cell.find(NS+'f') is not None else cell.get('t', 'n')
++                        cells[cell.get('r')] = (kind, None if value is None else value.text)
++                    yield cells
++                    node.clear()
++                elif node.tag == NS+'sheetData':
++                    node.clear()
++
++
++def numeric_equal(expected, value, cell_type, xml):
++    require(type(value) in (int, float) and cell_type == 'n' and
++            (type(value) is int or isfinite(value)), 'ROUNDTRIP_MISMATCH', 'Numeric XLSX cell has wrong type')
++    require(xml is not None and xml[0] == 'n' and xml[1] is not None,
++            'ROUNDTRIP_MISMATCH', 'Numeric OpenXML lexeme missing')
++    require(Decimal(str(value)) == Decimal(expected) == Decimal(xml[1]),
++            'ROUNDTRIP_MISMATCH', 'Numeric value changed in XML or openpyxl readback')
++
++
++def verify(path, projection, rows, budget):
++    count, cells = 0, 0
++    size, checksum = file_identity(path)
++    require(size > 0, 'ROUNDTRIP_MISMATCH', 'Empty export')
++    try:
++        if projection.output['format'] == 'CSV':
++            previous = csv.field_size_limit(100000000)
++            try:
++                with path.open(encoding='utf-8', errors='strict', newline='') as stream:
++                    reader = csv.reader(stream, delimiter=projection.output['delimiter'], strict=True)
++                    require(next(reader, None) == list(projection.headers), 'ROUNDTRIP_MISMATCH', 'CSV header order differs')
++                    for expected, actual in zip_longest(rows, reader, fillvalue=MISSING):
++                        require(expected is not MISSING and actual is not MISSING and
++                                [csv_cell(v) for v in expected] == actual,
++                                'ROUNDTRIP_MISMATCH', 'CSV full lexical row differs')
++                        count += 1
++                        cells += len(expected)
++                        if count % 100 == 0:
++                            budget.check()
++            finally:
++                csv.field_size_limit(previous)
++        else:
++            binary = path.open('rb')
++            try:
++                workbook = load_workbook(binary, read_only=True, data_only=True, keep_links=False)
++            except Exception:
++                binary.close()
++                raise
++            try:
++                require(workbook.sheetnames == [projection.output['sheet_name']],
++                        'ROUNDTRIP_MISMATCH', 'XLSX sheet differs')
++                reader = iter(workbook.worksheets[0].iter_rows(min_col=1,max_col=len(projection.columns)))
++                xml = iter(xml_rows(path))
++                header, header_xml = next(reader, None), next(xml, None)
++                require(header is not None and tuple(c.value for c in header) == projection.headers and
++                        all(c.data_type == 's' for c in header), 'ROUNDTRIP_MISMATCH', 'XLSX headers differ')
++                require(header_xml is not None and len(header_xml)==len(projection.columns),
++                        'ROUNDTRIP_MISMATCH','XLSX header extent differs')
++                for expected, actual, raw in zip_longest(rows, reader, xml, fillvalue=MISSING):
++                    require(expected is not MISSING and actual is not MISSING and raw is not MISSING,
++                            'ROUNDTRIP_MISMATCH', 'XLSX row count differs')
++                    require(len(actual) == len(expected), 'ROUNDTRIP_MISMATCH', 'XLSX column count differs')
++                    require(all(column_index_from_string(coordinate_from_string(c)[0])<=len(expected) for c in raw),
++                            'ROUNDTRIP_MISMATCH','XLSX physical column exceeds approved width')
++                    require(all(v[0] not in ('f', 'e') for v in raw.values()),
++                            'ROUNDTRIP_MISMATCH', 'Formula or error present in worksheet XML')
++                    for value, cell in zip(expected, actual):
++                        require(cell.data_type not in ('f', 'e'), 'ROUNDTRIP_MISMATCH', 'Formula or error cell exported')
++                        if type(value) in (int, Decimal):
++                            numeric_equal(value, cell.value, cell.data_type, raw.get(cell.coordinate))
++                        elif value is None:
++                            require(cell.value is None, 'ROUNDTRIP_MISMATCH', 'Null cell changed')
++                        elif type(value) is bool:
++                            require(cell.data_type == 'b' and type(cell.value) is bool and cell.value == value,
++                                    'ROUNDTRIP_MISMATCH', 'Boolean cell changed')
++                        else:
++                            target = value if type(value) is str else value.isoformat().replace('+00:00', 'Z')
++                            # openpyxl exposes empty inline strings as None;
++                            # require explicit inlineStr metadata for that case.
++                            require((cell.value == target and cell.data_type == 's') or
++                                    (target == '' and cell.value is None and cell.data_type == 'inlineStr'),
++                                    'ROUNDTRIP_MISMATCH', 'Text or date cell changed')
++                    count += 1
++                    cells += len(expected)
++                    if count % 100 == 0:
++                        budget.check()
++            finally:
++                workbook.close()
++                binary.close()
++        require(file_identity(path) == (size, checksum), 'ROUNDTRIP_MISMATCH', 'Staged file changed during verification')
++        budget.check()
++        return dict(rows=count, columns=len(projection.columns), cells=cells,
++                    headers=list(projection.headers), size=size, checksum=checksum,
++                    formulas=0, errors=0, readable=True, exact=True)
++    except P5Error:
++        raise
++    except (OSError, ValueError, TypeError, UnicodeError, csv.Error, zipfile.BadZipFile,
++            ET.ParseError, InvalidOperation, KeyError, StopIteration) as exc:
++        raise P5Error('ROUNDTRIP_MISMATCH', 'Independent full-table readback failed') from exc
+diff --git a/src/vde/p5/service.py b/src/vde/p5/service.py
+new file mode 100644
+index 0000000..a107acd
+--- /dev/null
++++ b/src/vde/p5/service.py
+@@ -0,0 +1,220 @@
++"""Explicit export/QA, two existing P1 commit boundaries, detect-only retry."""
++from dataclasses import dataclass, replace
++import hashlib
++from pathlib import Path
++import tempfile
++from threading import Lock
++from uuid import uuid4
++from vde.errors import StorageError, utc_now
++from vde.execution.errors import ExecutionError
++from vde.models import QAReportRecord, EventRecord
++from vde.persistence.uow import UnitOfWork
++from vde.storage import Storage
++from .budget import Budget
++from .contract import admit, health, read_internal, rows
++from .errors import P5Error, require
++from . import export as writer
++from . import roundtrip
++from .qa import Facts, evaluate_all
++from .report import build, overall
++
++_LOCKS = tuple(Lock() for _ in range(64))
++
++
++def artifact_id(run_id, format):
++    return 'p5-final-'+hashlib.sha256((run_id+'\0'+format).encode('utf-8')).hexdigest()
++
++
++def _run_lock(env,run_id):
++    slot=int(hashlib.sha256((str(env.database)+'\0'+run_id).encode()).hexdigest()[:8],16)%len(_LOCKS)
++    return _LOCKS[slot]
++
++
++@dataclass(frozen=True)
++class P5Decision:
++    run_id: str
++    order_status: str
++    report: dict
++    artifact: object
++    resources: dict
++    repeated: bool = False
++    error_json: dict | None = None
++
++
++class P5Service:
++    def __init__(self, env, *, checkpoint=None, budget_factory=Budget):
++        self.env = env
++        self.checkpoint = checkpoint or (lambda stage: None)
++        self.budget_factory = budget_factory
++
++    def _uow(self):
++        return UnitOfWork(self.env.database,self.env.workspace)
++
++    def inspect(self, run_id, expected_order=None):
++        health(self.env)
++        with self._uow() as uow:
++            return admit(uow,self.env,run_id,expected_order)
++
++    def read_decision(self,run_id):
++        """Verified terminal view. No P4 read_result or business writes."""
++        with _run_lock(self.env,run_id),self.budget_factory() as budget:
++            context=self.inspect(run_id)
++            require(context.order.status in ('READY','NEEDS_FIX'),'STATE_INVALID_TRANSITION','P5 decision is not terminal')
++            return self._terminal(context,self._final(context),budget)
++
++    def _final(self, context):
++        final = [a for a in context.artifacts if a != context.internal]
++        require(len(final)<=1 and all(a.artifact_type == 'RESULT_'+context.projection.output['format']
++                and a.format == context.projection.output['format']
++                and a.id == artifact_id(context.run.id,a.format) for a in final),
++                'STORAGE_ERROR', 'Ambiguous or unauthorized final Artifact')
++        return final[0] if final else None
++
++    def _terminal(self, context, artifact, budget):
++        require(artifact is not None and len(context.reports)==1, 'STORAGE_ERROR', 'Incomplete terminal P5 state')
++        report = context.reports[0].report_json
++        size, checksum = self.env.workspace.inspect(artifact.workspace_relpath)
++        summary = report['dataset_summary']
++        require(report['artifacts'] == [dict(artifact_type=artifact.artifact_type,path=artifact.workspace_relpath,checksum=artifact.checksum)]
++                and (summary['file_size_bytes'],summary['checksum']) == (size,checksum)
++                and checksum == artifact.checksum
++                and summary['columns'] == list(context.projection.columns)
++                and summary['output_headers'] == list(context.projection.headers)
++                and summary['column_count'] == len(context.projection.columns)
++                and summary['row_count'] == context.run.metrics_json['row_count']
++                and report['overall_status'] == overall(report['deterministic_checks'])
++                and context.order.status == ('NEEDS_FIX' if report['overall_status']=='FAIL' else 'READY'),
++                'STORAGE_ERROR', 'Terminal report, Artifact and Order contradict')
++        from .qa import IDS, CONDITIONAL
++        checks = report['deterministic_checks']
++        approved = {c['criterion_id'] for c in context.brief.document_json['acceptance_criteria']}
++        approved &= set(context.spec.document_json['acceptance_criteria_ref'])
++        expected_criteria={c['criterion_id']:c for c in context.brief.document_json['acceptance_criteria']
++                           if c['criterion_id'] in approved and c['requirement_status']!='NOT_APPLICABLE'}
++        from .qa import criterion_dq,json_value
++        require(set(c['check_id'] for c in checks)==set(IDS) and
++                len({(c['check_id'],c['criterion_id']) for c in checks})==len(checks) and
++                all(c['criterion_id'] is None or c['criterion_id'] in approved for c in checks) and
++                {c['criterion_id'] for c in checks if c['criterion_id']} == set(expected_criteria) and
++                all(c['check_id'] in CONDITIONAL for c in checks if c['status']=='SKIPPED'),
++                'STORAGE_ERROR', 'Terminal QA coverage differs')
++        for check in checks:
++            if check['criterion_id'] is not None:
++                criterion=expected_criteria[check['criterion_id']]
++                require(check['check_id']==criterion_dq(criterion) and check['expected']==json_value(criterion['expected']) and
++                        check['severity']==criterion['severity'] and
++                        check['target']['column']==criterion['target']['column'],
++                        'STORAGE_ERROR','Terminal criterion binding differs')
++        with self._uow() as uow:
++            events=[e for e in uow.events.list_for_run(context.run.id) if e.event_type=='P5_QA_COMPLETED']
++        require(len(events)==1 and events[0].payload_json['report_id']==report['report_id'] and
++                events[0].payload_json['overall_status']==report['overall_status'],
++                'STORAGE_ERROR','Terminal completion EventLog differs')
++        budget.check()
++        return P5Decision(context.run.id,context.order.status,report,artifact,budget.summary(),True,
++                          events[0].payload_json.get('error'))
++
++    def _fail(self, run_id, expected_order, exc, *, ordinary_storage=False):
++        # A damaged workspace is read-only. Source/approval/admission errors do
++        # not manufacture a new business decision. Final-UoW abort is retryable.
++        if exc.code not in ('EXPORT_FAILED','ROUNDTRIP_MISMATCH','SCHEMA_MISMATCH','COLUMN_COLLISION') and not ordinary_storage:
++            return
++        try:
++            health(self.env)
++        except P5Error:
++            return
++        with self._uow() as uow:
++            context = admit(uow,self.env,run_id,expected_order,projection_required=False)
++            require(not context.reports and context.order.status=='EXECUTING',
++                    'STATE_INVALID_TRANSITION','Failure context changed')
++            public = exc.public(order_id=context.order.id,run_id=run_id)
++            uow.orders.update(replace(context.order,status='FAILED',updated_at=utc_now()),expected=context.order)
++            uow.events.append(EventRecord(str(uuid4()),context.order.id,'P5_FAILED',utc_now(),run_id,{'error':public}))
++
++    def complete(self, run_id, expected_order):
++        # Bounded striped locks avoid a growing global map of run identities.
++        with _run_lock(self.env,run_id), self.budget_factory() as budget:
++            final_transaction=False
++            admitted=False
++            try:
++                context = self.inspect(run_id,expected_order)
++                admitted=True
++                artifact = self._final(context)
++                if context.order.status in ('READY','NEEDS_FIX'):
++                    return self._terminal(context,artifact,budget)
++                require(not context.reports, 'STORAGE_ERROR','Report exists before terminal Order')
++                self.checkpoint('after_admission')
++                data = read_internal(self.env,context,budget)
++                facts = Facts(context.projection,context.brief.document_json,context.spec.document_json,budget)
++                if artifact is None:
++                    with tempfile.TemporaryDirectory(prefix='p5-',dir=self.env.workspace.path('.staging')) as directory:
++                        path = Path(directory)/('result.'+context.projection.output['format'].lower())
++                        self.checkpoint('before_write')
++                        writer.write(path,context.projection,rows(data,context),budget,facts.observe)
++                        self.checkpoint('after_stage')
++                        proof = roundtrip.verify(path,context.projection,rows(data,context),budget)
++                        self.checkpoint('after_roundtrip')
++                        require(proof['rows']==context.run.metrics_json['row_count'], 'SCHEMA_MISMATCH','Export count differs from P4')
++                        checks = evaluate_all(context,facts,proof)
++                        budget.check(allocation=proof['size'])
++                        opaque = path.read_bytes()
++                    # Scratch is gone before recovery inspects the workspace.
++                    self.inspect(run_id,expected_order)
++                    require(hashlib.sha256(opaque).hexdigest()==proof['checksum'] and len(opaque)==proof['size'],
++                            'ROUNDTRIP_MISMATCH','Candidate changed before P1 publication')
++                    artifact = Storage(self.env.database,self.env.workspace,
++                        checkpoint=lambda stage:self.checkpoint('artifact_'+stage)).register_artifact(
++                            id=artifact_id(run_id,context.projection.output['format']),run_id=run_id,
++                            artifact_type='RESULT_'+context.projection.output['format'],
++                            format=context.projection.output['format'],data=opaque)
++                    del opaque
++                    budget.check()
++                    self.checkpoint('after_artifact_commit')
++                else:
++                    # Explicit retry reuses the committed object. No registration
++                    # or orphan adoption occurs here.
++                    for row in rows(data,context):
++                        facts.observe(row)
++                    proof = roundtrip.verify(self.env.workspace.path(artifact.workspace_relpath),
++                                             context.projection,rows(data,context),budget)
++                    checks = evaluate_all(context,facts,proof)
++                del data
++                health(self.env)
++                require(self.env.workspace.inspect(artifact.workspace_relpath)==(proof['size'],proof['checksum'])
++                        and artifact.checksum==proof['checksum'], 'STORAGE_ERROR','Published result differs')
++                doc = build(context,artifact,proof,checks)
++                public_error = P5Error('QA_BLOCKER','Deterministic blocking QA failed').public(
++                    order_id=context.order.id,run_id=run_id) if doc['overall_status']=='FAIL' else None
++                self.checkpoint('before_report_uow')
++                final_transaction=True
++                with self._uow() as uow:
++                    fresh = admit(uow,self.env,run_id,expected_order)
++                    require(not fresh.reports and self._final(fresh)==artifact,
++                            'STORAGE_ERROR','Final report transaction context changed')
++                    require(self.env.workspace.inspect(artifact.workspace_relpath)==(proof['size'],proof['checksum']),
++                            'STORAGE_ERROR','Final result changed before report commit')
++                    uow.reports.append(QAReportRecord.from_document(doc))
++                    self.checkpoint('after_report_append')
++                    status = 'NEEDS_FIX' if doc['overall_status']=='FAIL' else 'READY'
++                    uow.orders.update(replace(fresh.order,status=status,updated_at=utc_now()),expected=fresh.order)
++                    uow.events.append(EventRecord(str(uuid4()),fresh.order.id,'P5_QA_COMPLETED',utc_now(),run_id,
++                                                  {'report_id':doc['report_id'],'overall_status':doc['overall_status'],
++                                                   'error':public_error}))
++                    self.checkpoint('before_report_commit')
++                    budget.check()
++                self.checkpoint('after_report_commit')
++                return P5Decision(run_id,status,doc,artifact,budget.summary(),error_json=public_error)
++            except P5Error as exc:
++                self._fail(run_id,expected_order,exc)
++                raise
++            except ExecutionError as exc:
++                raise P5Error(exc.code,exc.reason) from exc
++            except StorageError as exc:
++                error=P5Error('STORAGE_ERROR',exc.reason)
++                if admitted and not final_transaction:
++                    self._fail(run_id,expected_order,error,ordinary_storage=True)
++                raise error from exc
++            except OSError as exc:
++                error = P5Error('EXPORT_FAILED','Export filesystem operation failed')
++                self._fail(run_id,expected_order,error)
++                raise error from exc
+diff --git a/src/vde/p5/ui.py b/src/vde/p5/ui.py
+new file mode 100644
+index 0000000..2b7c43d
+--- /dev/null
++++ b/src/vde/p5/ui.py
+@@ -0,0 +1,54 @@
++"""One explicit P5 action; passive rerenders never initiate work."""
++import streamlit as st
++from vde.errors import StorageError
++from vde.persistence.uow import UnitOfWork
++from .errors import P5Error
++from .service import P5Service
++
++
++def panel(env):
++    st.subheader('Export and deterministic QA')
++    if not st.checkbox('Open export and QA',key='p5_open'):
++        return
++    if env.health != 'ready':
++        st.warning('Export and QA require healthy local storage.')
++        st.button('Export + deterministic QA',key='p5_complete',disabled=True)
++        return
++    try:
++        with UnitOfWork(env.database,env.workspace) as uow:
++            orders = uow.orders.list()
++        if not orders:
++            st.info('Choose an existing Order after transformation succeeds.')
++            return
++        selected = st.selectbox('P5 existing Order',[o.id for o in orders],key='p5_order')
++        order = next(o for o in orders if o.id==selected)
++        with UnitOfWork(env.database,env.workspace) as uow:
++            runs = uow.runs.list_for_order(selected)
++            failed={r.id for r in runs if any(e.event_type=='P5_FAILED' for e in uow.events.list_for_run(r.id))}
++        eligible = [r for r in runs if r.status=='succeeded' and r.id not in failed and
++                    (r.brief_version_id,r.transformation_spec_version_id)==
++                    (order.selected_brief_version_id,order.selected_transformation_spec_version_id)]
++        if not eligible:
++            st.info('A succeeded transformation with the exact selected approvals is required.')
++            return
++        run_id = st.selectbox('P5 succeeded Run',[r.id for r in eligible],key='p5_run')
++        service = P5Service(env)
++        context = service.inspect(run_id,order)
++        st.write('Approved format: '+context.projection.output['format'])
++        st.caption('CSV preserves lexical cells; typed null and empty text remain distinct in QA. Unsafe formulas and numeric loss fail closed.')
++        if st.button('Export + deterministic QA',key='p5_complete',disabled=order.status!='EXECUTING'):
++            with st.spinner('Exporting and checking all rows'):
++                service.complete(run_id,order)
++        with UnitOfWork(env.database,env.workspace) as uow:
++            reports = uow.reports.list_for_run(run_id)
++        for report in reports:
++            doc = service.read_decision(run_id).report
++            if doc['overall_status']=='FAIL':
++                st.error('NEEDS_FIX — diagnostic result; NOT APPROVED FOR DELIVERY')
++            else:
++                st.success('READY — '+doc['overall_status'])
++            st.json(doc['dataset_summary'])
++            st.json(doc['deterministic_checks'])
++            st.json({'blocking_issues':doc['blocking_issues'],'warnings':doc['warnings']})
++    except (P5Error,StorageError) as exc:
++        st.error(exc.public()['code'])
+diff --git a/tests/p5/__init__.py b/tests/p5/__init__.py
+new file mode 100644
+index 0000000..491903c
+--- /dev/null
++++ b/tests/p5/__init__.py
+@@ -0,0 +1 @@
++"""P5 acceptance and phase-aware successor audit; historical tests unchanged."""
+diff --git a/tests/p5/conftest.py b/tests/p5/conftest.py
+new file mode 100644
+index 0000000..9ecec55
+--- /dev/null
++++ b/tests/p5/conftest.py
+@@ -0,0 +1,41 @@
++import hashlib
++import json
++from pathlib import Path
++import zipfile
++import pytest
++
++ROOT=Path(__file__).resolve().parents[2]
++
++
++@pytest.fixture(scope='session')
++def design(tmp_path_factory):
++    archive=ROOT/'docs/p5/handoff/P5_Codex_Implementation_Handoff_2026-11-05.zip'
++    assert hashlib.sha256(archive.read_bytes()).hexdigest()=='3e3a2f6a8e65f500fe5bd281ef805d9229d50b96c50433cdda52cbb4fd6d63e4'
++    target=tmp_path_factory.mktemp('p5-design')
++    with zipfile.ZipFile(archive) as z:
++        assert z.testzip() is None
++        z.extractall(target)
++    handoff=target/'P5_Codex_Implementation_Handoff_2026-11-05'
++    for row in (handoff/'HANDOFF_MANIFEST.sha256').read_text().splitlines():
++        digest,name=row.split('  ',1)
++        assert hashlib.sha256((handoff/name).read_bytes()).hexdigest()==digest
++    roots={}
++    for key,name in [('base','P5_Implementation_Design_Pack_v0.2a_candidate'),('pb','P5_Gate_A_PB_Supplement_v0.2b_candidate')]:
++        with zipfile.ZipFile(handoff/'sources'/(name+'.zip')) as z:
++            assert z.testzip() is None
++            z.extractall(target)
++        root=target/name
++        for f in json.loads((root/'PACK_MANIFEST.json').read_text())['files']:
++            assert hashlib.sha256((root/f['path']).read_bytes()).hexdigest()==f['sha256']
++        roots[key]=root
++    roots['handoff']=handoff
++    return roots
++
++
++def pytest_collection_modifyitems(items):
++    for item in items:
++        if '/p5/' in str(item.path):
++            import re
++            match=re.search(r'T(\d{2})',item.name)
++            if match:
++                item.user_properties.append(('p5_id','P5-T'+match[1]))
+diff --git a/tests/p5/restart_probe.py b/tests/p5/restart_probe.py
+new file mode 100644
+index 0000000..36a9b3c
+--- /dev/null
++++ b/tests/p5/restart_probe.py
+@@ -0,0 +1,23 @@
++"""Separate-process SIGKILL witness. Test-only; no application import of it."""
++import os
++from pathlib import Path
++import signal
++import sys
++from vde.bootstrap import bootstrap
++from vde.config import Config
++from vde.persistence.uow import UnitOfWork
++from vde.p5.service import P5Service
++
++
++def main():
++    workspace,run_id,stage=Path(sys.argv[1]),sys.argv[2],sys.argv[3]
++    env=bootstrap(Config(workspace));assert env.health=='ready'
++    with UnitOfWork(env.database,env.workspace) as u:
++        order=u.orders.get(u.runs.get(run_id).order_id)
++    def checkpoint(current):
++        if current==stage:os.kill(os.getpid(),signal.SIGKILL)
++    P5Service(env,checkpoint=checkpoint).complete(run_id,order)
++    raise AssertionError('Requested crash checkpoint was not reached')
++
++
++if __name__=='__main__':main()
+diff --git a/tests/p5/run_validation.py b/tests/p5/run_validation.py
+new file mode 100644
+index 0000000..70792a8
+--- /dev/null
++++ b/tests/p5/run_validation.py
+@@ -0,0 +1,199 @@
++"""Reproducible CR-P5-002 outer runner: three distinct evidence families.
++
++Run from a committed P5 tree, with an actual prior historical-run directory.
++Original test-generated validation files are captured separately and restored.
++No test is deselected, skipped, xfailed, patched or reclassified as PASS.
++"""
++import argparse
++from datetime import datetime
++import hashlib
++import importlib.metadata
++import json
++import os
++from pathlib import Path
++import platform
++import re
++import shlex
++import shutil
++import subprocess
++import sys
++from time import monotonic
++import xml.etree.ElementTree as ET
++import zipfile
++from zoneinfo import ZoneInfo
++
++from .support import ROOT,BASELINE,child_environment
++
++
++def sha(raw):return hashlib.sha256(raw).hexdigest()
++def git(*args):return subprocess.check_output(['git',*args],cwd=ROOT,text=True).strip()
++
++
++def junit(path):
++    rows=[]
++    for c in ET.parse(path).getroot().iter('testcase'):
++        outcome=next((k for k in ('failure','error','skipped') if c.find(k) is not None),'pass')
++        properties={p.get('name'):p.get('value') for p in c.findall('./properties/property')}
++        rows.append(dict(name=c.get('name'),classname=c.get('classname'),outcome=outcome,
++                         properties=properties,assertion=c.find(outcome).text if outcome!='pass' else None))
++    return rows
++
++
++def record_command(out,command,*,cwd=ROOT,env=None,pytest=False,legacy_outputs=False):
++    out=Path(out);out.mkdir(parents=True,exist_ok=False)
++    assert not git('status','--porcelain'),'Phases require a clean committed tree'
++    commit,tree=git('rev-parse','HEAD'),git('rev-parse','HEAD^{tree}')
++    environment=child_environment() if env is None else env.copy()
++    if pytest:environment['PYTEST_ADDOPTS']='--junitxml='+str(out/'results.xml')
++    environment['P5_RESULTS_DIR']=str(out/'observations')
++    validation_roots=[ROOT/'docs'/p/'validation' for p in ('p1','p2','p3','p4')]
++    original={p:p.read_bytes() for r in validation_roots if r.exists() for p in r.rglob('*') if p.is_file()}
++    tracked=git('ls-files').splitlines()
++    inputs={p:sha((ROOT/p).read_bytes()) for p in tracked if ROOT/p not in original}
++    if legacy_outputs:
++        for group in ('f-fixture','x-fixture','w-fixture','golden','generator','p0-semantic'):
++            path=ROOT/'docs/p4/validation'/(group+'-results.json');path.write_text('{}\n')
++    started=monotonic();meta=dict(command=command,shell_command=shlex.join(command),cwd=str(cwd),
++        tested_commit=commit,tested_tree=tree,python=sys.version,executable=sys.executable,
++        platform=platform.platform(),started_at_moscow=datetime.now(ZoneInfo('Europe/Moscow')).isoformat(),
++        packages={n:importlib.metadata.version(n) for n in ('pytest','jsonschema','referencing','rfc8785','openpyxl','streamlit')},
++        environment={k:environment.get(k) for k in ('PYTHONPATH','PYTHONDONTWRITEBYTECODE','PYTEST_ADDOPTS','P5_RESULTS_DIR','P5_HISTORICAL_JUNIT')},
++        input_sha256=inputs)
++    run=None
++    try:
++        with (out/'stdout.txt').open('wb') as stdout,(out/'stderr.txt').open('wb') as stderr:
++            run=subprocess.run(command,cwd=cwd,env=environment,stdout=stdout,stderr=stderr)
++    finally:
++        generated={}
++        for r in validation_roots:
++            if not r.exists():continue
++            for p in r.rglob('*'):
++                if not p.is_file():continue
++                raw=p.read_bytes()
++                if p not in original or raw!=original[p] or legacy_outputs and p.name.endswith('-results.json'):
++                    target=out/'generated'/p.relative_to(ROOT);target.parent.mkdir(parents=True,exist_ok=True);target.write_bytes(raw)
++                    generated[str(p.relative_to(ROOT))]=sha(raw)
++                if p not in original:p.unlink()
++        for p,raw in original.items():p.write_bytes(raw)
++        nested_command=out/'generated/docs/p4/validation/T63-p0-p3-regression.command.json'
++        if nested_command.is_file():
++            argv=json.loads(nested_command.read_text())['argv']
++            nested=next((Path(a.split('=',1)[1]) for a in argv if a.startswith('--junitxml=')),None)
++            if nested is not None and nested.is_file():
++                (out/'nested-P0-P3.junit.xml').write_bytes(nested.read_bytes())
++        meta.update(exit_code=None if run is None else run.returncode,elapsed_seconds=monotonic()-started,
++                    finished_at_moscow=datetime.now(ZoneInfo('Europe/Moscow')).isoformat(),generated=generated,
++                    historical_evidence_restored=all(p.read_bytes()==raw for p,raw in original.items()),
++                    inputs_unchanged=all(sha((ROOT/p).read_bytes())==h for p,h in inputs.items()),
++                    commit_unchanged=git('rev-parse','HEAD')==commit and git('rev-parse','HEAD^{tree}')==tree,
++                    final_git_status=git('status','--porcelain'))
++        if pytest and (out/'results.xml').is_file():meta['testcases']=junit(out/'results.xml')
++        (out/'command.json').write_text(json.dumps(meta,indent=2)+'\n')
++        (out/'exit-code.txt').write_text(str(meta['exit_code'])+'\n')
++        assert meta['historical_evidence_restored'] and meta['inputs_unchanged'] and meta['commit_unchanged'] and not meta['final_git_status'],meta
++    print(json.dumps({'phase':out.name,'exit_code':run.returncode,'seconds':meta['elapsed_seconds']}),flush=True)
++    return meta
++
++
++def legacy_id(case):
++    phase=re.search(r'(?:^|\.)p([1-4])(?:\.|$)',case['classname'])
++    number=re.search(r'^test_T(\d+)_',case['name'])
++    assert phase and number,case
++    return f'P{phase[1]}-T{int(number[1]):02}'
++
++
++def validate_inventory(cases):
++    expected={f'P{p}-T{i:02}' for p,n in ((1,42),(2,54),(3,52),(4,64)) for i in range(1,n+1)}
++    assert len(cases)==212 and {legacy_id(c) for c in cases}==expected
++
++
++def classify_legacy(meta,out):
++    cases=meta['testcases'];validate_inventory(cases)
++    known={'P2-T40','P3-T50','P3-T51','P4-T61','P4-T62','P4-T63'}
++    records=[]
++    for c in cases:
++        identity=legacy_id(c);state=c['outcome'];reason=c['assertion'] or ''
++        if state=='pass':classification='PASS'
++        elif state=='failure' and identity in known:
++            if identity=='P3-T50':
++                nested=out/'generated/docs/p3/validation/p2-results.xml'
++                checks=junit(nested)
++                failures=[n for n in checks if n['outcome']!='pass']
++                assert len(checks)==54 and len(failures)==1 and legacy_id(failures[0])=='P2-T40'
++                assert failures[0]['outcome']=='failure' and 'AssertionError: Unapproved application source/module/migration' in failures[0]['assertion']
++                assert 'test_T40_scope_dependencies' in reason and 'assert 1 == 0' in reason
++            elif identity=='P4-T63':
++                nested=out/'nested-P0-P3.junit.xml'
++                checks=junit(nested)
++                failures=[n for n in checks if n['outcome']!='pass']
++                assert {legacy_id(n) for n in failures}=={'P2-T40','P3-T50','P3-T51'} and all(n['outcome']=='failure' for n in failures),failures
++                assert len(checks)==148 and all('AssertionError: Unapproved application source/module/migration' in n['assertion'] for n in failures),failures
++            else:
++                assertion=('AssertionError: Unapproved full application paths' if identity=='P4-T61'
++                           else 'AssertionError: Unapproved application source/module/migration')
++                assert assertion in reason,c
++            classification='EXPECTED_HISTORICAL_SCOPE_CONFLICT'
++        else:classification='BLOCKING_BEHAVIORAL_REGRESSION'
++        records.append(dict(test_id=identity,pytest_outcome=state,classification=classification,exact_assertion=reason))
++    result=dict(total=212,passed=sum(r['classification']=='PASS' for r in records),
++                expected_historical_scope_conflicts=sum(r['classification']=='EXPECTED_HISTORICAL_SCOPE_CONFLICT' for r in records),
++                blocking_regressions=sum(r['classification']=='BLOCKING_BEHAVIORAL_REGRESSION' for r in records),records=records)
++    (out/'PHASE_AWARE_CLASSIFICATION.json').write_text(json.dumps(result,indent=2)+'\n')
++    return result
++
++
++def main():
++    parser=argparse.ArgumentParser();parser.add_argument('--out',type=Path,required=True)
++    parser.add_argument('--historical-run',type=Path,required=True);args=parser.parse_args()
++    out=args.out.resolve();assert not out.exists();assert not out.is_relative_to(ROOT)
++    out.mkdir(parents=True)
++    historical=args.historical_run.resolve();history=json.loads((historical/'command-environment.json').read_text())
++    assert history['tested_commit']==BASELINE and history['exit_code']==0
++    assert history['old_validation_restored'] and history['inputs_unchanged'] and history['commit_unchanged']
++    old_cases=junit(historical/'results.xml');validate_inventory(old_cases);assert all(c['outcome']=='pass' for c in old_cases)
++    assert not git('status','--porcelain')
++    commit,tree=git('rev-parse','HEAD'),git('rev-parse','HEAD^{tree}')
++    from .scope_audit import audit
++    scope_before=audit(ROOT)
++    env=child_environment();env['P5_HISTORICAL_JUNIT']=str(historical/'results.xml')
++    collection=record_command(out/'p5-collection',[sys.executable,'-m','pytest','tests/p5','--collect-only','-q'],env=env)
++    assert collection['exit_code']==0
++    compat=record_command(out/'integrated-legacy',[sys.executable,'-m','pytest','tests/p1','tests/p2','tests/p3','tests/p4','-q'],env=env,pytest=True,legacy_outputs=True)
++    classification=classify_legacy(compat,out/'integrated-legacy')
++    p5=record_command(out/'p5-runtime',[sys.executable,'-m','pytest','tests/p5','-q'],env=env,pytest=True)
++    actual={c['properties'].get('p5_id') for c in p5['testcases']}
++    p5_success=p5['exit_code']==0 and len(p5['testcases'])==76 and actual=={f'P5-T{i:02}' for i in range(1,77)} and all(c['outcome']=='pass' for c in p5['testcases'])
++    # Extract the unchanged original source packs for independent real-schema
++    # checks. Their historical proposal labels are preserved in raw stdout.
++    extracts=out/'unpacked-source';extracts.mkdir()
++    with zipfile.ZipFile(ROOT/'docs/p5/handoff/P5_Codex_Implementation_Handoff_2026-11-05.zip') as z:z.extractall(extracts)
++    handoff=extracts/'P5_Codex_Implementation_Handoff_2026-11-05'
++    base_name='P5_Implementation_Design_Pack_v0.2a_candidate';pb_name='P5_Gate_A_PB_Supplement_v0.2b_candidate'
++    for name in (base_name,pb_name):
++        with zipfile.ZipFile(handoff/'sources'/(name+'.zip')) as z:z.extractall(extracts)
++    base,pb=extracts/base_name,extracts/pb_name
++    static=[]
++    for label,root,command in (
++        ('strict-design',base,[sys.executable,'tools/verify_p5_design_pack.py','--p0-root',str(ROOT/'pecs/pilot_slice_v1'),'--require-p0','--mutation-probes']),
++        ('amendment-static',base,[sys.executable,'tools/verify_p5_v02_amendments.py','--mutation-probes']),
++        ('numeric-static',base,[sys.executable,'tools/verify_p5_v02a_precision.py','--mutation-probes']),
++        ('supplement-static',pb,[sys.executable,'tools/verify_gate_a_supplement.py','--base-root',str(base),'--mutations']),
++        ('real-p0-schemas',ROOT,[sys.executable,str(ROOT/'docs/p5/validation/implementation-admission-20261106/validate_available_p0.py'),
++                               '--p0-root',str(ROOT/'pecs/pilot_slice_v1'),'--out',str(out/'P0_SCHEMA_RESULTS.json'),'--supplement',str(pb)])):
++        static.append(record_command(out/label,command,cwd=root,env=env))
++    after=audit(ROOT)
++    summary=dict(tested_implementation_commit=commit,tested_implementation_tree=tree,
++        historical=dict(commit=BASELINE,tree=history['tested_tree'],total=212,pass_count=212),
++        integrated_legacy={k:v for k,v in classification.items() if k!='records'},
++        p5=dict(total=len(p5['testcases']),passed=sum(c['outcome']=='pass' for c in p5['testcases']),all_76_unique_ids=p5_success),
++        static_all_pass=all(m['exit_code']==0 for m in static),scope_before=scope_before,scope_after=after,
++        completed_at_moscow=datetime.now(ZoneInfo('Europe/Moscow')).isoformat(),
++        gates_closed_by_runner=False,merged=False,P6_started=False)
++    success=p5_success and classification['blocking_regressions']==0 and all(m['exit_code']==0 for m in static)
++    summary['technical_validation_success']=success
++    (out/'VALIDATION_SUMMARY.json').write_text(json.dumps(summary,indent=2)+'\n')
++    print(json.dumps(summary,indent=2),flush=True)
++    return 0 if success else 1
++
++
++if __name__=='__main__':raise SystemExit(main())
+diff --git a/tests/p5/scope_audit.py b/tests/p5/scope_audit.py
+new file mode 100644
+index 0000000..b4ebfcb
+--- /dev/null
++++ b/tests/p5/scope_audit.py
+@@ -0,0 +1,156 @@
++"""CR-P5-002 successor audit; historical policies and hashes stay untouched."""
++import ast
++from functools import lru_cache
++import hashlib
++import io
++import json
++from pathlib import Path
++import shutil
++import stat
++import subprocess
++import tarfile
++
++BASELINE='820245fc544fc66c393db548151e6d281e03d414'
++HISTORICAL='fd39aa1bed480313504ae8b1f76e77e170cb72ba'
++ADDENDUM_COMMIT='20e78e55c8f461d01b9671c475ba7fa98ae0a745'
++P5_SOURCE=tuple('src/vde/p5/'+n for n in (
++    '__init__.py','budget.py','contract.py','errors.py','export.py','project.py',
++    'qa.py','report.py','roundtrip.py','service.py','ui.py'))
++P5_TESTS=tuple('tests/p5/'+n for n in (
++    '__init__.py','conftest.py','support.py','test_acceptance.py','scope_audit.py',
++    'scope_policy_v1.json','restart_probe.py','stress_probe.py','run_validation.py'))
++P5_DOCS=(
++    'docs/p5/design_addenda/P5_DESIGN_ADDENDUM_v0.2c_CR_P5_003.md',
++    'docs/p5/implementation/README.md',
++    'docs/p5/implementation/TEST_PLAN_TRACEABILITY.md',
++)
++APP_APPEND=b'from vde.p5.ui import panel as export_qa_panel\nexport_qa_panel(result)\n'
++EVIDENCE_ROOT='docs/p5/validation/runtime-20261106/'
++POLICY=dict(format='P5_SCOPE_POLICY_V1',implementation_start=BASELINE,historical_regression_base=HISTORICAL,
++            addendum_commit=ADDENDUM_COMMIT,source_paths=list(P5_SOURCE),test_paths=list(P5_TESTS),document_paths=list(P5_DOCS),
++            app_integration=APP_APPEND.decode(),evidence_root=EVIDENCE_ROOT,
++            authority='Owner-approved P5 Gate A; CR-P5-001/002/003; no historical policy changes')
++
++
++def git(root,*args):
++    return subprocess.check_output(['git','--no-replace-objects','-C',str(root),*args],stderr=subprocess.PIPE)
++
++
++@lru_cache(maxsize=4)
++def frozen(root):
++    root=Path(root)
++    entries={}
++    for line in git(root,'ls-tree','-r','--full-tree',BASELINE).decode().splitlines():
++        obj,path=line.split('\t');mode,kind,blob=obj.split()
++        assert kind=='blob'
++        entries[path]=(mode,blob,git(root,'cat-file','blob',blob))
++    return entries
++
++
++def regular(path):
++    mode=path.lstat().st_mode
++    assert stat.S_ISREG(mode) and not mode&0o111,'File mode/type not approved: '+str(path)
++    return path.read_bytes()
++
++
++def audit(root,*,authority_root=None):
++    root=Path(root).resolve();authority=root if authority_root is None else Path(authority_root).resolve()
++    assert json.loads(regular(root/'tests/p5/scope_policy_v1.json'))==POLICY,'P5 policy closed contents differ'
++    from scope_policy import verify_governance_document
++    verify_governance_document(root,authority_root=authority if root!=authority else None)
++    git(authority,'merge-base','--is-ancestor',BASELINE,'HEAD')
++    git(authority,'merge-base','--is-ancestor',ADDENDUM_COMMIT,'HEAD')
++    assert regular(root/P5_DOCS[0])==git(authority,'show',ADDENDUM_COMMIT+':'+P5_DOCS[0]),'Approved numeric addendum changed'
++    base=frozen(str(authority))
++    for path,(mode,blob,raw) in base.items():
++        actual=regular(root/path)
++        wanted=raw+APP_APPEND if path=='src/vde/app.py' else raw
++        assert actual==wanted,'Protected file changed: '+path
++        if root==authority:
++            expected_blob=hashlib.sha1(b'blob '+str(len(wanted)).encode()+b'\0'+wanted).hexdigest()
++            assert git(authority,'ls-tree','HEAD','--',path)==f'{mode} blob {expected_blob}\t{path}\n'.encode(),'HEAD differs: '+path
++            assert git(authority,'ls-files','--stage','--',path)==f'{mode} {expected_blob} 0\t{path}\n'.encode(),'Index differs: '+path
++    sources={p.relative_to(root).as_posix() for p in (root/'src').rglob('*') if p.is_file() and '__pycache__' not in p.parts}
++    assert sources=={p for p in base if p.startswith('src/')}|set(P5_SOURCE),'Application source inventory differs'
++    imports={'collections','csv','dataclasses','datetime','decimal','fractions','hashlib','itertools','math',
++             'pathlib','tempfile','threading','time','types','unicodedata','uuid','xml','zipfile',
++             'vde','jsonschema','openpyxl','streamlit'}
++    for path in P5_SOURCE:
++        raw=regular(root/path);tree=ast.parse(raw)
++        for node in ast.walk(tree):
++            if isinstance(node,ast.Import):
++                assert all(a.name.split('.')[0] in imports for a in node.names),'Forbidden P5 import: '+path
++            if isinstance(node,ast.ImportFrom) and not node.level:
++                assert node.module.split('.')[0] in imports,'Forbidden P5 import: '+path
++            if isinstance(node,ast.Call):
++                name=ast.unparse(node.func)
++                assert name not in ('eval','exec','compile','__import__','getattr','setattr'),'Dynamic execution forbidden'
++                assert not name.startswith(('OPERATIONS.','subprocess.','os.system','sqlite3.')),'Unapproved execution/operation/schema change'
++        # New owned sources must also equal the exact committed review tree.
++        expected=git(authority,'show','HEAD:'+path)
++        assert raw==expected,'P5 source differs from committed tree: '+path
++        if root==authority:
++            blob=hashlib.sha1(b'blob '+str(len(raw)).encode()+b'\0'+raw).hexdigest()
++            assert git(authority,'ls-files','--stage','--',path)==f'100644 {blob} 0\t{path}\n'.encode(),'P5 index differs'
++    for path in (*P5_TESTS,*P5_DOCS):
++        raw=regular(root/path)
++        assert raw==git(authority,'show','HEAD:'+path),'New owned test/document differs from committed tree: '+path
++        if root==authority:
++            blob=hashlib.sha1(b'blob '+str(len(raw)).encode()+b'\0'+raw).hexdigest()
++            assert git(authority,'ls-files','--stage','--',path)==f'100644 {blob} 0\t{path}\n'.encode(),'Owned test/document index differs'
++    if root==authority:
++        inventory=set(git(authority,'ls-files','--cached','--others','--exclude-standard','-z').decode().rstrip('\0').split('\0'))
++    else:
++        inventory={p.relative_to(root).as_posix() for p in root.rglob('*') if p.is_file() and '__pycache__' not in p.parts}
++    allowed=set(base)|set(P5_SOURCE)|set(P5_TESTS)|set(P5_DOCS)
++    evidence={p for p in inventory if p.startswith(EVIDENCE_ROOT)}
++    if evidence:
++        manifest=EVIDENCE_ROOT+'MANIFEST.sha256'
++        entries={}
++        for row in regular(root/manifest).decode().splitlines():
++            digest,path=row.split('  ',1)
++            assert path.startswith(EVIDENCE_ROOT) and '..' not in Path(path).parts and path!=manifest
++            assert path not in entries
++            assert hashlib.sha256(regular(root/path)).hexdigest()==digest,'Evidence hash differs'
++            entries[path]=digest
++        assert evidence==set(entries)|{manifest},'Finite evidence manifest inventory differs'
++        allowed|=evidence
++    assert inventory<=allowed,'Unapproved repository files: '+str(sorted(inventory-allowed))
++    return {'result':'PASS','protected_start_files':len(base),'P5_sources':len(P5_SOURCE),
++            'historical_tests_and_policies_unchanged':True,'governance_pin_unchanged':True}
++
++
++def negative_probes(root,directory):
++    root=Path(root);directory=Path(directory);directory.mkdir(parents=True,exist_ok=True)
++    raw=git(root,'archive','HEAD')
++    probes=[
++        ('protected_runtime','src/vde/storage.py',lambda b:b+b'\n# forbidden change\n'),
++        ('historical_test','tests/p2/test_p2.py',lambda b:b+b'\n# forbidden change\n'),
++        ('P0_schema','pecs/pilot_slice_v1/contracts/qa_report.schema.json',lambda b:b+b'\n'),
++        ('P0_fixture','pecs/pilot_slice_v1/fixtures/P-A_dirty_csv/expected_result.csv',lambda b:b+b'\n'),
++        ('migration','src/vde/persistence/migrations/999_p5.sql',lambda b:b'CREATE TABLE forbidden(x);'),
++        ('dependency','pyproject.toml',lambda b:b+b'\n# dependency drift\n'),
++        ('DECISIONS','DECISIONS.md',lambda b:b+b'\nUnapproved\n'),
++        ('governance_pin','tests/p4/approved_governance_pin_v1.json',lambda b:b+b'\n'),
++        ('old_policy','tests/p4/scope_allowlist_v1.json',lambda b:b+b'\n'),
++        ('new_source','src/vde/p6.py',lambda b:b'# not approved\n'),
++        ('unknown_P5_source','src/vde/p5/network.py',lambda b:b'import socket\n'),
++        ('network_import','src/vde/p5/service.py',lambda b:b+b'\nimport socket\n'),
++        ('arbitrary_execution','src/vde/p5/service.py',lambda b:b+b'\nexec("pass")\n'),
++        ('new_operation','src/vde/p5/qa.py',lambda b:b+b'\nOPERATIONS.add("compute")\n'),
++        ('app_auto_trigger','src/vde/app.py',lambda b:b+b'\nexport_qa_panel(result)\n'),
++        ('policy_expansion','tests/p5/scope_policy_v1.json',lambda b:b.replace(b'"P5_SCOPE_POLICY_V1"',b'"UNAPPROVED"')),
++        ('unapproved_file','unapproved-document.txt',lambda b:b'unknown\n'),
++    ]
++    result=[]
++    for name,path,change in probes:
++        scratch=directory/name
++        with tarfile.open(fileobj=io.BytesIO(raw)) as archive:archive.extractall(scratch,filter='data')
++        target=scratch/path;target.parent.mkdir(parents=True,exist_ok=True)
++        target.write_bytes(change(target.read_bytes() if target.exists() else b''))
++        try:audit(scratch,authority_root=root)
++        except (AssertionError,OSError,subprocess.SubprocessError) as error:
++            result.append({'probe':name,'result':'REJECTED','reason':str(error)[:500]})
++        else:raise AssertionError('Scope mutation accepted: '+name)
++        shutil.rmtree(scratch)
++    return result
+diff --git a/tests/p5/scope_policy_v1.json b/tests/p5/scope_policy_v1.json
+new file mode 100644
+index 0000000..8b4e59e
+--- /dev/null
++++ b/tests/p5/scope_policy_v1.json
+@@ -0,0 +1,38 @@
++{
++  "addendum_commit": "20e78e55c8f461d01b9671c475ba7fa98ae0a745",
++  "app_integration": "from vde.p5.ui import panel as export_qa_panel\nexport_qa_panel(result)\n",
++  "authority": "Owner-approved P5 Gate A; CR-P5-001/002/003; no historical policy changes",
++  "document_paths": [
++    "docs/p5/design_addenda/P5_DESIGN_ADDENDUM_v0.2c_CR_P5_003.md",
++    "docs/p5/implementation/README.md",
++    "docs/p5/implementation/TEST_PLAN_TRACEABILITY.md"
++  ],
++  "evidence_root": "docs/p5/validation/runtime-20261106/",
++  "format": "P5_SCOPE_POLICY_V1",
++  "historical_regression_base": "fd39aa1bed480313504ae8b1f76e77e170cb72ba",
++  "implementation_start": "820245fc544fc66c393db548151e6d281e03d414",
++  "source_paths": [
++    "src/vde/p5/__init__.py",
++    "src/vde/p5/budget.py",
++    "src/vde/p5/contract.py",
++    "src/vde/p5/errors.py",
++    "src/vde/p5/export.py",
++    "src/vde/p5/project.py",
++    "src/vde/p5/qa.py",
++    "src/vde/p5/report.py",
++    "src/vde/p5/roundtrip.py",
++    "src/vde/p5/service.py",
++    "src/vde/p5/ui.py"
++  ],
++  "test_paths": [
++    "tests/p5/__init__.py",
++    "tests/p5/conftest.py",
++    "tests/p5/support.py",
++    "tests/p5/test_acceptance.py",
++    "tests/p5/scope_audit.py",
++    "tests/p5/scope_policy_v1.json",
++    "tests/p5/restart_probe.py",
++    "tests/p5/stress_probe.py",
++    "tests/p5/run_validation.py"
++  ]
++}
+diff --git a/tests/p5/stress_probe.py b/tests/p5/stress_probe.py
+new file mode 100644
+index 0000000..7744ca6
+--- /dev/null
++++ b/tests/p5/stress_probe.py
+@@ -0,0 +1,111 @@
++"""Actual P1/P3/P4→P5 100000×200 success, independent streaming oracle."""
++import argparse
++import gc
++import hashlib
++import json
++from pathlib import Path
++import subprocess
++import sys
++from threading import Event,Thread
++from time import monotonic
++import csv
++from openpyxl import load_workbook
++from vde.bootstrap import bootstrap
++from vde.config import Config
++from vde.ingestion.limits import current_rss
++from vde.p5.service import P5Service
++from vde.p5.errors import P5Error
++from .support import Scenario,field,simple_change,ROOT
++
++
++def main():
++    p=argparse.ArgumentParser();p.add_argument('--design-root',type=Path,required=True)
++    p.add_argument('--directory',type=Path,required=True);p.add_argument('--format',choices=('CSV','XLSX'),required=True);p.add_argument('--negative-oversized',action='store_true')
++    a=p.parse_args();a.directory.mkdir(parents=True,exist_ok=True)
++    source=a.directory/'fixed.csv'
++    generator=[sys.executable,str(a.design_root/'tools/generate_p5_stress.py'),'--rows','100000','--columns','200','--format','CSV','--out',str(source)]
++    generated=subprocess.run(generator,capture_output=True,text=True,check=True)
++    identity=json.loads(generated.stdout)
++    assert identity['size_bytes']==40500998 and identity['sha256']=='353698a4bab0ffc54633cb3fabad7eb404821b5f97dfeb7eb9676dafec4d9239'
++    fields=[field('id',unique=True)]+[field(f'c{i:03d}') for i in range(1,200)]
++    change=simple_change(fields,a.format,rows=100000)
++    if a.negative_oversized:
++        base_change=change
++        def change(b,s):
++            base_change(b,s)
++            s['pipeline']=[dict(schema_version='1.1',operation_id='expand-approved-text',type='replace',
++                input_dataset='raw',output_dataset='expanded',
++                params=dict(columns=[f'c{i:03d}' for i in range(1,200)],old='x',new='x'*12,regex=False)),
++                dict(schema_version='1.1',operation_id='select-expanded',type='select_columns',
++                input_dataset='expanded',output_dataset='result',params={'columns':['id']+[f'c{i:03d}' for i in range(1,200)]})]
++    scenario=Scenario(a.directory/'approved-test-order',raw=source.read_bytes(),change=change)
++    with scenario.uow() as u:
++        run_before=u.runs.get(scenario.run_id);internal=u.artifacts.list_for_run(scenario.run_id)[0]
++    p4_identity=scenario.env.workspace.inspect(internal.workspace_relpath)
++    # Both independently approved Orders use the pinned CSV source and distinct
++    # approved output formats. This is export stress, not an XLSX input claim.
++    del scenario.raw
++    gc.collect()
++    baseline=current_rss();peak=[baseline];stop=Event();samples=[0]
++    def sample():
++        while not stop.wait(0.005):
++            peak[0]=max(peak[0],current_rss());samples[0]+=1
++    thread=Thread(target=sample,daemon=True);thread.start();started=monotonic()
++    try:
++        try:
++            decision=P5Service(scenario.env).complete(scenario.run_id,scenario.order())
++            assert not a.negative_oversized,'Oversized negative unexpectedly completed'
++        except P5Error as error:
++            assert a.negative_oversized and error.code=='EXPORT_FAILED'
++            assert p4_identity[0]*2>536870912
++            assert scenario.order().status=='FAILED' and scenario.delta()['artifacts']==0 and scenario.delta()['qa_reports']==0
++            assert scenario.env.workspace.inspect(internal.workspace_relpath)==p4_identity
++            print(json.dumps(dict(result='PASS',negative_case='ACTUAL_100000x200_EXPANDED_TEXT',
++                rows=100000,columns=200,P4_internal_bytes=p4_identity[0],P4_internal_unchanged=True,
++                error=error.code,Order=scenario.order().status,new_final_artifacts=0,new_qa_reports=0,
++                safe_preallocation_rejection=True,elapsed_seconds=monotonic()-started),indent=2))
++            return
++        elapsed=monotonic()-started
++    finally:
++        stop.set();thread.join();peak[0]=max(peak[0],current_rss())
++    assert peak[0]-baseline<=536870912
++    assert decision.order_status=='READY' and decision.report['overall_status']=='PASS'
++    output=scenario.env.workspace.path(decision.artifact.workspace_relpath)
++    headers=['id']+[f'c{i:03d}' for i in range(1,200)]
++    count=cells=0
++    if a.format=='CSV':
++        with output.open(encoding='utf-8',newline='') as f:
++            reader=csv.reader(f,strict=True);assert next(reader)==headers
++            for count,row in enumerate(reader,1):
++                assert row==[f'{count:06d}']+['x']*199
++                cells+=len(row)
++        assert hashlib.sha256(output.read_bytes()).hexdigest()==identity['sha256']
++    else:
++        binary=output.open('rb')
++        book=load_workbook(binary,read_only=True,data_only=False,keep_links=False)
++        try:
++            assert book.sheetnames==['Data'];reader=iter(book['Data'].rows)
++            assert [c.value for c in next(reader)]==headers
++            for count,row in enumerate(reader,1):
++                assert [c.value for c in row]==[f'{count:06d}']+['x']*199
++                assert all(c.data_type=='s' for c in row)
++                cells+=len(row)
++        finally:book.close();binary.close()
++    assert count==100000 and cells==20000000
++    assert scenario.delta()==dict(artifacts=1,qa_reports=1,event_log=2,approvals=0,execution_runs=0)
++    assert scenario.env.workspace.inspect(internal.workspace_relpath)==p4_identity
++    with scenario.uow() as u:assert u.runs.get(scenario.run_id)==run_before
++    assert bootstrap(Config(scenario.env.workspace.root)).health=='ready'
++    print(json.dumps(dict(result='PASS',tested_commit=subprocess.check_output(['git','rev-parse','HEAD'],cwd=ROOT,text=True).strip(),
++                         tested_tree=subprocess.check_output(['git','rev-parse','HEAD^{tree}'],cwd=ROOT,text=True).strip(),
++                         format=a.format,source_type='LOCAL_CSV',generator_command=generator,generator=identity,
++                         rows=count,columns=200,independent_cells_checked=cells,
++                         baseline_rss_bytes=baseline,peak_rss_bytes=peak[0],incremental_peak_rss_bytes=peak[0]-baseline,
++                         rss_sample_count=samples[0],rss_sampling_interval_seconds=0.005,
++                         P5_elapsed_seconds=elapsed,runtime_resources=decision.resources,
++                         Order=decision.order_status,QA=decision.report['overall_status'],
++                         final_artifacts=1,qa_reports=1,P4_internal_unchanged=True,
++                         export_identity=decision.report['dataset_summary'],isolated_test_approvals_only=True),indent=2))
++
++
++if __name__=='__main__':main()
+diff --git a/tests/p5/support.py b/tests/p5/support.py
+new file mode 100644
+index 0000000..2ae2a6c
+--- /dev/null
++++ b/tests/p5/support.py
+@@ -0,0 +1,215 @@
++"""Isolated P5 scenarios use actual P1 storage, P3 actions and P4 execution."""
++from copy import deepcopy
++from dataclasses import replace
++from pathlib import Path
++import json
++from types import SimpleNamespace
++
++from vde.bootstrap import bootstrap
++from vde.config import Config
++from vde.models import OrderRecord
++from vde.persistence.uow import UnitOfWork
++from vde.storage import Storage
++from vde.workflow.service import ManualWorkflow
++from vde.execution.service import ExecutionService
++from vde.p5.service import P5Service
++
++ROOT = Path(__file__).resolve().parents[2]
++BASELINE = 'fd39aa1bed480313504ae8b1f76e77e170cb72ba'
++
++
++def load(p):
++    return json.loads(Path(p).read_text())
++
++
++class Scenario:
++    def __init__(self, directory, fixture='P-A_dirty_csv', *, change=None, raw=None, filename=None, execute=True):
++        self.directory = Path(directory)
++        self.env = bootstrap(Config(self.directory/'workspace'))
++        assert self.env.health=='ready'
++        self.source = ROOT/'pecs/pilot_slice_v1/fixtures'/fixture
++        brief, spec = deepcopy(load(self.source/'brief_version.json')), deepcopy(load(self.source/'transformation_spec_version.json'))
++        original_spec = deepcopy(spec)
++        if change:
++            change(brief,spec)
++        self.order_id = brief['order_id']
++        self.asset_id = spec['inputs'][0]['asset_id']
++        filename = filename or ('input_orders.xlsx' if spec['inputs'][0]['source_type']=='LOCAL_XLSX' else
++                                'input_problematic.csv' if fixture.startswith('P-D') else 'input_dirty.csv')
++        self.raw = raw if raw is not None else (self.source/filename).read_bytes()
++        with self.uow() as u:
++            u.orders.add(OrderRecord(self.order_id,'P5 isolated TEST_ONLY','No live business approval is represented.',
++                                    '2026-07-12T08:00:00Z','2026-07-12T08:00:00Z'))
++        self.asset = Storage(self.env.database,self.env.workspace).register_input(
++            id=self.asset_id,order_id=self.order_id,original_filename=filename,data=self.raw)
++        w = ManualWorkflow(self.env)
++        sel = spec['inputs'][0]
++        w.choose_input(self.order_id,self.asset_id,{k:deepcopy(sel[k]) for k in ('source_type','sheet_name','csv_options')})
++        w.begin_manual_review(self.order_id,self.order())
++        b = w.publish_brief(self.order_id,brief,self.order())
++        w.approve_brief(self.order_id,b.id,self.order())  # simulated user action in this isolated test DB
++        spec['brief_content_hash'] = b.content_hash
++        if spec['version_number'] > 1 and spec['version_id'] != original_spec['version_id']:
++            original_spec['brief_content_hash'] = b.content_hash
++            w.publish_spec(self.order_id,original_spec,self.order())
++        t = w.publish_spec(self.order_id,spec,self.order())
++        w.approve_spec_and_finish(self.order_id,t.id,self.order())
++        self.workflow = w
++        self.handoff = w.p4_handoff(self.order_id)
++        if execute:
++            self.result = ExecutionService(self.env).execute(self.order_id,self.order(),self.handoff)
++            self.run_id = self.result.run_id
++            self.before = self.counts()
++
++    def uow(self):
++        return UnitOfWork(self.env.database,self.env.workspace)
++
++    def order(self):
++        with self.uow() as u:
++            return u.orders.get(self.order_id)
++
++    def counts(self):
++        with self.uow() as u:
++            return {t:u.connection.execute('SELECT count(*) FROM '+t).fetchone()[0] for t in
++                    ('artifacts','qa_reports','event_log','approvals','execution_runs')}
++
++    def snapshot(self):
++        with self.uow() as u:
++            return {t:[dict(r) for r in u.connection.execute('SELECT * FROM '+t+' ORDER BY 1')] for t in
++                    ('orders','brief_versions','transformation_spec_versions','approvals','execution_runs','artifacts','qa_reports','event_log')}
++
++    def complete(self,**kw):
++        return P5Service(self.env,**kw).complete(self.run_id,self.order())
++
++    def delta(self):
++        now=self.counts()
++        return {k:now[k]-self.before[k] for k in now}
++
++
++def pb_v2(brief,spec):
++    spec['version_id']='transform-pb-v2-cr-p5-001'
++    spec['version_number']=2
++    spec['acceptance_criteria_ref'].append('PB-AC-007')
++
++
++def simple_change(fields, format='CSV', pipeline=None, *, rows=2):
++    def change(b,s):
++        b['fields']=deepcopy(fields);s['expected_schema']=deepcopy(fields)
++        names=[f['name'] for f in fields]
++        for out in (b['output_contract'],s['output']):
++            out.update(format=format,file_name='result.'+format.lower(),sheet_name='Data' if format=='XLSX' else None,
++                       encoding='UTF-8' if format=='CSV' else None,delimiter=',' if format=='CSV' else None,column_order=names)
++        b['volume_expectation'].update(mode='EXACT',exact_count=rows,min_count=None,max_count=None)
++        b['data_quality_expectations'].update(duplicate_key=[names[0]] if fields[0]['unique'] else None)
++        if s['inputs'][0]['source_type'] == 'LOCAL_CSV':
++            s['inputs'][0]['csv_options'] = dict(encoding='UTF-8',delimiter=',',header_row=0)
++        criterion=deepcopy(b['acceptance_criteria'][0])
++        criterion['target']['artifact_type']='RESULT_'+format
++        b['acceptance_criteria']=[criterion]
++        s['acceptance_criteria_ref']=[criterion['criterion_id']]
++        s['pipeline']=pipeline or [dict(schema_version='1.1',operation_id='p5-select',type='select_columns',
++                                        input_dataset='raw',output_dataset='result',params={'columns':names})]
++    return change
++
++
++def field(name='id',kind='string',*,required=True,unique=False):
++    f=deepcopy(load(ROOT/'pecs/pilot_slice_v1/fixtures/P-A_dirty_csv/brief_version.json')['fields'][0])
++    f.update(name=name,output_name=name,label=name,data_type=kind,required=required,nullable=not required,
++             format={'integer':'INTEGER','decimal':'DECIMAL_DOT','date':'YYYY-MM-DD'}.get(kind),
++             allowed_values=None,min_value=None,max_value=None,unique=unique)
++    return f
++
++
++def checks(decision,dq):
++    return [c for c in decision.report['deterministic_checks'] if c['check_id']==dq]
++
++
++def record(name,value):
++    import os
++    path=Path(os.environ.get('P5_RESULTS_DIR','/tmp/vde-p5-results'))
++    path.mkdir(parents=True,exist_ok=True)
++    (path/(name+'.json')).write_text(json.dumps(value,indent=2,ensure_ascii=False,default=str)+'\n')
++
++
++def dq_cases():
++    import io,zipfile
++    archive=ROOT/'docs/p5/handoff/P5_Codex_Implementation_Handoff_2026-11-05.zip'
++    with zipfile.ZipFile(archive) as outer:
++        prefix='P5_Codex_Implementation_Handoff_2026-11-05/sources/'
++        with zipfile.ZipFile(io.BytesIO(outer.read(prefix+'P5_Implementation_Design_Pack_v0.2a_candidate.zip'))) as inner:
++            return json.loads(inner.read('P5_Implementation_Design_Pack_v0.2a_candidate/fixtures/dq_cases.json'))['cases']
++
++
++def projection_for(kinds,format='CSV'):
++    from vde.p5.project import Projection
++    fs=[field('v'+str(i),k) for i,k in enumerate(kinds)]
++    names=tuple(f['name'] for f in fs)
++    return Projection(names,names,tuple(fs),dict(format=format,sheet_name='Data' if format=='XLSX' else None,
++                    delimiter=',' if format=='CSV' else None,encoding='UTF-8' if format=='CSV' else None,
++                    dataset_id='result',file_name='result.'+format.lower(),column_order=list(names)))
++
++
++def modify_xlsx(raw,coordinate,text,*,formula=False):
++    import io,zipfile,xml.etree.ElementTree as ET
++    ns='{http://schemas.openxmlformats.org/spreadsheetml/2006/main}'
++    output=io.BytesIO();found=False
++    with zipfile.ZipFile(io.BytesIO(raw)) as old,zipfile.ZipFile(output,'w',zipfile.ZIP_DEFLATED) as new:
++        for name in old.namelist():
++            data=old.read(name)
++            if name.startswith('xl/worksheets/') and name.endswith('.xml'):
++                root=ET.fromstring(data)
++                for cell in root.iter(ns+'c'):
++                    if cell.get('r')==coordinate:
++                        value=cell.find(ns+'v')
++                        if value is None:value=ET.SubElement(cell,ns+'v')
++                        value.text=text;found=True
++                        if formula:
++                            f=cell.find(ns+'f')
++                            if f is None:f=ET.SubElement(cell,ns+'f')
++                            f.text='1+1'
++                data=ET.tostring(root,encoding='utf-8',xml_declaration=True)
++            new.writestr(name,data)
++    assert found,coordinate
++    return output.getvalue()
++
++
++def assert_completed(scenario,decision,status,overall_status):
++    from vde.execution.wire import REVISION
++    assert decision.order_status==scenario.order().status==status
++    assert decision.report['overall_status']==overall_status
++    validate_report(decision.report)
++    with scenario.uow() as u:
++        run=u.runs.get(scenario.run_id)
++        assert run.status=='succeeded'
++        assert len(u.reports.list_for_run(run.id))==1
++        artifacts=u.artifacts.list_for_run(run.id)
++        assert len([a for a in artifacts if a.artifact_type.startswith('RESULT_')])==1
++        assert len([a for a in artifacts if a.artifact_type=='P4_INTERNAL' and a.format==REVISION])==1
++    assert scenario.delta()==dict(artifacts=1,qa_reports=1,event_log=2,approvals=0,execution_runs=0)
++    assert bootstrap(Config(scenario.env.workspace.root)).health=='ready'
++
++
++def validate_report(report):
++    from vde.contracts import validate
++    from vde.p5.qa import IDS,CONDITIONAL
++    validate(report,'qa_report')
++    results=report['deterministic_checks']
++    assert set(c['check_id'] for c in results)==set(IDS)
++    assert len({(c['check_id'],c['criterion_id']) for c in results})==len(results)
++    assert all(c['check_id'] in CONDITIONAL for c in results if c['status']=='SKIPPED')
++    for c in results:validate(c,'qa_check_result')
++
++
++def child_environment():
++    import os
++    env=os.environ.copy()
++    env['PYTHONPATH']=str(ROOT/'src')+os.pathsep+str(ROOT/'tests')
++    env['PYTHONDONTWRITEBYTECODE']='1'
++    return env
++
++
++def record_bytes(name,data):
++    import os
++    path=Path(os.environ.get('P5_RESULTS_DIR','/tmp/vde-p5-results'))
++    path.mkdir(parents=True,exist_ok=True)
++    (path/name).write_bytes(data)
+diff --git a/tests/p5/test_acceptance.py b/tests/p5/test_acceptance.py
+new file mode 100644
+index 0000000..0603c79
+--- /dev/null
++++ b/tests/p5/test_acceptance.py
+@@ -0,0 +1,574 @@
++"""76 owner-approved P5 IDs; immutable design oracles and actual integration."""
++from copy import deepcopy
++from dataclasses import replace
++from datetime import date
++from decimal import Decimal, localcontext
++import hashlib
++import io
++import json
++import os
++from pathlib import Path
++import signal
++import subprocess
++import sys
++from types import SimpleNamespace
++import xml.etree.ElementTree as ET
++
++import pytest
++from openpyxl import load_workbook
++from vde.bootstrap import bootstrap
++from vde.config import Config
++from vde.contracts import validate,content_hash
++from vde.errors import StorageError
++from vde.execution.service import ExecutionService
++from vde.execution.wire import decode_cell,iter_payload,REVISION
++from vde.execution.errors import ExecutionError
++from vde.persistence.repositories import ApprovalRepository,OrderRepository,ArtifactRepository
++from vde.persistence.uow import UnitOfWork
++from vde.storage import Storage
++from vde.p5.budget import Budget
++from vde.p5.contract import rows as semantic_rows
++from vde.p5.errors import P5Error
++from vde.p5.export import write
++from vde.p5.project import semantic_row,csv_cell,numeric_preflight,describe
++from vde.p5.qa import (Facts,criterion_result,evaluate_observation,typed,predicate,IDS,CONDITIONAL)
++from vde.p5.roundtrip import verify,numeric_equal
++from vde.p5.service import P5Service
++from .support import (ROOT,BASELINE,Scenario,field,simple_change,pb_v2,load,checks,record,dq_cases,
++                      projection_for,modify_xlsx,assert_completed,validate_report,child_environment,record_bytes)
++
++
++@pytest.mark.parametrize('case',dq_cases(),ids=lambda c:c['test_id'])
++def test_deterministic_check(case,tmp_path,design,monkeypatch):
++    # The independent immutable pack supplies input observations and expected
++    # status/count, never production output copied back into its own oracle.
++    observation=deepcopy(case['setup'].get('dataset',{}))
++    result=evaluate_observation(case['check_id'],observation,applicable=case['kind']!='NOT_APPLICABLE')
++    expected=case['expected']
++    for key in ('status','severity','affected_count'):
++        assert result[key]==expected[key],(case['case_id'],key,result)
++    if 'actual' in expected:assert result['actual']==expected['actual']
++    assert (result['status']=='FAIL' and result['severity'] in ('BLOCKER','ERROR'))==expected['blocking']
++    validate(result,'qa_check_result')
++    number=int(case['test_id'][-2:])
++    supplemental=[]
++    if number==25:
++        assert evaluate_observation('DQ-013',dict(null_count=3,row_count=10,max_ratio=0.3))['status']=='PASS'
++        assert evaluate_observation('DQ-013',dict(null_count=4,row_count=10,max_ratio=0.3))['status']=='FAIL'
++    if number in (19,20):
++        a=Scenario(tmp_path/'pb','P-B_xlsx_sheet')
++        context=P5Service(a.env).inspect(a.run_id,a.order())
++        c=next(c for c in context.brief.document_json['acceptance_criteria'] if c['criterion_id']=='PB-AC-002')
++        p=context.projection
++        if number==20:
++            columns=list(p.columns);columns[2],columns[3]=columns[3],columns[2];p=replace(p,columns=tuple(columns))
++        f=SimpleNamespace(projection=p)
++        r=criterion_result(c,f,{},context)
++        assert r['status']==('PASS' if number==19 else 'FAIL')
++        assert len(p.columns)==6
++        assert not predicate('sequence_equals',list(context.projection.columns),c['expected'])
++        generic=deepcopy(c);generic['criterion_id']='OTHER-AC-002'
++        assert criterion_result(generic,f,{},context)['status']=='FAIL'
++        supplemental.append({'PB_AC002_status':r['status'],'full_column_count':6,'generic_sequence_equals':'UNCHANGED'})
++    if number in (21,22,31,32):
++        decimal=projection_for(['decimal']);integer=projection_for(['integer'])
++        if number in (21,31):
++            values=[0,-1,10,9007199254740991,9007199254740992,9007199254740993,-(2**63),2**63-1]
++            with localcontext() as ctx:
++                ctx.prec=3
++                for original in values:
++                    raw=(original,);wide=semantic_row(raw,decimal)
++                    assert type(wide[0]) is Decimal and wide[0]==Decimal(original)
++                    assert raw==(original,) and type(raw[0]) is int
++                    assert typed(wide[0],'decimal') and csv_cell(wide[0])==str(original)+'.0'
++                    strict=semantic_row(raw,integer)
++                    assert type(strict[0]) is int and csv_cell(strict[0])==str(original)
++        else:
++            for original in ('10','',None,True,False,10.0):
++                projected=semantic_row((original,),decimal)[0]
++                assert type(projected) is type(original) and projected==original
++                assert not typed(projected,'decimal')
++            assert not typed(semantic_row((Decimal('10'),),integer)[0],'integer')
++            for token in ({'type':'integer','value':'01'},{'type':'integer','value':'9223372036854775808'},
++                          {'type':'decimal','value':'10.00'},10.0,10):
++                with pytest.raises(ExecutionError):decode_cell(token,expected_type='integer')
++            with pytest.raises(P5Error):semantic_row((2**63,),decimal)
++        supplemental.append({'CR_P5_003':'PASS','all_other_conversions':'FORBIDDEN'})
++    if number in (33,34):
++        raw=None
++        if number==34:
++            raw=modify_xlsx((ROOT/'pecs/pilot_slice_v1/fixtures/P-B_xlsx_sheet/input_orders.xlsx').read_bytes(),'F2','-20')
++        a=Scenario(tmp_path/'ranges','P-B_xlsx_sheet',change=pb_v2,raw=raw)
++        d=a.complete()
++        scoped={c['criterion_id']:c for c in checks(d,'DQ-017') if c['criterion_id']}
++        assert set(scoped)=={'PB-AC-006','PB-AC-007'}
++        assert scoped['PB-AC-006']['target']['column']=='quantity' and scoped['PB-AC-006']['status']=='PASS'
++        assert scoped['PB-AC-007']['target']['column']=='line_total'
++        assert scoped['PB-AC-007']['status']==('PASS' if number==33 else 'FAIL')
++        if number==33:
++            assert scoped['PB-AC-006']['actual']==1 and Decimal(str(scoped['PB-AC-007']['actual']))==Decimal('20')
++        else:assert d.order_status=='NEEDS_FIX'
++        supplemental.append({'isolated_simulated_approval_only':True,'criterion_instances':list(scoped.values())})
++    if number==34:
++        # Exact Spec approval cannot silently erase an independent frozen Brief
++        # field constraint. The real source/approval path still runs unchanged.
++        def stricter_brief(b,s):
++            simple_change([field('id','decimal')],rows=1)(b,s)
++            b['fields'][0]['min_value']=10
++            s['pipeline']=[dict(schema_version='1.1',operation_id='parse-domain',type='parse_number',input_dataset='raw',output_dataset='result',
++                               params=dict(column='id',decimal_separator='.',thousands_separator=None,target_type='decimal',errors='FAIL'))]
++        bounded=Scenario(tmp_path/'brief-domain',raw=b'id\n1\n',change=stricter_brief)
++        checked=bounded.complete()
++        assert checked.order_status=='NEEDS_FIX' and 'DQ-017' in checked.report['blocking_issues']
++    if number in (39,40):
++        a=Scenario(tmp_path/'roundtrip','P-B_xlsx_sheet',change=pb_v2)
++        context=P5Service(a.env).inspect(a.run_id,a.order())
++        _,raw=ExecutionService(a.env).read_result(a.run_id)
++        path=tmp_path/'test-only.xlsx'
++        with Budget() as budget:
++            write(path,context.projection,semantic_rows(raw,context),budget)
++            if number==40:path.write_bytes(modify_xlsx(path.read_bytes(),'F2','21'))
++            if number==39:
++                proof=verify(path,context.projection,semantic_rows(raw,context),budget)
++                assert (proof['rows'],proof['columns'],proof['cells'])==(3,6,18)
++            else:
++                with pytest.raises(P5Error,match='Numeric value changed'):verify(path,context.projection,semantic_rows(raw,context),budget)
++        numeric=load(design['base']/'fixtures/v02a_numeric_cases.json')
++        for numeric_case in numeric['csv_positive']:
++            value=decode_cell({'type':numeric_case['kind'],'value':numeric_case['p4_canonical_value']})
++            assert csv_cell(value)==numeric_case['expected_csv_field']
++        for numeric_case in numeric['csv_negative']:
++            value=decode_cell({'type':numeric_case['kind'],'value':numeric_case['p4_canonical_value']})
++            assert csv_cell(value)!=numeric_case['mutated_csv_field']
++        assert a.delta()==dict(artifacts=0,qa_reports=0,event_log=0,approvals=0,execution_runs=0)
++        supplemental.append({'full_PB_readback_cells':18,'real_P5_result_published':False,'numeric_csv_cases':15})
++    record(case['test_id'],{'fixture':case['case_id'],'result':'PASS','observed_check':result,'supplemental':supplemental})
++
++
++def test_T55_pa_actual_golden(tmp_path):
++    a=Scenario(tmp_path)
++    with a.uow() as u:run_before=u.runs.get(a.run_id);internal=u.artifacts.list_for_run(a.run_id)[0]
++    raw=a.env.workspace.path(internal.workspace_relpath).read_bytes()
++    assert {'type':'integer','value':'0'} in json.loads(raw)['rows'][-1]
++    d=a.complete();assert_completed(a,d,'READY','PASS')
++    actual=a.env.workspace.path(d.artifact.workspace_relpath).read_bytes()
++    assert actual==(a.source/'expected_result.csv').read_bytes() and len(actual)==277
++    record_bytes('P-A.actual-result.csv',actual)
++    record_bytes('P-A.original-P4-INTERNAL.json',raw)
++    assert d.report['dataset_summary']['checksum']=='c3b4e1f9a885bcf969cd34a9041951c1bed1abcd6aaba4c4f1f2fcd414d86cc9'
++    assert a.env.workspace.path(internal.workspace_relpath).read_bytes()==raw
++    with a.uow() as u:assert u.runs.get(a.run_id)==run_before
++    import csv
++    stream=io.StringIO(newline='');csv.writer(stream,lineterminator='\n').writerows([['id'],['e\u0301'],['quoted, value'],['line\nbreak']])
++    source=stream.getvalue().encode('utf-8')
++    unicode_case=Scenario(tmp_path/'unicode',raw=source,change=simple_change([field()],rows=3))
++    extra=unicode_case.complete()
++    assert extra.order_status=='READY' and unicode_case.env.workspace.path(extra.artifact.workspace_relpath).read_bytes()==source
++    record('P5-T55',{'result':'PASS','report':d.report,'P4_internal_unchanged':True,'source_unchanged':a.env.workspace.path(a.asset.workspace_relpath).read_bytes()==a.raw})
++
++
++def test_T56_pb_actual_six_column_xlsx(tmp_path,design):
++    a=Scenario(tmp_path,'P-B_xlsx_sheet',change=pb_v2)
++    with a.uow() as u:
++        spec=u.specs.get(a.handoff.transformation_spec_version_id)
++        assert spec.version_number==2 and len(u.specs.list_for_order(a.order_id))==2
++        assert spec.content_hash==load(design['pb']/'fixtures/P-B_versioned/transformation_spec_version_v2_CANDIDATE.json')['content_hash']
++    _,original=ExecutionService(a.env).read_result(a.run_id)
++    d=a.complete();assert_completed(a,d,'READY','PASS_WITH_WARNINGS')
++    record_bytes('P-B.original-P4-INTERNAL.json',original)
++    record_bytes('P-B.actual-result.xlsx',a.env.workspace.path(d.artifact.workspace_relpath).read_bytes())
++    assert len(d.report['deterministic_checks'])==24 and 'XLSX_FORMULA_PRESENT' in d.report['warnings']
++    assert d.report['dataset_summary']['column_count']==6 and d.report['dataset_summary']['row_count']==3
++    book=load_workbook(io.BytesIO(a.env.workspace.path(d.artifact.workspace_relpath).read_bytes()),read_only=True,data_only=False)
++    try:
++        actual=list(book['Data'].rows)
++        assert len(actual)==4 and all(len(r)==6 for r in actual)
++        assert all(c.data_type!='f' for r in actual for c in r)
++        assert [c.value for c in actual[0]]==d.report['dataset_summary']['output_headers']
++    finally:book.close()
++    p=projection_for(['string'],'XLSX');path=tmp_path/'formula-like-text.xlsx'
++    values=[('=SUM(1,1)',),('+1',),('@x',),('-text',),('e\u0301',),('',),(None,)]
++    with Budget() as b:
++        write(path,p,iter(values),b);proof=verify(path,p,iter(values),b)
++    assert proof['rows']==7
++    record('P5-T56',{'result':'PASS','isolated_simulated_local_user_approval_only':True,'report':d.report,'numeric_and_string_readback':'PASS'})
++
++
++def test_T57_pb_csv_is_test_projection_only(tmp_path):
++    a=Scenario(tmp_path,'P-B_xlsx_sheet',change=pb_v2)
++    context=P5Service(a.env).inspect(a.run_id,a.order());_,raw=ExecutionService(a.env).read_result(a.run_id)
++    p=replace(context.projection,output={**context.projection.output,'format':'CSV','encoding':'UTF-8','delimiter':',','sheet_name':None})
++    path=tmp_path/'test-only.csv'
++    with Budget() as b:write(path,p,semantic_rows(raw,context),b);verify(path,p,semantic_rows(raw,context),b)
++    assert path.read_bytes()==(a.source/'expected_result.csv').read_bytes() and path.stat().st_size==245
++    record_bytes('P-B.TEST-ONLY-projection.csv',path.read_bytes())
++    assert all(v==0 for v in a.delta().values())
++    record('P5-T57',{'result':'PASS','csv_sha256':hashlib.sha256(path.read_bytes()).hexdigest(),'production_RESULT_CSV':0,'all_cells':18})
++
++
++def test_T58_pd_diagnostic_csv_and_typed_failures(tmp_path):
++    a=Scenario(tmp_path,'P-D_errors_and_qa_blockers');d=a.complete();assert_completed(a,d,'NEEDS_FIX','FAIL')
++    assert a.env.workspace.path(d.artifact.workspace_relpath).read_bytes()==(a.source/'expected_result.csv').read_bytes()
++    record_bytes('P-D.actual-diagnostic.csv',a.env.workspace.path(d.artifact.workspace_relpath).read_bytes())
++    assert {'DQ-011','DQ-012','DQ-014'}<=set(d.report['blocking_issues'])
++    assert d.error_json['code']=='QA_BLOCKER'
++    validate(d.error_json,'execution_error')
++    assert all(c['status']=='PASS' for c in checks(d,'DQ-022'))
++    assert any(c['criterion_id']=='PD-AC-005' and c['actual'] is False for c in checks(d,'DQ-012'))
++    record('P5-T58',{'result':'PASS','report':d.report,'diagnostic_not_delivery':True})
++
++
++def test_T59_forged_approval_and_available_pc(tmp_path,monkeypatch,design):
++    a=Scenario(tmp_path);before=a.snapshot();original=ApprovalRepository.get
++    def forged(self,identity):
++        value=original(self,identity)
++        return replace(value,target_content_hash='0'*64) if value.target_type=='TRANSFORMATION_SPEC' else value
++    with monkeypatch.context() as patch:
++        patch.setattr('vde.p5.contract.health',lambda env:None)  # isolate post-recovery admission guard
++        patch.setattr(ApprovalRepository,'get',forged)
++        with pytest.raises((P5Error,StorageError)):
++            a.complete()
++    assert a.snapshot()==before and all(v==0 for v in a.delta().values())
++    availability=load(design['base']/'fixtures/p0_pc_reachability_v02.json')
++    assert len(availability['available_paths'])==10 and len(availability['missing_manifest_paths'])==13
++    for p in availability['available_paths']:assert (ROOT/p).is_file()
++    for p in availability['missing_manifest_paths']:assert not (ROOT/p).exists()
++    pc=ROOT/'pecs/pilot_slice_v1/fixtures/P-C_approval_safety/invalid_examples'
++    from jsonschema.exceptions import ValidationError
++    for name,schema in [('brief_approval_with_context.schema_invalid.json','approval'),('brief_with_approved_at.schema_invalid.json','brief_version'),('output_name_with_tab.invalid.json','brief_version')]:
++        with pytest.raises(ValidationError):validate(load(pc/name),schema)
++    record('P5-T59',{'result':'PASS','forged_admission':'REJECTED_NO_WRITES','available_PC_files':10,'missing_PC_files':13,'full_PC_positive':'BLOCKED'})
++
++
++def test_T60_missing_required_column_fails_without_dummy_report(tmp_path,monkeypatch):
++    a=Scenario(tmp_path);original=describe
++    def missing(brief,spec,columns):
++        return original(brief,spec,columns[1:])
++    with monkeypatch.context() as patch:
++        patch.setattr('vde.p5.contract.describe',missing)
++        with pytest.raises(P5Error) as err:a.complete()
++    assert err.value.code=='SCHEMA_MISMATCH' and a.order().status=='FAILED'
++    assert a.delta()==dict(artifacts=0,qa_reports=0,event_log=1,approvals=0,execution_runs=0)
++    record('P5-T60',{'result':'PASS','error':err.value.code,'final_artifacts':0,'reports':0,'Order':'FAILED'})
++
++
++def test_T61_duplicate_id_blocks_ready(tmp_path):
++    fs=[field(unique=True)]
++    a=Scenario(tmp_path,raw=b'id\nA\nA\n',change=simple_change(fs))
++    d=a.complete();assert_completed(a,d,'NEEDS_FIX','FAIL')
++    assert checks(d,'DQ-014')[0]['affected_count']==1
++    record('P5-T61',{'result':'PASS','duplicate_count':1,'report':d.report})
++
++
++def test_T62_parse_null_preserved_and_warned(tmp_path):
++    a=Scenario(tmp_path,'P-D_errors_and_qa_blockers');_,raw=ExecutionService(a.env).read_result(a.run_id)
++    before=list(iter_payload(raw));assert any(None in row for row in before)
++    d=a.complete();assert_completed(a,d,'NEEDS_FIX','FAIL')
++    assert any(c['status']=='WARN' for c in checks(d,'DQ-015'))
++    assert all(c['status']=='PASS' for c in checks(d,'DQ-022'))
++    assert csv_cell(None)==csv_cell('')==''
++    record('P5-T62',{'result':'PASS','typed_null_evidence':True,'lexical_roundtrip':'PASS','report':d.report})
++
++
++def test_T63_writer_failure_and_csv_injection(tmp_path,monkeypatch):
++    a=Scenario(tmp_path/'io')
++    with monkeypatch.context() as patch:
++        def broken(*args,**kwargs):raise OSError('Injected writer failure')
++        patch.setattr('vde.p5.service.writer.write',broken)
++        with pytest.raises(P5Error) as err:a.complete()
++    assert err.value.code=='EXPORT_FAILED' and a.order().status=='FAILED'
++    assert a.delta()['artifacts']==0 and a.delta()['qa_reports']==0 and a.delta()['event_log']==1
++    for index,text in enumerate(('=SUM(1,1)',' +1','\t-2','\u2003\x01@calc')):
++        # Quoting/escaping is done solely to form the input fixture. The source
++        # cell itself must remain unchanged and must be rejected at export.
++        import csv
++        s=io.StringIO(newline='');csv.writer(s,lineterminator='\n').writerows([['id'],[text]])
++        b=Scenario(tmp_path/str(index),raw=s.getvalue().encode(),change=simple_change([field()],rows=1))
++        with pytest.raises(P5Error) as caught:b.complete()
++        assert caught.value.code=='EXPORT_FAILED' and b.order().status=='FAILED' and b.delta()['artifacts']==0
++        assert b.env.workspace.path(b.asset.workspace_relpath).read_bytes()==b.raw
++    record('P5-T63',{'result':'PASS','writer_failure':'EXPORT_FAILED','formula_strings_rejected':4,'silent_prefix':False})
++
++
++def test_T64_precision_and_independent_numeric_guards(tmp_path,monkeypatch,design):
++    numeric=load(design['base']/'fixtures/v02a_numeric_cases.json')
++    for item in numeric['xlsx_positive']:
++        v=decode_cell({'type':item['kind'],'value':item['p4_canonical_value']})
++        p=projection_for([item['kind']],'XLSX');path=tmp_path/(item['case_id']+'.xlsx')
++        with Budget() as b:
++            write(path,p,iter([(v,)]),b);assert verify(path,p,iter([(v,)]),b)['cells']==1
++    for value in (9007199254740993,-(2**63),2**63-1,Decimal('123456789012345.6789'),Decimal('0.10000000000000001')):
++        with pytest.raises(P5Error):numeric_preflight(value)
++    for actual,xml,kind in ((15.6,'15.5','n'),(15.5,'15.6','n'),('15.5','15.5','s'),(True,'15.5','n')):
++        with pytest.raises(P5Error) as error:numeric_equal(Decimal('15.5'),actual,kind,(kind,xml))
++        assert error.value.code=='ROUNDTRIP_MISMATCH'
++    for index,(kind,token,parse_kind) in enumerate((('integer','9007199254740993','integer'),('decimal','9007199254740993','integer'),('decimal','123456789012345.6789','decimal'))):
++        fields=[field('id',kind)]
++        change=simple_change(fields,'XLSX',rows=1)
++        raw=('id\n'+token+'\n').encode()
++        def transform(b,s,change=change,parse_kind=parse_kind):
++            change(b,s)
++            s['pipeline']=[dict(schema_version='1.1',operation_id='parse-exact',type='parse_number',input_dataset='raw',output_dataset='result',
++                               params=dict(column='id',decimal_separator='.',thousands_separator=None,target_type=parse_kind,errors='FAIL'))]
++        a=Scenario(tmp_path/f'preflight-{index}',raw=raw,change=transform)
++        with pytest.raises(P5Error) as error:a.complete()
++        assert error.value.code=='EXPORT_FAILED' and a.order().status=='FAILED' and a.delta()['artifacts']==0
++        b=Scenario(tmp_path/f'bypass-{index}',raw=raw,change=transform)
++        with monkeypatch.context() as patch:
++            patch.setattr('vde.p5.export.numeric_preflight',lambda value:None)
++            with pytest.raises(P5Error) as error:b.complete()
++        assert error.value.code=='ROUNDTRIP_MISMATCH' and b.order().status=='FAILED' and b.delta()['artifacts']==0
++    # Whole-service signed64 boundaries are exact in integer CSV and in the
++    # approved decimal semantic projection, with original P4 tags retained.
++    tokens=['9007199254740991','9007199254740992','9007199254740993',str(-(2**63)),str(2**63-1)]
++    for kind in ('integer','decimal'):
++        def bounds(b,s,kind=kind):
++            simple_change([field('id',kind)],rows=len(tokens))(b,s)
++            s['pipeline']=[dict(schema_version='1.1',operation_id='parse-bounds',type='parse_number',input_dataset='raw',output_dataset='result',
++                params=dict(column='id',decimal_separator='.',thousands_separator=None,target_type='integer',errors='FAIL'))]
++        a=Scenario(tmp_path/('csv-bounds-'+kind),raw=('id\n'+'\n'.join(tokens)+'\n').encode(),change=bounds)
++        with a.uow() as u:internal=u.artifacts.list_for_run(a.run_id)[0]
++        original=a.env.workspace.path(internal.workspace_relpath).read_bytes()
++        d=a.complete();assert d.order_status=='READY'
++        expected=('id\n'+'\n'.join(t+('.0' if kind=='decimal' else '') for t in tokens)+'\n').encode()
++        assert a.env.workspace.path(d.artifact.workspace_relpath).read_bytes()==expected
++        assert a.env.workspace.path(internal.workspace_relpath).read_bytes()==original
++    large=Scenario(tmp_path/'xlsx-text-capacity',raw=b'id\n'+b'x'*32768+b'\n',
++                   change=simple_change([field()],'XLSX',rows=1))
++    with pytest.raises(P5Error) as error:large.complete()
++    assert error.value.code=='EXPORT_FAILED' and large.order().status=='FAILED' and large.delta()['artifacts']==0
++    # An actual changed staged CSV is rejected before publication.
++    a=Scenario(tmp_path/'changed-csv')
++    def tamper(stage):
++        if stage=='after_stage':
++            p=next(a.env.workspace.path('.staging').glob('p5-*/result.csv'))
++            p.write_bytes(p.read_bytes().replace(b'1234.5',b'1234.6'))
++    with pytest.raises(P5Error) as error:a.complete(checkpoint=tamper)
++    assert error.value.code=='ROUNDTRIP_MISMATCH' and a.delta()['artifacts']==0
++    record('P5-T64',{'result':'PASS','preflight_rejections':5,'separate_numeric_guard_mutations':4,'actual_service_preflight_and_bypass':6,'changed_CSV':'REJECTED'})
++
++
++def test_T65_corrupt_internal_storage_blocks_without_writes(tmp_path):
++    a=Scenario(tmp_path)
++    with a.uow() as u:internal=u.artifacts.list_for_run(a.run_id)[0]
++    before=a.snapshot();a.env.workspace.path(internal.workspace_relpath).write_bytes(b'corrupt')
++    with pytest.raises(P5Error) as err:a.complete()
++    assert err.value.code=='STORAGE_ERROR' and a.snapshot()==before
++    assert bootstrap(Config(a.env.workspace.root)).health=='blocked'
++    record('P5-T65',{'result':'PASS','health':'blocked','writes':0})
++
++
++def test_T66_wrong_context_and_missing_pb_reference(tmp_path,monkeypatch):
++    a=Scenario(tmp_path/'context');before=a.snapshot();get=OrderRepository.get
++    selected=replace(a.order(),selected_transformation_spec_version_id='foreign-spec')
++    def wrong(self,identity):return replace(get(self,identity),selected_transformation_spec_version_id='foreign-spec')
++    with monkeypatch.context() as patch:
++        patch.setattr('vde.p5.contract.health',lambda env:None)
++        patch.setattr(OrderRepository,'get',wrong)
++        with pytest.raises(P5Error) as error:P5Service(a.env).complete(a.run_id,selected)
++    assert error.value.code=='VERSION_INCOMPATIBLE' and a.snapshot()==before
++    future=Scenario(tmp_path/'future-test-only');snapshot=future.snapshot();get_approval=ApprovalRepository.get
++    def synthetic(self,identity):
++        approval=get_approval(self,identity)
++        return replace(approval,approved_at='2099-01-01T00:00:00Z') if approval.target_type=='TRANSFORMATION_SPEC' else approval
++    with monkeypatch.context() as patch:
++        patch.setattr('vde.p5.contract.health',lambda env:None)
++        patch.setattr(ApprovalRepository,'get',synthetic)
++        with pytest.raises(P5Error) as error:future.complete()
++    assert error.value.code=='APPROVAL_MISSING' and future.snapshot()==snapshot
++    b=Scenario(tmp_path/'original-pb','P-B_xlsx_sheet');d=b.complete()
++    assert all(c['criterion_id']!='PB-AC-007' for c in d.report['deterministic_checks'])
++    assert 'PB-AC-007' not in b.handoff.transformation_spec_version_id
++    record('P5-T66',{'result':'PASS','wrong_context':'REJECTED','PB_AC007_in_original_spec':'NOT_AUTHORIZED_NOT_EVALUATED'})
++
++
++def test_T67_repeat_and_competing_calls_do_not_duplicate(tmp_path):
++    from concurrent.futures import ThreadPoolExecutor
++    a=Scenario(tmp_path);service=P5Service(a.env)
++    expected=a.order()
++    with ThreadPoolExecutor(max_workers=2) as pool:
++        initial=list(pool.map(lambda _:service.complete(a.run_id,expected),range(2)))
++    assert {r.repeated for r in initial}=={False,True} and initial[0].artifact==initial[1].artifact
++    first=initial[0];before=a.snapshot()
++    second=service.complete(a.run_id,a.order())
++    assert second.repeated and second.artifact==first.artifact and second.report==first.report and a.snapshot()==before
++    with ThreadPoolExecutor(max_workers=2) as pool:
++        results=list(pool.map(lambda _:service.complete(a.run_id,a.order()),range(2)))
++    assert all(r.repeated and r.artifact.id==first.artifact.id for r in results) and a.snapshot()==before
++    retry=Scenario(tmp_path/'fresh-P4-required')
++    def fail_write(stage):
++        if stage=='before_write':raise P5Error('EXPORT_FAILED','Injected first attempt failure')
++    with pytest.raises(P5Error):retry.complete(checkpoint=fail_write)
++    old_run=retry.run_id
++    execution=ExecutionService(retry.env)
++    newer=execution.execute(retry.order_id,retry.order(),execution.fresh_handoff(retry.order_id))
++    snapshot=retry.snapshot()
++    with pytest.raises(P5Error) as error:P5Service(retry.env).complete(old_run,retry.order())
++    assert error.value.code=='STATE_INVALID_TRANSITION' and retry.snapshot()==snapshot
++    fresh=P5Service(retry.env).complete(newer.run_id,retry.order())
++    assert fresh.order_status=='READY'
++    record('P5-T67',{'result':'PASS','terminal_repeats':3,'artifacts_total':1,'reports_total':1,'writes_after_first':0})
++
++
++def crash_case(tmp_path,stage):
++    a=Scenario(tmp_path)
++    command=[sys.executable,'-m','p5.restart_probe',str(a.env.workspace.root),a.run_id,stage]
++    child=subprocess.run(command,cwd=ROOT,capture_output=True,text=True,env=child_environment())
++    assert child.returncode==-signal.SIGKILL,(stage,child.stdout,child.stderr)
++    env=bootstrap(Config(a.env.workspace.root));before=a.snapshot()
++    record('crash-'+stage,{'command':command,'exit_code':child.returncode,'stdout':child.stdout,'stderr':child.stderr,
++                          'health':env.health,'delta':a.delta(),'Order':a.order().status})
++    return a,env,before
++
++
++def test_T68_orphan_after_promotion_detect_only(tmp_path):
++    a,env,before=crash_case(tmp_path,'artifact_promoted')
++    assert env.health=='degraded' and env.recovery.orphans and a.order().status=='EXECUTING'
++    assert a.delta()['artifacts']==a.delta()['qa_reports']==a.delta()['event_log']==0
++    with pytest.raises(P5Error) as error:P5Service(env).complete(a.run_id,a.order())
++    assert error.value.code=='STORAGE_ERROR' and a.snapshot()==before
++    record('P5-T68',{'result':'PASS','detect_only':'degraded_orphan','auto_adoption':False})
++
++
++def test_T69_committed_artifact_reused_after_sigkill(tmp_path,monkeypatch):
++    a,env,before=crash_case(tmp_path,'after_artifact_commit')
++    assert env.health=='ready' and a.order().status=='EXECUTING' and a.delta()['artifacts']==1
++    assert a.delta()['qa_reports']==0 and a.delta()['event_log']==1
++    with monkeypatch.context() as patch:
++        def forbidden(*args,**kwargs):raise AssertionError('A committed Artifact must be reused')
++        patch.setattr(Storage,'register_artifact',forbidden)
++        patch.setattr(ExecutionService,'read_result',forbidden)
++        d=P5Service(env).complete(a.run_id,a.order())
++    assert_completed(a,d,'READY','PASS')
++    pb=Scenario(tmp_path/'pb-reuse','P-B_xlsx_sheet',change=pb_v2)
++    def pause(stage):
++        if stage=='after_artifact_commit':raise SystemExit('Isolated interrupted completion')
++    with pytest.raises(SystemExit):pb.complete(checkpoint=pause)
++    assert pb.delta()['artifacts']==1 and pb.delta()['qa_reports']==0 and pb.order().status=='EXECUTING'
++    with monkeypatch.context() as patch:
++        patch.setattr(Storage,'register_artifact',lambda *a,**k:pytest.fail('XLSX Artifact must be reused'))
++        finished=pb.complete()
++    assert_completed(pb,finished,'READY','PASS_WITH_WARNINGS')
++    record('P5-T69',{'result':'PASS','new_artifact_registrations_on_retry':0,'reused_artifact_id':d.artifact.id})
++
++
++def test_T70_report_transaction_rolls_back_and_retry_reuses(tmp_path,monkeypatch):
++    a=Scenario(tmp_path)
++    def abort(stage):
++        if stage=='after_report_append':raise StorageError('Injected report UoW abort')
++    with pytest.raises(P5Error) as error:a.complete(checkpoint=abort)
++    assert error.value.code=='STORAGE_ERROR' and a.order().status=='EXECUTING'
++    assert a.delta()['artifacts']==1 and a.delta()['qa_reports']==0 and a.delta()['event_log']==1
++    assert bootstrap(Config(a.env.workspace.root)).health=='ready'
++    with monkeypatch.context() as patch:
++        patch.setattr(Storage,'register_artifact',lambda *a,**k:pytest.fail('Second registration forbidden'))
++        d=a.complete()
++    assert_completed(a,d,'READY','PASS')
++    record('P5-T70',{'result':'PASS','report_uow_rolled_back':True,'artifact_reused':True})
++
++
++def test_T71_terminal_commit_survives_restart_read_only(tmp_path,monkeypatch):
++    a,env,before=crash_case(tmp_path,'after_report_commit')
++    assert env.health=='ready' and a.order().status=='READY'
++    with monkeypatch.context() as patch:
++        patch.setattr(ExecutionService,'read_result',lambda *a,**k:pytest.fail('Terminal replay cannot call P4 read_result'))
++        patch.setattr(Storage,'register_artifact',lambda *a,**k:pytest.fail('Terminal replay cannot register'))
++        d=P5Service(env).complete(a.run_id,a.order())
++    assert d.repeated and a.snapshot()==before
++    assert_completed(a,d,'READY','PASS')
++    record('P5-T71',{'result':'PASS','terminal_repeat_read_only':True,'artifact_id':d.artifact.id})
++
++
++def test_T72_csv_and_xlsx_100000_by_200(tmp_path,design):
++    outcomes=[]
++    for format in ('CSV','XLSX'):
++        directory=tmp_path/format;directory.mkdir()
++        command=[sys.executable,'-m','p5.stress_probe','--design-root',str(design['base']),'--directory',str(directory),'--format',format]
++        run=subprocess.run(command,cwd=ROOT,capture_output=True,text=True,timeout=3600,env=child_environment())
++        record('stress-'+format,{'command':command,'exit_code':run.returncode,'stdout':run.stdout,'stderr':run.stderr})
++        assert run.returncode==0,(format,run.stdout,run.stderr)
++        outcome=json.loads(run.stdout)
++        assert outcome['rows']==100000 and outcome['columns']==200 and outcome['independent_cells_checked']==20000000
++        assert outcome['incremental_peak_rss_bytes']<=536870912 and outcome['Order']=='READY' and outcome['QA']=='PASS'
++        outcomes.append(outcome)
++    command=[sys.executable,'-m','p5.stress_probe','--design-root',str(design['base']),
++             '--directory',str(tmp_path/'oversized'),'--format','CSV','--negative-oversized']
++    run=subprocess.run(command,cwd=ROOT,capture_output=True,text=True,timeout=1800,env=child_environment())
++    record('stress-negative-expanded-text',{'command':command,'exit_code':run.returncode,'stdout':run.stdout,'stderr':run.stderr})
++    assert run.returncode==0,(run.stdout,run.stderr)
++    negative=json.loads(run.stdout)
++    assert negative['safe_preallocation_rejection'] and negative['new_final_artifacts']==0
++    # A separate forced budget limit is a negative control, never a substitute
++    # for either successful fixed workload above.
++    a=Scenario(tmp_path/'limit')
++    with pytest.raises(P5Error) as error:a.complete(budget_factory=lambda:Budget(limit=0,rss_reader=iter([100,101,102,103,104]).__next__))
++    assert error.value.code=='EXPORT_FAILED' and a.order().status!='READY' and a.delta()['artifacts']==0
++    record('P5-T72',{'result':'PASS','positive_runs':outcomes,'large_text_negative':negative,'separate_budget_exceed':'FAIL_CLOSED'})
++
++
++def test_T73_external_historical_212_and_76_inventory(design):
++    path=Path(os.environ.get('P5_HISTORICAL_JUNIT',str(ROOT/'docs/p5/validation/implementation-admission-20261106/historical-212/results.xml')))
++    cases=list(ET.parse(path).getroot().iter('testcase'))
++    assert len(cases)==212
++    import re,ast
++    phases={i:[] for i in range(1,5)}
++    for case in cases:
++        assert not any(case.find(k) is not None for k in ('failure','error','skipped'))
++        phase=int(re.search(r'(?:^|\.)p([1-4])(?:\.|$)',case.get('classname')).group(1))
++        number=int(re.search(r'^test_T(\d+)_',case.get('name')).group(1));phases[phase].append(number)
++    for phase,count in ((1,42),(2,54),(3,52),(4,64)):assert sorted(phases[phase])==list(range(1,count+1))
++    source=ast.parse(Path(__file__).read_text())
++    names=[int(n.name.split('_')[1][1:]) for n in source.body if isinstance(n,ast.FunctionDef) and n.name.startswith('test_T')]
++    ids={c['test_id'] for c in dq_cases()}|{f'P5-T{n:02}' for n in names}
++    assert ids=={f'P5-T{i:02}' for i in range(1,77)}
++    record('P5-T73',{'result':'PASS','external_historical_junit':str(path),'historical_tests':212,'P5_unique_definitions':76,'nested_full_pytest_invocations':0})
++
++
++def test_T74_real_p0_schemas_and_immutable_pb_specimen(design):
++    from vde.contracts import validators
++    assert len(validators())==20
++    for name in ('P_A','P_B','P_D'):
++        validate(load(design['base']/f'fixtures/qa_report_specimen_{name}.json'),'qa_report')
++    specimen=load(design['pb']/'fixtures/P-B_versioned/qa_report_specimen_v2_TEST_ONLY.json')
++    validate(specimen,'qa_report')
++    assert len(specimen['deterministic_checks'])==24
++    assert {c['criterion_id'] for c in specimen['deterministic_checks'] if c['check_id']=='DQ-017'}=={'PB-AC-006','PB-AC-007'}
++    old=load(ROOT/'pecs/pilot_slice_v1/fixtures/P-B_xlsx_sheet/expected_qa_report.json')
++    assert next(c for c in old['deterministic_checks'] if c['check_id']=='DQ-022')['actual']=={'rows':3,'columns':5}
++    original=load(ROOT/'pecs/pilot_slice_v1/fixtures/P-B_xlsx_sheet/transformation_spec_version.json')
++    assert 'PB-AC-007' not in original['acceptance_criteria_ref']
++    assert load(design['pb']/'fixtures/P-B_versioned/transformation_approval_v2_TEST_ONLY.json')['approved_at'].startswith('2099-')
++    record('P5-T74',{'result':'PASS','real_schema_count':20,'original_PB_contradictions':'PRESERVED','synthetic_approval_is_business_authority':False})
++
++
++def test_T75_streamlit_explicit_action_and_passive_rerender(tmp_path,monkeypatch):
++    from streamlit.testing.v1 import AppTest
++    a=Scenario(tmp_path);monkeypatch.setenv('VDE_WORKSPACE',str(a.env.workspace.root))
++    app=AppTest.from_file(str(ROOT/'src/vde/app.py'),default_timeout=120).run()
++    assert not app.exception
++    app.checkbox(key='p5_open').check().run()
++    assert not app.exception
++    before=a.counts()
++    app.button(key='p5_complete').click().run()
++    assert not app.exception
++    assert a.order().status=='READY' and a.counts()['qa_reports']==before['qa_reports']+1
++    snapshot=a.snapshot();app.run();app.run()
++    assert not app.exception and a.snapshot()==snapshot
++    assert a.delta()['artifacts']==1 and a.delta()['event_log']==2
++    record('P5-T75',{'result':'PASS','clicks':1,'passive_rerenders':2,'report_count':1,'artifact_count':1})
++
++
++def test_T76_successor_scope_negatives_and_ambiguous_result(tmp_path,monkeypatch):
++    from .scope_audit import audit,negative_probes
++    audit(ROOT);probes=negative_probes(ROOT,tmp_path/'mutations')
++    assert probes and all(p['result']=='REJECTED' for p in probes)
++    a=Scenario(tmp_path/'ambiguity');d=a.complete();before=a.snapshot();get=ArtifactRepository.list_for_run
++    def ambiguous(self,run_id):
++        actual=get(self,run_id)
++        return actual+[replace(d.artifact,id='extra-unapproved-result')] if run_id==a.run_id else actual
++    with monkeypatch.context() as patch:
++        patch.setattr('vde.p5.contract.health',lambda env:None)
++        patch.setattr(ArtifactRepository,'list_for_run',ambiguous)
++        with pytest.raises(P5Error) as error:a.complete()
++    assert error.value.code=='STORAGE_ERROR' and a.snapshot()==before
++    record('P5-T76',{'result':'PASS','successor_scope_mutations':probes,'ambiguous_final_result':'REJECTED_NO_WRITES'})

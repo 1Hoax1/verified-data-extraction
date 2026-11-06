@@ -1,0 +1,39 @@
+{
+  "fixture": "P5-DQ-010-POS",
+  "result": "PASS",
+  "observed_check": {
+    "schema_version": "1.1",
+    "check_id": "DQ-010",
+    "name": "DQ-010 deterministic check",
+    "status": "PASS",
+    "severity": "ERROR",
+    "target": {
+      "artifact": null,
+      "dataset_id": null,
+      "column": null,
+      "row_ids": []
+    },
+    "expected": true,
+    "actual": {
+      "expected": [
+        "id",
+        "date"
+      ],
+      "actual": [
+        "id",
+        "date"
+      ]
+    },
+    "affected_count": 0,
+    "sample_row_ids": [],
+    "message": "All selected data checked.",
+    "criterion_id": null
+  },
+  "supplemental": [
+    {
+      "PB_AC002_status": "PASS",
+      "full_column_count": 6,
+      "generic_sequence_equals": "UNCHANGED"
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "result": "PASS",
+  "negative_case": "ACTUAL_100000x200_EXPANDED_TEXT",
+  "rows": 100000,
+  "columns": 200,
+  "P4_internal_bytes": 299601477,
+  "P4_internal_unchanged": true,
+  "error": "EXPORT_FAILED",
+  "Order": "FAILED",
+  "new_final_artifacts": 0,
+  "new_qa_reports": 0,
+  "safe_preallocation_rejection": true,
+  "elapsed_seconds": 4.168631075997837
+}

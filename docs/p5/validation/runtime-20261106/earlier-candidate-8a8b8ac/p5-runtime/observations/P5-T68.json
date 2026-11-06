@@ -1,0 +1,5 @@
+{
+  "result": "PASS",
+  "detect_only": "degraded_orphan",
+  "auto_adoption": false
+}

@@ -23,3 +23,5 @@ from vde.workflow.ui import panel as workflow_panel
 workflow_panel(result)
 from vde.execution.ui import panel as execution_panel
 execution_panel(result)
+from vde.p5.ui import panel as export_qa_panel
+export_qa_panel(result)

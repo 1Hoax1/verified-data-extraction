@@ -1,0 +1,1113 @@
+{
+  "command": [
+    "/workspace/verified-data-extraction/.venv/bin/python",
+    "-m",
+    "pytest",
+    "tests/p5",
+    "-q"
+  ],
+  "shell_command": "/workspace/verified-data-extraction/.venv/bin/python -m pytest tests/p5 -q",
+  "cwd": "/workspace/p5-export-deterministic-qa",
+  "tested_commit": "8a8b8ace8944acacc24ba1e33a29f700d5e5b334",
+  "tested_tree": "bfedc38eb5de72f62f6b4354cf2d9ce29ea1e208",
+  "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+  "executable": "/workspace/verified-data-extraction/.venv/bin/python",
+  "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+  "started_at_moscow": "2026-11-06T17:07:19.045274+03:00",
+  "packages": {
+    "pytest": "8.4.2",
+    "jsonschema": "4.26.0",
+    "referencing": "0.37.0",
+    "rfc8785": "0.1.4",
+    "openpyxl": "3.1.5",
+    "streamlit": "1.50.0"
+  },
+  "environment": {
+    "PYTHONPATH": "/workspace/p5-export-deterministic-qa/src:/workspace/p5-export-deterministic-qa/tests",
+    "PYTHONDONTWRITEBYTECODE": "1",
+    "PYTEST_ADDOPTS": "--junitxml=/workspace/p5-resume-work/final-02/p5-runtime/results.xml",
+    "P5_RESULTS_DIR": "/workspace/p5-resume-work/final-02/p5-runtime/observations",
+    "P5_HISTORICAL_JUNIT": "/workspace/p5-resume-work/historical-runs/full-01/results.xml"
+  },
+  "input_sha256": {
+    ".gitignore": "260ca2a0d91c9d7aac841de17bec068b500cca663d7952a73ed9cc4b70b9ea43",
+    "DECISIONS.md": "c76e162cca8e044dcc78d3f52a52b57fd230592b17249b6048f6f753618b6d18",
+    "README.md": "18de913238b9d60ae4953dec44c036c3146be27d72206f5095119875a7db571e",
+    "docs/change_requests/CR-P2-001.md": "be4118d43f853e1e5e214b0dd3ff2da691d13b2edf946ff79f18f1c4fe736c01",
+    "docs/change_requests/CR-P3-001.md": "c8dfbea40e0c12dff7145c40d370d7fe51b21a1cd3f9805b76b221af0dea6e07",
+    "docs/change_requests/CR-P3-002.md": "054a9bb3966ec81f8ee2c664b05907f45abb1f86e23a3521b209043534bf2625",
+    "docs/change_requests/CR-P4-001.md": "d381b9063525c8ef340658372542b14e89671bdb5efde43b5be8779ab6ace6b7",
+    "docs/change_requests/CR-P4-002.md": "7a8cac133053c6ac37f38061114dcb940c604479d2228f2da1e9b0a3c1e4af57",
+    "docs/change_requests/CR-P4-003.md": "f9016c3f3ba40482a16abd4313857deeb8623a4349632ada9b3aec27e781c339",
+    "docs/change_requests/CR-P4-004.md": "66d427daa45cb32cb8c5e1f66cc76acf2469998ff8e46de8dc585e9bae828495",
+    "docs/change_requests/CR-P4-005.md": "243a56dd2fc1382228e76c2d6a8916668f73af99797044f2ae40233daf917964",
+    "docs/change_requests/CR-P4-005_REVISED_PROPOSED.md": "6545b582d4003449fdc7a5f0da3d7b2b0db8bfb314e7f85776e9b39f6c396170",
+    "docs/change_requests/CR-P5-003_PROPOSED.md": "a28e3faf1a78754a8d122e3389ca17bd2afc2005acfce021ba5f5e8ded6be422",
+    "docs/implementation/MVP-0_Implementation_Scope_v1.1": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+    "docs/p1/amendments/v1.1/P1_TEST_PLAN_AMENDMENT.md": "f327e2cc4799034cb7000b4f95d524f384845e8ff90c9d59f2fabe99a8fd563e",
+    "docs/p1/amendments/v1.1/TRACEABILITY_AMENDMENT.md": "09fe3f3e5e48ce762da944b4b22b59c17d9b3438a7beaa0781a82c9e54e49c90",
+    "docs/p1/v1.0/APPLICATION_SKELETON.md": "546ff8abb9a8a6af1ed4b260fa8408e3ef3a7fa15aa4b908d4558ffa451bfae8",
+    "docs/p1/v1.0/MIGRATIONS.md": "8b6814352e5a281afd0c6daf53e8a56851ec2fd19ef180f448549df864f2518b",
+    "docs/p1/v1.0/OPEN_DECISIONS.md": "4d866c3a81a46028512b82f269d68437bb665e1d9c377633d459ea6d34e156be",
+    "docs/p1/v1.0/P1_RELEASE_GATE.md": "53991226ce8a65541d4b30a342d68db6638f79b2051d9356aa576cf7ae0a92b1",
+    "docs/p1/v1.0/P1_TEST_PLAN.md": "2b75ead921223a50ca3d06a9f4f60720a9fd4d63de45b0f0ed317682d26b0698",
+    "docs/p1/v1.0/PACK_MANIFEST.json": "b0e0620e759ade61b5e69965539410bb5d7f3e92844fb5b181e1ad281964e1cc",
+    "docs/p1/v1.0/PERSISTENCE_MODELS.md": "596966be5f4b88de55ec8c7b57f2a66bf6d87959f1a47ce6eebbe2ef9f3e3582",
+    "docs/p1/v1.0/README.md": "7c3644d6dcbe10a205613476fa1450d68e7aede91e1bdc0e2fdb6113c0c289f6",
+    "docs/p1/v1.0/REPOSITORIES.md": "1801053ebb5dd1058f91618d79af3c2e37a3b5162d3367e94906195dbff94bad",
+    "docs/p1/v1.0/RESTART_RECOVERY.md": "5f3d2328e40aeae5d8330d63204a4292432b0ec43c1ee137577fc7625aa9c289",
+    "docs/p1/v1.0/SCOPE.md": "1e5309be1c1bfe737c83bc56358002e186db12cc7e930d2759b6225ca0d6b73b",
+    "docs/p1/v1.0/SQLITE_SCHEMA.md": "7030e93811daaa72365b9f35e21f229b1cb3ed33d9b6fa32ad9bd25bcb488c02",
+    "docs/p1/v1.0/STORAGE_ERRORS.md": "f721db6d47e975f7a63ab4465d71c65269d775e2792077e71634d7004328868f",
+    "docs/p1/v1.0/TRACEABILITY_MATRIX.md": "f0ab9a45d09100fcba312835ac0667a5c5cdfb7bd4831b1bd6389c4278bef8ad",
+    "docs/p1/v1.0/TRANSACTIONS.md": "7b0a53f06af5acb3713ca90adcdf79d113d0eb98f924dfec528fe19f3e264659",
+    "docs/p1/v1.0/WORKSPACE.md": "25d30e9ff2cc6482c0c7d93b9f5b1f45b6598ec0573a1e7ca56c0f8d5a4f18a1",
+    "docs/p2/amendments/v1.1/P2_TEST_PLAN_AMENDMENT.md": "fd05fba16ee8041326a04bf2bee3e9feeb0dac8f8c1da093fd4f9129b7d27288",
+    "docs/p2/amendments/v1.1/TRACEABILITY_AMENDMENT.md": "35c06db2df2659fe8688da5a10aa437ea977e23bee30f20d617dc849c9e08030",
+    "docs/p2/amendments/v1.2/P2_TEST_PLAN_AMENDMENT.md": "46226a427d44354930118f2a3df66ccbdc486d70514f46c72a4a661246a8b057",
+    "docs/p2/amendments/v1.2/TRACEABILITY_AMENDMENT.md": "c80170594274127a69a7063d8c80f9bc5f47551c743fef5d23f83f07a52bd50a",
+    "docs/p2/v1.0/GATE_A_APPROVAL.md": "03084a33c49623f281271a17bd2018f123df2e5449b95e0575c721fd11ccc4b9",
+    "docs/p2/v1.0/P2_Implementation_Pack_v1.0_APPROVED.zip": "1fed602bcea695be892150581b9cbcb00807681f0a389f598bd54fac9e504d84",
+    "docs/p3/amendments/v1.1/P3_TEST_PLAN_AMENDMENT.md": "5b1863d911a565ff69f54879bda4d8f34245a529146970ed80a880226b99f3c4",
+    "docs/p3/amendments/v1.1/TRACEABILITY_AMENDMENT.md": "a03b4acd12e100ce5ad6fabeb8e8a7e043ed1e6c90ad26385ceee42eac1d5559",
+    "docs/p3/v1.0/GATE_A_APPROVAL.md": "3cba4bdf5e09ab85e23b50db75b892def94d4c4923ab9112260f0df8325f151d",
+    "docs/p3/v1.0/IMPLEMENTATION_START_AUTHORIZATION.md": "324dfefee60610bc2886063bf5fd1cc1cb9c68c1969942e06de2b62181de7f7f",
+    "docs/p3/v1.0/P3_Implementation_Pack_v1.0_APPROVED.zip": "8a77848419161a5f784b61e7302a058e5c23e2ff5925e88a643c350e80930bc7",
+    "docs/p3/v1.0/README.md": "25723a98c18fd25aa27a1c4aa3630ff9ea4dafb1520288feb2141a168d02ce3d",
+    "docs/p4/amendments/v1.1/P4_TEST_PLAN_AMENDMENT.md": "4b189959b1205ff60776540ca1d89dcfa1657541e10a7648915b4da1f34163c9",
+    "docs/p4/amendments/v1.2/P4_DECIMAL_WIRE_AMENDMENT.md": "092162c471874c58fc87bc70771318044f551b4c30cda2220c524ad3fb39230e",
+    "docs/p4/amendments/v1.3/GOVERNANCE_AUDIT_AMENDMENT.md": "13bc9fc0c2dd6002e234a2614ffc46bca30aa06648c7cbf1b9563497edf97cb0",
+    "docs/p4/implementation/README.md": "e4a6841ff40d613b6f5dd57ef3802eaff1455c1a13d68607eea7a11f10c02fb1",
+    "docs/p4/v1.0/GATE_A_APPROVAL.md": "fa490818dfdae856ceab1f5e71b567742c748b23d901a245437dc52d651e0bd2",
+    "docs/p4/v1.0/GITHUB_ARCHIVE_UPLOAD_PENDING.md": "a90374d64984aaa38307e15923dacc220739da77208df32953109b1f53d86358",
+    "docs/p4/v1.0/GITHUB_ARCHIVE_UPLOAD_VERIFIED.md": "ea6de3b4f517ab6f890b973d63f62e3b316310baaf9977ec5a124c9432f4ab14",
+    "docs/p4/v1.0/IMPLEMENTATION_START_AUTHORIZATION.md": "e20dda356c74e7ce4347daf608fa477494110c34b1ed3f27452446eca02bea55",
+    "docs/p4/v1.0/P4_Implementation_Pack_v1.0_APPROVED.zip": "e3c686f81e3ba0d63874420d0f67f7585b9861826fdbc8a76dfb6a5d8f2aa5aa",
+    "docs/p4/v1.0/STRICT_VALIDATION_EVIDENCE.md": "83005babff214c09da1d15b0057de85e10ed4102970e9880e02e624a4ad698e3",
+    "docs/p5/OWNER_APPROVAL_AND_CODEX_HANDOFF.md": "c450fdf582cfa681b080532e1b256bbf2f38b93397eed8009928fd87ff133cd4",
+    "docs/p5/decisions/CR-P5-003_OWNER_APPROVAL_2026-11-06.md": "2ce1a5e116db8c7864e77bacc64414c6fa1f3fd9a0309e558e024cc45c55d82c",
+    "docs/p5/design_addenda/P5_DESIGN_ADDENDUM_v0.2c_CR_P5_003.md": "e952c2abe2ecd5a49d3526a495021368f8b9f7c07debe5e95d4cd20cde63a0b9",
+    "docs/p5/handoff/P5_Codex_Implementation_Handoff_2026-11-05.zip": "3e3a2f6a8e65f500fe5bd281ef805d9229d50b96c50433cdda52cbb4fd6d63e4",
+    "docs/p5/implementation/README.md": "e35d7df4ac8c9d2551ba6047b11a05591d24db3ebedb9c71c6790bf98986f9ff",
+    "docs/p5/implementation/TEST_PLAN_TRACEABILITY.md": "1041ae52ec56bae83b6d2ed160f562ba3da1d053de3dbeb864bdfcbabf43733c",
+    "docs/p5/validation/implementation-admission-20261106/ADDED_FILES.txt": "83043b96e95ae12cae0143ec52bfe274fff9760fe88eec12d01c61a714bc9c7d",
+    "docs/p5/validation/implementation-admission-20261106/BASELINE_DIFF.txt": "856c2cc41f51b974f4a35a52f73fe2d5c2bd6703cdbe58418eeb9ddb1d21c119",
+    "docs/p5/validation/implementation-admission-20261106/HANDOFF_INTEGRITY.json": "c5f9dbeddd47a6efd04dac42a8ba8720edbf4c50edce001fa3b5decfe96ff446",
+    "docs/p5/validation/implementation-admission-20261106/HISTORICAL_TEST_ID_INVENTORY.json": "b9610aaef1f48b7f8f84330e72022539d2b6b83726dfe90cf2a35540fe549c67",
+    "docs/p5/validation/implementation-admission-20261106/MANIFEST.sha256": "6ca8701efb69b7546f3d96ab84619c70b2dd2226f190673166766d2e784179ad",
+    "docs/p5/validation/implementation-admission-20261106/PROTECTED_FILES_BEFORE_AFTER.json": "a10ca83789e3d05b581cd7f071516fdbdf6a7ff1bbbf330ac42e42ab6c10c7eb",
+    "docs/p5/validation/implementation-admission-20261106/REPRODUCE.md": "35c3945f480129bd16c032a10684d10e25e4bf4c94531afba23ada7b38304005",
+    "docs/p5/validation/implementation-admission-20261106/RUNNER_SOURCE_SHA256.json": "b2d8d87e2a7ef875420920e07a65a4b3e18627b1d5b7b201056bb8ab70a0a7ef",
+    "docs/p5/validation/implementation-admission-20261106/VALIDATION_REPORT.md": "5fa7877290858edf0e462184739394276f2a0205e2f894523d96e5c40ab180cb",
+    "docs/p5/validation/implementation-admission-20261106/amendment-static/command.json": "fc84ee05faec80224b83d069e9b674b2477d419fdde3f6ef9382d93124090f12",
+    "docs/p5/validation/implementation-admission-20261106/amendment-static/exit-code.txt": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+    "docs/p5/validation/implementation-admission-20261106/amendment-static/stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/p5/validation/implementation-admission-20261106/amendment-static/stdout.txt": "a67e2fb1f2a41b421ea668e16d6f8dfb960fbe217b8e21620f93dde6d9f7ffc4",
+    "docs/p5/validation/implementation-admission-20261106/available-p0/command.json": "47c624e63e395f3c6bedc196878d797d61f432e24aa690db3e4f67866600b9b9",
+    "docs/p5/validation/implementation-admission-20261106/available-p0/exit-code.txt": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+    "docs/p5/validation/implementation-admission-20261106/available-p0/schema-results.json": "6737c1990c7b086051957496f32127a83a12fd75592b5845ebe0b7d3c4205e7a",
+    "docs/p5/validation/implementation-admission-20261106/available-p0/stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/p5/validation/implementation-admission-20261106/available-p0/stdout.txt": "fc59250b15c1544a513211c3a1f6886281c7ad1b5e5cd4d49ffb091d1ce15382",
+    "docs/p5/validation/implementation-admission-20261106/base-static/command.json": "b25f9bb57a54b08b979b8bc709fe77aaa15d887c913ffada5208d522488bb95c",
+    "docs/p5/validation/implementation-admission-20261106/base-static/exit-code.txt": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+    "docs/p5/validation/implementation-admission-20261106/base-static/stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/p5/validation/implementation-admission-20261106/base-static/stdout.txt": "02cda7c5abfa1c6daafe6bfe3c5b5dccaa9288a33104238179336f9c8a913831",
+    "docs/p5/validation/implementation-admission-20261106/collection-attempts/available-p0-01/command.json": "48d5ff6e97cb888f5eda97a7efe817f6b9bdf8859df21a90f9310ebcdf070d7b",
+    "docs/p5/validation/implementation-admission-20261106/collection-attempts/available-p0-01/exit-code.txt": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+    "docs/p5/validation/implementation-admission-20261106/collection-attempts/available-p0-01/schema-results.json": "50576903b8ad712085e6f3bbde2fdcafd257b4371c233b0348a5911e03239e58",
+    "docs/p5/validation/implementation-admission-20261106/collection-attempts/available-p0-01/script.snapshot.py": "1c594c25e1fdc9913e095f6ecac2a37519f813310cd7833b70c106a252f67d61",
+    "docs/p5/validation/implementation-admission-20261106/collection-attempts/available-p0-01/stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/p5/validation/implementation-admission-20261106/collection-attempts/available-p0-01/stdout.txt": "fc59250b15c1544a513211c3a1f6886281c7ad1b5e5cd4d49ffb091d1ce15382",
+    "docs/p5/validation/implementation-admission-20261106/github-main-before-publication/command.json": "5671054bbc4f465e69c5a0eda8475ab6832b73da0a43ecbedc9e228b881bb68f",
+    "docs/p5/validation/implementation-admission-20261106/github-main-before-publication/exit-code.txt": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+    "docs/p5/validation/implementation-admission-20261106/github-main-before-publication/stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/p5/validation/implementation-admission-20261106/github-main-before-publication/stdout.txt": "484e842020d48dd2e00d5a98b81f8625b5c2bac49f8e7311580e1639951f9680",
+    "docs/p5/validation/implementation-admission-20261106/github-p5-before-publication/command.json": "41cb4014a68c13072bf3375a0231b51116689e75aa8fb2ba50d9a2d20d10c873",
+    "docs/p5/validation/implementation-admission-20261106/github-p5-before-publication/exit-code.txt": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+    "docs/p5/validation/implementation-admission-20261106/github-p5-before-publication/stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/p5/validation/implementation-admission-20261106/github-p5-before-publication/stdout.txt": "6ff558a2dd8f92e0b3dd7f46ff97c055b13326778bb1fef7911755b4d8b3029f",
+    "docs/p5/validation/implementation-admission-20261106/historical-212/command-environment.json": "ce7ef1708a11ce0ab475bd198d48b94ebe29c297fd4dbb0376afdeb15d692f33",
+    "docs/p5/validation/implementation-admission-20261106/historical-212/exit-code.txt": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+    "docs/p5/validation/implementation-admission-20261106/historical-212/generated/docs/p2/validation/fixture-verification.json": "bdef5ddb89c150d05f855ac7fe0250d139707d96b8e6ac38362b1b3d4c3393f9",
+    "docs/p5/validation/implementation-admission-20261106/historical-212/generated/docs/p2/validation/p1-results.xml": "6dff759f6951fc3c18ea9d9cfc8097a70cb9a04e691d15e2844270cff5833223",
+    "docs/p5/validation/implementation-admission-20261106/historical-212/generated/docs/p2/validation/rss-csv.json": "471543daf0d85c43112a1a6665f24ba9597506d676bed9fbddb3fd53f81ec9cf",
+    "docs/p5/validation/implementation-admission-20261106/historical-212/generated/docs/p2/validation/rss-xlsx.json": "d58d6d1972c49a6c66a92a13ba223a9dfc564b5d44408487e19882ba1d5aec75",
+    "docs/p5/validation/implementation-admission-20261106/historical-212/generated/docs/p3/validation/fixture-verification.json": "8ee278b327b3d3cc513b73b5e40ff94b48c15cf70567b12ea23b7acb890f67fe",
+    "docs/p5/validation/implementation-admission-20261106/historical-212/generated/docs/p3/validation/fixture-verifier.log": "607e152ae230f0530738411787de5793c59971c950cb6459aff04c8796a1429f",
+    "docs/p5/validation/implementation-admission-20261106/historical-212/generated/docs/p3/validation/p1-results.xml": "c738983fb0daaa0e3dbf85bc52303318e5efe850ff89ce4e972afe7f98148e36",
+    "docs/p5/validation/implementation-admission-20261106/historical-212/generated/docs/p3/validation/p1-run.log": "b9841a9c42d85dbfcb771d8bd9aba239d3a15479b89026fcf1454c0aec4e288b",
+    "docs/p5/validation/implementation-admission-20261106/historical-212/generated/docs/p3/validation/p2-results.xml": "c397c18e4689619ec1d4487b7a8c0c46051976758bf4487b2012f4408ed27636",
+    "docs/p5/validation/implementation-admission-20261106/historical-212/generated/docs/p3/validation/p2-run.log": "854400ee8140109ebf1da2969c08ae2facecdd3ab48c027a7a76817c61a16f3b",
+    "docs/p5/validation/implementation-admission-20261106/historical-212/generated/docs/p3/validation/rss-csv.json": "18ff9f48005f994b98d0c72a8155a8645503194b9b8e1b1e477d1125207d0f17",
+    "docs/p5/validation/implementation-admission-20261106/historical-212/generated/docs/p3/validation/rss-xlsx.json": "d546670f74a816e5c93b9ee4bf01cfbf08f1b6fd47900b0c08fc4a6c5ff5c8e3",
+    "docs/p5/validation/implementation-admission-20261106/historical-212/generated/docs/p4/validation/T63-p0-p3-regression.command.json": "05ee96ac032210a9d1c623be108f8e5d8a42d46dbda26f02bbf3a17768a8c2a3",
+    "docs/p5/validation/implementation-admission-20261106/historical-212/generated/docs/p4/validation/T63-p0-p3-regression.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/p5/validation/implementation-admission-20261106/historical-212/generated/docs/p4/validation/T63-p0-p3-regression.stdout.txt": "da2fdef256d19ea704fdd1d593ca61e582263e9c219c41303739fb01e4147631",
+    "docs/p5/validation/implementation-admission-20261106/historical-212/generated/docs/p4/validation/T63-p0-p3-regression.xml": "71e3e090af608acda456c8884a095f029c3a51b5624dd157f82d36a8955fbdbf",
+    "docs/p5/validation/implementation-admission-20261106/historical-212/generated/docs/p4/validation/cr-p4-005/governance-results.json": "b2c013a8403af003c3d437031d42afc3ae423a006de5c3f1e90348aff9563e37",
+    "docs/p5/validation/implementation-admission-20261106/historical-212/generated/docs/p4/validation/f-fixture-results.json": "c35ee5a90f2e6c6bf67c6def39946860c6c9db74a9acc071a95b60ca59bb9906",
+    "docs/p5/validation/implementation-admission-20261106/historical-212/generated/docs/p4/validation/fixture-verifier.command.json": "4e1b9c5c390696dd96d0b25022f6614a722e2bfe685384c9d6da3afd76bfd00b",
+    "docs/p5/validation/implementation-admission-20261106/historical-212/generated/docs/p4/validation/fixture-verifier.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/p5/validation/implementation-admission-20261106/historical-212/generated/docs/p4/validation/fixture-verifier.stdout.txt": "3766ea16f4d2e00580a1414f8c20927bfa4c2dae6f5aaf8c62de70f24eb9480b",
+    "docs/p5/validation/implementation-admission-20261106/historical-212/generated/docs/p4/validation/generator-results.json": "3bb92eaa6bd8f6da150eca863bda140aef76718e26b2da04e7e5813be8d5888a",
+    "docs/p5/validation/implementation-admission-20261106/historical-212/generated/docs/p4/validation/golden-results.json": "c68b08f96f9872a7cf69fdc70f14c31f0c5a0daf991ae2647ee1ccbc3ad55f5b",
+    "docs/p5/validation/implementation-admission-20261106/historical-212/generated/docs/p4/validation/p0-semantic-results.json": "6dae6bce5be507310407637f3698486492bff46ae5def2d45d379ad5fb71c016",
+    "docs/p5/validation/implementation-admission-20261106/historical-212/generated/docs/p4/validation/restart-after_artifact_commit.command.json": "80b1f78f64b9d7f127a7ca6307661d04132a635ae4958aaebab8ea850927e7e3",
+    "docs/p5/validation/implementation-admission-20261106/historical-212/generated/docs/p4/validation/restart-after_artifact_commit.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/p5/validation/implementation-admission-20261106/historical-212/generated/docs/p4/validation/restart-after_artifact_commit.stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/p5/validation/implementation-admission-20261106/historical-212/generated/docs/p4/validation/restart-after_promotion_before_metadata.command.json": "c335e9fc1fb378555900b8617700ccb7794c78e6a00771b2968d57f6ebb3c051",
+    "docs/p5/validation/implementation-admission-20261106/historical-212/generated/docs/p4/validation/restart-after_promotion_before_metadata.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/p5/validation/implementation-admission-20261106/historical-212/generated/docs/p4/validation/restart-after_promotion_before_metadata.stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/p5/validation/implementation-admission-20261106/historical-212/generated/docs/p4/validation/restart-after_run_commit.command.json": "86cc5d11d7c7debc7454b7ab7098efab2ed296c915baabd23db9219f5cadacc1",
+    "docs/p5/validation/implementation-admission-20261106/historical-212/generated/docs/p4/validation/restart-after_run_commit.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/p5/validation/implementation-admission-20261106/historical-212/generated/docs/p4/validation/restart-after_run_commit.stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/p5/validation/implementation-admission-20261106/historical-212/generated/docs/p4/validation/restart-after_success_commit.command.json": "dd56cd85409690571342d84ee6c0986af5c676b5ed28efadd9fcf23b565c4177",
+    "docs/p5/validation/implementation-admission-20261106/historical-212/generated/docs/p4/validation/restart-after_success_commit.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/p5/validation/implementation-admission-20261106/historical-212/generated/docs/p4/validation/restart-after_success_commit.stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/p5/validation/implementation-admission-20261106/historical-212/generated/docs/p4/validation/restart-before_run_commit.command.json": "0f89997966f983a5a586ba239d70b568c19bee1daff282026c1ca1b4468c6308",
+    "docs/p5/validation/implementation-admission-20261106/historical-212/generated/docs/p4/validation/restart-before_run_commit.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/p5/validation/implementation-admission-20261106/historical-212/generated/docs/p4/validation/restart-before_run_commit.stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/p5/validation/implementation-admission-20261106/historical-212/generated/docs/p4/validation/restart-event_insert_failure.command.json": "de84a3c7c11993995ba12d28fcf85712f2316a910d36e3f0f3fe405de36599cc",
+    "docs/p5/validation/implementation-admission-20261106/historical-212/generated/docs/p4/validation/restart-event_insert_failure.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/p5/validation/implementation-admission-20261106/historical-212/generated/docs/p4/validation/restart-event_insert_failure.stdout.txt": "edb0977f82f6c00bc18cb90848d6d388891e8a480b77f7fcad85344a599c65d0",
+    "docs/p5/validation/implementation-admission-20261106/historical-212/generated/docs/p4/validation/restart-mid_pipeline.command.json": "8b0bc0e225305351a52510091823383eb98752858126231ade121c7808deb85c",
+    "docs/p5/validation/implementation-admission-20261106/historical-212/generated/docs/p4/validation/restart-mid_pipeline.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/p5/validation/implementation-admission-20261106/historical-212/generated/docs/p4/validation/restart-mid_pipeline.stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/p5/validation/implementation-admission-20261106/historical-212/generated/docs/p4/validation/stress.command.json": "50b769dba117628738fdf662d6a905c90718d196e64491cfa223f17e4f27c41e",
+    "docs/p5/validation/implementation-admission-20261106/historical-212/generated/docs/p4/validation/stress.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/p5/validation/implementation-admission-20261106/historical-212/generated/docs/p4/validation/stress.stdout.txt": "83c8f7be27278d9e4a974c521f636f231425d312364304acf6c2d3f99cd2fc82",
+    "docs/p5/validation/implementation-admission-20261106/historical-212/generated/docs/p4/validation/w-fixture-results.json": "5bee85689ccbc9fbb7208fc5d0df3bef11e09b4b5dfc509a40a9a1c3b11645b3",
+    "docs/p5/validation/implementation-admission-20261106/historical-212/generated/docs/p4/validation/x-fixture-results.json": "382c49d526155273b4e5327f1b49a164639a992cd8dbfa1ef37d4e2bfd94fb3b",
+    "docs/p5/validation/implementation-admission-20261106/historical-212/results.xml": "e032938905cf652fc062ef8e53669edee3db9e727989e9dbf577817bea935b52",
+    "docs/p5/validation/implementation-admission-20261106/historical-212/stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/p5/validation/implementation-admission-20261106/historical-212/stdout.txt": "e797895c486d153dc6f758d7b8c7fbdb81d4130d5d9d96bb7d7dd20bbced6af3",
+    "docs/p5/validation/implementation-admission-20261106/historical_recorder.py": "85fec632a7b9eabf482621f4d72e95079db34c79d4e29a7b8b25591ddcdf3d5d",
+    "docs/p5/validation/implementation-admission-20261106/numeric-handoff/command.json": "0486818e53faa443c0eec4c8218ba62c372f2e214cc15efe46f4b3f7161977cb",
+    "docs/p5/validation/implementation-admission-20261106/numeric-handoff/exit-code.txt": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865",
+    "docs/p5/validation/implementation-admission-20261106/numeric-handoff/probe/NUMERIC_HANDOFF_FINDINGS.json": "d65e1588ad38d599eb4da275dc504838915af06352946de76fe5bfc6ecba5c4a",
+    "docs/p5/validation/implementation-admission-20261106/numeric-handoff/probe/P-A.P4_INTERNAL_V2.json": "2e02a70bbb96712640966117fbc724de3fe8a27a8db4c049037599bbd6ec3500",
+    "docs/p5/validation/implementation-admission-20261106/numeric-handoff/probe/P-A.frozen_golden.snapshot.csv": "c3b4e1f9a885bcf969cd34a9041951c1bed1abcd6aaba4c4f1f2fcd414d86cc9",
+    "docs/p5/validation/implementation-admission-20261106/numeric-handoff/probe/P-A.q03_runtime_type_projection.TEST_ONLY.csv": "90295d6f974a564dd389de463912c4a0878c8ee000894e0553b5ae4c38d78d20",
+    "docs/p5/validation/implementation-admission-20261106/numeric-handoff/probe/P-B.P4_INTERNAL_V2.json": "3ebed54a3c2d5a62ef971c0ce1d604c32efd77d38c1b93b59496ad2d92156578",
+    "docs/p5/validation/implementation-admission-20261106/numeric-handoff/probe/P-B.frozen_golden.snapshot.csv": "1e9449a8ff90f0cac9d62ba94b3d6e812dd565f85e9dd91fb2b48b6cbbf4d3c6",
+    "docs/p5/validation/implementation-admission-20261106/numeric-handoff/probe/P-B.q03_runtime_type_projection.TEST_ONLY.csv": "cd660986eddd4f1977ace62f9762dd94399111e2150bb3bdb6f40b6b142b94d9",
+    "docs/p5/validation/implementation-admission-20261106/numeric-handoff/probe/numeric-compatibility.junit.xml": "bfca9d6df99c382e24bcff6fe5e41d8f19efc95383e372e039ecffffe56d93e9",
+    "docs/p5/validation/implementation-admission-20261106/numeric-handoff/stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/p5/validation/implementation-admission-20261106/numeric-handoff/stdout.txt": "d65e1588ad38d599eb4da275dc504838915af06352946de76fe5bfc6ecba5c4a",
+    "docs/p5/validation/implementation-admission-20261106/numeric-static/command.json": "6430bf6964310f17cab0ec4e3fea8fd0469b2fda91e34b82df89eb232685434c",
+    "docs/p5/validation/implementation-admission-20261106/numeric-static/exit-code.txt": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+    "docs/p5/validation/implementation-admission-20261106/numeric-static/stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/p5/validation/implementation-admission-20261106/numeric-static/stdout.txt": "0a47919d9564dccba471b308665664dde3e751268c39cf0951517815066f79a3",
+    "docs/p5/validation/implementation-admission-20261106/record_command.py": "5ebb8c5b1b687530050a8385eccbaa6887c38956b81f565eec227fad675dc85b",
+    "docs/p5/validation/implementation-admission-20261106/reproduce_numeric_handoff.py": "1e48d4de387dab18f1f86d507dd8390da7b0b6b77de4be82b09c162465fc0a87",
+    "docs/p5/validation/implementation-admission-20261106/supplement-static/command.json": "c777e4cb993f40526fc129610c80cadfbaeb6ae5a7a765e2b6c29edc6255f48b",
+    "docs/p5/validation/implementation-admission-20261106/supplement-static/exit-code.txt": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+    "docs/p5/validation/implementation-admission-20261106/supplement-static/stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/p5/validation/implementation-admission-20261106/supplement-static/stdout.txt": "90d050a0a4d80e675a440bc98dbf9dc917b759bfc6713368f8ad9bbd9d09ffa3",
+    "docs/p5/validation/implementation-admission-20261106/validate_available_p0.py": "203462494f54da2a9b1b26dfdc28613140b33e8b8678e68b9019cfdad89899be",
+    "docs/product/Product Specification v0.1": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+    "pecs/pilot_slice_v1/ARCHIVE_DIFF.json": "e3f1f2a2e6b20b14e3a888f23f01584b373d2962ac8d8239b3bb2828d350a756",
+    "pecs/pilot_slice_v1/CHANGELOG_FROM_PREVIOUS_ARCHIVE.md": "d4c96f519b99aaf1d6575c26e051397604b452cd499e9ab5ae32752653b5b1f6",
+    "pecs/pilot_slice_v1/OPEN_DECISIONS.md": "e2f3d18cc6ae0f15e168cf95f59b8d360f5f7684b254661e8e3e9b1a82e68414",
+    "pecs/pilot_slice_v1/PACK_MANIFEST.json": "87175177f029c8b9852b5323a749a218b82dd9aef484fa51b9adb296844963d5",
+    "pecs/pilot_slice_v1/PREVIOUS_ARCHIVE_MANIFEST.json": "98345d328840986382727e1c8642f2cfbf33fcd06673f6f41fb699c2b3f82162",
+    "pecs/pilot_slice_v1/README.md": "820961d0b02b87a2508d5cda59d498dd044488a8f98603b9d26eb1efb5e9e8cd",
+    "pecs/pilot_slice_v1/TRACEABILITY_MATRIX.csv": "153f744460e71375b6e340594c8ba089f6137c082187634bac72306d867239ab",
+    "pecs/pilot_slice_v1/TRACEABILITY_MATRIX.md": "a554ad7820191ee96b41c2907cdeb8160eb015cbc4892afb5486c9fb22391f3d",
+    "pecs/pilot_slice_v1/VALIDATION_REPORT.md": "b490a423399016d97099b1abcd01c5831d95480a7e75ccc24944a6c8120a7a17",
+    "pecs/pilot_slice_v1/contracts/acceptance_criterion.schema.json": "dd597532a910acaa4d213cdd16a4d85c469bb09598d9195d4bf684aa86a690f2",
+    "pecs/pilot_slice_v1/contracts/approval.schema.json": "7f2abd388298b741ea028e6132b4d96568bb9f61b53423a355c97ec040de27c0",
+    "pecs/pilot_slice_v1/contracts/brief_version.schema.json": "68836b055144179b181c96d08cb8f1e71d8d2b4a2dc3b3a3c7519ade149a0023",
+    "pecs/pilot_slice_v1/contracts/execution_error.schema.json": "4c2a4ba909e57e591f386a9054d98b8e5655fdd149f01cef86fbe0c5585e4778",
+    "pecs/pilot_slice_v1/contracts/operation.schema.json": "d41e2a8f1fe676604254611af4e9b537ee698fd63d8e2ca97350f0e0dd2861df",
+    "pecs/pilot_slice_v1/contracts/operations/change_case.schema.json": "3dcbd8df424ff0c3309015ace620f7d2b3d8594076b3635731dace9a771d3d91",
+    "pecs/pilot_slice_v1/contracts/operations/deduplicate.schema.json": "7e0dd964f08023ef59fc80875cf00a826e3e431db95b32ba50642664cb4a50a5",
+    "pecs/pilot_slice_v1/contracts/operations/drop_columns.schema.json": "d370f43f03dccf20c7b23229b022344b29c463a11aa76d31ad701e20804af804",
+    "pecs/pilot_slice_v1/contracts/operations/drop_missing.schema.json": "b6c98c68fcbf6168e9b4fdabe7e7c7761c68dc23db85b4d4136f8ff2ef8e38de",
+    "pecs/pilot_slice_v1/contracts/operations/fill_missing.schema.json": "51b6e7156f22ef1a026c5f7b3eb5787523c49b78ee32253bc2ef65e06db6bb17",
+    "pecs/pilot_slice_v1/contracts/operations/parse_date.schema.json": "b056e06f3346b4336e87036b2ccf31bde74e7d69887bb572588232d010bcdd95",
+    "pecs/pilot_slice_v1/contracts/operations/parse_number.schema.json": "eee01cdc6b06ace11c1b0c7292abfe8d13184867af77834da0e4dbbd30ebdcbe",
+    "pecs/pilot_slice_v1/contracts/operations/rename.schema.json": "f4cba74222241df29075012d030d978356bc2e0c6ff49b9929ec744091baf673",
+    "pecs/pilot_slice_v1/contracts/operations/replace.schema.json": "5bbc16d0c172bc28f4af7b17aeecb7f0c305f08a34c3bc3336b1f2686ec7d995",
+    "pecs/pilot_slice_v1/contracts/operations/select_columns.schema.json": "b3d3e2be15f7cc4470256c79bcd9ab8629ee6fde853f6cf3bdb675ba86468f4d",
+    "pecs/pilot_slice_v1/contracts/operations/sort.schema.json": "fbf5465afeff4b1d8ff00e5f28fb16ce3373c2a6957107b74ba5f1f5d8b724b0",
+    "pecs/pilot_slice_v1/contracts/operations/trim.schema.json": "e20f023cbc96079b30c083d9b5ead038f5cc8271cd8fe0b26825c3da970e3a6d",
+    "pecs/pilot_slice_v1/contracts/qa_check_result.schema.json": "97e2e443621b1fd48efd356c11b3f01771d0fbeb2a4d82be1e1b9e8428eed073",
+    "pecs/pilot_slice_v1/contracts/qa_report.schema.json": "48011249a0ce595891e67a2befd54f4c8e2845cf0843e599fc7a79fa572d6163",
+    "pecs/pilot_slice_v1/contracts/transformation_spec_version.schema.json": "c82b497cafaf59179414bc1a0da239a0659ce29909ccc302f33a99b51bb2b07e",
+    "pecs/pilot_slice_v1/fixtures/P-A_dirty_csv/README.md": "5b3d4f8fabc16ad492e263167f70fd73f21d1c26ec33b27521d58dce4172862b",
+    "pecs/pilot_slice_v1/fixtures/P-A_dirty_csv/acceptance_criteria.json": "ff93a355218eeddb422ca5a70a111a7631eac31174e95c671ed1ea72edef05bf",
+    "pecs/pilot_slice_v1/fixtures/P-A_dirty_csv/approvals/brief_approval.json": "fa18189e5b973536d5fcaf726ffd045c09a16e81436264bee123a04218366420",
+    "pecs/pilot_slice_v1/fixtures/P-A_dirty_csv/approvals/transformation_approval.json": "f10e8d45cc835afcbff908502749e42cfdd8bfc8f10bba3b1c96a73716d09d90",
+    "pecs/pilot_slice_v1/fixtures/P-A_dirty_csv/brief_version.json": "422912ff8e31312e5f3c249208bb6e83eb6bf4625da37e6157f09086977d40d3",
+    "pecs/pilot_slice_v1/fixtures/P-A_dirty_csv/errors_checked.json": "4a0268893fd273e37db95600341becc869361a135f5b2d0590c5dd3125d8c82d",
+    "pecs/pilot_slice_v1/fixtures/P-A_dirty_csv/expected_qa_report.json": "8bfee77053c4a7b7daba984f167e6578d97b42c4e092e7563ac7cc8690611aea",
+    "pecs/pilot_slice_v1/fixtures/P-A_dirty_csv/expected_result.csv": "c3b4e1f9a885bcf969cd34a9041951c1bed1abcd6aaba4c4f1f2fcd414d86cc9",
+    "pecs/pilot_slice_v1/fixtures/P-A_dirty_csv/input_dirty.csv": "c0e3f84d189e0ed177d5e64a183142fe1b923ddb79c6617ebb26edd139658fcb",
+    "pecs/pilot_slice_v1/fixtures/P-A_dirty_csv/input_preview.json": "9401fb95de86d07174ba0396880119fbd11e9564988509d11d0019b32aec2002",
+    "pecs/pilot_slice_v1/fixtures/P-A_dirty_csv/invalid_examples/brief_with_is_approved.invalid.json": "a6baaddaff0b308d6b1a1b27fd79a5ba295e53954cf501dd6656a848b0362ce5",
+    "pecs/pilot_slice_v1/fixtures/P-A_dirty_csv/invalid_examples/csv_auto_encoding.invalid.json": "64770e2d40180a835d878ea43bb0cdc8c6585fb368968ecaaa66d2b45c7a15a3",
+    "pecs/pilot_slice_v1/fixtures/P-A_dirty_csv/invalid_examples/operation_invalid_separators.invalid.json": "9fc8ea8c1897e86ad218bebf08ddebabe880efe7d2f10179e026ca8aacba09bb",
+    "pecs/pilot_slice_v1/fixtures/P-A_dirty_csv/invalid_examples/output_name_with_tab.invalid.json": "bb62b9cc78d8240530b712e00dad46a6229cc5017a4d79ee6ce73e28fcccdc8f",
+    "pecs/pilot_slice_v1/fixtures/P-A_dirty_csv/invalid_examples/spec_with_non_pilot_operation.invalid.json": "ed4f2f09934ddbe9bfb987d51202264220f0eaff6cc2e8a07792137bafa80dd0",
+    "pecs/pilot_slice_v1/fixtures/P-A_dirty_csv/invalid_manifest.json": "cc7d487ad08ecae241fa8b9232d7e29c24cfd7ed5f608765534d24c7a58f6b7b",
+    "pecs/pilot_slice_v1/fixtures/P-A_dirty_csv/semantic_payloads/brief_payload.json": "fcca56fbe51c2a7d8564b22610072f2e38f07d972fddcb6cfd353f9b8aae3032",
+    "pecs/pilot_slice_v1/fixtures/P-A_dirty_csv/semantic_payloads/transformation_payload.json": "a0e8a12a85c101ce1068213b1b935477c33bbe30777396a73b0c0db662e2ea09",
+    "pecs/pilot_slice_v1/fixtures/P-A_dirty_csv/transformation_spec_version.json": "3cdf68776ea86ec08c57e11c29d96076fc73d02fa0e7ccf33fe4840b7ebf8420",
+    "pecs/pilot_slice_v1/fixtures/P-B_xlsx_sheet/README.md": "9b173f13754baf4683081fde9d5aaf8c7bf76d14e9c0de6e7fa875cc4977569c",
+    "pecs/pilot_slice_v1/fixtures/P-B_xlsx_sheet/acceptance_criteria.json": "3a7b0f3475c81795a4d57c60772d3d7b26cac6b0a8382885e6730198acb25058",
+    "pecs/pilot_slice_v1/fixtures/P-B_xlsx_sheet/approvals/brief_approval.json": "991372d51e87e33c6f269f11cacb4844a212324156f33e39174906cbad9492be",
+    "pecs/pilot_slice_v1/fixtures/P-B_xlsx_sheet/approvals/transformation_approval.json": "af1b1c66e82cf15ad49de29b5f24cf7bc9ba4ab73ff11f0c0a77da699bfdd64d",
+    "pecs/pilot_slice_v1/fixtures/P-B_xlsx_sheet/brief_version.json": "3998f7946ada335f0f6c47d5d17f2b593989db858627d61a7d9230cea9fa9248",
+    "pecs/pilot_slice_v1/fixtures/P-B_xlsx_sheet/errors_checked.json": "dc4030c415e52736ad834c88b0c28c331c0b65ff459dc5516043c13178031e2e",
+    "pecs/pilot_slice_v1/fixtures/P-B_xlsx_sheet/expected_qa_report.json": "d6ea4e425c7a2d642839d3ac5ac73cb545d44278ce906430041472c54b814313",
+    "pecs/pilot_slice_v1/fixtures/P-B_xlsx_sheet/expected_result.csv": "1e9449a8ff90f0cac9d62ba94b3d6e812dd565f85e9dd91fb2b48b6cbbf4d3c6",
+    "pecs/pilot_slice_v1/fixtures/P-B_xlsx_sheet/expected_result.xlsx": "52431d5a68c4002c22a26d78b13bdd3846d0cf1e81c89095bc3ff07a8c8e0082",
+    "pecs/pilot_slice_v1/fixtures/P-B_xlsx_sheet/formula_detection_cases.json": "cef941c10baf2bde2f6502c9a5537fbf5c7b00a65e0d445515f4ea0d4d5131ff",
+    "pecs/pilot_slice_v1/fixtures/P-B_xlsx_sheet/input_orders.xlsx": "d275fa7393e73ef1be7815e83b31b1a710b3f345bb7138c72569b03f66edf80d",
+    "pecs/pilot_slice_v1/fixtures/P-B_xlsx_sheet/input_preview.json": "6aa88f45f29ddb5f40eeda2fc733dd54346a91679a2787e468c780ab6f88ca61",
+    "pecs/pilot_slice_v1/fixtures/P-B_xlsx_sheet/invalid_examples/output_name_with_tab.invalid.json": "6456898d61e7679030651f8fef3f95f34f7223ae67c69f4023d387266de7ac5a",
+    "pecs/pilot_slice_v1/fixtures/P-B_xlsx_sheet/invalid_examples/sort_length_mismatch.semantic_invalid.json": "ea9c5a1ebe4d9285b5aba3e04a2fcd6e6a4a205634261213b6addab8884b354e",
+    "pecs/pilot_slice_v1/fixtures/P-B_xlsx_sheet/invalid_examples/xlsx_with_csv_options.invalid.json": "0cb2a620eabbfdca45995805f78f2f51b13b1d2e03c7fe6ad7c7d2218aea51e9",
+    "pecs/pilot_slice_v1/fixtures/P-B_xlsx_sheet/invalid_examples/xlsx_without_sheet.invalid.json": "9c6ed19bba26c8dead560db2627781ce595c152506d1a1d9670eb999c618ff07",
+    "pecs/pilot_slice_v1/fixtures/P-B_xlsx_sheet/invalid_manifest.json": "4aacef51edf8636f63940427e933cbd3577d0d230ba5655014fe61552accdba8",
+    "pecs/pilot_slice_v1/fixtures/P-B_xlsx_sheet/semantic_payloads/brief_payload.json": "00c182447fabd9967bc198e131b96b27b51a9f7d22a272067702e2a15f948900",
+    "pecs/pilot_slice_v1/fixtures/P-B_xlsx_sheet/semantic_payloads/transformation_payload.json": "b13c6f986dad03d813bc982d6165c38c8364567e39e2a0b7c6974b31be182812",
+    "pecs/pilot_slice_v1/fixtures/P-B_xlsx_sheet/transformation_spec_version.json": "960a0aa50925b70ef1456e70ac4c6601fd706a3f161c2abc3d1cd08c6e74e6d7",
+    "pecs/pilot_slice_v1/fixtures/P-C_approval_safety/input.csv": "1bd14f640068c311c5a25ae6d87e9cc9154af227c67f5cf59b2530362986b6c9",
+    "pecs/pilot_slice_v1/fixtures/P-C_approval_safety/input_preview.json": "b14904885593e261e0179b75a8a27cda347a2c2e26531f84bbf251da49e58f64",
+    "pecs/pilot_slice_v1/fixtures/P-C_approval_safety/invalid_examples/approval_target_hash_wrong.json": "9d058f251005706ae0f1d49042659f8931a41b975808e3e1bf369cb67b6627da",
+    "pecs/pilot_slice_v1/fixtures/P-C_approval_safety/invalid_examples/brief_approval_with_context.schema_invalid.json": "03908837362cc5da24b1270e7b49ae97c02e0d36f94efbbc28d24a3ec5cc8f06",
+    "pecs/pilot_slice_v1/fixtures/P-C_approval_safety/invalid_examples/brief_mutated_after_approval.json": "bbb40d38b17193673f7449f62d1c9e95d3c46469f494519770b25e367b57bb7f",
+    "pecs/pilot_slice_v1/fixtures/P-C_approval_safety/invalid_examples/brief_with_approved_at.schema_invalid.json": "cffd7009c0237eff6142414129be5685d2498bbf702f95ef54e58b96ab4068fa",
+    "pecs/pilot_slice_v1/fixtures/P-C_approval_safety/invalid_examples/output_name_duplicate.semantic_invalid.json": "cc12536345bef5a5e9f3277f71236b3f106dc748c6fd9a44fad0e8ef9afde7e6",
+    "pecs/pilot_slice_v1/fixtures/P-C_approval_safety/invalid_examples/output_name_non_nfc.semantic_invalid.json": "4de6946010accc208e4c6a9c2221a252a263bf01ed45bb1235ee06563330515f",
+    "pecs/pilot_slice_v1/fixtures/P-C_approval_safety/invalid_examples/output_name_with_tab.invalid.json": "25db1d561b5b7bd8c82193b751df0ce58d88020ccc2868206b37ad779b047378",
+    "pecs/pilot_slice_v1/fixtures/P-C_approval_safety/invalid_examples/transformation_wrong_brief_hash.json": "d654aca02f3267dc3c35ef338b9c5f25308b3ba430f5ec13598ed83360d099b5",
+    "pecs/pilot_slice_v1/fixtures/P-D_errors_and_qa_blockers/README.md": "8ef54b7f757626563b3a45632851d7f7b649153e6d0c2df3ff3d337ada9021de",
+    "pecs/pilot_slice_v1/fixtures/P-D_errors_and_qa_blockers/acceptance_criteria.json": "2e443afab0a89f7593b9f1c8f0165aacbf0445ec0d5269ff4cdc80fbd7d44fc3",
+    "pecs/pilot_slice_v1/fixtures/P-D_errors_and_qa_blockers/approvals/brief_approval.json": "603c7137da77eec1ea3ff3bfdcbff4b4944bc5647f50ef8c9151cb5e794d7e67",
+    "pecs/pilot_slice_v1/fixtures/P-D_errors_and_qa_blockers/approvals/transformation_approval.json": "5c37820f8f75517083f5a6f53d873ede77f6956c1bcf9f995b00b660ed451ea2",
+    "pecs/pilot_slice_v1/fixtures/P-D_errors_and_qa_blockers/brief_version.json": "d651dc60a68782490a0e603901043a92ffd1b3a91fe43e8ce3cb5387b7ad1e71",
+    "pecs/pilot_slice_v1/fixtures/P-D_errors_and_qa_blockers/errors_checked.json": "def1ef9dc41b7ae3bc5274e5d958a18fa37b3fd150a408a2b75e5d1fccc310ec",
+    "pecs/pilot_slice_v1/fixtures/P-D_errors_and_qa_blockers/expected_qa_report.json": "b043c2d5f780fedba3aa3e5e1261fb946d3a49e6b08d32bf19ff92f7c4dcb2e2",
+    "pecs/pilot_slice_v1/fixtures/P-D_errors_and_qa_blockers/expected_result.csv": "ab2c047b0c4024f49a4db8de1cf6f649e2c2caa45aca6db2241fe71174bf9737",
+    "pecs/pilot_slice_v1/fixtures/P-D_errors_and_qa_blockers/input_preview.json": "fb8b6ddb8ef9ab2064a886afc05c8869e64c3a7f93d303b41254c12a5e15bf69",
+    "pecs/pilot_slice_v1/fixtures/P-D_errors_and_qa_blockers/input_problematic.csv": "6c23995c37abce84d24d5a6d6d46e709e4d88e737926c3fb7e9d453db2afaf59",
+    "pecs/pilot_slice_v1/fixtures/P-D_errors_and_qa_blockers/invalid_examples/brief_missing_objective.invalid.json": "3563952c36b542c32da0d87e9421be1b0b5cdc5e1e6735042661da7a7c4c9f27",
+    "pecs/pilot_slice_v1/fixtures/P-D_errors_and_qa_blockers/invalid_examples/output_name_with_tab.invalid.json": "31364c0e46ff020b04e78323d2e0af31494e77f38234d359340e13c7fad7ed5f",
+    "pecs/pilot_slice_v1/fixtures/P-D_errors_and_qa_blockers/invalid_examples/parse_failure_policy_fail.semantic_invalid.json": "e357babb30a38943f43c181850fbede21cee058ef908b4f0c52ec602a4df3478",
+    "pecs/pilot_slice_v1/fixtures/P-D_errors_and_qa_blockers/invalid_examples/preflight_missing_column.semantic_invalid.json": "e12bc4bf76e6e00723562328ba3feca6f18863d797d1b2185e2ea7a34b6dc928",
+    "pecs/pilot_slice_v1/fixtures/P-D_errors_and_qa_blockers/invalid_examples/rename_collision.semantic_invalid.json": "2be6147c95368a69e29a383dcf12e60a55f3bf5cfc072078fa0982ef084d74f2",
+    "pecs/pilot_slice_v1/fixtures/P-D_errors_and_qa_blockers/invalid_examples/spec_with_script.invalid.json": "a0ca0c55df888384ddc8acb82312d3d3f7b2d1bf7fa96027c2fe5f9475c0e1a1",
+    "pecs/pilot_slice_v1/fixtures/P-D_errors_and_qa_blockers/invalid_examples/unknown_operation.invalid.json": "7309af65a68c9e8c4f765463fe8e54c9bbc727b3f42062b7c913ff40f04490db",
+    "pecs/pilot_slice_v1/fixtures/P-D_errors_and_qa_blockers/invalid_manifest.json": "4f34ede9db5c45bc9052e3157134f4b8cbb60d8a9e3d53f6b3010f1af3e47b3b",
+    "pecs/pilot_slice_v1/fixtures/P-D_errors_and_qa_blockers/semantic_error_cases.json": "0ba2f7c948c82dbb59d76fc4362e030409b32803b959f5272571dfc5569a0ea9",
+    "pecs/pilot_slice_v1/fixtures/P-D_errors_and_qa_blockers/semantic_payloads/brief_payload.json": "8153997063e9565bfcb942a8f27273d9edbec60715dbb6715e139e6d5eeb36b7",
+    "pecs/pilot_slice_v1/fixtures/P-D_errors_and_qa_blockers/semantic_payloads/transformation_payload.json": "58782b4d70a3ecb1840f13641a15e10da71d544b285dd698591cd55b2a80c78c",
+    "pecs/pilot_slice_v1/fixtures/P-D_errors_and_qa_blockers/transformation_spec_version.json": "a5f74ff09fa3edbb073cb324e7e2d937ad46eeb41ba43be9cfb6dd561af28587",
+    "pecs/pilot_slice_v1/registries/acceptance_operators.json": "b1b0c32c1102188d29c146615329b04c65f6a1db08413b55bb2901effca2f7a5",
+    "pecs/pilot_slice_v1/registries/approval_stages.json": "efd0b010c908c68f7319daed2163932ff5ebf54fef90822a92940615f4ecc7e6",
+    "pecs/pilot_slice_v1/registries/data_types.json": "3a6c9cc5202ec16f61c3d82d5da85d65f3ccb8601852b6fe14210a7bc7faf342",
+    "pecs/pilot_slice_v1/registries/error_codes.json": "833253b7dad2d0b275ba5910bfe327b2281cdbdba5b106cdc6ef02b12d071fd1",
+    "pecs/pilot_slice_v1/registries/order_statuses.json": "2434d70b1404eb08733e186ff6e2fc917813c7cad8d5fad33be37fa081b9b5d6",
+    "pecs/pilot_slice_v1/registries/qa_statuses.json": "ec9b01756efb0f9eab034514ff05dd915a12ada1d82c0ba8b2b881c29eba4c43",
+    "pecs/pilot_slice_v1/specifications/approval_validation_rules.md": "b8d968d1a4f85896b1e08bac6193e3e77ad245961a796bfba220ab30f62a5711",
+    "pecs/pilot_slice_v1/specifications/content_hash_spec.md": "5bf12904ddaeb58324490a292a62ab44366b58cb22919a6490804a6d9b16ed8f",
+    "pecs/pilot_slice_v1/specifications/hash_vectors/brief_vector_01.expected_sha256.txt": "97b5779fdab3c25f37accfd4cbdaa167721eb0a1aae9f8af6b61c674ca7f767e",
+    "pecs/pilot_slice_v1/specifications/hash_vectors/brief_vector_01.input.json": "33d0f88df1073774b7da77658448962cb90b8232308c417cc78f2c1852734b1f",
+    "pecs/pilot_slice_v1/specifications/hash_vectors/transformation_vector_01.expected_sha256.txt": "c8cc8718a4588c4e1f12b6ec8666af41f9d17389c67ba853b72b65f42ac886f8",
+    "pecs/pilot_slice_v1/specifications/hash_vectors/transformation_vector_01.input.json": "80b417c0760bbc75cd35a1d5f5d0ac196474be08f74a4dd00ed88d9766ace365",
+    "pecs/pilot_slice_v1/specifications/hash_vectors/vectors_manifest.json": "cbe1be63a0f6adc064d725d8947f87e985111c5c95b20b434015feb1fcafd3bb",
+    "pecs/pilot_slice_v1/specifications/pilot_error_policies.md": "6aed7883c4d9a8d76efefb1b48aed01fd080c31388197f81be8f728c27f7327e",
+    "pecs/pilot_slice_v1/specifications/pilot_ingestion_rules.md": "b21d0dfe6db796c624be7dbe2268aba068bf4f7c8fc3d78573150dc8f786347c",
+    "pecs/pilot_slice_v1/specifications/state_transition_rules.md": "a2753d9feab071a8eb0251e6cc3a073888dd1c8cd6b3849eb56a10321fd7293f",
+    "pecs/pilot_slice_v1/v1.0/p0-contract-pack-v1.0": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+    "pecs/pilot_slice_v1/validation_results.json": "933dd070bc295c641bfbfa4c95ea301e27da5d3eec81c04e99e8badc65a58683",
+    "pyproject.toml": "6d9462265c1f84aba937f7aaf9adf59ccb4a723df2e63be0f6c9332d2762eec1",
+    "scripts/smoke_shell.py": "890cf8c27c7eae1e9e3e176eeb16e30bbcdbfa59fa4cd5b2efed61e2be822183",
+    "src/vde/__init__.py": "cd8a6696b9fffa286810bf790fafd899ffead2519c7bcb89a72c623cb5f2fdde",
+    "src/vde/app.py": "4059e3d32228a186020f39ce0e5dd37416a726e3ac3a67dc0cac4b8c45d12b73",
+    "src/vde/bootstrap.py": "582f972f5a0d749498458c8ad8234a16909eedb9a8894179268445b98c5287b7",
+    "src/vde/config.py": "613d600cde4530457543019941d2a50bca02d07e964dc8cb394d62b5dca6417a",
+    "src/vde/contracts.py": "61ca43cf6357af2bba9738c03d37341078e634054544c7d77f6161a56ada8691",
+    "src/vde/errors.py": "d025728c36761a927d782dd56e93d5a150350ad99c68cdd2b3d7641b74f5e568",
+    "src/vde/execution/__init__.py": "54ea2158fb9054eb68610ef23124722615a77afcb55521d7c8f2c8229e26e4ca",
+    "src/vde/execution/budget.py": "4c5053393bb5689d5bc81b6065a56f022f2672924063442f9426b042bd040f8e",
+    "src/vde/execution/commit.py": "8def24622d22f5e1e78041e879c42dbf54f2c50adb5ec801e6f6756bc64d6e8a",
+    "src/vde/execution/engine.py": "25f695f645bee9b9374d6d5526ea22e57426576bbc30fcb090f6349fafa9cb9d",
+    "src/vde/execution/errors.py": "114916bcf6fa21a6aeae0163427e8d0e8e58cde436b5eb019eda3f469b2df1d7",
+    "src/vde/execution/operations.py": "67a486e0cedda1e90dfb6076f3c4754d45cc64781ad014383d209ae454341f3c",
+    "src/vde/execution/preflight.py": "9c10c43e2245fbdf387eb82b3c1d87514b713dffe48ee34a6b0ad8fcf7fee82a",
+    "src/vde/execution/provenance.py": "bd21c6f8530808f0a06a1b35b114155d5eeee32e2aae38ee15044266a289b35a",
+    "src/vde/execution/service.py": "242928635479817416b182b3f2688df18f66bc1857d636fe6657a753c15c3d6f",
+    "src/vde/execution/source_adapter.py": "89a6675678fbdef8210e33913ae54928037bae24f9d3bd80e24cc7250f0d2d69",
+    "src/vde/execution/spill.py": "855de4ab0aa46f4837d776b4e770892e7fdb0586bb39320ca5b3331af4e1d5ec",
+    "src/vde/execution/ui.py": "652368e2be998063dea6074460b9c0ec1df1a93c295cebd39641ae6b62156582",
+    "src/vde/execution/wire.py": "ca6e86caf3e3775405329235487e5bd8ea23ca5ac32c2cae90a60ae014ff75a2",
+    "src/vde/ingestion/__init__.py": "d889f881c9c32173675088186ab3d9877160406c87707935d0341d9938709589",
+    "src/vde/ingestion/csv_reader.py": "af5024512a7c67088e667435880fc847b5cacfb5039288ccacaff8297749386b",
+    "src/vde/ingestion/diagnostics.py": "4af3063a13c63907a5af5a3ee46c75b460337e4e7c9d0cb170b9d25fa89ab03a",
+    "src/vde/ingestion/limits.py": "c64a976d5dca3212fc942ed1095fe92c526b36d75897a052c605b7c0005ea87f",
+    "src/vde/ingestion/local.py": "d20b2e496abe5e04d74a69db00c52dfff53a4bda0f7b3a8f83bf2577ff2d5859",
+    "src/vde/ingestion/preview.py": "f33b89b3936ce43240c4facf39b33287c0746354fbffaf1656d89686aa459bfb",
+    "src/vde/ingestion/ui.py": "3e0002a25c6f2227349ee5254c99cd5748b9ca868584e85bf0d815e0a1dbcab1",
+    "src/vde/ingestion/xlsx_reader.py": "52721841db24132913cf22dbc5a74dc5faff998d5b5cbd71f0815b758c94e9aa",
+    "src/vde/models.py": "2c1637b28cb3d2471c9dd6db0e952433e78dea5ce4dd72eb0965bb53c901bd68",
+    "src/vde/p5/__init__.py": "bef984820b3cefb387a958b10ce1ce03dd1aa9854d0ad9c7a01c929fe33cc286",
+    "src/vde/p5/budget.py": "f2188f413aef4343bae70ae34d90b53053b3902da146b8914da86b79853dc192",
+    "src/vde/p5/contract.py": "e8cfc4eec3199a633bbc6f3de965c4d2e17b49d42e5db6ba27ef750dddc0923a",
+    "src/vde/p5/errors.py": "fdca530a190fa0a63f40978b7c374e6a40ad9fe1c9f153d63c0bcf0d8e962008",
+    "src/vde/p5/export.py": "694eb540ee6a267fdd1678a8a1f4731298ffdfd85618585d168ffa4b27f23025",
+    "src/vde/p5/project.py": "ac958f77c98107164a91c909a1135e6950ecad434f23af123b123a092a0bb370",
+    "src/vde/p5/qa.py": "4b15c0990685df55a44330d66275481b421eb95707527232e964aea3e000816c",
+    "src/vde/p5/report.py": "5b27e698416ea81dad55c0b30bf89a5763323788bcdd19ce246a6dc466c77a68",
+    "src/vde/p5/roundtrip.py": "c4943f357957c04c133701835b30afaea16bdbe7ec927eda0bdd0b3998cef135",
+    "src/vde/p5/service.py": "253e6c1918daaa557afc32906a4b68b92082e2de98cadd875bdfaf33f3dc1b02",
+    "src/vde/p5/ui.py": "d9e0f414b333e0a53c28ad17195b4bf1b09cfb8117aeabf8ae2728653e2732d2",
+    "src/vde/persistence/__init__.py": "7993ab04d099856afa95d1fa59a4e14023dfc68d15946d5678d8f30bad596664",
+    "src/vde/persistence/database.py": "f647ec69dd47c1728a3bfd0cb09fa64f582e712405e9192bd6f78181bbe5d5a8",
+    "src/vde/persistence/migrations/001_p1_baseline.sql": "186d6415d59f3fa48d8f1d350b3746689bb46f6e129394a4811c8cc717e53d76",
+    "src/vde/persistence/repositories.py": "c62b34396b678404170fb1e122ccb9937e6c2cef774faae36563fa1ecac515dd",
+    "src/vde/persistence/uow.py": "5da8ffbbcba07e3015c20d0c7f3526f01f8abb47b7c140c3b4284006ff7119af",
+    "src/vde/recovery.py": "43c016dac35ceb2cfcd9f0c84b77679e23afc0e1505c3dfaaa7b2d6d6d23829a",
+    "src/vde/storage.py": "75bf9f7dc2ca0d4261d07238085e4ee870fc8701350519141618977cbec41c5e",
+    "src/vde/workflow/__init__.py": "e94a9339e0fa3d7cf308341c189c4f519f025140aaee5d07799af68231f8431e",
+    "src/vde/workflow/errors.py": "6b7f2349337551ec39e4ad6b809dd4658e522e71f28e17cec594927c63cf92a4",
+    "src/vde/workflow/read_model.py": "cd68bf55b2b896a6a080854b97f5d3bca4797fee671d35a1f13a6d1e8000b714",
+    "src/vde/workflow/service.py": "61238ddf354cddb0e801d6ce7624b3d60994dd923226989275cb76e5ec209f85",
+    "src/vde/workflow/ui.py": "9a04ec9a103e35da387eb74325b24b2e9659dbe29fd1a5d78150f49dabb5a7ea",
+    "src/vde/workflow/validation.py": "daa3e48e4cb7273fac41d78f88274f4c54641fce8f8d428f45fc8fcf2ba39d00",
+    "src/vde/workspace.py": "cf7330c85ac7a5b1ed559481f43a8bda02cfc5d8940f3053bc32a87df0580e17",
+    "tests/p1/conftest.py": "2bae5a8348059542445ad4e843bc4523034b3be50f2a7a122441ce0caf41df57",
+    "tests/p1/test_p1.py": "0b8aa83407e6595d69592862a2d7adf585510ccafc3443b24991609071ed0bde",
+    "tests/p2/conftest.py": "97a21e6ca197c9332e3242d40f558c445eab9e298d902baa93427e43331b2968",
+    "tests/p2/rss_probe.py": "d1de78b7415c1acffc93f42f2bea1e720ff7fe1388a198d55e4d6f4cb6a84101",
+    "tests/p2/scope_allowlist_v1.json": "181e5df6648c23d4571169972393c68c4d971f3c27b471a01c3a93b02c2df55a",
+    "tests/p2/test_p2.py": "4dd334be16de2971cbb4fd7ecc0a57165380a45d3d69ad6f83a76965481a5007",
+    "tests/p3/conftest.py": "5015be4e1bef23e0079f0473fe5da3c54fd78635f959a693bcfcab34a416da0c",
+    "tests/p3/driver.py": "27393416f9311c0571582006b7f1786c3caee8c55f293bfe1b43992aab851647",
+    "tests/p3/restart_probe.py": "2ae05af070cc4871785307800b0fdbc984a1505c026d0f5e3263b8adcee0b087",
+    "tests/p3/run_validation.py": "10d0291ef7eb40f4f59e6c257bd6ca9394f910aaeebf0ec635873a3b505a03a7",
+    "tests/p3/scope_allowlist_v1.json": "be262ad5c83e89e844e60c9ffa2f86f4bc8b20255592ef9970cd9aff38253a9d",
+    "tests/p3/test_p3.py": "9f2535d9cf0e6907752d444367b6de420c6fa5821d5a219d9e65920850d6a9fa",
+    "tests/p4/__init__.py": "dec80f39b1918f37dc933b395a8bc05c9584699db1aa07f1aba3224aff499147",
+    "tests/p4/approved_governance_pin_v1.json": "95b7c92a417ec06a80f3d4e839e136e00100e4313d1bee021c94f5beda1f0df7",
+    "tests/p4/build_scope_policy.py": "d376025577c3b09278bda57d122a559a231ed2c08be15451814d90618d22e90c",
+    "tests/p4/conftest.py": "8765d0acf2b7cb973fd2c39d6b3dce7738c674130eea40fdb7c707f50e0f4cf1",
+    "tests/p4/fixtures/decimal_fraction_cases.json": "ff3f561edcd304728853ab64aea9aa10207a578b7868b7f6981f9aed24c41d7a",
+    "tests/p4/restart_probe.py": "e4afcc0091033d62dcad11571a2ca5e4b37dfdeaa26f023600e6ff1af60277ea",
+    "tests/p4/run_validation.py": "8b0fea697bed589a88daaac7c6137b3fbc588643da11c3e3fab0c1ede71af333",
+    "tests/p4/scope_allowlist_v1.json": "8100eb18eacc9453a55b75cb9f775d0cb7411a50d98fb6cd769ba68813359067",
+    "tests/p4/scope_audit.py": "00f33774fe80947baf6d8e79b50605c4bca9f4e7b32967df0ba630701bb4c3f2",
+    "tests/p4/source_fixtures.py": "87cf3ef4ce222fe96a0a9ab6906f980e8937e278fa059eb100cbe89e2afb6149",
+    "tests/p4/stress_probe.py": "9b4922f65b6ee3edf029d16df8322dca8fcede100bb3db2239d35922ebf8be6f",
+    "tests/p4/support.py": "93ec6742a6941c926bf9f4c8187a9ca982087e9f8344938b67c286ba88c1caa4",
+    "tests/p4/test_execution.py": "e9222c884ac8d848354b94ad2e3406bb327385d1cec3fdb5028849c724acda76",
+    "tests/p5/__init__.py": "9889ae95bea6cc970683b6ebc0dbde0c009048c6ef94c040cfe0467bf236a540",
+    "tests/p5/conftest.py": "78848ceb3bfcfe4befddd9b53862f1f1444e7e1e3cbb324bcfdc6bb8322a164c",
+    "tests/p5/restart_probe.py": "9db1d4b271c68e9c3116165fc305998308450ae3f2bad63bb8985cc35d57d738",
+    "tests/p5/run_validation.py": "e2775bdd8d6df3dd1abe9619c4e9e4fc6407d496d8825e240fd6fbc3458a3c3a",
+    "tests/p5/scope_audit.py": "1ed460ff41b002a665f8eca57dbe86ffb57ea7756d853e6bf27ff67fbb31bde4",
+    "tests/p5/scope_policy_v1.json": "f6b379491e76f8fe12855bac5dba6159555bcdfd94dd55452a2256ea15590fc9",
+    "tests/p5/stress_probe.py": "324bf6652071bf2758ae5103935c4b9b1f1a0a73e3eb247963ff215961dd0e54",
+    "tests/p5/support.py": "8ef701752394af5eb78e1f4e430170f4037d87fbb3782a6765a040393dfa46a5",
+    "tests/p5/test_acceptance.py": "52fb0023ba54dad50c2ce49db192f95e7734492c946e8e17812c90500ff42a0c",
+    "tests/scope_policy.py": "8c548d055a51bdd5b68c8db21f01b1a36fc23d5cd98806684ea2de6bbeacccfd",
+    "uv.lock": "7a4ed597bb53a55189cce5b9c5d32b191f150f6cbc92f55122382cd164b42776"
+  },
+  "exit_code": 1,
+  "elapsed_seconds": 995.3570975370021,
+  "finished_at_moscow": "2026-11-06T17:23:54.402400+03:00",
+  "generated": {},
+  "historical_evidence_restored": true,
+  "inputs_unchanged": true,
+  "commit_unchanged": true,
+  "final_git_status": "",
+  "testcases": [
+    {
+      "name": "test_deterministic_check[P5-T01]",
+      "classname": "tests.p5.test_acceptance",
+      "outcome": "pass",
+      "properties": {
+        "p5_id": "P5-T01"
+      },
+      "assertion": null
+    },
+    {
+      "name": "test_deterministic_check[P5-T02]",
+      "classname": "tests.p5.test_acceptance",
+      "outcome": "pass",
+      "properties": {
+        "p5_id": "P5-T02"
+      },
+      "assertion": null
+    },
+    {
+      "name": "test_deterministic_check[P5-T03]",
+      "classname": "tests.p5.test_acceptance",
+      "outcome": "pass",
+      "properties": {
+        "p5_id": "P5-T03"
+      },
+      "assertion": null
+    },
+    {
+      "name": "test_deterministic_check[P5-T04]",
+      "classname": "tests.p5.test_acceptance",
+      "outcome": "pass",
+      "properties": {
+        "p5_id": "P5-T04"
+      },
+      "assertion": null
+    },
+    {
+      "name": "test_deterministic_check[P5-T05]",
+      "classname": "tests.p5.test_acceptance",
+      "outcome": "pass",
+      "properties": {
+        "p5_id": "P5-T05"
+      },
+      "assertion": null
+    },
+    {
+      "name": "test_deterministic_check[P5-T06]",
+      "classname": "tests.p5.test_acceptance",
+      "outcome": "pass",
+      "properties": {
+        "p5_id": "P5-T06"
+      },
+      "assertion": null
+    },
+    {
+      "name": "test_deterministic_check[P5-T07]",
+      "classname": "tests.p5.test_acceptance",
+      "outcome": "pass",
+      "properties": {
+        "p5_id": "P5-T07"
+      },
+      "assertion": null
+    },
+    {
+      "name": "test_deterministic_check[P5-T08]",
+      "classname": "tests.p5.test_acceptance",
+      "outcome": "pass",
+      "properties": {
+        "p5_id": "P5-T08"
+      },
+      "assertion": null
+    },
+    {
+      "name": "test_deterministic_check[P5-T09]",
+      "classname": "tests.p5.test_acceptance",
+      "outcome": "pass",
+      "properties": {
+        "p5_id": "P5-T09"
+      },
+      "assertion": null
+    },
+    {
+      "name": "test_deterministic_check[P5-T10]",
+      "classname": "tests.p5.test_acceptance",
+      "outcome": "pass",
+      "properties": {
+        "p5_id": "P5-T10"
+      },
+      "assertion": null
+    },
+    {
+      "name": "test_deterministic_check[P5-T11]",
+      "classname": "tests.p5.test_acceptance",
+      "outcome": "pass",
+      "properties": {
+        "p5_id": "P5-T11"
+      },
+      "assertion": null
+    },
+    {
+      "name": "test_deterministic_check[P5-T12]",
+      "classname": "tests.p5.test_acceptance",
+      "outcome": "pass",
+      "properties": {
+        "p5_id": "P5-T12"
+      },
+      "assertion": null
+    },
+    {
+      "name": "test_deterministic_check[P5-T13]",
+      "classname": "tests.p5.test_acceptance",
+      "outcome": "pass",
+      "properties": {
+        "p5_id": "P5-T13"
+      },
+      "assertion": null
+    },
+    {
+      "name": "test_deterministic_check[P5-T14]",
+      "classname": "tests.p5.test_acceptance",
+      "outcome": "pass",
+      "properties": {
+        "p5_id": "P5-T14"
+      },
+      "assertion": null
+    },
+    {
+      "name": "test_deterministic_check[P5-T15]",
+      "classname": "tests.p5.test_acceptance",
+      "outcome": "pass",
+      "properties": {
+        "p5_id": "P5-T15"
+      },
+      "assertion": null
+    },
+    {
+      "name": "test_deterministic_check[P5-T16]",
+      "classname": "tests.p5.test_acceptance",
+      "outcome": "pass",
+      "properties": {
+        "p5_id": "P5-T16"
+      },
+      "assertion": null
+    },
+    {
+      "name": "test_deterministic_check[P5-T17]",
+      "classname": "tests.p5.test_acceptance",
+      "outcome": "pass",
+      "properties": {
+        "p5_id": "P5-T17"
+      },
+      "assertion": null
+    },
+    {
+      "name": "test_deterministic_check[P5-T18]",
+      "classname": "tests.p5.test_acceptance",
+      "outcome": "pass",
+      "properties": {
+        "p5_id": "P5-T18"
+      },
+      "assertion": null
+    },
+    {
+      "name": "test_deterministic_check[P5-T47]",
+      "classname": "tests.p5.test_acceptance",
+      "outcome": "pass",
+      "properties": {
+        "p5_id": "P5-T47"
+      },
+      "assertion": null
+    },
+    {
+      "name": "test_deterministic_check[P5-T19]",
+      "classname": "tests.p5.test_acceptance",
+      "outcome": "pass",
+      "properties": {
+        "p5_id": "P5-T19"
+      },
+      "assertion": null
+    },
+    {
+      "name": "test_deterministic_check[P5-T20]",
+      "classname": "tests.p5.test_acceptance",
+      "outcome": "pass",
+      "properties": {
+        "p5_id": "P5-T20"
+      },
+      "assertion": null
+    },
+    {
+      "name": "test_deterministic_check[P5-T48]",
+      "classname": "tests.p5.test_acceptance",
+      "outcome": "pass",
+      "properties": {
+        "p5_id": "P5-T48"
+      },
+      "assertion": null
+    },
+    {
+      "name": "test_deterministic_check[P5-T21]",
+      "classname": "tests.p5.test_acceptance",
+      "outcome": "pass",
+      "properties": {
+        "p5_id": "P5-T21"
+      },
+      "assertion": null
+    },
+    {
+      "name": "test_deterministic_check[P5-T22]",
+      "classname": "tests.p5.test_acceptance",
+      "outcome": "pass",
+      "properties": {
+        "p5_id": "P5-T22"
+      },
+      "assertion": null
+    },
+    {
+      "name": "test_deterministic_check[P5-T23]",
+      "classname": "tests.p5.test_acceptance",
+      "outcome": "pass",
+      "properties": {
+        "p5_id": "P5-T23"
+      },
+      "assertion": null
+    },
+    {
+      "name": "test_deterministic_check[P5-T24]",
+      "classname": "tests.p5.test_acceptance",
+      "outcome": "pass",
+      "properties": {
+        "p5_id": "P5-T24"
+      },
+      "assertion": null
+    },
+    {
+      "name": "test_deterministic_check[P5-T25]",
+      "classname": "tests.p5.test_acceptance",
+      "outcome": "pass",
+      "properties": {
+        "p5_id": "P5-T25"
+      },
+      "assertion": null
+    },
+    {
+      "name": "test_deterministic_check[P5-T26]",
+      "classname": "tests.p5.test_acceptance",
+      "outcome": "pass",
+      "properties": {
+        "p5_id": "P5-T26"
+      },
+      "assertion": null
+    },
+    {
+      "name": "test_deterministic_check[P5-T49]",
+      "classname": "tests.p5.test_acceptance",
+      "outcome": "pass",
+      "properties": {
+        "p5_id": "P5-T49"
+      },
+      "assertion": null
+    },
+    {
+      "name": "test_deterministic_check[P5-T27]",
+      "classname": "tests.p5.test_acceptance",
+      "outcome": "pass",
+      "properties": {
+        "p5_id": "P5-T27"
+      },
+      "assertion": null
+    },
+    {
+      "name": "test_deterministic_check[P5-T28]",
+      "classname": "tests.p5.test_acceptance",
+      "outcome": "pass",
+      "properties": {
+        "p5_id": "P5-T28"
+      },
+      "assertion": null
+    },
+    {
+      "name": "test_deterministic_check[P5-T29]",
+      "classname": "tests.p5.test_acceptance",
+      "outcome": "pass",
+      "properties": {
+        "p5_id": "P5-T29"
+      },
+      "assertion": null
+    },
+    {
+      "name": "test_deterministic_check[P5-T30]",
+      "classname": "tests.p5.test_acceptance",
+      "outcome": "pass",
+      "properties": {
+        "p5_id": "P5-T30"
+      },
+      "assertion": null
+    },
+    {
+      "name": "test_deterministic_check[P5-T50]",
+      "classname": "tests.p5.test_acceptance",
+      "outcome": "pass",
+      "properties": {
+        "p5_id": "P5-T50"
+      },
+      "assertion": null
+    },
+    {
+      "name": "test_deterministic_check[P5-T31]",
+      "classname": "tests.p5.test_acceptance",
+      "outcome": "pass",
+      "properties": {
+        "p5_id": "P5-T31"
+      },
+      "assertion": null
+    },
+    {
+      "name": "test_deterministic_check[P5-T32]",
+      "classname": "tests.p5.test_acceptance",
+      "outcome": "pass",
+      "properties": {
+        "p5_id": "P5-T32"
+      },
+      "assertion": null
+    },
+    {
+      "name": "test_deterministic_check[P5-T51]",
+      "classname": "tests.p5.test_acceptance",
+      "outcome": "pass",
+      "properties": {
+        "p5_id": "P5-T51"
+      },
+      "assertion": null
+    },
+    {
+      "name": "test_deterministic_check[P5-T33]",
+      "classname": "tests.p5.test_acceptance",
+      "outcome": "pass",
+      "properties": {
+        "p5_id": "P5-T33"
+      },
+      "assertion": null
+    },
+    {
+      "name": "test_deterministic_check[P5-T34]",
+      "classname": "tests.p5.test_acceptance",
+      "outcome": "pass",
+      "properties": {
+        "p5_id": "P5-T34"
+      },
+      "assertion": null
+    },
+    {
+      "name": "test_deterministic_check[P5-T52]",
+      "classname": "tests.p5.test_acceptance",
+      "outcome": "pass",
+      "properties": {
+        "p5_id": "P5-T52"
+      },
+      "assertion": null
+    },
+    {
+      "name": "test_deterministic_check[P5-T35]",
+      "classname": "tests.p5.test_acceptance",
+      "outcome": "pass",
+      "properties": {
+        "p5_id": "P5-T35"
+      },
+      "assertion": null
+    },
+    {
+      "name": "test_deterministic_check[P5-T36]",
+      "classname": "tests.p5.test_acceptance",
+      "outcome": "pass",
+      "properties": {
+        "p5_id": "P5-T36"
+      },
+      "assertion": null
+    },
+    {
+      "name": "test_deterministic_check[P5-T37]",
+      "classname": "tests.p5.test_acceptance",
+      "outcome": "pass",
+      "properties": {
+        "p5_id": "P5-T37"
+      },
+      "assertion": null
+    },
+    {
+      "name": "test_deterministic_check[P5-T38]",
+      "classname": "tests.p5.test_acceptance",
+      "outcome": "pass",
+      "properties": {
+        "p5_id": "P5-T38"
+      },
+      "assertion": null
+    },
+    {
+      "name": "test_deterministic_check[P5-T39]",
+      "classname": "tests.p5.test_acceptance",
+      "outcome": "pass",
+      "properties": {
+        "p5_id": "P5-T39"
+      },
+      "assertion": null
+    },
+    {
+      "name": "test_deterministic_check[P5-T40]",
+      "classname": "tests.p5.test_acceptance",
+      "outcome": "pass",
+      "properties": {
+        "p5_id": "P5-T40"
+      },
+      "assertion": null
+    },
+    {
+      "name": "test_deterministic_check[P5-T41]",
+      "classname": "tests.p5.test_acceptance",
+      "outcome": "pass",
+      "properties": {
+        "p5_id": "P5-T41"
+      },
+      "assertion": null
+    },
+    {
+      "name": "test_deterministic_check[P5-T42]",
+      "classname": "tests.p5.test_acceptance",
+      "outcome": "pass",
+      "properties": {
+        "p5_id": "P5-T42"
+      },
+      "assertion": null
+    },
+    {
+      "name": "test_deterministic_check[P5-T53]",
+      "classname": "tests.p5.test_acceptance",
+      "outcome": "pass",
+      "properties": {
+        "p5_id": "P5-T53"
+      },
+      "assertion": null
+    },
+    {
+      "name": "test_deterministic_check[P5-T43]",
+      "classname": "tests.p5.test_acceptance",
+      "outcome": "pass",
+      "properties": {
+        "p5_id": "P5-T43"
+      },
+      "assertion": null
+    },
+    {
+      "name": "test_deterministic_check[P5-T44]",
+      "classname": "tests.p5.test_acceptance",
+      "outcome": "pass",
+      "properties": {
+        "p5_id": "P5-T44"
+      },
+      "assertion": null
+    },
+    {
+      "name": "test_deterministic_check[P5-T54]",
+      "classname": "tests.p5.test_acceptance",
+      "outcome": "pass",
+      "properties": {
+        "p5_id": "P5-T54"
+      },
+      "assertion": null
+    },
+    {
+      "name": "test_deterministic_check[P5-T45]",
+      "classname": "tests.p5.test_acceptance",
+      "outcome": "pass",
+      "properties": {
+        "p5_id": "P5-T45"
+      },
+      "assertion": null
+    },
+    {
+      "name": "test_deterministic_check[P5-T46]",
+      "classname": "tests.p5.test_acceptance",
+      "outcome": "pass",
+      "properties": {
+        "p5_id": "P5-T46"
+      },
+      "assertion": null
+    },
+    {
+      "name": "test_T55_pa_actual_golden",
+      "classname": "tests.p5.test_acceptance",
+      "outcome": "pass",
+      "properties": {
+        "p5_id": "P5-T55"
+      },
+      "assertion": null
+    },
+    {
+      "name": "test_T56_pb_actual_six_column_xlsx",
+      "classname": "tests.p5.test_acceptance",
+      "outcome": "pass",
+      "properties": {
+        "p5_id": "P5-T56"
+      },
+      "assertion": null
+    },
+    {
+      "name": "test_T57_pb_csv_is_test_projection_only",
+      "classname": "tests.p5.test_acceptance",
+      "outcome": "pass",
+      "properties": {
+        "p5_id": "P5-T57"
+      },
+      "assertion": null
+    },
+    {
+      "name": "test_T58_pd_diagnostic_csv_and_typed_failures",
+      "classname": "tests.p5.test_acceptance",
+      "outcome": "pass",
+      "properties": {
+        "p5_id": "P5-T58"
+      },
+      "assertion": null
+    },
+    {
+      "name": "test_T59_forged_approval_and_available_pc",
+      "classname": "tests.p5.test_acceptance",
+      "outcome": "pass",
+      "properties": {
+        "p5_id": "P5-T59"
+      },
+      "assertion": null
+    },
+    {
+      "name": "test_T60_missing_required_column_fails_without_dummy_report",
+      "classname": "tests.p5.test_acceptance",
+      "outcome": "pass",
+      "properties": {
+        "p5_id": "P5-T60"
+      },
+      "assertion": null
+    },
+    {
+      "name": "test_T61_duplicate_id_blocks_ready",
+      "classname": "tests.p5.test_acceptance",
+      "outcome": "pass",
+      "properties": {
+        "p5_id": "P5-T61"
+      },
+      "assertion": null
+    },
+    {
+      "name": "test_T62_parse_null_preserved_and_warned",
+      "classname": "tests.p5.test_acceptance",
+      "outcome": "pass",
+      "properties": {
+        "p5_id": "P5-T62"
+      },
+      "assertion": null
+    },
+    {
+      "name": "test_T63_writer_failure_and_csv_injection",
+      "classname": "tests.p5.test_acceptance",
+      "outcome": "pass",
+      "properties": {
+        "p5_id": "P5-T63"
+      },
+      "assertion": null
+    },
+    {
+      "name": "test_T64_precision_and_independent_numeric_guards",
+      "classname": "tests.p5.test_acceptance",
+      "outcome": "pass",
+      "properties": {
+        "p5_id": "P5-T64"
+      },
+      "assertion": null
+    },
+    {
+      "name": "test_T65_corrupt_internal_storage_blocks_without_writes",
+      "classname": "tests.p5.test_acceptance",
+      "outcome": "pass",
+      "properties": {
+        "p5_id": "P5-T65"
+      },
+      "assertion": null
+    },
+    {
+      "name": "test_T66_wrong_context_and_missing_pb_reference",
+      "classname": "tests.p5.test_acceptance",
+      "outcome": "pass",
+      "properties": {
+        "p5_id": "P5-T66"
+      },
+      "assertion": null
+    },
+    {
+      "name": "test_T67_repeat_and_competing_calls_do_not_duplicate",
+      "classname": "tests.p5.test_acceptance",
+      "outcome": "pass",
+      "properties": {
+        "p5_id": "P5-T67"
+      },
+      "assertion": null
+    },
+    {
+      "name": "test_T68_orphan_after_promotion_detect_only",
+      "classname": "tests.p5.test_acceptance",
+      "outcome": "pass",
+      "properties": {
+        "p5_id": "P5-T68"
+      },
+      "assertion": null
+    },
+    {
+      "name": "test_T69_committed_artifact_reused_after_sigkill",
+      "classname": "tests.p5.test_acceptance",
+      "outcome": "pass",
+      "properties": {
+        "p5_id": "P5-T69"
+      },
+      "assertion": null
+    },
+    {
+      "name": "test_T70_report_transaction_rolls_back_and_retry_reuses",
+      "classname": "tests.p5.test_acceptance",
+      "outcome": "pass",
+      "properties": {
+        "p5_id": "P5-T70"
+      },
+      "assertion": null
+    },
+    {
+      "name": "test_T71_terminal_commit_survives_restart_read_only",
+      "classname": "tests.p5.test_acceptance",
+      "outcome": "pass",
+      "properties": {
+        "p5_id": "P5-T71"
+      },
+      "assertion": null
+    },
+    {
+      "name": "test_T72_csv_and_xlsx_100000_by_200",
+      "classname": "tests.p5.test_acceptance",
+      "outcome": "failure",
+      "properties": {
+        "p5_id": "P5-T72"
+      },
+      "assertion": "tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-47/test_T72_csv_and_xlsx_100000_b0')\ndesign = {'base': PosixPath('/tmp/pytest-of-agent/pytest-47/p5-design0/P5_Implementation_Design_Pack_v0.2a_candidate'), 'handof...off_2026-11-05'), 'pb': PosixPath('/tmp/pytest-of-agent/pytest-47/p5-design0/P5_Gate_A_PB_Supplement_v0.2b_candidate')}\n\n    def test_T72_csv_and_xlsx_100000_by_200(tmp_path,design):\n        outcomes=[]\n        for format in ('CSV','XLSX'):\n            directory=tmp_path/format;directory.mkdir()\n            command=[sys.executable,'-m','p5.stress_probe','--design-root',str(design['base']),'--directory',str(directory),'--format',format]\n            run=subprocess.run(command,cwd=ROOT,capture_output=True,text=True,timeout=3600,env=child_environment())\n            record('stress-'+format,{'command':command,'exit_code':run.returncode,'stdout':run.stdout,'stderr':run.stderr})\n            assert run.returncode==0,(format,run.stdout,run.stderr)\n            outcome=json.loads(run.stdout)\n            assert outcome['rows']==100000 and outcome['columns']==200 and outcome['independent_cells_checked']==20000000\n            assert outcome['incremental_peak_rss_bytes']<=536870912 and outcome['Order']=='READY' and outcome['QA']=='PASS'\n            outcomes.append(outcome)\n        command=[sys.executable,'-m','p5.stress_probe','--design-root',str(design['base']),\n                 '--directory',str(tmp_path/'oversized'),'--format','CSV','--negative-oversized']\n        run=subprocess.run(command,cwd=ROOT,capture_output=True,text=True,timeout=1800,env=child_environment())\n        record('stress-negative-expanded-text',{'command':command,'exit_code':run.returncode,'stdout':run.stdout,'stderr':run.stderr})\n>       assert run.returncode==0,(run.stdout,run.stderr)\nE       AssertionError: ('', 'Traceback (most recent call last):\nE           File \"/workspace/p5-export-deterministic-qa/src/vde/workflow/validation.py...lid closed operation parameters\\') from exc\nE         vde.workflow.errors.WorkflowError: Invalid closed operation parameters\nE         ')\nE       assert 1 == 0\nE        +  where 1 = CompletedProcess(args=['/workspace/verified-data-extraction/.venv/bin/python', '-m', 'p5.stress_probe', '--design-root...lid closed operation parameters\\') from exc\\nvde.workflow.errors.WorkflowError: Invalid closed operation parameters\\n').returncode\n\ntests/p5/test_acceptance.py:498: AssertionError"
+    },
+    {
+      "name": "test_T73_external_historical_212_and_76_inventory",
+      "classname": "tests.p5.test_acceptance",
+      "outcome": "pass",
+      "properties": {
+        "p5_id": "P5-T73"
+      },
+      "assertion": null
+    },
+    {
+      "name": "test_T74_real_p0_schemas_and_immutable_pb_specimen",
+      "classname": "tests.p5.test_acceptance",
+      "outcome": "pass",
+      "properties": {
+        "p5_id": "P5-T74"
+      },
+      "assertion": null
+    },
+    {
+      "name": "test_T75_streamlit_explicit_action_and_passive_rerender",
+      "classname": "tests.p5.test_acceptance",
+      "outcome": "pass",
+      "properties": {
+        "p5_id": "P5-T75"
+      },
+      "assertion": null
+    },
+    {
+      "name": "test_T76_successor_scope_negatives_and_ambiguous_result",
+      "classname": "tests.p5.test_acceptance",
+      "outcome": "pass",
+      "properties": {
+        "p5_id": "P5-T76"
+      },
+      "assertion": null
+    }
+  ]
+}

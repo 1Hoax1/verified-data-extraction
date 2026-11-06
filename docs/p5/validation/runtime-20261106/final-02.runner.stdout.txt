@@ -1,0 +1,49 @@
+{"phase": "p5-collection", "exit_code": 0, "seconds": 0.694730367999}
+{"phase": "integrated-legacy", "exit_code": 1, "seconds": 355.0654200729987}
+{"phase": "p5-runtime", "exit_code": 1, "seconds": 995.3570975370021}
+{"phase": "strict-design", "exit_code": 0, "seconds": 0.1410615350032458}
+{"phase": "amendment-static", "exit_code": 0, "seconds": 0.059232935003819875}
+{"phase": "numeric-static", "exit_code": 0, "seconds": 0.25404057199921226}
+{"phase": "supplement-static", "exit_code": 0, "seconds": 0.07668718800414354}
+{"phase": "real-p0-schemas", "exit_code": 0, "seconds": 0.30631278500368353}
+{
+  "tested_implementation_commit": "8a8b8ace8944acacc24ba1e33a29f700d5e5b334",
+  "tested_implementation_tree": "bfedc38eb5de72f62f6b4354cf2d9ce29ea1e208",
+  "historical": {
+    "commit": "fd39aa1bed480313504ae8b1f76e77e170cb72ba",
+    "tree": "9d9f492491792a75b76954b3a17d1a376bc333e9",
+    "total": 212,
+    "pass_count": 212
+  },
+  "integrated_legacy": {
+    "total": 212,
+    "passed": 206,
+    "expected_historical_scope_conflicts": 6,
+    "blocking_regressions": 0
+  },
+  "p5": {
+    "total": 76,
+    "passed": 75,
+    "all_76_unique_ids": false
+  },
+  "static_all_pass": true,
+  "scope_before": {
+    "result": "PASS",
+    "protected_start_files": 883,
+    "P5_sources": 11,
+    "historical_tests_and_policies_unchanged": true,
+    "governance_pin_unchanged": true
+  },
+  "scope_after": {
+    "result": "PASS",
+    "protected_start_files": 883,
+    "P5_sources": 11,
+    "historical_tests_and_policies_unchanged": true,
+    "governance_pin_unchanged": true
+  },
+  "completed_at_moscow": "2026-11-06T17:23:58.662232+03:00",
+  "gates_closed_by_runner": false,
+  "merged": false,
+  "P6_started": false,
+  "technical_validation_success": false
+}

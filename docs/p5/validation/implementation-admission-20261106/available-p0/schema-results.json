@@ -1,0 +1,809 @@
+{
+  "schemas_checked": 20,
+  "positive_validations": 121,
+  "positive_schema_results": [
+    {
+      "path": "/workspace/p5-historical-regression/pecs/pilot_slice_v1/fixtures/P-A_dirty_csv/brief_version.json",
+      "schema": "brief_version",
+      "outcome": "PASS"
+    },
+    {
+      "path": "/workspace/p5-historical-regression/pecs/pilot_slice_v1/fixtures/P-A_dirty_csv/transformation_spec_version.json",
+      "schema": "transformation_spec_version",
+      "outcome": "PASS"
+    },
+    {
+      "path": "/workspace/p5-historical-regression/pecs/pilot_slice_v1/fixtures/P-A_dirty_csv/transformation_spec_version.json",
+      "schema": "rename",
+      "outcome": "PASS"
+    },
+    {
+      "path": "/workspace/p5-historical-regression/pecs/pilot_slice_v1/fixtures/P-A_dirty_csv/transformation_spec_version.json",
+      "schema": "trim",
+      "outcome": "PASS"
+    },
+    {
+      "path": "/workspace/p5-historical-regression/pecs/pilot_slice_v1/fixtures/P-A_dirty_csv/transformation_spec_version.json",
+      "schema": "change_case",
+      "outcome": "PASS"
+    },
+    {
+      "path": "/workspace/p5-historical-regression/pecs/pilot_slice_v1/fixtures/P-A_dirty_csv/transformation_spec_version.json",
+      "schema": "change_case",
+      "outcome": "PASS"
+    },
+    {
+      "path": "/workspace/p5-historical-regression/pecs/pilot_slice_v1/fixtures/P-A_dirty_csv/transformation_spec_version.json",
+      "schema": "change_case",
+      "outcome": "PASS"
+    },
+    {
+      "path": "/workspace/p5-historical-regression/pecs/pilot_slice_v1/fixtures/P-A_dirty_csv/transformation_spec_version.json",
+      "schema": "replace",
+      "outcome": "PASS"
+    },
+    {
+      "path": "/workspace/p5-historical-regression/pecs/pilot_slice_v1/fixtures/P-A_dirty_csv/transformation_spec_version.json",
+      "schema": "replace",
+      "outcome": "PASS"
+    },
+    {
+      "path": "/workspace/p5-historical-regression/pecs/pilot_slice_v1/fixtures/P-A_dirty_csv/transformation_spec_version.json",
+      "schema": "parse_date",
+      "outcome": "PASS"
+    },
+    {
+      "path": "/workspace/p5-historical-regression/pecs/pilot_slice_v1/fixtures/P-A_dirty_csv/transformation_spec_version.json",
+      "schema": "parse_number",
+      "outcome": "PASS"
+    },
+    {
+      "path": "/workspace/p5-historical-regression/pecs/pilot_slice_v1/fixtures/P-A_dirty_csv/transformation_spec_version.json",
+      "schema": "fill_missing",
+      "outcome": "PASS"
+    },
+    {
+      "path": "/workspace/p5-historical-regression/pecs/pilot_slice_v1/fixtures/P-A_dirty_csv/transformation_spec_version.json",
+      "schema": "drop_missing",
+      "outcome": "PASS"
+    },
+    {
+      "path": "/workspace/p5-historical-regression/pecs/pilot_slice_v1/fixtures/P-A_dirty_csv/transformation_spec_version.json",
+      "schema": "deduplicate",
+      "outcome": "PASS"
+    },
+    {
+      "path": "/workspace/p5-historical-regression/pecs/pilot_slice_v1/fixtures/P-A_dirty_csv/transformation_spec_version.json",
+      "schema": "sort",
+      "outcome": "PASS"
+    },
+    {
+      "path": "/workspace/p5-historical-regression/pecs/pilot_slice_v1/fixtures/P-A_dirty_csv/transformation_spec_version.json",
+      "schema": "select_columns",
+      "outcome": "PASS"
+    },
+    {
+      "path": "/workspace/p5-historical-regression/pecs/pilot_slice_v1/fixtures/P-A_dirty_csv/expected_qa_report.json",
+      "schema": "qa_report",
+      "outcome": "PASS"
+    },
+    {
+      "path": "/workspace/p5-historical-regression/pecs/pilot_slice_v1/fixtures/P-A_dirty_csv/expected_qa_report.json",
+      "schema": "qa_check_result",
+      "outcome": "PASS"
+    },
+    {
+      "path": "/workspace/p5-historical-regression/pecs/pilot_slice_v1/fixtures/P-A_dirty_csv/expected_qa_report.json",
+      "schema": "qa_check_result",
+      "outcome": "PASS"
+    },
+    {
+      "path": "/workspace/p5-historical-regression/pecs/pilot_slice_v1/fixtures/P-A_dirty_csv/expected_qa_report.json",
+      "schema": "qa_check_result",
+      "outcome": "PASS"
+    },
+    {
+      "path": "/workspace/p5-historical-regression/pecs/pilot_slice_v1/fixtures/P-A_dirty_csv/expected_qa_report.json",
+      "schema": "qa_check_result",
+      "outcome": "PASS"
+    },
+    {
+      "path": "/workspace/p5-historical-regression/pecs/pilot_slice_v1/fixtures/P-A_dirty_csv/expected_qa_report.json",
+      "schema": "qa_check_result",
+      "outcome": "PASS"
+    },
+    {
+      "path": "/workspace/p5-historical-regression/pecs/pilot_slice_v1/fixtures/P-A_dirty_csv/expected_qa_report.json",
+      "schema": "qa_check_result",
+      "outcome": "PASS"
+    },
+    {
+      "path": "/workspace/p5-historical-regression/pecs/pilot_slice_v1/fixtures/P-A_dirty_csv/expected_qa_report.json",
+      "schema": "qa_check_result",
+      "outcome": "PASS"
+    },
+    {
+      "path": "/workspace/p5-historical-regression/pecs/pilot_slice_v1/fixtures/P-A_dirty_csv/expected_qa_report.json",
+      "schema": "qa_check_result",
+      "outcome": "PASS"
+    },
+    {
+      "path": "/workspace/p5-historical-regression/pecs/pilot_slice_v1/fixtures/P-A_dirty_csv/expected_qa_report.json",
+      "schema": "qa_check_result",
+      "outcome": "PASS"
+    },
+    {
+      "path": "/workspace/p5-historical-regression/pecs/pilot_slice_v1/fixtures/P-A_dirty_csv/expected_qa_report.json",
+      "schema": "qa_check_result",
+      "outcome": "PASS"
+    },
+    {
+      "path": "/workspace/p5-historical-regression/pecs/pilot_slice_v1/fixtures/P-A_dirty_csv/expected_qa_report.json",
+      "schema": "qa_check_result",
+      "outcome": "PASS"
+    },
+    {
+      "path": "/workspace/p5-historical-regression/pecs/pilot_slice_v1/fixtures/P-A_dirty_csv/expected_qa_report.json",
+      "schema": "qa_check_result",
+      "outcome": "PASS"
+    },
+    {
+      "path": "/workspace/p5-historical-regression/pecs/pilot_slice_v1/fixtures/P-A_dirty_csv/expected_qa_report.json",
+      "schema": "qa_check_result",
+      "outcome": "PASS"
+    },
+    {
+      "path": "/workspace/p5-historical-regression/pecs/pilot_slice_v1/fixtures/P-A_dirty_csv/expected_qa_report.json",
+      "schema": "qa_check_result",
+      "outcome": "PASS"
+    },
+    {
+      "path": "/workspace/p5-historical-regression/pecs/pilot_slice_v1/fixtures/P-A_dirty_csv/expected_qa_report.json",
+      "schema": "qa_check_result",
+      "outcome": "PASS"
+    },
+    {
+      "path": "/workspace/p5-historical-regression/pecs/pilot_slice_v1/fixtures/P-A_dirty_csv/expected_qa_report.json",
+      "schema": "qa_check_result",
+      "outcome": "PASS"
+    },
+    {
+      "path": "/workspace/p5-historical-regression/pecs/pilot_slice_v1/fixtures/P-A_dirty_csv/expected_qa_report.json",
+      "schema": "qa_check_result",
+      "outcome": "PASS"
+    },
+    {
+      "path": "/workspace/p5-historical-regression/pecs/pilot_slice_v1/fixtures/P-A_dirty_csv/expected_qa_report.json",
+      "schema": "qa_check_result",
+      "outcome": "PASS"
+    },
+    {
+      "path": "/workspace/p5-historical-regression/pecs/pilot_slice_v1/fixtures/P-A_dirty_csv/expected_qa_report.json",
+      "schema": "qa_check_result",
+      "outcome": "PASS"
+    },
+    {
+      "path": "/workspace/p5-historical-regression/pecs/pilot_slice_v1/fixtures/P-A_dirty_csv/approvals/brief_approval.json",
+      "schema": "approval",
+      "outcome": "PASS"
+    },
+    {
+      "path": "/workspace/p5-historical-regression/pecs/pilot_slice_v1/fixtures/P-A_dirty_csv/approvals/transformation_approval.json",
+      "schema": "approval",
+      "outcome": "PASS"
+    },
+    {
+      "path": "/workspace/p5-historical-regression/pecs/pilot_slice_v1/fixtures/P-A_dirty_csv/acceptance_criteria.json",
+      "schema": "acceptance_criterion",
+      "outcome": "PASS"
+    },
+    {
+      "path": "/workspace/p5-historical-regression/pecs/pilot_slice_v1/fixtures/P-A_dirty_csv/acceptance_criteria.json",
+      "schema": "acceptance_criterion",
+      "outcome": "PASS"
+    },
+    {
+      "path": "/workspace/p5-historical-regression/pecs/pilot_slice_v1/fixtures/P-A_dirty_csv/acceptance_criteria.json",
+      "schema": "acceptance_criterion",
+      "outcome": "PASS"
+    },
+    {
+      "path": "/workspace/p5-historical-regression/pecs/pilot_slice_v1/fixtures/P-A_dirty_csv/acceptance_criteria.json",
+      "schema": "acceptance_criterion",
+      "outcome": "PASS"
+    },
+    {
+      "path": "/workspace/p5-historical-regression/pecs/pilot_slice_v1/fixtures/P-A_dirty_csv/acceptance_criteria.json",
+      "schema": "acceptance_criterion",
+      "outcome": "PASS"
+    },
+    {
+      "path": "/workspace/p5-historical-regression/pecs/pilot_slice_v1/fixtures/P-A_dirty_csv/acceptance_criteria.json",
+      "schema": "acceptance_criterion",
+      "outcome": "PASS"
+    },
+    {
+      "path": "/workspace/p5-historical-regression/pecs/pilot_slice_v1/fixtures/P-A_dirty_csv/acceptance_criteria.json",
+      "schema": "acceptance_criterion",
+      "outcome": "PASS"
+    },
+    {
+      "path": "/workspace/p5-historical-regression/pecs/pilot_slice_v1/fixtures/P-B_xlsx_sheet/brief_version.json",
+      "schema": "brief_version",
+      "outcome": "PASS"
+    },
+    {
+      "path": "/workspace/p5-historical-regression/pecs/pilot_slice_v1/fixtures/P-B_xlsx_sheet/transformation_spec_version.json",
+      "schema": "transformation_spec_version",
+      "outcome": "PASS"
+    },
+    {
+      "path": "/workspace/p5-historical-regression/pecs/pilot_slice_v1/fixtures/P-B_xlsx_sheet/transformation_spec_version.json",
+      "schema": "rename",
+      "outcome": "PASS"
+    },
+    {
+      "path": "/workspace/p5-historical-regression/pecs/pilot_slice_v1/fixtures/P-B_xlsx_sheet/transformation_spec_version.json",
+      "schema": "trim",
+      "outcome": "PASS"
+    },
+    {
+      "path": "/workspace/p5-historical-regression/pecs/pilot_slice_v1/fixtures/P-B_xlsx_sheet/transformation_spec_version.json",
+      "schema": "change_case",
+      "outcome": "PASS"
+    },
+    {
+      "path": "/workspace/p5-historical-regression/pecs/pilot_slice_v1/fixtures/P-B_xlsx_sheet/transformation_spec_version.json",
+      "schema": "parse_date",
+      "outcome": "PASS"
+    },
+    {
+      "path": "/workspace/p5-historical-regression/pecs/pilot_slice_v1/fixtures/P-B_xlsx_sheet/transformation_spec_version.json",
+      "schema": "deduplicate",
+      "outcome": "PASS"
+    },
+    {
+      "path": "/workspace/p5-historical-regression/pecs/pilot_slice_v1/fixtures/P-B_xlsx_sheet/transformation_spec_version.json",
+      "schema": "sort",
+      "outcome": "PASS"
+    },
+    {
+      "path": "/workspace/p5-historical-regression/pecs/pilot_slice_v1/fixtures/P-B_xlsx_sheet/transformation_spec_version.json",
+      "schema": "select_columns",
+      "outcome": "PASS"
+    },
+    {
+      "path": "/workspace/p5-historical-regression/pecs/pilot_slice_v1/fixtures/P-B_xlsx_sheet/expected_qa_report.json",
+      "schema": "qa_report",
+      "outcome": "PASS"
+    },
+    {
+      "path": "/workspace/p5-historical-regression/pecs/pilot_slice_v1/fixtures/P-B_xlsx_sheet/expected_qa_report.json",
+      "schema": "qa_check_result",
+      "outcome": "PASS"
+    },
+    {
+      "path": "/workspace/p5-historical-regression/pecs/pilot_slice_v1/fixtures/P-B_xlsx_sheet/expected_qa_report.json",
+      "schema": "qa_check_result",
+      "outcome": "PASS"
+    },
+    {
+      "path": "/workspace/p5-historical-regression/pecs/pilot_slice_v1/fixtures/P-B_xlsx_sheet/expected_qa_report.json",
+      "schema": "qa_check_result",
+      "outcome": "PASS"
+    },
+    {
+      "path": "/workspace/p5-historical-regression/pecs/pilot_slice_v1/fixtures/P-B_xlsx_sheet/expected_qa_report.json",
+      "schema": "qa_check_result",
+      "outcome": "PASS"
+    },
+    {
+      "path": "/workspace/p5-historical-regression/pecs/pilot_slice_v1/fixtures/P-B_xlsx_sheet/expected_qa_report.json",
+      "schema": "qa_check_result",
+      "outcome": "PASS"
+    },
+    {
+      "path": "/workspace/p5-historical-regression/pecs/pilot_slice_v1/fixtures/P-B_xlsx_sheet/expected_qa_report.json",
+      "schema": "qa_check_result",
+      "outcome": "PASS"
+    },
+    {
+      "path": "/workspace/p5-historical-regression/pecs/pilot_slice_v1/fixtures/P-B_xlsx_sheet/expected_qa_report.json",
+      "schema": "qa_check_result",
+      "outcome": "PASS"
+    },
+    {
+      "path": "/workspace/p5-historical-regression/pecs/pilot_slice_v1/fixtures/P-B_xlsx_sheet/expected_qa_report.json",
+      "schema": "qa_check_result",
+      "outcome": "PASS"
+    },
+    {
+      "path": "/workspace/p5-historical-regression/pecs/pilot_slice_v1/fixtures/P-B_xlsx_sheet/expected_qa_report.json",
+      "schema": "qa_check_result",
+      "outcome": "PASS"
+    },
+    {
+      "path": "/workspace/p5-historical-regression/pecs/pilot_slice_v1/fixtures/P-B_xlsx_sheet/expected_qa_report.json",
+      "schema": "qa_check_result",
+      "outcome": "PASS"
+    },
+    {
+      "path": "/workspace/p5-historical-regression/pecs/pilot_slice_v1/fixtures/P-B_xlsx_sheet/expected_qa_report.json",
+      "schema": "qa_check_result",
+      "outcome": "PASS"
+    },
+    {
+      "path": "/workspace/p5-historical-regression/pecs/pilot_slice_v1/fixtures/P-B_xlsx_sheet/expected_qa_report.json",
+      "schema": "qa_check_result",
+      "outcome": "PASS"
+    },
+    {
+      "path": "/workspace/p5-historical-regression/pecs/pilot_slice_v1/fixtures/P-B_xlsx_sheet/expected_qa_report.json",
+      "schema": "qa_check_result",
+      "outcome": "PASS"
+    },
+    {
+      "path": "/workspace/p5-historical-regression/pecs/pilot_slice_v1/fixtures/P-B_xlsx_sheet/expected_qa_report.json",
+      "schema": "qa_check_result",
+      "outcome": "PASS"
+    },
+    {
+      "path": "/workspace/p5-historical-regression/pecs/pilot_slice_v1/fixtures/P-B_xlsx_sheet/expected_qa_report.json",
+      "schema": "qa_check_result",
+      "outcome": "PASS"
+    },
+    {
+      "path": "/workspace/p5-historical-regression/pecs/pilot_slice_v1/fixtures/P-B_xlsx_sheet/expected_qa_report.json",
+      "schema": "qa_check_result",
+      "outcome": "PASS"
+    },
+    {
+      "path": "/workspace/p5-historical-regression/pecs/pilot_slice_v1/fixtures/P-B_xlsx_sheet/expected_qa_report.json",
+      "schema": "qa_check_result",
+      "outcome": "PASS"
+    },
+    {
+      "path": "/workspace/p5-historical-regression/pecs/pilot_slice_v1/fixtures/P-B_xlsx_sheet/expected_qa_report.json",
+      "schema": "qa_check_result",
+      "outcome": "PASS"
+    },
+    {
+      "path": "/workspace/p5-historical-regression/pecs/pilot_slice_v1/fixtures/P-B_xlsx_sheet/expected_qa_report.json",
+      "schema": "qa_check_result",
+      "outcome": "PASS"
+    },
+    {
+      "path": "/workspace/p5-historical-regression/pecs/pilot_slice_v1/fixtures/P-B_xlsx_sheet/expected_qa_report.json",
+      "schema": "qa_check_result",
+      "outcome": "PASS"
+    },
+    {
+      "path": "/workspace/p5-historical-regression/pecs/pilot_slice_v1/fixtures/P-B_xlsx_sheet/expected_qa_report.json",
+      "schema": "qa_check_result",
+      "outcome": "PASS"
+    },
+    {
+      "path": "/workspace/p5-historical-regression/pecs/pilot_slice_v1/fixtures/P-B_xlsx_sheet/approvals/brief_approval.json",
+      "schema": "approval",
+      "outcome": "PASS"
+    },
+    {
+      "path": "/workspace/p5-historical-regression/pecs/pilot_slice_v1/fixtures/P-B_xlsx_sheet/approvals/transformation_approval.json",
+      "schema": "approval",
+      "outcome": "PASS"
+    },
+    {
+      "path": "/workspace/p5-historical-regression/pecs/pilot_slice_v1/fixtures/P-B_xlsx_sheet/acceptance_criteria.json",
+      "schema": "acceptance_criterion",
+      "outcome": "PASS"
+    },
+    {
+      "path": "/workspace/p5-historical-regression/pecs/pilot_slice_v1/fixtures/P-B_xlsx_sheet/acceptance_criteria.json",
+      "schema": "acceptance_criterion",
+      "outcome": "PASS"
+    },
+    {
+      "path": "/workspace/p5-historical-regression/pecs/pilot_slice_v1/fixtures/P-B_xlsx_sheet/acceptance_criteria.json",
+      "schema": "acceptance_criterion",
+      "outcome": "PASS"
+    },
+    {
+      "path": "/workspace/p5-historical-regression/pecs/pilot_slice_v1/fixtures/P-B_xlsx_sheet/acceptance_criteria.json",
+      "schema": "acceptance_criterion",
+      "outcome": "PASS"
+    },
+    {
+      "path": "/workspace/p5-historical-regression/pecs/pilot_slice_v1/fixtures/P-B_xlsx_sheet/acceptance_criteria.json",
+      "schema": "acceptance_criterion",
+      "outcome": "PASS"
+    },
+    {
+      "path": "/workspace/p5-historical-regression/pecs/pilot_slice_v1/fixtures/P-B_xlsx_sheet/acceptance_criteria.json",
+      "schema": "acceptance_criterion",
+      "outcome": "PASS"
+    },
+    {
+      "path": "/workspace/p5-historical-regression/pecs/pilot_slice_v1/fixtures/P-B_xlsx_sheet/acceptance_criteria.json",
+      "schema": "acceptance_criterion",
+      "outcome": "PASS"
+    },
+    {
+      "path": "/workspace/p5-historical-regression/pecs/pilot_slice_v1/fixtures/P-D_errors_and_qa_blockers/brief_version.json",
+      "schema": "brief_version",
+      "outcome": "PASS"
+    },
+    {
+      "path": "/workspace/p5-historical-regression/pecs/pilot_slice_v1/fixtures/P-D_errors_and_qa_blockers/transformation_spec_version.json",
+      "schema": "transformation_spec_version",
+      "outcome": "PASS"
+    },
+    {
+      "path": "/workspace/p5-historical-regression/pecs/pilot_slice_v1/fixtures/P-D_errors_and_qa_blockers/transformation_spec_version.json",
+      "schema": "trim",
+      "outcome": "PASS"
+    },
+    {
+      "path": "/workspace/p5-historical-regression/pecs/pilot_slice_v1/fixtures/P-D_errors_and_qa_blockers/transformation_spec_version.json",
+      "schema": "change_case",
+      "outcome": "PASS"
+    },
+    {
+      "path": "/workspace/p5-historical-regression/pecs/pilot_slice_v1/fixtures/P-D_errors_and_qa_blockers/transformation_spec_version.json",
+      "schema": "parse_date",
+      "outcome": "PASS"
+    },
+    {
+      "path": "/workspace/p5-historical-regression/pecs/pilot_slice_v1/fixtures/P-D_errors_and_qa_blockers/transformation_spec_version.json",
+      "schema": "parse_number",
+      "outcome": "PASS"
+    },
+    {
+      "path": "/workspace/p5-historical-regression/pecs/pilot_slice_v1/fixtures/P-D_errors_and_qa_blockers/expected_qa_report.json",
+      "schema": "qa_report",
+      "outcome": "PASS"
+    },
+    {
+      "path": "/workspace/p5-historical-regression/pecs/pilot_slice_v1/fixtures/P-D_errors_and_qa_blockers/expected_qa_report.json",
+      "schema": "qa_check_result",
+      "outcome": "PASS"
+    },
+    {
+      "path": "/workspace/p5-historical-regression/pecs/pilot_slice_v1/fixtures/P-D_errors_and_qa_blockers/expected_qa_report.json",
+      "schema": "qa_check_result",
+      "outcome": "PASS"
+    },
+    {
+      "path": "/workspace/p5-historical-regression/pecs/pilot_slice_v1/fixtures/P-D_errors_and_qa_blockers/expected_qa_report.json",
+      "schema": "qa_check_result",
+      "outcome": "PASS"
+    },
+    {
+      "path": "/workspace/p5-historical-regression/pecs/pilot_slice_v1/fixtures/P-D_errors_and_qa_blockers/expected_qa_report.json",
+      "schema": "qa_check_result",
+      "outcome": "PASS"
+    },
+    {
+      "path": "/workspace/p5-historical-regression/pecs/pilot_slice_v1/fixtures/P-D_errors_and_qa_blockers/expected_qa_report.json",
+      "schema": "qa_check_result",
+      "outcome": "PASS"
+    },
+    {
+      "path": "/workspace/p5-historical-regression/pecs/pilot_slice_v1/fixtures/P-D_errors_and_qa_blockers/expected_qa_report.json",
+      "schema": "qa_check_result",
+      "outcome": "PASS"
+    },
+    {
+      "path": "/workspace/p5-historical-regression/pecs/pilot_slice_v1/fixtures/P-D_errors_and_qa_blockers/expected_qa_report.json",
+      "schema": "qa_check_result",
+      "outcome": "PASS"
+    },
+    {
+      "path": "/workspace/p5-historical-regression/pecs/pilot_slice_v1/fixtures/P-D_errors_and_qa_blockers/expected_qa_report.json",
+      "schema": "qa_check_result",
+      "outcome": "PASS"
+    },
+    {
+      "path": "/workspace/p5-historical-regression/pecs/pilot_slice_v1/fixtures/P-D_errors_and_qa_blockers/expected_qa_report.json",
+      "schema": "qa_check_result",
+      "outcome": "PASS"
+    },
+    {
+      "path": "/workspace/p5-historical-regression/pecs/pilot_slice_v1/fixtures/P-D_errors_and_qa_blockers/expected_qa_report.json",
+      "schema": "qa_check_result",
+      "outcome": "PASS"
+    },
+    {
+      "path": "/workspace/p5-historical-regression/pecs/pilot_slice_v1/fixtures/P-D_errors_and_qa_blockers/expected_qa_report.json",
+      "schema": "qa_check_result",
+      "outcome": "PASS"
+    },
+    {
+      "path": "/workspace/p5-historical-regression/pecs/pilot_slice_v1/fixtures/P-D_errors_and_qa_blockers/expected_qa_report.json",
+      "schema": "qa_check_result",
+      "outcome": "PASS"
+    },
+    {
+      "path": "/workspace/p5-historical-regression/pecs/pilot_slice_v1/fixtures/P-D_errors_and_qa_blockers/expected_qa_report.json",
+      "schema": "qa_check_result",
+      "outcome": "PASS"
+    },
+    {
+      "path": "/workspace/p5-historical-regression/pecs/pilot_slice_v1/fixtures/P-D_errors_and_qa_blockers/expected_qa_report.json",
+      "schema": "qa_check_result",
+      "outcome": "PASS"
+    },
+    {
+      "path": "/workspace/p5-historical-regression/pecs/pilot_slice_v1/fixtures/P-D_errors_and_qa_blockers/expected_qa_report.json",
+      "schema": "qa_check_result",
+      "outcome": "PASS"
+    },
+    {
+      "path": "/workspace/p5-historical-regression/pecs/pilot_slice_v1/fixtures/P-D_errors_and_qa_blockers/expected_qa_report.json",
+      "schema": "qa_check_result",
+      "outcome": "PASS"
+    },
+    {
+      "path": "/workspace/p5-historical-regression/pecs/pilot_slice_v1/fixtures/P-D_errors_and_qa_blockers/expected_qa_report.json",
+      "schema": "qa_check_result",
+      "outcome": "PASS"
+    },
+    {
+      "path": "/workspace/p5-historical-regression/pecs/pilot_slice_v1/fixtures/P-D_errors_and_qa_blockers/expected_qa_report.json",
+      "schema": "qa_check_result",
+      "outcome": "PASS"
+    },
+    {
+      "path": "/workspace/p5-historical-regression/pecs/pilot_slice_v1/fixtures/P-D_errors_and_qa_blockers/approvals/brief_approval.json",
+      "schema": "approval",
+      "outcome": "PASS"
+    },
+    {
+      "path": "/workspace/p5-historical-regression/pecs/pilot_slice_v1/fixtures/P-D_errors_and_qa_blockers/approvals/transformation_approval.json",
+      "schema": "approval",
+      "outcome": "PASS"
+    },
+    {
+      "path": "/workspace/p5-historical-regression/pecs/pilot_slice_v1/fixtures/P-D_errors_and_qa_blockers/acceptance_criteria.json",
+      "schema": "acceptance_criterion",
+      "outcome": "PASS"
+    },
+    {
+      "path": "/workspace/p5-historical-regression/pecs/pilot_slice_v1/fixtures/P-D_errors_and_qa_blockers/acceptance_criteria.json",
+      "schema": "acceptance_criterion",
+      "outcome": "PASS"
+    },
+    {
+      "path": "/workspace/p5-historical-regression/pecs/pilot_slice_v1/fixtures/P-D_errors_and_qa_blockers/acceptance_criteria.json",
+      "schema": "acceptance_criterion",
+      "outcome": "PASS"
+    },
+    {
+      "path": "/workspace/p5-historical-regression/pecs/pilot_slice_v1/fixtures/P-D_errors_and_qa_blockers/acceptance_criteria.json",
+      "schema": "acceptance_criterion",
+      "outcome": "PASS"
+    },
+    {
+      "path": "/workspace/p5-historical-regression/pecs/pilot_slice_v1/fixtures/P-D_errors_and_qa_blockers/acceptance_criteria.json",
+      "schema": "acceptance_criterion",
+      "outcome": "PASS"
+    },
+    {
+      "path": "/workspace/p5-historical-regression/pecs/pilot_slice_v1/fixtures/P-D_errors_and_qa_blockers/acceptance_criteria.json",
+      "schema": "acceptance_criterion",
+      "outcome": "PASS"
+    },
+    {
+      "path": "/workspace/p5-handoff-source/P5_Gate_A_PB_Supplement_v0.2b_candidate/P5_Gate_A_PB_Supplement_v0.2b_candidate/fixtures/P-B_versioned/transformation_spec_version_v2_CANDIDATE.json",
+      "schema": "transformation_spec_version",
+      "outcome": "PASS"
+    },
+    {
+      "path": "/workspace/p5-handoff-source/P5_Gate_A_PB_Supplement_v0.2b_candidate/P5_Gate_A_PB_Supplement_v0.2b_candidate/fixtures/P-B_versioned/transformation_approval_v2_TEST_ONLY.json",
+      "schema": "approval",
+      "outcome": "PASS"
+    },
+    {
+      "path": "/workspace/p5-handoff-source/P5_Gate_A_PB_Supplement_v0.2b_candidate/P5_Gate_A_PB_Supplement_v0.2b_candidate/fixtures/P-B_versioned/qa_report_specimen_v2_TEST_ONLY.json",
+      "schema": "qa_report",
+      "outcome": "PASS"
+    }
+  ],
+  "negative_examples_inspected": 24,
+  "negative_schema_results": [
+    {
+      "path": "fixtures/P-A_dirty_csv/invalid_examples/brief_with_is_approved.invalid.json",
+      "schema": "brief_version",
+      "schema_outcome": "REJECTED",
+      "schema_errors": [
+        "Additional properties are not allowed ('is_approved' was unexpected)"
+      ]
+    },
+    {
+      "path": "fixtures/P-A_dirty_csv/invalid_examples/csv_auto_encoding.invalid.json",
+      "schema": "transformation_spec_version",
+      "schema_outcome": "REJECTED",
+      "schema_errors": [
+        "{'encoding': 'AUTO', 'delimiter': ',', 'header_row': 0} is not valid under any of the given schemas"
+      ]
+    },
+    {
+      "path": "fixtures/P-A_dirty_csv/invalid_examples/operation_invalid_separators.invalid.json",
+      "schema": "parse_number",
+      "schema_outcome": "REJECTED",
+      "schema_errors": [
+        "{'column': 'revenue', 'decimal_separator': '.', 'thousands_separator': '.', 'target_type': 'decimal', 'errors': 'FAIL'} should not be valid under {'anyOf': [{'properties': {'decimal_separator': {'const': '.'}, 'thousands_separator': {'const': '.'}}, 'required': ['decimal_separator', 'thousands_separator']}, {'properties': {'decimal_separator': {'const': ','}, 'thousands_separator': {'const': ','}}, 'required': ['decimal_separator', 'thousands_separator']}]}"
+      ]
+    },
+    {
+      "path": "fixtures/P-A_dirty_csv/invalid_examples/output_name_with_tab.invalid.json",
+      "schema": "brief_version",
+      "schema_outcome": "REJECTED",
+      "schema_errors": [
+        "'Bad\\tHeader' does not match '^(?!\\\\s)(?!.*\\\\s$)[^\\\\x00-\\\\x1F\\\\x7F-\\\\x9F]{1,128}$'"
+      ]
+    },
+    {
+      "path": "fixtures/P-A_dirty_csv/invalid_examples/spec_with_non_pilot_operation.invalid.json",
+      "schema": "transformation_spec_version",
+      "schema_outcome": "REJECTED",
+      "schema_errors": [
+        "{'schema_version': '1.1', 'operation_id': 'pa-op-01', 'type': 'filter', 'input_dataset': 'raw', 'output_dataset': 's01', 'params': {'mapping': {'Customer Name': 'customer_name', 'Country': 'country', 'Signup Date': 'signup_date', 'Revenue': 'revenue', 'Status': 'status', 'Email': 'email'}}} is not valid under any of the given schemas"
+      ]
+    },
+    {
+      "path": "fixtures/P-B_xlsx_sheet/invalid_examples/output_name_with_tab.invalid.json",
+      "schema": "brief_version",
+      "schema_outcome": "REJECTED",
+      "schema_errors": [
+        "'Bad\\tHeader' does not match '^(?!\\\\s)(?!.*\\\\s$)[^\\\\x00-\\\\x1F\\\\x7F-\\\\x9F]{1,128}$'"
+      ]
+    },
+    {
+      "path": "fixtures/P-B_xlsx_sheet/invalid_examples/sort_length_mismatch.semantic_invalid.json",
+      "schema": "sort",
+      "schema_outcome": "ACCEPTED_REQUIRES_SEMANTIC_GUARD",
+      "schema_errors": []
+    },
+    {
+      "path": "fixtures/P-B_xlsx_sheet/invalid_examples/xlsx_with_csv_options.invalid.json",
+      "schema": "transformation_spec_version",
+      "schema_outcome": "REJECTED",
+      "schema_errors": [
+        "None was expected"
+      ]
+    },
+    {
+      "path": "fixtures/P-B_xlsx_sheet/invalid_examples/xlsx_without_sheet.invalid.json",
+      "schema": "brief_version",
+      "schema_outcome": "REJECTED",
+      "schema_errors": [
+        "None is not of type 'string'"
+      ]
+    },
+    {
+      "path": "fixtures/P-C_approval_safety/invalid_examples/approval_target_hash_wrong.json",
+      "schema": "approval",
+      "schema_outcome": "ACCEPTED_REQUIRES_SEMANTIC_GUARD",
+      "schema_errors": []
+    },
+    {
+      "path": "fixtures/P-C_approval_safety/invalid_examples/brief_approval_with_context.schema_invalid.json",
+      "schema": "approval",
+      "schema_outcome": "REJECTED",
+      "schema_errors": [
+        "None was expected"
+      ]
+    },
+    {
+      "path": "fixtures/P-C_approval_safety/invalid_examples/brief_mutated_after_approval.json",
+      "schema": "brief_version",
+      "schema_outcome": "ACCEPTED_REQUIRES_SEMANTIC_GUARD",
+      "schema_errors": []
+    },
+    {
+      "path": "fixtures/P-C_approval_safety/invalid_examples/brief_with_approved_at.schema_invalid.json",
+      "schema": "brief_version",
+      "schema_outcome": "REJECTED",
+      "schema_errors": [
+        "Additional properties are not allowed ('approved_at' was unexpected)"
+      ]
+    },
+    {
+      "path": "fixtures/P-C_approval_safety/invalid_examples/output_name_duplicate.semantic_invalid.json",
+      "schema": "brief_version",
+      "schema_outcome": "ACCEPTED_REQUIRES_SEMANTIC_GUARD",
+      "schema_errors": []
+    },
+    {
+      "path": "fixtures/P-C_approval_safety/invalid_examples/output_name_non_nfc.semantic_invalid.json",
+      "schema": "brief_version",
+      "schema_outcome": "ACCEPTED_REQUIRES_SEMANTIC_GUARD",
+      "schema_errors": []
+    },
+    {
+      "path": "fixtures/P-C_approval_safety/invalid_examples/output_name_with_tab.invalid.json",
+      "schema": "brief_version",
+      "schema_outcome": "REJECTED",
+      "schema_errors": [
+        "'Bad\\tHeader' does not match '^(?!\\\\s)(?!.*\\\\s$)[^\\\\x00-\\\\x1F\\\\x7F-\\\\x9F]{1,128}$'"
+      ]
+    },
+    {
+      "path": "fixtures/P-C_approval_safety/invalid_examples/transformation_wrong_brief_hash.json",
+      "schema": "transformation_spec_version",
+      "schema_outcome": "ACCEPTED_REQUIRES_SEMANTIC_GUARD",
+      "schema_errors": []
+    },
+    {
+      "path": "fixtures/P-D_errors_and_qa_blockers/invalid_examples/brief_missing_objective.invalid.json",
+      "schema": "brief_version",
+      "schema_outcome": "REJECTED",
+      "schema_errors": [
+        "'objective' is a required property"
+      ]
+    },
+    {
+      "path": "fixtures/P-D_errors_and_qa_blockers/invalid_examples/output_name_with_tab.invalid.json",
+      "schema": "brief_version",
+      "schema_outcome": "REJECTED",
+      "schema_errors": [
+        "'Bad\\tHeader' does not match '^(?!\\\\s)(?!.*\\\\s$)[^\\\\x00-\\\\x1F\\\\x7F-\\\\x9F]{1,128}$'"
+      ]
+    },
+    {
+      "path": "fixtures/P-D_errors_and_qa_blockers/invalid_examples/parse_failure_policy_fail.semantic_invalid.json",
+      "schema": "transformation_spec_version",
+      "schema_outcome": "ACCEPTED_REQUIRES_SEMANTIC_GUARD",
+      "schema_errors": []
+    },
+    {
+      "path": "fixtures/P-D_errors_and_qa_blockers/invalid_examples/preflight_missing_column.semantic_invalid.json",
+      "schema": "transformation_spec_version",
+      "schema_outcome": "ACCEPTED_REQUIRES_SEMANTIC_GUARD",
+      "schema_errors": []
+    },
+    {
+      "path": "fixtures/P-D_errors_and_qa_blockers/invalid_examples/rename_collision.semantic_invalid.json",
+      "schema": "transformation_spec_version",
+      "schema_outcome": "ACCEPTED_REQUIRES_SEMANTIC_GUARD",
+      "schema_errors": []
+    },
+    {
+      "path": "fixtures/P-D_errors_and_qa_blockers/invalid_examples/spec_with_script.invalid.json",
+      "schema": "transformation_spec_version",
+      "schema_outcome": "REJECTED",
+      "schema_errors": [
+        "Additional properties are not allowed ('script' was unexpected)"
+      ]
+    },
+    {
+      "path": "fixtures/P-D_errors_and_qa_blockers/invalid_examples/unknown_operation.invalid.json",
+      "schema": "operation",
+      "schema_outcome": "REJECTED",
+      "schema_errors": [
+        "{'schema_version': '1.1', 'operation_id': 'pd-bad-01', 'type': 'filter', 'input_dataset': 'raw', 'output_dataset': 'result', 'params': {}} is not valid under any of the given schemas"
+      ]
+    }
+  ],
+  "manifest_present_matches": 116,
+  "manifest_declared_count": 129,
+  "missing_P_C_originals": [
+    "fixtures/P-C_approval_safety/README.md",
+    "fixtures/P-C_approval_safety/acceptance_criteria.json",
+    "fixtures/P-C_approval_safety/approval_safety_cases.json",
+    "fixtures/P-C_approval_safety/approvals/brief_approval.json",
+    "fixtures/P-C_approval_safety/approvals/transformation_approval.json",
+    "fixtures/P-C_approval_safety/brief_version.json",
+    "fixtures/P-C_approval_safety/errors_checked.json",
+    "fixtures/P-C_approval_safety/expected_qa_report.json",
+    "fixtures/P-C_approval_safety/expected_result.csv",
+    "fixtures/P-C_approval_safety/invalid_manifest.json",
+    "fixtures/P-C_approval_safety/semantic_payloads/brief_payload.json",
+    "fixtures/P-C_approval_safety/semantic_payloads/transformation_payload.json",
+    "fixtures/P-C_approval_safety/transformation_spec_version.json"
+  ],
+  "available_schema_validation": "PASS",
+  "complete_original_P0_pack": "INCOMPLETE_13_MISSING_ORIGINALS",
+  "P_C_full_positive": "BLOCKED_NOT_CLAIMED",
+  "synthetic_supplement_approval": "SCHEMA_VALID_TEST_ONLY_NOT_BUSINESS_AUTHORITY"
+}

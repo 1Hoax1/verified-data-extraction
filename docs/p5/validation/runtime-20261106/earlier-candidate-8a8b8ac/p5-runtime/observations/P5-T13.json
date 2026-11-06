@@ -1,0 +1,35 @@
+{
+  "fixture": "P5-DQ-007-POS",
+  "result": "PASS",
+  "observed_check": {
+    "schema_version": "1.1",
+    "check_id": "DQ-007",
+    "name": "DQ-007 deterministic check",
+    "status": "PASS",
+    "severity": "ERROR",
+    "target": {
+      "artifact": null,
+      "dataset_id": null,
+      "column": null,
+      "row_ids": []
+    },
+    "expected": true,
+    "actual": {
+      "expected": {
+        "format": "CSV",
+        "encoding": "UTF-8",
+        "delimiter": ","
+      },
+      "actual": {
+        "format": "CSV",
+        "encoding": "UTF-8",
+        "delimiter": ","
+      }
+    },
+    "affected_count": 0,
+    "sample_row_ids": [],
+    "message": "All selected data checked.",
+    "criterion_id": null
+  },
+  "supplemental": []
+}

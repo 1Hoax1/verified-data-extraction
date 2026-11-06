@@ -1,0 +1,11 @@
+{
+  "argv": [
+    "/workspace/verified-data-extraction/.venv/bin/python",
+    "-m",
+    "p4.restart_probe",
+    "/tmp/pytest-of-agent/pytest-48/test_T47_kill_mid_pipeline0/workspace",
+    "mid_pipeline"
+  ],
+  "cwd": "/workspace/p5-export-deterministic-qa",
+  "exit_code": -9
+}

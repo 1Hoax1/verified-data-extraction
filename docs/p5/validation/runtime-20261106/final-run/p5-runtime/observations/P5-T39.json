@@ -1,0 +1,39 @@
+{
+  "fixture": "P5-DQ-022-POS",
+  "result": "PASS",
+  "observed_check": {
+    "schema_version": "1.1",
+    "check_id": "DQ-022",
+    "name": "DQ-022 deterministic check",
+    "status": "PASS",
+    "severity": "ERROR",
+    "target": {
+      "artifact": null,
+      "dataset_id": null,
+      "column": null,
+      "row_ids": []
+    },
+    "expected": true,
+    "actual": {
+      "before": [
+        3,
+        6
+      ],
+      "after": [
+        3,
+        6
+      ]
+    },
+    "affected_count": 0,
+    "sample_row_ids": [],
+    "message": "All selected data checked.",
+    "criterion_id": null
+  },
+  "supplemental": [
+    {
+      "full_PB_readback_cells": 18,
+      "real_P5_result_published": false,
+      "numeric_csv_cases": 15
+    }
+  ]
+}

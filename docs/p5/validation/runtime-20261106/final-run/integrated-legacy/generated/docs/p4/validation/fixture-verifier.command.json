@@ -1,0 +1,12 @@
+{
+  "argv": [
+    "/workspace/verified-data-extraction/.venv/bin/python",
+    "/tmp/pytest-of-agent/pytest-48/p4-approved0/P4_Implementation_Pack_v1.0_APPROVED/tools/verify_p4_fixture_consistency.py",
+    "--p0-root",
+    "/workspace/p5-export-deterministic-qa/pecs/pilot_slice_v1",
+    "--require-p0",
+    "--mutation-probes"
+  ],
+  "cwd": "/workspace/p5-export-deterministic-qa",
+  "exit_code": 0
+}

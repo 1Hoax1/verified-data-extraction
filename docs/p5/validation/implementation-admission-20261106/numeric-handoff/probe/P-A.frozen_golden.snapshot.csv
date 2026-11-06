@@ -1,0 +1,4 @@
+Имя клиента,Страна,Дата регистрации,Выручка,Статус,Email
+Алиса Смит,RU,2026-01-31,1234.5,active,alice@example.com
+Bob Jones,US,2026-02-05,2000.0,active,bob@example.com
+Carla Ruiz,ES,2026-02-15,0.0,inactive,carla@example.com

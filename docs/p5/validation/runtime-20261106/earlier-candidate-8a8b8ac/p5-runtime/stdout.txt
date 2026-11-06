@@ -1,0 +1,37 @@
+.......................................................................F [ 94%]
+....                                                                     [100%]
+=================================== FAILURES ===================================
+_____________________ test_T72_csv_and_xlsx_100000_by_200 ______________________
+
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-47/test_T72_csv_and_xlsx_100000_b0')
+design = {'base': PosixPath('/tmp/pytest-of-agent/pytest-47/p5-design0/P5_Implementation_Design_Pack_v0.2a_candidate'), 'handof...off_2026-11-05'), 'pb': PosixPath('/tmp/pytest-of-agent/pytest-47/p5-design0/P5_Gate_A_PB_Supplement_v0.2b_candidate')}
+
+    def test_T72_csv_and_xlsx_100000_by_200(tmp_path,design):
+        outcomes=[]
+        for format in ('CSV','XLSX'):
+            directory=tmp_path/format;directory.mkdir()
+            command=[sys.executable,'-m','p5.stress_probe','--design-root',str(design['base']),'--directory',str(directory),'--format',format]
+            run=subprocess.run(command,cwd=ROOT,capture_output=True,text=True,timeout=3600,env=child_environment())
+            record('stress-'+format,{'command':command,'exit_code':run.returncode,'stdout':run.stdout,'stderr':run.stderr})
+            assert run.returncode==0,(format,run.stdout,run.stderr)
+            outcome=json.loads(run.stdout)
+            assert outcome['rows']==100000 and outcome['columns']==200 and outcome['independent_cells_checked']==20000000
+            assert outcome['incremental_peak_rss_bytes']<=536870912 and outcome['Order']=='READY' and outcome['QA']=='PASS'
+            outcomes.append(outcome)
+        command=[sys.executable,'-m','p5.stress_probe','--design-root',str(design['base']),
+                 '--directory',str(tmp_path/'oversized'),'--format','CSV','--negative-oversized']
+        run=subprocess.run(command,cwd=ROOT,capture_output=True,text=True,timeout=1800,env=child_environment())
+        record('stress-negative-expanded-text',{'command':command,'exit_code':run.returncode,'stdout':run.stdout,'stderr':run.stderr})
+>       assert run.returncode==0,(run.stdout,run.stderr)
+E       AssertionError: ('', 'Traceback (most recent call last):
+E           File "/workspace/p5-export-deterministic-qa/src/vde/workflow/validation.py...lid closed operation parameters\') from exc
+E         vde.workflow.errors.WorkflowError: Invalid closed operation parameters
+E         ')
+E       assert 1 == 0
+E        +  where 1 = CompletedProcess(args=['/workspace/verified-data-extraction/.venv/bin/python', '-m', 'p5.stress_probe', '--design-root...lid closed operation parameters\') from exc\nvde.workflow.errors.WorkflowError: Invalid closed operation parameters\n').returncode
+
+tests/p5/test_acceptance.py:498: AssertionError
+- generated xml file: /workspace/p5-resume-work/final-02/p5-runtime/results.xml -
+=========================== short test summary info ============================
+FAILED tests/p5/test_acceptance.py::test_T72_csv_and_xlsx_100000_by_200 - Ass...
+1 failed, 75 passed in 994.83s (0:16:34)

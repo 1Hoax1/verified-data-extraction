@@ -1,0 +1,28 @@
+{
+  "command": [
+    "/workspace/verified-data-extraction/.venv/bin/python",
+    "/workspace/p5-export-deterministic-qa/docs/p5/validation/implementation-admission-20261106/reproduce_numeric_handoff.py",
+    "--repo",
+    "/workspace/p5-historical-regression",
+    "--out",
+    "/workspace/p5-work/numeric-handoff/probe"
+  ],
+  "cwd": "/workspace/p5-historical-regression",
+  "started_at_moscow": "2026-11-06T15:37:36.821005+03:00",
+  "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+  "executable": "/workspace/verified-data-extraction/.venv/bin/python",
+  "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+  "packages": {
+    "pytest": "8.4.2",
+    "jsonschema": "4.26.0",
+    "referencing": "0.37.0",
+    "rfc8785": "0.1.4",
+    "openpyxl": "3.1.5",
+    "streamlit": "1.50.0"
+  },
+  "checkout_commit": "fd39aa1bed480313504ae8b1f76e77e170cb72ba",
+  "checkout_tree": "9d9f492491792a75b76954b3a17d1a376bc333e9",
+  "exit_code": 1,
+  "elapsed_seconds": 2.207258147001994,
+  "finished_at_moscow": "2026-11-06T15:37:39.036240+03:00"
+}

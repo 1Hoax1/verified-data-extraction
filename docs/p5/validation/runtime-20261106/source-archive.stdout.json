@@ -1,0 +1,72 @@
+{
+  "result": "PASS",
+  "archive_sha256": "3e3a2f6a8e65f500fe5bd281ef805d9229d50b96c50433cdda52cbb4fd6d63e4",
+  "entries": 10,
+  "manifest_sha256": "107e4b2b03228bf4037e291452ac1d0e271d90b567c71bed7a625519634251d8",
+  "tested_commit": "801cc2ba5db46494eaa93e5b963c3bc2f936ddc2",
+  "observed_at_utc": "2026-11-06T14:40:56.220621+00:00",
+  "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+  "note": "The packaged old summary says 9; the actual complete manifest has 10 entries.",
+  "records": [
+    {
+      "path": "CODEX_IMPLEMENTATION_TASK.md",
+      "sha256": "28436f38797dcc7b920ff993686458fc7c2edc36c4dff71499971fb33fd84687",
+      "size": 4586,
+      "result": "PASS"
+    },
+    {
+      "path": "HANDOFF_VALIDATION_REPORT.md",
+      "sha256": "cba0e846262741fdcc62ef58bb074e36331c243b1ba8c72fdd89866b241a91d7",
+      "size": 755,
+      "result": "PASS"
+    },
+    {
+      "path": "OWNER_AUTHORITY_2026-11-05.md",
+      "sha256": "fd7cfa602fc5d5ddd84b47d56e87ff13e71b33abaa7d8262b3be24684fd3ca55",
+      "size": 2929,
+      "result": "PASS"
+    },
+    {
+      "path": "README_FIRST.md",
+      "sha256": "0f83eb786a90766a6767d222a7e4ec71b992d18fb387bb629548f15b546a97d2",
+      "size": 1872,
+      "result": "PASS"
+    },
+    {
+      "path": "sources/CR-P5-001_PROPOSED.md",
+      "sha256": "4b99720e5c18b76f0217e9b036548bfba3e835427622b834923e755f68058cfe",
+      "size": 5022,
+      "result": "PASS"
+    },
+    {
+      "path": "sources/CR-P5-002_PROPOSED.md",
+      "sha256": "3776bd431c854f8fb673a10673f3858e2293fad28ec1caf289e6717bf69ee342",
+      "size": 7331,
+      "result": "PASS"
+    },
+    {
+      "path": "sources/MVP-0_Implementation_Scope_v1.1.docx",
+      "sha256": "8abb80b3734b9d438b5d24af0d8278d3e27cf5f1b9c39b4547992621dbceccd1",
+      "size": 86600,
+      "result": "PASS"
+    },
+    {
+      "path": "sources/P5_Gate_A_PB_Supplement_v0.2b_candidate.zip",
+      "sha256": "4e08285b00344f2d00a7af89a723a835f931f4bceb768b11ec1aaf637fd0ae18",
+      "size": 26905,
+      "result": "PASS"
+    },
+    {
+      "path": "sources/P5_Implementation_Design_Pack_v0.2a_candidate.zip",
+      "sha256": "a351fb55c5ea3d442cc3ff3e3facc7a09c426569aad476fb713f8f09f10ca3ac",
+      "size": 116988,
+      "result": "PASS"
+    },
+    {
+      "path": "sources/Product_Specification_v0.1.pdf",
+      "sha256": "49421af31a1cf2dd838c89372898040c9a4307bd64dcd84114e1ff47a3cbb72c",
+      "size": 190742,
+      "result": "PASS"
+    }
+  ]
+}

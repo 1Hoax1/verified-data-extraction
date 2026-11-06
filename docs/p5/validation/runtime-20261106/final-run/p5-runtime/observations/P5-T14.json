@@ -1,0 +1,35 @@
+{
+  "fixture": "P5-DQ-007-NEG",
+  "result": "PASS",
+  "observed_check": {
+    "schema_version": "1.1",
+    "check_id": "DQ-007",
+    "name": "DQ-007 deterministic check",
+    "status": "FAIL",
+    "severity": "ERROR",
+    "target": {
+      "artifact": null,
+      "dataset_id": null,
+      "column": null,
+      "row_ids": []
+    },
+    "expected": true,
+    "actual": {
+      "expected": {
+        "format": "CSV",
+        "encoding": "UTF-8",
+        "delimiter": ","
+      },
+      "actual": {
+        "format": "CSV",
+        "encoding": "CP1251",
+        "delimiter": ";"
+      }
+    },
+    "affected_count": 1,
+    "sample_row_ids": [],
+    "message": "The approved deterministic requirement failed.",
+    "criterion_id": null
+  },
+  "supplemental": []
+}
