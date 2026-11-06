@@ -206,3 +206,10 @@ def child_environment():
     env['PYTHONPATH']=str(ROOT/'src')+os.pathsep+str(ROOT/'tests')
     env['PYTHONDONTWRITEBYTECODE']='1'
     return env
+
+
+def record_bytes(name,data):
+    import os
+    path=Path(os.environ.get('P5_RESULTS_DIR','/tmp/vde-p5-results'))
+    path.mkdir(parents=True,exist_ok=True)
+    (path/name).write_bytes(data)

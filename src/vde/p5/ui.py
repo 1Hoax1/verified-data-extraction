@@ -24,7 +24,8 @@ def panel(env):
         order = next(o for o in orders if o.id==selected)
         with UnitOfWork(env.database,env.workspace) as uow:
             runs = uow.runs.list_for_order(selected)
-        eligible = [r for r in runs if r.status=='succeeded' and
+            failed={r.id for r in runs if any(e.event_type=='P5_FAILED' for e in uow.events.list_for_run(r.id))}
+        eligible = [r for r in runs if r.status=='succeeded' and r.id not in failed and
                     (r.brief_version_id,r.transformation_spec_version_id)==
                     (order.selected_brief_version_id,order.selected_transformation_spec_version_id)]
         if not eligible:
@@ -41,7 +42,7 @@ def panel(env):
         with UnitOfWork(env.database,env.workspace) as uow:
             reports = uow.reports.list_for_run(run_id)
         for report in reports:
-            doc = report.report_json
+            doc = service.read_decision(run_id).report
             if doc['overall_status']=='FAIL':
                 st.error('NEEDS_FIX — diagnostic result; NOT APPROVED FOR DELIVERY')
             else:

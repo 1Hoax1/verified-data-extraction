@@ -109,17 +109,24 @@ def validate_inventory(cases):
 
 def classify_legacy(meta,out):
     cases=meta['testcases'];validate_inventory(cases)
-    known={'P2-T40','P3-T51','P4-T61','P4-T62','P4-T63'}
+    known={'P2-T40','P3-T50','P3-T51','P4-T61','P4-T62','P4-T63'}
     records=[]
     for c in cases:
         identity=legacy_id(c);state=c['outcome'];reason=c['assertion'] or ''
         if state=='pass':classification='PASS'
         elif state=='failure' and identity in known:
-            if identity=='P4-T63':
+            if identity=='P3-T50':
+                nested=out/'generated/docs/p3/validation/p2-results.xml'
+                checks=junit(nested)
+                failures=[n for n in checks if n['outcome']!='pass']
+                assert len(checks)==54 and len(failures)==1 and legacy_id(failures[0])=='P2-T40'
+                assert failures[0]['outcome']=='failure' and 'AssertionError: Unapproved application source/module/migration' in failures[0]['assertion']
+                assert 'test_T40_scope_dependencies' in reason and 'assert 1 == 0' in reason
+            elif identity=='P4-T63':
                 nested=out/'nested-P0-P3.junit.xml'
                 checks=junit(nested)
                 failures=[n for n in checks if n['outcome']!='pass']
-                assert failures and all(legacy_id(n) in {'P2-T40','P3-T51'} and n['outcome']=='failure' for n in failures),failures
+                assert {legacy_id(n) for n in failures}=={'P2-T40','P3-T50','P3-T51'} and all(n['outcome']=='failure' for n in failures),failures
                 assert len(checks)==148 and all('AssertionError: Unapproved application source/module/migration' in n['assertion'] for n in failures),failures
             else:
                 assertion=('AssertionError: Unapproved full application paths' if identity=='P4-T61'

@@ -8,6 +8,7 @@ from pathlib import PurePosixPath
 import zipfile
 from xml.etree import ElementTree as ET
 from openpyxl import load_workbook
+from openpyxl.utils.cell import coordinate_from_string, column_index_from_string
 from .errors import P5Error, require
 from .project import csv_cell
 
@@ -96,14 +97,19 @@ def verify(path, projection, rows, budget):
             try:
                 require(workbook.sheetnames == [projection.output['sheet_name']],
                         'ROUNDTRIP_MISMATCH', 'XLSX sheet differs')
-                reader, xml = iter(workbook.worksheets[0].rows), iter(xml_rows(path))
+                reader = iter(workbook.worksheets[0].iter_rows(min_col=1,max_col=len(projection.columns)))
+                xml = iter(xml_rows(path))
                 header, header_xml = next(reader, None), next(xml, None)
                 require(header is not None and tuple(c.value for c in header) == projection.headers and
                         all(c.data_type == 's' for c in header), 'ROUNDTRIP_MISMATCH', 'XLSX headers differ')
+                require(header_xml is not None and len(header_xml)==len(projection.columns),
+                        'ROUNDTRIP_MISMATCH','XLSX header extent differs')
                 for expected, actual, raw in zip_longest(rows, reader, xml, fillvalue=MISSING):
                     require(expected is not MISSING and actual is not MISSING and raw is not MISSING,
                             'ROUNDTRIP_MISMATCH', 'XLSX row count differs')
                     require(len(actual) == len(expected), 'ROUNDTRIP_MISMATCH', 'XLSX column count differs')
+                    require(all(column_index_from_string(coordinate_from_string(c)[0])<=len(expected) for c in raw),
+                            'ROUNDTRIP_MISMATCH','XLSX physical column exceeds approved width')
                     require(all(v[0] not in ('f', 'e') for v in raw.values()),
                             'ROUNDTRIP_MISMATCH', 'Formula or error present in worksheet XML')
                     for value, cell in zip(expected, actual):

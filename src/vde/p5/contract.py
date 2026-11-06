@@ -45,6 +45,8 @@ def admit(uow, env, run_id, expected_order=None, *, projection_required=True):
             'STATE_INVALID_TRANSITION', 'Stale P5 Order snapshot')
     require(run.status == 'succeeded' and order.status in ('EXECUTING', 'READY', 'NEEDS_FIX')
             and order.approval_stage == 'COMPLETE', 'STATE_INVALID_TRANSITION', 'P5 requires a succeeded P4 Run and eligible Order')
+    require(not any(e.event_type=='P5_FAILED' for e in uow.events.list_for_run(run_id)),
+            'STATE_INVALID_TRANSITION','A failed P5 attempt requires a fresh verified P4 Run, not resurrection of the old Run')
     require((order.selected_brief_version_id, order.selected_transformation_spec_version_id) ==
             (run.brief_version_id, run.transformation_spec_version_id),
             'VERSION_INCOMPATIBLE', 'Selected versions differ from P4 Run')

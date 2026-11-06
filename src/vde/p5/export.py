@@ -1,5 +1,6 @@
 """Single approved-format staging; strings never become spreadsheet formulas."""
 import csv
+from pathlib import Path
 from datetime import date, datetime, time
 from decimal import Decimal
 from openpyxl import Workbook
@@ -63,9 +64,13 @@ def write(path, projection, rows, budget, observe=lambda row: None):
                 workbook.save(path)
             finally:
                 # Close write-only generators on failed staging too.
-                if not sheet.closed:
-                    sheet.close()
-                workbook.close()
+                try:
+                    if not sheet.closed:
+                        sheet.close()
+                finally:
+                    workbook.close()
+                    if sheet._writer is not None and Path(sheet._writer.out).exists():
+                        sheet._writer.cleanup()
         budget.check()
         return count
     except P5Error:

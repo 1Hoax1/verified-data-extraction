@@ -25,6 +25,11 @@ def artifact_id(run_id, format):
     return 'p5-final-'+hashlib.sha256((run_id+'\0'+format).encode('utf-8')).hexdigest()
 
 
+def _run_lock(env,run_id):
+    slot=int(hashlib.sha256((str(env.database)+'\0'+run_id).encode()).hexdigest()[:8],16)%len(_LOCKS)
+    return _LOCKS[slot]
+
+
 @dataclass(frozen=True)
 class P5Decision:
     run_id: str
@@ -49,6 +54,13 @@ class P5Service:
         health(self.env)
         with self._uow() as uow:
             return admit(uow,self.env,run_id,expected_order)
+
+    def read_decision(self,run_id):
+        """Verified terminal view. No P4 read_result or business writes."""
+        with _run_lock(self.env,run_id),self.budget_factory() as budget:
+            context=self.inspect(run_id)
+            require(context.order.status in ('READY','NEEDS_FIX'),'STATE_INVALID_TRANSITION','P5 decision is not terminal')
+            return self._terminal(context,self._final(context),budget)
 
     def _final(self, context):
         final = [a for a in context.artifacts if a != context.internal]
@@ -109,8 +121,7 @@ class P5Service:
 
     def complete(self, run_id, expected_order):
         # Bounded striped locks avoid a growing global map of run identities.
-        slot = int(hashlib.sha256((str(self.env.database)+'\0'+run_id).encode()).hexdigest()[:8],16)%len(_LOCKS)
-        with _LOCKS[slot], self.budget_factory() as budget:
+        with _run_lock(self.env,run_id), self.budget_factory() as budget:
             final_transaction=False
             admitted=False
             try:

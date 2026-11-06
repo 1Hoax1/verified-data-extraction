@@ -126,8 +126,18 @@ class Facts:
         self.samples, self.minimum, self.maximum = {}, {}, {}
         self.criteria = [c for c in brief['acceptance_criteria']
                          if c['criterion_id'] in spec['acceptance_criteria_ref'] and c['requirement_status'] != 'NOT_APPLICABLE']
+        self.brief_fields = {f['name']:f for f in brief['fields']}
+        self.domains = {}
+        for f in projection.fields:
+            rules=[]
+            for definition in (f,self.brief_fields[f['name']]):
+                for key,operator in (('allowed_values','in_set'),('min_value','min_value'),('max_value','max_value')):
+                    rule=(operator,definition[key])
+                    if definition[key] is not None and rule not in rules:
+                        rules.append(rule)
+            self.domains[f['name']]=rules
         keys = [tuple(brief['data_quality_expectations']['duplicate_key'] or ())]
-        keys.extend((f['name'],) for f in projection.fields if f['unique'])
+        keys.extend((f['name'],) for f in projection.fields if f['unique'] or self.brief_fields[f['name']]['unique'])
         keys.extend(tuple(c['target'].get('columns') or [c['target']['column']])
                     for c in self.criteria if c['operator'] == 'unique' and
                     (c['target'].get('columns') or c['target']['column']))
@@ -145,13 +155,13 @@ class Facts:
             if not typed(value, f['data_type'], f['nullable']):
                 self.bad_types[name] += 1
             if not missing(value):
-                if f['data_type'] in ('date', 'datetime') and not typed(value, f['data_type']):
+                if f['data_type'] in ('date', 'datetime') and (not typed(value, f['data_type']) or
+                        any(d['format'] is not None and not predicate('matches_format',value,d['format'])
+                            for d in (f,self.brief_fields[name]))):
                     self.bad_dates[name] += 1
                 if f['data_type'] in ('integer', 'decimal') and not typed(value, f['data_type']):
                     self.bad_numbers[name] += 1
-                domain = ((f['allowed_values'] is None or predicate('in_set', value, f['allowed_values'])) and
-                          (f['min_value'] is None or predicate('min_value', value, f['min_value'])) and
-                          (f['max_value'] is None or predicate('max_value', value, f['max_value'])))
+                domain = all(predicate(operator,value,expected) for operator,expected in self.domains[name])
                 if not domain:
                     self.bad_domains[name] += 1
                 if type(value) in (int, Decimal, date, datetime, str):
@@ -277,6 +287,9 @@ def evaluate_all(context, facts, export):
     audit, criteria = m['operation_audit'], facts.criteria
     expected_ops = [o['operation_id'] for o in s['pipeline']]
     audited_ops = [a['operation_id'] for a in audit]
+    audit_matches = expected_ops == audited_ops and all(
+        all(a[k] == op[k] for k in ('type','input_dataset','output_dataset'))
+        for a,op in zip(audit,s['pipeline']))
     valid_ops = True
     try:
         for op in s['pipeline']:
@@ -289,7 +302,7 @@ def evaluate_all(context, facts, export):
     dates = [f['name'] for f in p.fields if f['data_type'] in ('date', 'datetime')]
     numbers = [f['name'] for f in p.fields if f['data_type'] in ('integer', 'decimal')]
     required = [f['name'] for f in p.fields if f['required'] or not f['nullable']]
-    ranged = [f['name'] for f in p.fields if any(f[k] is not None for k in ('allowed_values','min_value','max_value'))]
+    ranged = [name for name,rules in facts.domains.items() if rules]
     volume = b['volume_expectation']
     volume_ok = volume['mode'] == 'NONE' or (volume['mode'] == 'EXACT' and facts.count == volume['exact_count']) or (
         volume['mode'] == 'RANGE' and volume['min_count'] <= facts.count <= volume['max_count'])
@@ -306,8 +319,8 @@ def evaluate_all(context, facts, export):
         'DQ-001': (True, True, context.asset.size_bytes, 0),
         'DQ-002': (True, context.asset.byte_sha256, m['source']['source_byte_sha256'], 0),
         'DQ-003': (True, [context.brief.content_hash,context.spec.content_hash], [context.brief.content_hash,context.spec.content_hash], 0),
-        'DQ-004': (valid_ops, list(OPERATIONS), [o['type'] for o in s['pipeline']], int(not valid_ops)),
-        'DQ-005': (expected_ops == audited_ops, expected_ops, audited_ops, int(expected_ops != audited_ops)),
+        'DQ-004': (valid_ops, sorted(OPERATIONS), [o['type'] for o in s['pipeline']], int(not valid_ops)),
+        'DQ-005': (audit_matches, expected_ops, audited_ops if audit_matches else {'operation_ids':audited_ops,'bindings':[dict(type=a['type'],input_dataset=a['input_dataset'],output_dataset=a['output_dataset']) for a in audit]}, int(not audit_matches)),
         'DQ-006': (export['readable'], True, export['readable'], int(not export['readable'])),
         'DQ-007': (True, p.output['format'], p.output['format'], 0),
         'DQ-008': (set(required) <= set(p.columns), required, list(p.columns), len(set(required)-set(p.columns))),
@@ -337,7 +350,7 @@ def evaluate_all(context, facts, export):
         'DQ-001':dict(result=True),
         'DQ-002':dict(expected=context.asset.byte_sha256,actual=m['source']['source_byte_sha256']),
         'DQ-004':dict(ops=[o['type'] for o in s['pipeline']],all_valid=valid_ops),
-        'DQ-005':dict(approved=expected_ops,audited=audited_ops),
+        'DQ-005':dict(approved=expected_ops,audited=audited_ops,binding_valid=audit_matches),
         'DQ-006':dict(well_formed=export['readable']),
         'DQ-008':dict(required=required,present=list(p.columns)),
         'DQ-009':dict(allowed=s['output']['column_order'],actual=list(p.columns)),
@@ -406,7 +419,7 @@ def evaluate_observation(check_id, evidence, *, applicable=True):
     elif check_id == 'DQ-004':
         ok = evidence['all_valid'] is True and all(op in OPERATIONS for op in evidence['ops'])
     elif check_id == 'DQ-005':
-        ok = evidence['approved'] == evidence['audited']
+        ok = evidence['approved'] == evidence['audited'] and evidence.get('binding_valid',True)
     elif check_id == 'DQ-006':
         ok = evidence['well_formed'] is True
     elif check_id == 'DQ-007':

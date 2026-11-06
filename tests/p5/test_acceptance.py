@@ -35,7 +35,7 @@ from vde.p5.qa import (Facts,criterion_result,evaluate_observation,typed,predica
 from vde.p5.roundtrip import verify,numeric_equal
 from vde.p5.service import P5Service
 from .support import (ROOT,BASELINE,Scenario,field,simple_change,pb_v2,load,checks,record,dq_cases,
-                      projection_for,modify_xlsx,assert_completed,validate_report,child_environment)
+                      projection_for,modify_xlsx,assert_completed,validate_report,child_environment,record_bytes)
 
 
 @pytest.mark.parametrize('case',dq_cases(),ids=lambda c:c['test_id'])
@@ -106,6 +106,17 @@ def test_deterministic_check(case,tmp_path,design,monkeypatch):
             assert scoped['PB-AC-006']['actual']==1 and Decimal(str(scoped['PB-AC-007']['actual']))==Decimal('20')
         else:assert d.order_status=='NEEDS_FIX'
         supplemental.append({'isolated_simulated_approval_only':True,'criterion_instances':list(scoped.values())})
+    if number==34:
+        # Exact Spec approval cannot silently erase an independent frozen Brief
+        # field constraint. The real source/approval path still runs unchanged.
+        def stricter_brief(b,s):
+            simple_change([field('id','decimal')],rows=1)(b,s)
+            b['fields'][0]['min_value']=10
+            s['pipeline']=[dict(schema_version='1.1',operation_id='parse-domain',type='parse_number',input_dataset='raw',output_dataset='result',
+                               params=dict(column='id',decimal_separator='.',thousands_separator=None,target_type='decimal',errors='FAIL'))]
+        bounded=Scenario(tmp_path/'brief-domain',raw=b'id\n1\n',change=stricter_brief)
+        checked=bounded.complete()
+        assert checked.order_status=='NEEDS_FIX' and 'DQ-017' in checked.report['blocking_issues']
     if number in (39,40):
         a=Scenario(tmp_path/'roundtrip','P-B_xlsx_sheet',change=pb_v2)
         context=P5Service(a.env).inspect(a.run_id,a.order())
@@ -139,6 +150,8 @@ def test_T55_pa_actual_golden(tmp_path):
     d=a.complete();assert_completed(a,d,'READY','PASS')
     actual=a.env.workspace.path(d.artifact.workspace_relpath).read_bytes()
     assert actual==(a.source/'expected_result.csv').read_bytes() and len(actual)==277
+    record_bytes('P-A.actual-result.csv',actual)
+    record_bytes('P-A.original-P4-INTERNAL.json',raw)
     assert d.report['dataset_summary']['checksum']=='c3b4e1f9a885bcf969cd34a9041951c1bed1abcd6aaba4c4f1f2fcd414d86cc9'
     assert a.env.workspace.path(internal.workspace_relpath).read_bytes()==raw
     with a.uow() as u:assert u.runs.get(a.run_id)==run_before
@@ -157,7 +170,10 @@ def test_T56_pb_actual_six_column_xlsx(tmp_path,design):
         spec=u.specs.get(a.handoff.transformation_spec_version_id)
         assert spec.version_number==2 and len(u.specs.list_for_order(a.order_id))==2
         assert spec.content_hash==load(design['pb']/'fixtures/P-B_versioned/transformation_spec_version_v2_CANDIDATE.json')['content_hash']
+    _,original=ExecutionService(a.env).read_result(a.run_id)
     d=a.complete();assert_completed(a,d,'READY','PASS_WITH_WARNINGS')
+    record_bytes('P-B.original-P4-INTERNAL.json',original)
+    record_bytes('P-B.actual-result.xlsx',a.env.workspace.path(d.artifact.workspace_relpath).read_bytes())
     assert len(d.report['deterministic_checks'])==24 and 'XLSX_FORMULA_PRESENT' in d.report['warnings']
     assert d.report['dataset_summary']['column_count']==6 and d.report['dataset_summary']['row_count']==3
     book=load_workbook(io.BytesIO(a.env.workspace.path(d.artifact.workspace_relpath).read_bytes()),read_only=True,data_only=False)
@@ -168,10 +184,10 @@ def test_T56_pb_actual_six_column_xlsx(tmp_path,design):
         assert [c.value for c in actual[0]]==d.report['dataset_summary']['output_headers']
     finally:book.close()
     p=projection_for(['string'],'XLSX');path=tmp_path/'formula-like-text.xlsx'
-    values=[('=SUM(1,1)',),('+1',),('@x',),('-text',),('e\u0301',),('',)]
+    values=[('=SUM(1,1)',),('+1',),('@x',),('-text',),('e\u0301',),('',),(None,)]
     with Budget() as b:
         write(path,p,iter(values),b);proof=verify(path,p,iter(values),b)
-    assert proof['rows']==6
+    assert proof['rows']==7
     record('P5-T56',{'result':'PASS','isolated_simulated_local_user_approval_only':True,'report':d.report,'numeric_and_string_readback':'PASS'})
 
 
@@ -182,6 +198,7 @@ def test_T57_pb_csv_is_test_projection_only(tmp_path):
     path=tmp_path/'test-only.csv'
     with Budget() as b:write(path,p,semantic_rows(raw,context),b);verify(path,p,semantic_rows(raw,context),b)
     assert path.read_bytes()==(a.source/'expected_result.csv').read_bytes() and path.stat().st_size==245
+    record_bytes('P-B.TEST-ONLY-projection.csv',path.read_bytes())
     assert all(v==0 for v in a.delta().values())
     record('P5-T57',{'result':'PASS','csv_sha256':hashlib.sha256(path.read_bytes()).hexdigest(),'production_RESULT_CSV':0,'all_cells':18})
 
@@ -189,6 +206,7 @@ def test_T57_pb_csv_is_test_projection_only(tmp_path):
 def test_T58_pd_diagnostic_csv_and_typed_failures(tmp_path):
     a=Scenario(tmp_path,'P-D_errors_and_qa_blockers');d=a.complete();assert_completed(a,d,'NEEDS_FIX','FAIL')
     assert a.env.workspace.path(d.artifact.workspace_relpath).read_bytes()==(a.source/'expected_result.csv').read_bytes()
+    record_bytes('P-D.actual-diagnostic.csv',a.env.workspace.path(d.artifact.workspace_relpath).read_bytes())
     assert {'DQ-011','DQ-012','DQ-014'}<=set(d.report['blocking_issues'])
     assert d.error_json['code']=='QA_BLOCKER'
     validate(d.error_json,'execution_error')
@@ -346,6 +364,15 @@ def test_T66_wrong_context_and_missing_pb_reference(tmp_path,monkeypatch):
         patch.setattr(OrderRepository,'get',wrong)
         with pytest.raises(P5Error) as error:P5Service(a.env).complete(a.run_id,selected)
     assert error.value.code=='VERSION_INCOMPATIBLE' and a.snapshot()==before
+    future=Scenario(tmp_path/'future-test-only');snapshot=future.snapshot();get_approval=ApprovalRepository.get
+    def synthetic(self,identity):
+        approval=get_approval(self,identity)
+        return replace(approval,approved_at='2099-01-01T00:00:00Z') if approval.target_type=='TRANSFORMATION_SPEC' else approval
+    with monkeypatch.context() as patch:
+        patch.setattr('vde.p5.contract.health',lambda env:None)
+        patch.setattr(ApprovalRepository,'get',synthetic)
+        with pytest.raises(P5Error) as error:future.complete()
+    assert error.value.code=='APPROVAL_MISSING' and future.snapshot()==snapshot
     b=Scenario(tmp_path/'original-pb','P-B_xlsx_sheet');d=b.complete()
     assert all(c['criterion_id']!='PB-AC-007' for c in d.report['deterministic_checks'])
     assert 'PB-AC-007' not in b.handoff.transformation_spec_version_id
@@ -365,6 +392,18 @@ def test_T67_repeat_and_competing_calls_do_not_duplicate(tmp_path):
     with ThreadPoolExecutor(max_workers=2) as pool:
         results=list(pool.map(lambda _:service.complete(a.run_id,a.order()),range(2)))
     assert all(r.repeated and r.artifact.id==first.artifact.id for r in results) and a.snapshot()==before
+    retry=Scenario(tmp_path/'fresh-P4-required')
+    def fail_write(stage):
+        if stage=='before_write':raise P5Error('EXPORT_FAILED','Injected first attempt failure')
+    with pytest.raises(P5Error):retry.complete(checkpoint=fail_write)
+    old_run=retry.run_id
+    execution=ExecutionService(retry.env)
+    newer=execution.execute(retry.order_id,retry.order(),execution.fresh_handoff(retry.order_id))
+    snapshot=retry.snapshot()
+    with pytest.raises(P5Error) as error:P5Service(retry.env).complete(old_run,retry.order())
+    assert error.value.code=='STATE_INVALID_TRANSITION' and retry.snapshot()==snapshot
+    fresh=P5Service(retry.env).complete(newer.run_id,retry.order())
+    assert fresh.order_status=='READY'
     record('P5-T67',{'result':'PASS','terminal_repeats':3,'artifacts_total':1,'reports_total':1,'writes_after_first':0})
 
 
@@ -398,6 +437,15 @@ def test_T69_committed_artifact_reused_after_sigkill(tmp_path,monkeypatch):
         patch.setattr(ExecutionService,'read_result',forbidden)
         d=P5Service(env).complete(a.run_id,a.order())
     assert_completed(a,d,'READY','PASS')
+    pb=Scenario(tmp_path/'pb-reuse','P-B_xlsx_sheet',change=pb_v2)
+    def pause(stage):
+        if stage=='after_artifact_commit':raise SystemExit('Isolated interrupted completion')
+    with pytest.raises(SystemExit):pb.complete(checkpoint=pause)
+    assert pb.delta()['artifacts']==1 and pb.delta()['qa_reports']==0 and pb.order().status=='EXECUTING'
+    with monkeypatch.context() as patch:
+        patch.setattr(Storage,'register_artifact',lambda *a,**k:pytest.fail('XLSX Artifact must be reused'))
+        finished=pb.complete()
+    assert_completed(pb,finished,'READY','PASS_WITH_WARNINGS')
     record('P5-T69',{'result':'PASS','new_artifact_registrations_on_retry':0,'reused_artifact_id':d.artifact.id})
 
 
