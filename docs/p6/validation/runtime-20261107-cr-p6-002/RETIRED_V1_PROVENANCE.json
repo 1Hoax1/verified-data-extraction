@@ -1,0 +1,33 @@
+{
+  "active_format": "P6_SCOPE_POLICY_V2_CR_P6_002",
+  "historical_only": [
+    {
+      "path": "tests/p6/scope_policy_v1.json",
+      "commit": "deddc2799464076227173bd2e4890f552ffe64bf",
+      "blob": "43a27fee46b95c5bc61b5330f8666d8269b7504e",
+      "sha256": "0b90083e30783bed6a5420dc7faed7127071b0c2d0023073bf8bb87bbad08207",
+      "active": false
+    },
+    {
+      "path": "tests/p6/scope_audit.py",
+      "commit": "deddc2799464076227173bd2e4890f552ffe64bf",
+      "blob": "cd3d24f186d607b566a1ef47bcde0aa1452d202d",
+      "sha256": "a682ed6e27ea901495ca782d7ff7cb0ddb025f16b3f1da20914a717b39d1d050",
+      "active": false
+    },
+    {
+      "path": "tests/p6/run_validation.py",
+      "commit": "deddc2799464076227173bd2e4890f552ffe64bf",
+      "blob": "bac032efff26e4c79a85d1441ec92c9abcb59e2e",
+      "sha256": "3c74becbb6090a1c59844fe25d047bf4194a25368cd2975d0e3a4553b9d484ad",
+      "active": false
+    },
+    {
+      "path": "tests/p6/test_acceptance.py",
+      "commit": "deddc2799464076227173bd2e4890f552ffe64bf",
+      "blob": "0691e62060402d6321447cf87e03de4cf0204d57",
+      "sha256": "ec73f1e1d8e6e58494f1d1079701a357c0679782768c8ccd0cc68ae6983cb149",
+      "active": false
+    }
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "schema_version": "1.1",
+  "id": "approval-order-pb-spec-v2-TEST-ONLY",
+  "order_id": "order-pb",
+  "target_type": "TRANSFORMATION_SPEC",
+  "target_version_id": "transform-pb-v2-cr-p5-001",
+  "target_content_hash": "c4f9aa33b341cf703b8edacbe60ba1b8070814dde461b4412407d8535188c9a3",
+  "context_brief_version_id": "brief-pb-v1",
+  "context_brief_content_hash": "9b7c2b0111360714dfbc9cbdbc755b693b11e067f32771cb226126fdcd1ffb49",
+  "approved_by": "local_user",
+  "approved_at": "2099-01-01T00:00:00Z"
+}

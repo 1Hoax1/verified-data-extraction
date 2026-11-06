@@ -1,0 +1,14 @@
+{
+  "implementation_commit": "245b1ccf5d4212d3f34973e526172f20a4928539",
+  "implementation_tree": "0db696f5e14284849f969310fadf4ee585713045",
+  "parent": "66c2b4f97e2b4dbe4e7a01696c89ae5fd0431981",
+  "modified_paths": [
+    "docs/p6/README_PILOT.md",
+    "docs/p6/RELEASE_CHECKLIST.md",
+    "src/vde/p5/qa.py",
+    "tests/p6/run_validation.py",
+    "tests/p6/scope_audit.py",
+    "tests/p6/scope_policy_v1.json",
+    "tests/p6/test_acceptance.py"
+  ]
+}

@@ -1,0 +1,30 @@
+{
+  "purpose": "UNCOMMITTED DEVELOPMENT DIAGNOSTIC ONLY; not final exact-tree validation",
+  "command": [
+    "/workspace/verified-data-extraction/.venv/bin/python",
+    "-m",
+    "pytest",
+    "tests/p6/test_acceptance.py::test_T06_pb_explicit_v2_approval_and_typed_warning_oracle",
+    "tests/p6/test_acceptance.py::test_T07_pb_xlsx_and_qa_independent_http_and_18_cells",
+    "tests/p6/test_acceptance.py::test_T13_cross_order_and_context_guards_before_artifact_access",
+    "-q",
+    "--junitxml=/workspace/p6-cr2-work/dev-focused-02/results.xml"
+  ],
+  "cwd": "/workspace/p6-streamlit-e2e",
+  "committed_head": "66c2b4f97e2b4dbe4e7a01696c89ae5fd0431981",
+  "worktree_dirty": true,
+  "source_sha256": {
+    "docs/p6/README_PILOT.md": "66aa522a88f29c755aa8e16d76a46e6b28a0ffef591fcfc43f861e32a419b485",
+    "docs/p6/RELEASE_CHECKLIST.md": "d75376cbe266b1d7f065c472017111e9fef599f69a7254076df74466349bae7c",
+    "src/vde/p5/qa.py": "8caee87fce7a0c748e2333b8fe3b1b3333fee3548ee78111516a8eac541d8a52",
+    "tests/p6/run_validation.py": "85d2ed334fc8701107e92ea62a9c119db8e45e5859132b708be436e5137da646",
+    "tests/p6/scope_audit.py": "229d4ba0520c7d41845ec0b8acbcee12813272ea3b74722bec48e9ef8241e005",
+    "tests/p6/scope_policy_v1.json": "4175d4f74c15c77ea23a1f794cfc9566fb82ae887efe22598353d5cf2b256bcd",
+    "tests/p6/test_acceptance.py": "39523dca4060c6cbb01af762138fc388414a6c97bf9c9356170f8850e1678de1"
+  },
+  "inputs_unchanged": true,
+  "started_at_utc": "2026-11-06T23:02:42.340293+00:00",
+  "finished_at_utc": "2026-11-06T23:03:21.323886+00:00",
+  "elapsed_seconds": 38.98363348899875,
+  "exit_code": 0
+}

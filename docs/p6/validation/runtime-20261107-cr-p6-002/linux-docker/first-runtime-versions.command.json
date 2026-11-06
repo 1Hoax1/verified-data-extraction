@@ -1,0 +1,13 @@
+{
+  "argv": [
+    "docker",
+    "--host=unix:///var/run/docker.sock",
+    "exec",
+    "vde-p6-cr2-smoke",
+    "/tmp/vde-venv/bin/python",
+    "-c",
+    "import platform,sys,importlib.metadata,json; print(json.dumps(dict(platform=platform.platform(),python=sys.version,packages={n:importlib.metadata.version(n) for n in [\"streamlit\",\"pytest\",\"jsonschema\",\"referencing\",\"rfc8785\",\"openpyxl\"]}),indent=2))"
+  ],
+  "cwd": "/workspace/p6-streamlit-e2e",
+  "utc": "2026-11-06T23:05:49.192232+00:00"
+}

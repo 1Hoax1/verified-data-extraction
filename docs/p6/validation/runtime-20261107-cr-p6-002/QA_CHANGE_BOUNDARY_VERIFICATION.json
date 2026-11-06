@@ -1,0 +1,18 @@
+{
+  "result": "PASS",
+  "baseline": "66c2b4f97e2b4dbe4e7a01696c89ae5fd0431981",
+  "path": "src/vde/p5/qa.py",
+  "sha256_before": "4b15c0990685df55a44330d66275481b421eb95707527232e964aea3e000816c",
+  "sha256_after": "8caee87fce7a0c748e2333b8fe3b1b3333fee3548ee78111516a8eac541d8a52",
+  "unchanged_AST_after_reversing_only_guard_helper_imports": true,
+  "changed_paths": [
+    "docs/p6/README_PILOT.md",
+    "docs/p6/RELEASE_CHECKLIST.md",
+    "src/vde/p5/qa.py",
+    "tests/p6/run_validation.py",
+    "tests/p6/scope_audit.py",
+    "tests/p6/scope_policy_v1.json",
+    "tests/p6/test_acceptance.py"
+  ],
+  "owner_decision_sha256": "ad91837ed5b9b45c6dfe24c9783089e19d7d2c14fc0f67fb766229e9be5d9339"
+}

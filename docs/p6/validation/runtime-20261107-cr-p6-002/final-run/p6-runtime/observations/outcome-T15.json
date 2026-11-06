@@ -1,0 +1,12 @@
+{
+  "nodeid": "tests/p6/test_acceptance.py::test_T15_passive_rerenders_reprepare_transfer_and_single_snapshot",
+  "outcome": "passed",
+  "duration_seconds": 41.1959928139986,
+  "properties": [
+    [
+      "p6_id",
+      "P6-T15"
+    ]
+  ],
+  "failure": null
+}

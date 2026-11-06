@@ -1,0 +1,29 @@
+{
+  "result": "PASS",
+  "tested_commit": "245b1ccf5d4212d3f34973e526172f20a4928539",
+  "source_and_golden_identities": [
+    {
+      "path": "pecs/pilot_slice_v1/fixtures/P-B_xlsx_sheet/input_orders.xlsx",
+      "blob": "0abbac188d662b7af03015f1c44debf387e07324",
+      "size_bytes": 4338,
+      "sha256": "d275fa7393e73ef1be7815e83b31b1a710b3f345bb7138c72569b03f66edf80d",
+      "unchanged": true
+    },
+    {
+      "path": "pecs/pilot_slice_v1/fixtures/P-B_xlsx_sheet/brief_version.json",
+      "blob": "ec9051648f53d790357d11e18a421f6ac7ef25e6",
+      "size_bytes": 8644,
+      "sha256": "3998f7946ada335f0f6c47d5d17f2b593989db858627d61a7d9230cea9fa9248",
+      "unchanged": true
+    },
+    {
+      "path": "pecs/pilot_slice_v1/fixtures/P-B_xlsx_sheet/expected_result.xlsx",
+      "blob": "762f91a32f33e786a5868b938b5b5f55152923af",
+      "size_bytes": 3780,
+      "sha256": "52431d5a68c4002c22a26d78b13bdd3846d0cf1e81c89095bc3ff07a8c8e0082",
+      "unchanged": true
+    }
+  ],
+  "canonical_brief_semantic_hash": "9b7c2b0111360714dfbc9cbdbc755b693b11e067f32771cb226126fdcd1ffb49",
+  "synthetic_fixtures_created": false
+}

@@ -1,0 +1,11 @@
+{
+  "mode": "restart",
+  "health": "ready",
+  "persisted_rows_exactly_unchanged": true,
+  "persisted_payload_hashes_exactly_unchanged": true,
+  "fresh_session_had_no_prepared_download": true,
+  "explicit_reprepare_http_get_status": 200,
+  "result_sha256": "c3b4e1f9a885bcf969cd34a9041951c1bed1abcd6aaba4c4f1f2fcd414d86cc9",
+  "platform": "linux",
+  "actual_mac_host_execution": "NOT_RUN"
+}

@@ -1,0 +1,11 @@
+{
+  "argv": [
+    "docker",
+    "--host=unix:///var/run/docker.sock",
+    "info",
+    "--format",
+    "Server={{.ServerVersion}} OS={{.OSType}} Arch={{.Architecture}} Driver={{.Driver}}"
+  ],
+  "cwd": "/workspace/p6-streamlit-e2e",
+  "utc": "2026-11-06T23:05:36.560201+00:00"
+}

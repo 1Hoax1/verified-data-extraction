@@ -1,0 +1,62 @@
+..................F.                                                     [100%]
+=================================== FAILURES ===================================
+________ test_T19_documented_linux_launch_restart_and_actual_mac_docker ________
+
+pa = <p6.conftest.UIScenario object at 0x7fb300755460>
+copy_workspace = <function copy_workspace.<locals>.make at 0x7fb2f80e8e00>
+
+    def test_T19_documented_linux_launch_restart_and_actual_mac_docker(pa, copy_workspace):
+        directory, env = copy_workspace(pa)
+        before = snapshot(directory); files = payload_hashes(directory)
+        readme = (ROOT / 'docs/p6/README_PILOT.md').read_text()
+        assert 'streamlit' in readme and 'docker' in readme.lower() and 'VDE_WORKSPACE' in readme
+        observations = {'observed_host': platform.platform(), 'linux_launches': []}
+        for _ in range(2):
+            with socket.socket() as listener:
+                listener.bind(('127.0.0.1', 0)); port = listener.getsockname()[1]
+            command = [sys.executable, '-m', 'streamlit', 'run', str(ROOT / 'src/vde/app.py'),
+                       '--server.address=127.0.0.1', '--server.port=' + str(port), '--server.headless=true',
+                       '--browser.gatherUsageStats=false']
+            child_env = os.environ.copy(); child_env['VDE_WORKSPACE'] = str(directory)
+            process = subprocess.Popen(command, cwd=ROOT, env=child_env, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+            status = None
+            try:
+                deadline = time.monotonic() + 30
+                while time.monotonic() < deadline:
+                    try:
+                        with urlopen(f'http://127.0.0.1:{port}/_stcore/health', timeout=1) as response:
+                            status = response.status
+                            assert response.read() == b'ok'
+                        break
+                    except OSError:
+                        if process.poll() is not None:
+                            break
+                        time.sleep(0.1)
+                assert status == 200
+            finally:
+                process.terminate()
+                stdout, stderr = process.communicate(timeout=15)
+            observations['linux_launches'].append({'command': command, 'health_http': status,
+                                                    'stdout': stdout, 'stderr': stderr})
+        assert snapshot(directory) == before and payload_hashes(directory) == files
+        observations['persisted_order_run_result_qa_after_restart'] = True
+        mac_path = os.environ.get('P6_MAC_DOCKER_EVIDENCE')
+        if mac_path:
+            mac = json.loads(Path(mac_path).read_text())
+            observations['mac_docker'] = mac
+            assert mac['host_system'] == 'Darwin' and mac['container_system'] == 'Linux'
+            assert mac['launch_http_status'] == 200 and mac['restart_http_status'] == 200
+            assert mac['workspace_persisted'] is True and mac['explicit_ui_workflow_completed'] is True
+            assert mac['commands'] and mac['stdout'] and mac['docker_info']
+        else:
+            observations['mac_docker'] = {'outcome': 'NOT_RUN', 'reason': 'This execution host is Linux; no actual macOS Docker host evidence is available.'}
+        record('T19', observations)
+>       assert mac_path, 'NOT_RUN — Mac Docker launch/restart and explicit workflow require actual macOS host evidence; Linux smoke passed. Gate B remains blocked.'
+E       AssertionError: NOT_RUN — Mac Docker launch/restart and explicit workflow require actual macOS host evidence; Linux smoke passed. Gate B remains blocked.
+E       assert None
+
+tests/p6/test_acceptance.py:743: AssertionError
+-- generated xml file: /workspace/p6-cr2-work/final-01/p6-runtime/results.xml --
+=========================== short test summary info ============================
+FAILED tests/p6/test_acceptance.py::test_T19_documented_linux_launch_restart_and_actual_mac_docker
+1 failed, 19 passed in 248.18s (0:04:08)

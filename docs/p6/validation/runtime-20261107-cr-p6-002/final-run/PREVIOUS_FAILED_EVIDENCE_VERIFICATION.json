@@ -1,0 +1,12 @@
+{
+  "path": "docs/p6/validation/runtime-20261107/final-run/p6-runtime/results.xml",
+  "sha256": "239f397d3430296fcc71b171527f2a5fe33edce2845a87551f56dadfa30d0060",
+  "tested_commit": "deddc2799464076227173bd2e4890f552ffe64bf",
+  "tested_tree": "afc4126ccddce4ca4615ac411b1dd6281a98a960",
+  "actual_failures": [
+    "test_T06_pb_explicit_v2_approval_and_typed_warning_oracle",
+    "test_T07_pb_xlsx_and_qa_independent_http_and_18_cells",
+    "test_T19_documented_linux_launch_restart_and_actual_mac_docker"
+  ],
+  "preserved_unchanged": true
+}

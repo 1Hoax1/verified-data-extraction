@@ -1,0 +1,29 @@
+{
+  "http_transfers": {
+    "result": {
+      "bytes": 277,
+      "sha256": "c3b4e1f9a885bcf969cd34a9041951c1bed1abcd6aaba4c4f1f2fcd414d86cc9",
+      "url": "/mock/media/feb9ca32e98c27b803913361265fb557e554bbaea618fae19de93c5d.csv",
+      "status": 200,
+      "content_type": "text/csv",
+      "content_disposition": "attachment; filename=\"customers_clean.csv\""
+    },
+    "report": {
+      "bytes": 10658,
+      "sha256": "9b050bb78968dd869a18c3e85ea191ec400d338c3d299ff18c24c8d55d31176c",
+      "url": "/mock/media/2a45409774100de6348f0b583aa13a171e95ddfae2216cbabd36a169.vde-qa-json",
+      "status": 200,
+      "content_type": "application/json; charset=utf-8",
+      "content_disposition": "attachment; filename=\"qa_report_p5-qa-fc261f51-0e9f-4b7b-88b7-464ddf3b39a4.json\""
+    }
+  },
+  "golden_sha256": "c3b4e1f9a885bcf969cd34a9041951c1bed1abcd6aaba4c4f1f2fcd414d86cc9",
+  "snapshot_key": [
+    "a38a915d-a172-4cc1-a921-8f2bc912799d",
+    "dc09361b-7078-4720-9d5c-c8c461ea60b6",
+    "p5-final-8429bbd7e1dccd53de3b6989679d1d2a69851cde005afc72756c81e0da9cf898",
+    "c3b4e1f9a885bcf969cd34a9041951c1bed1abcd6aaba4c4f1f2fcd414d86cc9",
+    "PASS",
+    "CSV"
+  ]
+}

@@ -1,0 +1,7 @@
+M	docs/p6/README_PILOT.md
+M	docs/p6/RELEASE_CHECKLIST.md
+M	src/vde/p5/qa.py
+M	tests/p6/run_validation.py
+M	tests/p6/scope_audit.py
+M	tests/p6/scope_policy_v1.json
+M	tests/p6/test_acceptance.py

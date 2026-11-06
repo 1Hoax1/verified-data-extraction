@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="1" skipped="0" tests="20" time="248.176" timestamp="2026-11-06T23:31:08.746019+00:00" hostname="832769dc7e6d"><testcase classname="tests.p6.test_acceptance" name="test_T01_fresh_linux_bootstrap_and_passive_ui" time="0.140"><properties><property name="p6_id" value="P6-T01" /></properties></testcase><testcase classname="tests.p6.test_acceptance" name="test_T02_create_order_form_exact_fields_and_p2_visibility" time="0.038"><properties><property name="p6_id" value="P6-T02" /></properties></testcase><testcase classname="tests.p6.test_acceptance" name="test_T03_invalid_form_retry_idempotency_and_concurrent_conflict" time="0.121"><properties><property name="p6_id" value="P6-T03" /></properties></testcase><testcase classname="tests.p6.test_acceptance" name="test_T04_pa_explicit_two_ui_approvals_and_exact_hashes" time="11.877"><properties><property name="p6_id" value="P6-T04" /></properties></testcase><testcase classname="tests.p6.test_acceptance" name="test_T05_pa_csv_result_and_qa_actual_http_transfer" time="12.498"><properties><property name="p6_id" value="P6-T05" /></properties></testcase><testcase classname="tests.p6.test_acceptance" name="test_T06_pb_explicit_v2_approval_and_typed_warning_oracle" time="12.161"><properties><property name="p6_id" value="P6-T06" /></properties></testcase><testcase classname="tests.p6.test_acceptance" name="test_T07_pb_xlsx_and_qa_independent_http_and_18_cells" time="8.599"><properties><property name="p6_id" value="P6-T07" /></properties></testcase><testcase classname="tests.p6.test_acceptance" name="test_T08_pd_diagnostic_never_client_ready" time="12.707"><properties><property name="p6_id" value="P6-T08" /></properties></testcase><testcase classname="tests.p6.test_acceptance" name="test_T09_ineligible_states_and_missing_approvals" time="2.639"><properties><property name="p6_id" value="P6-T09" /></properties></testcase><testcase classname="tests.p6.test_acceptance" name="test_T10_restart_intermediate_and_terminal_no_cached_authorization" time="11.260"><properties><property name="p6_id" value="P6-T10" /></properties></testcase><testcase classname="tests.p6.test_acceptance" name="test_T11_corrupt_source_csv_and_xlsx_on_disposable_copies" time="2.887"><properties><property name="p6_id" value="P6-T11" /></properties></testcase><testcase classname="tests.p6.test_acceptance" name="test_T12_corrupt_internal_final_and_snapshot_boundary" time="4.793"><properties><property name="p6_id" value="P6-T12" /></properties></testcase><testcase classname="tests.p6.test_acceptance" name="test_T13_cross_order_and_context_guards_before_artifact_access" time="4.997"><properties><property name="p6_id" value="P6-T13" /></properties></testcase><testcase classname="tests.p6.test_acceptance" name="test_T14_missing_report_artifact_metadata_and_health_fail_closed" time="5.510"><properties><property name="p6_id" value="P6-T14" /></properties></testcase><testcase classname="tests.p6.test_acceptance" name="test_T15_passive_rerenders_reprepare_transfer_and_single_snapshot" time="41.196"><properties><property name="p6_id" value="P6-T15" /></properties></testcase><testcase classname="tests.p6.test_acceptance" name="test_T16_mime_names_deterministic_json_and_unsafe_name_denial" time="9.027"><properties><property name="p6_id" value="P6-T16" /></properties></testcase><testcase classname="tests.p6.test_acceptance" name="test_T17_actual_large_p5_artifact_p6_rss_http_and_resource_denial" time="75.643"><properties><property name="p6_id" value="P6-T17" /></properties></testcase><testcase classname="tests.p6.test_acceptance" name="test_T18_successor_scope_audit_and_negative_mutation_classes" time="30.853"><properties><property name="p6_id" value="P6-T18" /></properties></testcase><testcase classname="tests.p6.test_acceptance" name="test_T19_documented_linux_launch_restart_and_actual_mac_docker" time="0.869"><properties><property name="p6_id" value="P6-T19" /></properties><failure message="AssertionError: NOT_RUN — Mac Docker launch/restart and explicit workflow require actual macOS host evidence; Linux smoke passed. Gate B remains blocked.&#10;assert None">pa = &lt;p6.conftest.UIScenario object at 0x7fb300755460&gt;
+copy_workspace = &lt;function copy_workspace.&lt;locals&gt;.make at 0x7fb2f80e8e00&gt;
+
+    def test_T19_documented_linux_launch_restart_and_actual_mac_docker(pa, copy_workspace):
+        directory, env = copy_workspace(pa)
+        before = snapshot(directory); files = payload_hashes(directory)
+        readme = (ROOT / 'docs/p6/README_PILOT.md').read_text()
+        assert 'streamlit' in readme and 'docker' in readme.lower() and 'VDE_WORKSPACE' in readme
+        observations = {'observed_host': platform.platform(), 'linux_launches': []}
+        for _ in range(2):
+            with socket.socket() as listener:
+                listener.bind(('127.0.0.1', 0)); port = listener.getsockname()[1]
+            command = [sys.executable, '-m', 'streamlit', 'run', str(ROOT / 'src/vde/app.py'),
+                       '--server.address=127.0.0.1', '--server.port=' + str(port), '--server.headless=true',
+                       '--browser.gatherUsageStats=false']
+            child_env = os.environ.copy(); child_env['VDE_WORKSPACE'] = str(directory)
+            process = subprocess.Popen(command, cwd=ROOT, env=child_env, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+            status = None
+            try:
+                deadline = time.monotonic() + 30
+                while time.monotonic() &lt; deadline:
+                    try:
+                        with urlopen(f'http://127.0.0.1:{port}/_stcore/health', timeout=1) as response:
+                            status = response.status
+                            assert response.read() == b'ok'
+                        break
+                    except OSError:
+                        if process.poll() is not None:
+                            break
+                        time.sleep(0.1)
+                assert status == 200
+            finally:
+                process.terminate()
+                stdout, stderr = process.communicate(timeout=15)
+            observations['linux_launches'].append({'command': command, 'health_http': status,
+                                                    'stdout': stdout, 'stderr': stderr})
+        assert snapshot(directory) == before and payload_hashes(directory) == files
+        observations['persisted_order_run_result_qa_after_restart'] = True
+        mac_path = os.environ.get('P6_MAC_DOCKER_EVIDENCE')
+        if mac_path:
+            mac = json.loads(Path(mac_path).read_text())
+            observations['mac_docker'] = mac
+            assert mac['host_system'] == 'Darwin' and mac['container_system'] == 'Linux'
+            assert mac['launch_http_status'] == 200 and mac['restart_http_status'] == 200
+            assert mac['workspace_persisted'] is True and mac['explicit_ui_workflow_completed'] is True
+            assert mac['commands'] and mac['stdout'] and mac['docker_info']
+        else:
+            observations['mac_docker'] = {'outcome': 'NOT_RUN', 'reason': 'This execution host is Linux; no actual macOS Docker host evidence is available.'}
+        record('T19', observations)
+&gt;       assert mac_path, 'NOT_RUN — Mac Docker launch/restart and explicit workflow require actual macOS host evidence; Linux smoke passed. Gate B remains blocked.'
+E       AssertionError: NOT_RUN — Mac Docker launch/restart and explicit workflow require actual macOS host evidence; Linux smoke passed. Gate B remains blocked.
+E       assert None
+
+tests/p6/test_acceptance.py:743: AssertionError</failure></testcase><testcase classname="tests.p6.test_acceptance" name="test_T20_exact_twenty_id_inventory_and_pending_release_gate" time="0.006"><properties><property name="p6_id" value="P6-T20" /></properties></testcase></testsuite></testsuites>

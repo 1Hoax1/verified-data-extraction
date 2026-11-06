@@ -1,0 +1,102 @@
+[
+  {
+    "test_id": "P6-T01",
+    "pytest_outcome": "pass",
+    "assertion": null
+  },
+  {
+    "test_id": "P6-T02",
+    "pytest_outcome": "pass",
+    "assertion": null
+  },
+  {
+    "test_id": "P6-T03",
+    "pytest_outcome": "pass",
+    "assertion": null
+  },
+  {
+    "test_id": "P6-T04",
+    "pytest_outcome": "pass",
+    "assertion": null
+  },
+  {
+    "test_id": "P6-T05",
+    "pytest_outcome": "pass",
+    "assertion": null
+  },
+  {
+    "test_id": "P6-T06",
+    "pytest_outcome": "pass",
+    "assertion": null
+  },
+  {
+    "test_id": "P6-T07",
+    "pytest_outcome": "pass",
+    "assertion": null
+  },
+  {
+    "test_id": "P6-T08",
+    "pytest_outcome": "pass",
+    "assertion": null
+  },
+  {
+    "test_id": "P6-T09",
+    "pytest_outcome": "pass",
+    "assertion": null
+  },
+  {
+    "test_id": "P6-T10",
+    "pytest_outcome": "pass",
+    "assertion": null
+  },
+  {
+    "test_id": "P6-T11",
+    "pytest_outcome": "pass",
+    "assertion": null
+  },
+  {
+    "test_id": "P6-T12",
+    "pytest_outcome": "pass",
+    "assertion": null
+  },
+  {
+    "test_id": "P6-T13",
+    "pytest_outcome": "pass",
+    "assertion": null
+  },
+  {
+    "test_id": "P6-T14",
+    "pytest_outcome": "pass",
+    "assertion": null
+  },
+  {
+    "test_id": "P6-T15",
+    "pytest_outcome": "pass",
+    "assertion": null
+  },
+  {
+    "test_id": "P6-T16",
+    "pytest_outcome": "pass",
+    "assertion": null
+  },
+  {
+    "test_id": "P6-T17",
+    "pytest_outcome": "pass",
+    "assertion": null
+  },
+  {
+    "test_id": "P6-T18",
+    "pytest_outcome": "pass",
+    "assertion": null
+  },
+  {
+    "test_id": "P6-T19",
+    "pytest_outcome": "failure",
+    "assertion": "pa = <p6.conftest.UIScenario object at 0x7fb300755460>\ncopy_workspace = <function copy_workspace.<locals>.make at 0x7fb2f80e8e00>\n\n    def test_T19_documented_linux_launch_restart_and_actual_mac_docker(pa, copy_workspace):\n        directory, env = copy_workspace(pa)\n        before = snapshot(directory); files = payload_hashes(directory)\n        readme = (ROOT / 'docs/p6/README_PILOT.md').read_text()\n        assert 'streamlit' in readme and 'docker' in readme.lower() and 'VDE_WORKSPACE' in readme\n        observations = {'observed_host': platform.platform(), 'linux_launches': []}\n        for _ in range(2):\n            with socket.socket() as listener:\n                listener.bind(('127.0.0.1', 0)); port = listener.getsockname()[1]\n            command = [sys.executable, '-m', 'streamlit', 'run', str(ROOT / 'src/vde/app.py'),\n                       '--server.address=127.0.0.1', '--server.port=' + str(port), '--server.headless=true',\n                       '--browser.gatherUsageStats=false']\n            child_env = os.environ.copy(); child_env['VDE_WORKSPACE'] = str(directory)\n            process = subprocess.Popen(command, cwd=ROOT, env=child_env, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)\n            status = None\n            try:\n                deadline = time.monotonic() + 30\n                while time.monotonic() < deadline:\n                    try:\n                        with urlopen(f'http://127.0.0.1:{port}/_stcore/health', timeout=1) as response:\n                            status = response.status\n                            assert response.read() == b'ok'\n                        break\n                    except OSError:\n                        if process.poll() is not None:\n                            break\n                        time.sleep(0.1)\n                assert status == 200\n            finally:\n                process.terminate()\n                stdout, stderr = process.communicate(timeout=15)\n            observations['linux_launches'].append({'command': command, 'health_http': status,\n                                                    'stdout': stdout, 'stderr': stderr})\n        assert snapshot(directory) == before and payload_hashes(directory) == files\n        observations['persisted_order_run_result_qa_after_restart'] = True\n        mac_path = os.environ.get('P6_MAC_DOCKER_EVIDENCE')\n        if mac_path:\n            mac = json.loads(Path(mac_path).read_text())\n            observations['mac_docker'] = mac\n            assert mac['host_system'] == 'Darwin' and mac['container_system'] == 'Linux'\n            assert mac['launch_http_status'] == 200 and mac['restart_http_status'] == 200\n            assert mac['workspace_persisted'] is True and mac['explicit_ui_workflow_completed'] is True\n            assert mac['commands'] and mac['stdout'] and mac['docker_info']\n        else:\n            observations['mac_docker'] = {'outcome': 'NOT_RUN', 'reason': 'This execution host is Linux; no actual macOS Docker host evidence is available.'}\n        record('T19', observations)\n>       assert mac_path, 'NOT_RUN \u2014 Mac Docker launch/restart and explicit workflow require actual macOS host evidence; Linux smoke passed. Gate B remains blocked.'\nE       AssertionError: NOT_RUN \u2014 Mac Docker launch/restart and explicit workflow require actual macOS host evidence; Linux smoke passed. Gate B remains blocked.\nE       assert None\n\ntests/p6/test_acceptance.py:743: AssertionError"
+  },
+  {
+    "test_id": "P6-T20",
+    "pytest_outcome": "pass",
+    "assertion": null
+  }
+]

@@ -1,0 +1,69 @@
+..F                                                                      [100%]
+=================================== FAILURES ===================================
+________ test_T13_cross_order_and_context_guards_before_artifact_access ________
+
+pa = <p6.conftest.UIScenario object at 0x7ff461635220>
+pb = <p6.conftest.UIScenario object at 0x7ff46ce51a90>
+copy_workspace = <function copy_workspace.<locals>.make at 0x7ff461bd6660>
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7ff4619bbec0>
+
+    def test_T13_cross_order_and_context_guards_before_artifact_access(pa, pb, copy_workspace, monkeypatch):
+        directory, env = copy_workspace(pa)
+        other = CreateOrderService(env).create(str(uuid4()), title='Other', listing_text='Other isolated Order')
+        from vde.p5.service import P5Service
+        calls = []
+        original = P5Service.read_decision
+        def spy(service, run_id):
+            calls.append(run_id)
+            return original(service, run_id)
+        monkeypatch.setattr(P5Service, 'read_decision', spy)
+        code = refused(env, other.id, pa.run_id, {'P6_CROSS_ORDER'})
+        assert calls == []
+        observations = {'cross_order': {'code': code, 'p5_artifact_reads': 0}}
+        mutations = [('approval_hash', 'UPDATE approvals SET target_content_hash=? WHERE target_type=?', ('0'*64, 'TRANSFORMATION_SPEC')),
+                     ('spec_context', 'UPDATE transformation_spec_versions SET brief_content_hash=?', ('1'*64,)),
+                     ('run_context', 'UPDATE execution_runs SET transformation_approval_id=?', (str(uuid4()),))]
+        for label, sql, args in mutations:
+            directory, copied = copy_workspace(pa)
+            mutate_sql(directory, sql, args)
+            observations[label] = refused(copied, pa.order_id, pa.run_id)
+        pb_mutations = [
+            ('brief_approval_hash', 'UPDATE approvals SET target_content_hash=? WHERE target_type=?', ('0'*64, 'BRIEF')),
+            ('spec_approval_hash', 'UPDATE approvals SET target_content_hash=? WHERE target_type=?', ('0'*64, 'TRANSFORMATION_SPEC')),
+            ('spec_approval_context', 'UPDATE approvals SET context_brief_content_hash=? WHERE target_type=?', ('0'*64, 'TRANSFORMATION_SPEC')),
+            ('missing_brief_approval', 'DELETE FROM approvals WHERE target_type=?', ('BRIEF',)),
+            ('fake_approver', 'UPDATE approvals SET approved_by=?', ('TEST_ONLY',)),
+            ('future_approval', 'UPDATE approvals SET approved_at=?', ('2099-01-01T00:00:00Z',)),
+            ('run_approval', 'UPDATE execution_runs SET transformation_approval_id=?', (str(uuid4()),)),
+            ('failed_run', 'UPDATE execution_runs SET status=?', ('failed',)),
+            ('selected_spec', 'UPDATE orders SET selected_transformation_spec_version_id=?', (str(uuid4()),)),
+            ('asset_checksum', 'UPDATE input_assets SET byte_sha256=?', ('0'*64,)),
+        ]
+        pb_denials = {}
+        for label, sql, args in pb_mutations:
+            directory, copied = copy_workspace(pb)
+>           mutate_sql(directory, sql, args)
+
+tests/p6/test_acceptance.py:509: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+directory = PosixPath('/tmp/pytest-of-agent/pytest-89/test_T13_cross_order_and_conte0/disposable-9')
+statement = 'UPDATE approvals SET approved_by=?', parameters = ('TEST_ONLY',)
+
+    def mutate_sql(directory, statement, parameters=()):
+        """Offline adversarial mutation ONLY of a disposable test copy."""
+        assert Path(directory).resolve().is_relative_to(Path('/tmp'))
+        with sqlite3.connect(Path(directory) / 'app.sqlite3') as connection:
+            for (name,) in connection.execute("SELECT name FROM sqlite_master WHERE type='trigger'").fetchall():
+                connection.execute('DROP TRIGGER "' + name.replace('"', '""') + '"')
+>           connection.execute(statement, parameters)
+E           sqlite3.IntegrityError: CHECK constraint failed: approved_by='local_user'
+
+tests/p6/conftest.py:74: IntegrityError
+---------------------------- Captured stderr setup -----------------------------
+2026-11-06 22:59:32.059 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+2026-11-06 22:59:32.102 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+---- generated xml file: /workspace/p6-cr2-work/dev-focused-01/results.xml -----
+=========================== short test summary info ============================
+FAILED tests/p6/test_acceptance.py::test_T13_cross_order_and_context_guards_before_artifact_access
+1 failed, 2 passed in 35.97s

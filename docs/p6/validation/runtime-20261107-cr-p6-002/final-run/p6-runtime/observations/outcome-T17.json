@@ -1,0 +1,12 @@
+{
+  "nodeid": "tests/p6/test_acceptance.py::test_T17_actual_large_p5_artifact_p6_rss_http_and_resource_denial",
+  "outcome": "passed",
+  "duration_seconds": 75.64199031100725,
+  "properties": [
+    [
+      "p6_id",
+      "P6-T17"
+    ]
+  ],
+  "failure": null
+}

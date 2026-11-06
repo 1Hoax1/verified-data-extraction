@@ -1,0 +1,10 @@
+{
+  "argv": [
+    "docker",
+    "--host=unix:///var/run/docker.sock",
+    "logs",
+    "vde-p6-cr2-smoke"
+  ],
+  "cwd": "/workspace/p6-streamlit-e2e",
+  "utc": "2026-11-06T23:06:49.168485+00:00"
+}

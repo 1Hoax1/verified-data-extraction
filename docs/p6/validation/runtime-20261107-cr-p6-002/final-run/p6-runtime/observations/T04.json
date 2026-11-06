@@ -1,0 +1,301 @@
+{
+  "approvals": [
+    {
+      "id": "094ac408-368a-4480-821d-b43b90ef4aa9",
+      "order_id": "a38a915d-a172-4cc1-a921-8f2bc912799d",
+      "target_type": "BRIEF",
+      "target_version_id": "588f8065-e5f6-454c-bf12-b8df5eda2eeb",
+      "target_content_hash": "09ab9e35b473e1398509305fc394a0e2d383150138066f5126d65d99e18f031f",
+      "context_brief_version_id": null,
+      "context_brief_content_hash": null,
+      "approved_by": "local_user",
+      "approved_at": "2026-11-06T23:31:09Z"
+    },
+    {
+      "id": "c15f1b4d-4242-4f2f-a7e4-46486b8a5788",
+      "order_id": "a38a915d-a172-4cc1-a921-8f2bc912799d",
+      "target_type": "TRANSFORMATION_SPEC",
+      "target_version_id": "e3c62a73-d65b-45b3-9d39-5df209ac362c",
+      "target_content_hash": "e3fd8bcba4efcf069661b0161fd08b1f1619e52068691f05edc6090c70557a0a",
+      "context_brief_version_id": "588f8065-e5f6-454c-bf12-b8df5eda2eeb",
+      "context_brief_content_hash": "09ab9e35b473e1398509305fc394a0e2d383150138066f5126d65d99e18f031f",
+      "approved_by": "local_user",
+      "approved_at": "2026-11-06T23:31:10Z"
+    }
+  ],
+  "explicit_actions": [
+    {
+      "action": "button",
+      "label": "Create DRAFT Order",
+      "before_counts": {
+        "orders": 0,
+        "input_assets": 0,
+        "brief_versions": 0,
+        "transformation_spec_versions": 0,
+        "approvals": 0,
+        "execution_runs": 0,
+        "artifacts": 0,
+        "qa_reports": 0,
+        "event_log": 0
+      }
+    },
+    {
+      "action": "button",
+      "label": "Upload",
+      "before_counts": {
+        "orders": 1,
+        "input_assets": 0,
+        "brief_versions": 0,
+        "transformation_spec_versions": 0,
+        "approvals": 0,
+        "execution_runs": 0,
+        "artifacts": 0,
+        "qa_reports": 0,
+        "event_log": 0
+      }
+    },
+    {
+      "action": "checkbox",
+      "label": "Open manual workflow"
+    },
+    {
+      "action": "button",
+      "label": "Verify P3 input and preview",
+      "before_counts": {
+        "orders": 1,
+        "input_assets": 1,
+        "brief_versions": 0,
+        "transformation_spec_versions": 0,
+        "approvals": 0,
+        "execution_runs": 0,
+        "artifacts": 0,
+        "qa_reports": 0,
+        "event_log": 1
+      }
+    },
+    {
+      "action": "button",
+      "label": "Begin manual review",
+      "before_counts": {
+        "orders": 1,
+        "input_assets": 1,
+        "brief_versions": 0,
+        "transformation_spec_versions": 0,
+        "approvals": 0,
+        "execution_runs": 0,
+        "artifacts": 0,
+        "qa_reports": 0,
+        "event_log": 1
+      }
+    },
+    {
+      "action": "checkbox",
+      "label": "Open deterministic transformation"
+    },
+    {
+      "action": "button",
+      "label": "Validate Brief draft",
+      "before_counts": {
+        "orders": 1,
+        "input_assets": 1,
+        "brief_versions": 0,
+        "transformation_spec_versions": 0,
+        "approvals": 0,
+        "execution_runs": 0,
+        "artifacts": 0,
+        "qa_reports": 0,
+        "event_log": 2
+      }
+    },
+    {
+      "action": "button",
+      "label": "Save new Brief version",
+      "before_counts": {
+        "orders": 1,
+        "input_assets": 1,
+        "brief_versions": 0,
+        "transformation_spec_versions": 0,
+        "approvals": 0,
+        "execution_runs": 0,
+        "artifacts": 0,
+        "qa_reports": 0,
+        "event_log": 2
+      }
+    },
+    {
+      "action": "checkbox",
+      "label": "Confirm this exact Brief ID and hash"
+    },
+    {
+      "action": "button",
+      "label": "I approve this Brief version",
+      "before_counts": {
+        "orders": 1,
+        "input_assets": 1,
+        "brief_versions": 1,
+        "transformation_spec_versions": 0,
+        "approvals": 0,
+        "execution_runs": 0,
+        "artifacts": 0,
+        "qa_reports": 0,
+        "event_log": 3
+      }
+    },
+    {
+      "action": "checkbox",
+      "label": "Open deterministic transformation"
+    },
+    {
+      "action": "button",
+      "label": "Validate TransformationSpec draft",
+      "before_counts": {
+        "orders": 1,
+        "input_assets": 1,
+        "brief_versions": 1,
+        "transformation_spec_versions": 0,
+        "approvals": 1,
+        "execution_runs": 0,
+        "artifacts": 0,
+        "qa_reports": 0,
+        "event_log": 4
+      }
+    },
+    {
+      "action": "button",
+      "label": "Save new TransformationSpec version",
+      "before_counts": {
+        "orders": 1,
+        "input_assets": 1,
+        "brief_versions": 1,
+        "transformation_spec_versions": 0,
+        "approvals": 1,
+        "execution_runs": 0,
+        "artifacts": 0,
+        "qa_reports": 0,
+        "event_log": 4
+      }
+    },
+    {
+      "action": "checkbox",
+      "label": "Confirm this exact Spec ID, hash and approved Brief context"
+    },
+    {
+      "action": "button",
+      "label": "I approve TransformationSpec",
+      "before_counts": {
+        "orders": 1,
+        "input_assets": 1,
+        "brief_versions": 1,
+        "transformation_spec_versions": 1,
+        "approvals": 1,
+        "execution_runs": 0,
+        "artifacts": 0,
+        "qa_reports": 0,
+        "event_log": 5
+      }
+    },
+    {
+      "action": "checkbox",
+      "label": "Open deterministic transformation"
+    },
+    {
+      "action": "checkbox",
+      "label": "I confirm the selected source and pipeline"
+    },
+    {
+      "action": "button",
+      "label": "Execute",
+      "before_counts": {
+        "orders": 1,
+        "input_assets": 1,
+        "brief_versions": 1,
+        "transformation_spec_versions": 1,
+        "approvals": 2,
+        "execution_runs": 0,
+        "artifacts": 0,
+        "qa_reports": 0,
+        "event_log": 6
+      }
+    },
+    {
+      "action": "checkbox",
+      "label": "Open export and QA"
+    },
+    {
+      "action": "button",
+      "label": "Export + deterministic QA",
+      "before_counts": {
+        "orders": 1,
+        "input_assets": 1,
+        "brief_versions": 1,
+        "transformation_spec_versions": 1,
+        "approvals": 2,
+        "execution_runs": 1,
+        "artifacts": 1,
+        "qa_reports": 0,
+        "event_log": 9
+      }
+    }
+  ],
+  "adaptations": [
+    {
+      "source": "pecs/pilot_slice_v1/fixtures/P-A_dirty_csv/brief_version.json",
+      "original_file_sha256": "422912ff8e31312e5f3c249208bb6e83eb6bf4625da37e6157f09086977d40d3",
+      "original_content_hash": "695088adceedcb49d1d494b352f2ee332da98dd953a7b997b42b36b76147854d",
+      "substitutions": [
+        {
+          "path": "order_id",
+          "original": "order-pa",
+          "adapted": "a38a915d-a172-4cc1-a921-8f2bc912799d"
+        },
+        {
+          "path": "inputs_expected[0].asset_id",
+          "original": "asset-pa-csv",
+          "adapted": "d389c0d8-9098-492e-8190-94cbc59e5e8f"
+        },
+        {
+          "path": "source_refs",
+          "original": [
+            "asset-pa-csv"
+          ],
+          "adapted": [
+            "d389c0d8-9098-492e-8190-94cbc59e5e8f"
+          ]
+        }
+      ],
+      "derived_content_hash": "09ab9e35b473e1398509305fc394a0e2d383150138066f5126d65d99e18f031f",
+      "derived_json_sha256": "3bb367884451ef34cbb7712463686daa86fe23d78e58926dc4cf167df9ebd320",
+      "ui_allocates_version_id_created_at_and_monotonic_version_number": true
+    },
+    {
+      "source": "pecs/pilot_slice_v1/fixtures/P-A_dirty_csv/transformation_spec_version.json",
+      "original_file_sha256": "3cdf68776ea86ec08c57e11c29d96076fc73d02fa0e7ccf33fe4840b7ebf8420",
+      "original_content_hash": "490e68c8a918daee12f4f9dec02a5652f7b67d1f57e1f1c46bcce85a0a5429f8",
+      "substitutions": [
+        {
+          "path": "order_id",
+          "original": "order-pa",
+          "adapted": "a38a915d-a172-4cc1-a921-8f2bc912799d"
+        },
+        {
+          "path": "inputs[0].asset_id",
+          "original": "asset-pa-csv",
+          "adapted": "d389c0d8-9098-492e-8190-94cbc59e5e8f"
+        },
+        {
+          "path": "brief_version_id",
+          "original": "brief-pa-v1",
+          "adapted": "588f8065-e5f6-454c-bf12-b8df5eda2eeb"
+        },
+        {
+          "path": "brief_content_hash",
+          "original": "695088adceedcb49d1d494b352f2ee332da98dd953a7b997b42b36b76147854d",
+          "adapted": "09ab9e35b473e1398509305fc394a0e2d383150138066f5126d65d99e18f031f"
+        }
+      ],
+      "derived_content_hash": "e3fd8bcba4efcf069661b0161fd08b1f1619e52068691f05edc6090c70557a0a",
+      "derived_json_sha256": "ed5c432c2b3903ed169dc63d3f0cf3f7ba7ebb52454edd97c139d2b654e67984",
+      "ui_allocates_version_id_created_at_and_monotonic_version_number": true
+    }
+  ]
+}

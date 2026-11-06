@@ -1,0 +1,28 @@
+{
+  "result": "PASS",
+  "manifest_sha256": "ade4e8b0c72cf0cdc90918fb134ce071f67ab7423e29fe562525aa0aadfd20d5",
+  "entries": 439,
+  "actual_reproduction": {
+    "purpose": "Actual reproduction of original T06/T07 defect; original frozen evidence unchanged",
+    "command": [
+      "/workspace/verified-data-extraction/.venv/bin/python",
+      "-m",
+      "pytest",
+      "tests/p6/test_acceptance.py::test_T06_pb_explicit_v2_approval_and_typed_warning_oracle",
+      "tests/p6/test_acceptance.py::test_T07_pb_xlsx_and_qa_independent_http_and_18_cells",
+      "-q",
+      "--junitxml=/workspace/p6-cr2-work/original-reproduction/results.xml"
+    ],
+    "cwd": "/workspace/p6-cr2-original",
+    "tested_commit": "deddc2799464076227173bd2e4890f552ffe64bf",
+    "tested_tree": "afc4126ccddce4ca4615ac411b1dd6281a98a960",
+    "started_at_utc": "2026-11-06T22:59:48.394243+00:00",
+    "finished_at_utc": "2026-11-06T23:00:07.827240+00:00",
+    "elapsed_seconds": 19.433005159997265,
+    "actual_exit_code": 1,
+    "actual_cases": 2,
+    "actual_failures": 2,
+    "worktree_clean": true
+  },
+  "historical_evidence_rewritten": false
+}

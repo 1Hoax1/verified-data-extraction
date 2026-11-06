@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="2" skipped="0" tests="2" time="18.597" timestamp="2026-11-06T22:59:48.836527+00:00" hostname="832769dc7e6d"><testcase classname="tests.p6.test_acceptance" name="test_T06_pb_explicit_v2_approval_and_typed_warning_oracle" time="9.739"><properties><property name="p6_id" value="P6-T06" /></properties><failure message="AssertionError: ('Real P3 UI allocates a UUID Brief ID; frozen P5 PB-AC-002 special handling requires brief-pb-v1.', ['DQ-010'])&#10;assert ('NEEDS_FIX' == 'READY'&#10;  &#10;  - READY&#10;  + NEEDS_FIX)">pb = &lt;p6.conftest.UIScenario object at 0x7f154aa445f0&gt;
+
+    def test_T06_pb_explicit_v2_approval_and_typed_warning_oracle(pb):
+        assert pb.spec.version_number == 2
+        with pb.uow() as u:
+            versions = u.specs.list_for_order(pb.order_id)
+            approvals = u.approvals.list_for_order(pb.order_id)
+            artifacts = u.artifacts.list_for_run(pb.run_id)
+        assert len(versions) == 2 and len(approvals) == 2
+        assert next(a for a in approvals if a.target_type == 'TRANSFORMATION_SPEC').target_version_id == pb.spec.id
+        assert all(a.approved_by == 'local_user' for a in approvals)
+        checks = pb.decision.report['deterministic_checks']
+        assert len(checks) == 24
+        dq17 = {c['criterion_id']: c['status'] for c in checks if c['check_id'] == 'DQ-017'}
+        assert dq17 == {'PB-AC-006': 'PASS', 'PB-AC-007': 'PASS'}
+        assert pb.decision.report['warnings']
+        assert any('FORMULA' in json.dumps(w).upper() for w in pb.decision.report['warnings'])
+        assert [a.artifact_type for a in artifacts if a.artifact_type.startswith('RESULT_')] == ['RESULT_XLSX']
+        record('T06', {'versions': [asdict(v) for v in versions], 'approvals': [asdict(a) for a in approvals],
+                       'DQ017': dq17, 'checks': len(checks), 'warnings': pb.decision.report['warnings'],
+                       'adaptations': pb.adaptations, 'observed_order_status': pb.order().status,
+                       'observed_qa_status': pb.decision.report['overall_status'],
+                       'actual_report': pb.decision.report,
+                       'blocking_issues': pb.decision.report['blocking_issues'],
+                       'failed_checks': [c for c in checks if c['status'] == 'FAIL']})
+&gt;       assert pb.order().status == 'READY' and pb.decision.report['overall_status'] == 'PASS_WITH_WARNINGS', (
+            'Real P3 UI allocates a UUID Brief ID; frozen P5 PB-AC-002 special handling requires brief-pb-v1.',
+            pb.decision.report['blocking_issues'])
+E       AssertionError: ('Real P3 UI allocates a UUID Brief ID; frozen P5 PB-AC-002 special handling requires brief-pb-v1.', ['DQ-010'])
+E       assert ('NEEDS_FIX' == 'READY'
+E         
+E         - READY
+E         + NEEDS_FIX)
+
+tests/p6/test_acceptance.py:222: AssertionError</failure></testcase><testcase classname="tests.p6.test_acceptance" name="test_T07_pb_xlsx_and_qa_independent_http_and_18_cells" time="8.556"><properties><property name="p6_id" value="P6-T07" /></properties><failure message="AssertionError: assert ('NEEDS_FIX' == 'READY'&#10;  &#10;  - READY&#10;  + NEEDS_FIX)">pb = &lt;p6.conftest.UIScenario object at 0x7f154aa445f0&gt;
+download_http = &lt;function download_http.&lt;locals&gt;.fetch at 0x7f154028dbc0&gt;
+
+    def test_T07_pb_xlsx_and_qa_independent_http_and_18_cells(pb, download_http):
+        before = pb.snapshot()
+        prepared = pb.prepare_ui()
+        verified_report(pb, prepared)
+        assert prepared.result_name.endswith('.xlsx')
+        assert prepared.result_mime == 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+        book = load_workbook(io.BytesIO(prepared.result_bytes), read_only=True, data_only=False, keep_links=False)
+        try:
+            sheet = book[pb.spec.document_json['output']['sheet_name']]
+            rows = list(sheet.iter_rows())
+            assert len(rows) == 4 and all(len(row) == 6 for row in rows)
+            assert all(cell.data_type != 'f' for row in rows for cell in row)
+            values = [[cell.value for cell in row] for row in rows]
+        finally:
+            book.close()
+        # Frozen P-B expected cells are independent of the exported workbook.
+        golden = load_workbook(pb.source / 'expected_result.xlsx', read_only=True, data_only=False, keep_links=False)
+        try:
+            expected = [[cell.value for cell in row] for row in golden.active.iter_rows()]
+        finally:
+            golden.close()
+        assert values == expected
+        assert sum(len(row) for row in values[1:]) == 18
+        observations = transfer(pb.app, download_http, snapshot_expectation(prepared))
+        assert pb.snapshot() == before
+        record('T07', {'http_transfers': observations, 'decoded_cells': values, 'data_cells': 18,
+                       'observed_qa_status': pb.decision.report['overall_status'], 'result_name': prepared.result_name})
+&gt;       assert pb.order().status == 'READY' and pb.decision.report['overall_status'] == 'PASS_WITH_WARNINGS'
+E       AssertionError: assert ('NEEDS_FIX' == 'READY'
+E         
+E         - READY
+E         + NEEDS_FIX)
+
+tests/p6/test_acceptance.py:254: AssertionError</failure></testcase></testsuite></testsuites>

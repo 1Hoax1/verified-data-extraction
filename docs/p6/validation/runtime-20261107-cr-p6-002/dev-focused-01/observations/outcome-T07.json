@@ -1,0 +1,12 @@
+{
+  "nodeid": "tests/p6/test_acceptance.py::test_T07_pb_xlsx_and_qa_independent_http_and_18_cells",
+  "outcome": "passed",
+  "duration_seconds": 8.76006955000048,
+  "properties": [
+    [
+      "p6_id",
+      "P6-T07"
+    ]
+  ],
+  "failure": null
+}

@@ -1,0 +1,57 @@
+{
+  "http_transfers": {
+    "result": {
+      "bytes": 5096,
+      "sha256": "d7f900dd153e654dc3e727eac0b22a8322df1c472e4ba262730b1d36108380f3",
+      "url": "/mock/media/36641c0ae8bb7f7d1898711ffbb68a24f3ed3000636c7ee8049e0a88.xlsx",
+      "status": 200,
+      "content_type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+      "content_disposition": "attachment; filename=\"orders_clean_DIAGNOSTIC_NOT_FOR_DELIVERY.xlsx\""
+    },
+    "report": {
+      "bytes": 10913,
+      "sha256": "23b8b67d941d806e876690e0aa48f221ce489def01d976d916d62c0f69cb1020",
+      "url": "/mock/media/77558e23d5cc221d95f78e05a3c7e16597121a15fa9e9f6f98f8d748.vde-qa-json",
+      "status": 200,
+      "content_type": "application/json; charset=utf-8",
+      "content_disposition": "attachment; filename=\"qa_report_p5-qa-8f67e09c-9a08-4b2e-835c-9aa128b2fb3e.json\""
+    }
+  },
+  "decoded_cells": [
+    [
+      "Номер заказа",
+      "Товар",
+      "Количество",
+      "Цена за единицу",
+      "Дата заказа",
+      "Сумма строки"
+    ],
+    [
+      "O-001",
+      "Widget A",
+      2,
+      10,
+      "2026-02-01",
+      20
+    ],
+    [
+      "O-002",
+      "Widget B",
+      1,
+      20,
+      "2026-02-05",
+      20
+    ],
+    [
+      "O-003",
+      "Widget C",
+      3,
+      15.5,
+      "2026-02-15",
+      46.5
+    ]
+  ],
+  "data_cells": 18,
+  "observed_qa_status": "FAIL",
+  "result_name": "orders_clean_DIAGNOSTIC_NOT_FOR_DELIVERY.xlsx"
+}

@@ -1,0 +1,39 @@
+........................................................................ [ 94%]
+...F                                                                     [100%]
+=================================== FAILURES ===================================
+___________ test_T76_successor_scope_negatives_and_ambiguous_result ____________
+
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-102/test_T76_successor_scope_negat0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7ff5875486b0>
+
+    def test_T76_successor_scope_negatives_and_ambiguous_result(tmp_path,monkeypatch):
+        from .scope_audit import audit,negative_probes
+>       audit(ROOT);probes=negative_probes(ROOT,tmp_path/'mutations')
+        ^^^^^^^^^^^
+
+tests/p5/test_acceptance.py:563: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+root = PosixPath('/workspace/p6-streamlit-e2e')
+
+    def audit(root,*,authority_root=None):
+        root=Path(root).resolve();authority=root if authority_root is None else Path(authority_root).resolve()
+        assert json.loads(regular(root/'tests/p5/scope_policy_v1.json'))==POLICY,'P5 policy closed contents differ'
+        from scope_policy import verify_governance_document
+        verify_governance_document(root,authority_root=authority if root!=authority else None)
+        git(authority,'merge-base','--is-ancestor',BASELINE,'HEAD')
+        git(authority,'merge-base','--is-ancestor',ADDENDUM_COMMIT,'HEAD')
+        assert regular(root/P5_DOCS[0])==git(authority,'show',ADDENDUM_COMMIT+':'+P5_DOCS[0]),'Approved numeric addendum changed'
+        base=frozen(str(authority))
+        for path,(mode,blob,raw) in base.items():
+            actual=regular(root/path)
+            wanted=raw+APP_APPEND if path=='src/vde/app.py' else raw
+>           assert actual==wanted,'Protected file changed: '+path
+                   ^^^^^^^^^^^^^^
+E           AssertionError: Protected file changed: src/vde/app.py
+
+tests/p5/scope_audit.py:68: AssertionError
+-- generated xml file: /workspace/p6-cr2-work/final-01/legacy-p5/results.xml ---
+=========================== short test summary info ============================
+FAILED tests/p5/test_acceptance.py::test_T76_successor_scope_negatives_and_ambiguous_result
+1 failed, 75 passed in 1048.69s (0:17:28)

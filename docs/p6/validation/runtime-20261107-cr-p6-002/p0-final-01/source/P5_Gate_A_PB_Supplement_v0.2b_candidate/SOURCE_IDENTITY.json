@@ -1,0 +1,11 @@
+{
+  "repository": "1Hoax1/verified-data-extraction",
+  "commit": "fd39aa1bed480313504ae8b1f76e77e170cb72ba",
+  "P0_original_Spec": "pecs/pilot_slice_v1/fixtures/P-B_xlsx_sheet/transformation_spec_version.json",
+  "P0_original_Approval": "pecs/pilot_slice_v1/fixtures/P-B_xlsx_sheet/approvals/transformation_approval.json",
+  "P0_content_hash_spec": "pecs/pilot_slice_v1/specifications/content_hash_spec.md",
+  "old_content_hash": "d7c30e08e6d03054d4a15daeb741f64c1f4fef64c225208d98c1659f8e82f2aa",
+  "old_hash_reconstructed": "d7c30e08e6d03054d4a15daeb741f64c1f4fef64c225208d98c1659f8e82f2aa",
+  "assertion": "Original P0 immutable; new fixture is a derivative, uncommitted candidate.",
+  "v02a_input_zip_sha256": "a351fb55c5ea3d442cc3ff3e3facc7a09c426569aad476fb713f8f09f10ca3ac"
+}

@@ -1,0 +1,12 @@
+{
+  "nodeid": "tests/p6/test_acceptance.py::test_T18_successor_scope_audit_and_negative_mutation_classes",
+  "outcome": "passed",
+  "duration_seconds": 30.852105710000615,
+  "properties": [
+    [
+      "p6_id",
+      "P6-T18"
+    ]
+  ],
+  "failure": null
+}

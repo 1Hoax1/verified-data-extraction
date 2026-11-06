@@ -1,0 +1,14 @@
+{
+  "command": [
+    "git",
+    "worktree",
+    "add",
+    "--detach",
+    "/workspace/p6-cr2-original",
+    "deddc2799464076227173bd2e4890f552ffe64bf"
+  ],
+  "cwd": "/workspace/p6-streamlit-e2e",
+  "started_at_utc": "2026-11-06T22:59:35.195485+00:00",
+  "finished_at_utc": "2026-11-06T22:59:35.500186+00:00",
+  "exit_code": 0
+}

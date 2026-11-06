@@ -1,0 +1,12 @@
+{
+  "nodeid": "tests/p6/test_acceptance.py::test_T06_pb_explicit_v2_approval_and_typed_warning_oracle",
+  "outcome": "passed",
+  "duration_seconds": 2.74291138999979,
+  "properties": [
+    [
+      "p6_id",
+      "P6-T06"
+    ]
+  ],
+  "failure": null
+}

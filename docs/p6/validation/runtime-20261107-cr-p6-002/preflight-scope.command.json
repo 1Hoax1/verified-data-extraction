@@ -1,0 +1,11 @@
+{
+  "command": [
+    "/workspace/verified-data-extraction/.venv/bin/python",
+    "-c",
+    "from p6.scope_audit import audit; from pathlib import Path; import json; print(json.dumps(audit(Path.cwd()),indent=2))"
+  ],
+  "cwd": "/workspace/p6-streamlit-e2e",
+  "started_at_utc": "2026-11-06T23:04:52.659440+00:00",
+  "finished_at_utc": "2026-11-06T23:05:12.775113+00:00",
+  "exit_code": 0
+}

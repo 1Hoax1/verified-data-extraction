@@ -1,0 +1,25 @@
+{
+  "result": "PASS",
+  "policy_format": "P6_SCOPE_POLICY_V2_CR_P6_002",
+  "baseline": "0af4a1ff49ccf8fa59c39780d749e15cb5042fc3",
+  "implementation_start": "b93e0ef4ed69343968ff7ae4188d586c0d1485a5",
+  "correction_start": "66c2b4f97e2b4dbe4e7a01696c89ae5fd0431981",
+  "p5_qa_sha256": "8caee87fce7a0c748e2333b8fe3b1b3333fee3548ee78111516a8eac541d8a52",
+  "predecessor_policy_commit": "deddc2799464076227173bd2e4890f552ffe64bf",
+  "retired_policy_provenance": "PASS",
+  "protected_main_files": 1458,
+  "protected_start_files": 1461,
+  "protected_correction_files": 1914,
+  "authorized_amended_paths": [
+    "src/vde/p5/qa.py",
+    "tests/p6/test_acceptance.py",
+    "tests/p6/scope_audit.py",
+    "tests/p6/scope_policy_v1.json",
+    "tests/p6/run_validation.py",
+    "docs/p6/README_PILOT.md",
+    "docs/p6/RELEASE_CHECKLIST.md"
+  ],
+  "new_runtime_files": 4,
+  "exact_app_additions": 4,
+  "historical_tests_policies_governance_unchanged": true
+}

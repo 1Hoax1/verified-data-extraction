@@ -1,0 +1,622 @@
+{
+  "result": "PASS",
+  "report": {
+    "schema_version": "1.1",
+    "report_id": "p5-qa-0430f103-e49a-48fb-a295-42643f4782ed",
+    "run_id": "3ddfb645-5b50-4803-9c89-4955d6ac2252",
+    "brief_version_id": "brief-pa-v1",
+    "transformation_spec_version_id": "transform-pa-v1",
+    "generated_at": "2026-11-06T23:13:48Z",
+    "overall_status": "PASS",
+    "dataset_summary": {
+      "dataset_id": "result",
+      "row_count": 3,
+      "column_count": 6,
+      "columns": [
+        "customer_name",
+        "country",
+        "signup_date",
+        "revenue",
+        "status",
+        "email"
+      ],
+      "output_headers": [
+        "Имя клиента",
+        "Страна",
+        "Дата регистрации",
+        "Выручка",
+        "Статус",
+        "Email"
+      ],
+      "file_size_bytes": 277,
+      "checksum": "c3b4e1f9a885bcf969cd34a9041951c1bed1abcd6aaba4c4f1f2fcd414d86cc9"
+    },
+    "deterministic_checks": [
+      {
+        "schema_version": "1.1",
+        "check_id": "DQ-001",
+        "name": "DQ-001 deterministic check",
+        "status": "PASS",
+        "severity": "BLOCKER",
+        "target": {
+          "artifact": null,
+          "dataset_id": null,
+          "column": null,
+          "row_ids": []
+        },
+        "expected": true,
+        "actual": 369,
+        "affected_count": 0,
+        "sample_row_ids": [],
+        "message": "All selected data checked.",
+        "criterion_id": null
+      },
+      {
+        "schema_version": "1.1",
+        "check_id": "DQ-002",
+        "name": "DQ-002 deterministic check",
+        "status": "PASS",
+        "severity": "BLOCKER",
+        "target": {
+          "artifact": null,
+          "dataset_id": null,
+          "column": null,
+          "row_ids": []
+        },
+        "expected": "c0e3f84d189e0ed177d5e64a183142fe1b923ddb79c6617ebb26edd139658fcb",
+        "actual": "c0e3f84d189e0ed177d5e64a183142fe1b923ddb79c6617ebb26edd139658fcb",
+        "affected_count": 0,
+        "sample_row_ids": [],
+        "message": "All selected data checked.",
+        "criterion_id": null
+      },
+      {
+        "schema_version": "1.1",
+        "check_id": "DQ-003",
+        "name": "DQ-003 deterministic check",
+        "status": "PASS",
+        "severity": "BLOCKER",
+        "target": {
+          "artifact": null,
+          "dataset_id": null,
+          "column": null,
+          "row_ids": []
+        },
+        "expected": [
+          "695088adceedcb49d1d494b352f2ee332da98dd953a7b997b42b36b76147854d",
+          "490e68c8a918daee12f4f9dec02a5652f7b67d1f57e1f1c46bcce85a0a5429f8"
+        ],
+        "actual": [
+          "695088adceedcb49d1d494b352f2ee332da98dd953a7b997b42b36b76147854d",
+          "490e68c8a918daee12f4f9dec02a5652f7b67d1f57e1f1c46bcce85a0a5429f8"
+        ],
+        "affected_count": 0,
+        "sample_row_ids": [],
+        "message": "All selected data checked.",
+        "criterion_id": null
+      },
+      {
+        "schema_version": "1.1",
+        "check_id": "DQ-004",
+        "name": "DQ-004 deterministic check",
+        "status": "PASS",
+        "severity": "BLOCKER",
+        "target": {
+          "artifact": null,
+          "dataset_id": null,
+          "column": null,
+          "row_ids": []
+        },
+        "expected": [
+          "change_case",
+          "deduplicate",
+          "drop_columns",
+          "drop_missing",
+          "fill_missing",
+          "parse_date",
+          "parse_number",
+          "rename",
+          "replace",
+          "select_columns",
+          "sort",
+          "trim"
+        ],
+        "actual": [
+          "rename",
+          "trim",
+          "change_case",
+          "change_case",
+          "change_case",
+          "replace",
+          "replace",
+          "parse_date",
+          "parse_number",
+          "fill_missing",
+          "drop_missing",
+          "deduplicate",
+          "sort",
+          "select_columns"
+        ],
+        "affected_count": 0,
+        "sample_row_ids": [],
+        "message": "All selected data checked.",
+        "criterion_id": null
+      },
+      {
+        "schema_version": "1.1",
+        "check_id": "DQ-005",
+        "name": "DQ-005 deterministic check",
+        "status": "PASS",
+        "severity": "BLOCKER",
+        "target": {
+          "artifact": null,
+          "dataset_id": null,
+          "column": null,
+          "row_ids": []
+        },
+        "expected": [
+          "pa-op-01",
+          "pa-op-02",
+          "pa-op-03",
+          "pa-op-04",
+          "pa-op-05",
+          "pa-op-06",
+          "pa-op-07",
+          "pa-op-08",
+          "pa-op-09",
+          "pa-op-10",
+          "pa-op-11",
+          "pa-op-12",
+          "pa-op-13",
+          "pa-op-14"
+        ],
+        "actual": [
+          "pa-op-01",
+          "pa-op-02",
+          "pa-op-03",
+          "pa-op-04",
+          "pa-op-05",
+          "pa-op-06",
+          "pa-op-07",
+          "pa-op-08",
+          "pa-op-09",
+          "pa-op-10",
+          "pa-op-11",
+          "pa-op-12",
+          "pa-op-13",
+          "pa-op-14"
+        ],
+        "affected_count": 0,
+        "sample_row_ids": [],
+        "message": "All selected data checked.",
+        "criterion_id": null
+      },
+      {
+        "schema_version": "1.1",
+        "check_id": "DQ-006",
+        "name": "DQ-006 deterministic check",
+        "status": "PASS",
+        "severity": "BLOCKER",
+        "target": {
+          "artifact": "RESULT_CSV",
+          "dataset_id": null,
+          "column": null,
+          "row_ids": []
+        },
+        "expected": true,
+        "actual": true,
+        "affected_count": 0,
+        "sample_row_ids": [],
+        "message": "All selected data checked.",
+        "criterion_id": "PA-AC-001"
+      },
+      {
+        "schema_version": "1.1",
+        "check_id": "DQ-007",
+        "name": "DQ-007 deterministic check",
+        "status": "PASS",
+        "severity": "ERROR",
+        "target": {
+          "artifact": null,
+          "dataset_id": null,
+          "column": null,
+          "row_ids": []
+        },
+        "expected": "CSV",
+        "actual": "CSV",
+        "affected_count": 0,
+        "sample_row_ids": [],
+        "message": "All selected data checked.",
+        "criterion_id": null
+      },
+      {
+        "schema_version": "1.1",
+        "check_id": "DQ-008",
+        "name": "DQ-008 deterministic check",
+        "status": "PASS",
+        "severity": "BLOCKER",
+        "target": {
+          "artifact": null,
+          "dataset_id": null,
+          "column": null,
+          "row_ids": []
+        },
+        "expected": [
+          "customer_name",
+          "country",
+          "signup_date",
+          "revenue",
+          "status",
+          "email"
+        ],
+        "actual": [
+          "customer_name",
+          "country",
+          "signup_date",
+          "revenue",
+          "status",
+          "email"
+        ],
+        "affected_count": 0,
+        "sample_row_ids": [],
+        "message": "All selected data checked.",
+        "criterion_id": null
+      },
+      {
+        "schema_version": "1.1",
+        "check_id": "DQ-009",
+        "name": "DQ-009 deterministic check",
+        "status": "PASS",
+        "severity": "ERROR",
+        "target": {
+          "artifact": null,
+          "dataset_id": null,
+          "column": null,
+          "row_ids": []
+        },
+        "expected": [
+          "customer_name",
+          "country",
+          "signup_date",
+          "revenue",
+          "status",
+          "email"
+        ],
+        "actual": [
+          "customer_name",
+          "country",
+          "signup_date",
+          "revenue",
+          "status",
+          "email"
+        ],
+        "affected_count": 0,
+        "sample_row_ids": [],
+        "message": "All selected data checked.",
+        "criterion_id": null
+      },
+      {
+        "schema_version": "1.1",
+        "check_id": "DQ-010",
+        "name": "DQ-010 deterministic check",
+        "status": "PASS",
+        "severity": "BLOCKER",
+        "target": {
+          "artifact": null,
+          "dataset_id": "result",
+          "column": null,
+          "row_ids": []
+        },
+        "expected": [
+          "customer_name",
+          "country",
+          "signup_date",
+          "revenue",
+          "status",
+          "email"
+        ],
+        "actual": [
+          "customer_name",
+          "country",
+          "signup_date",
+          "revenue",
+          "status",
+          "email"
+        ],
+        "affected_count": 0,
+        "sample_row_ids": [],
+        "message": "All selected data checked.",
+        "criterion_id": "PA-AC-002"
+      },
+      {
+        "schema_version": "1.1",
+        "check_id": "DQ-011",
+        "name": "DQ-011 deterministic check",
+        "status": "PASS",
+        "severity": "ERROR",
+        "target": {
+          "artifact": null,
+          "dataset_id": null,
+          "column": null,
+          "row_ids": []
+        },
+        "expected": "approved typed schema",
+        "actual": {},
+        "affected_count": 0,
+        "sample_row_ids": [],
+        "message": "All selected data checked.",
+        "criterion_id": null
+      },
+      {
+        "schema_version": "1.1",
+        "check_id": "DQ-012",
+        "name": "DQ-012 deterministic check",
+        "status": "PASS",
+        "severity": "BLOCKER",
+        "target": {
+          "artifact": null,
+          "dataset_id": "result",
+          "column": "customer_name",
+          "row_ids": []
+        },
+        "expected": true,
+        "actual": true,
+        "affected_count": 0,
+        "sample_row_ids": [],
+        "message": "All selected data checked.",
+        "criterion_id": "PA-AC-004"
+      },
+      {
+        "schema_version": "1.1",
+        "check_id": "DQ-013",
+        "name": "DQ-013 deterministic check",
+        "status": "SKIPPED",
+        "severity": "INFO",
+        "target": {
+          "artifact": null,
+          "dataset_id": null,
+          "column": null,
+          "row_ids": []
+        },
+        "expected": null,
+        "actual": null,
+        "affected_count": 0,
+        "sample_row_ids": [],
+        "message": "Not applicable to the approved contract.",
+        "criterion_id": null
+      },
+      {
+        "schema_version": "1.1",
+        "check_id": "DQ-014",
+        "name": "DQ-014 deterministic check",
+        "status": "PASS",
+        "severity": "BLOCKER",
+        "target": {
+          "artifact": null,
+          "dataset_id": "result",
+          "column": "email",
+          "row_ids": []
+        },
+        "expected": true,
+        "actual": true,
+        "affected_count": 0,
+        "sample_row_ids": [],
+        "message": "All selected data checked.",
+        "criterion_id": "PA-AC-005"
+      },
+      {
+        "schema_version": "1.1",
+        "check_id": "DQ-015",
+        "name": "DQ-015 deterministic check",
+        "status": "PASS",
+        "severity": "ERROR",
+        "target": {
+          "artifact": null,
+          "dataset_id": "result",
+          "column": "signup_date",
+          "row_ids": []
+        },
+        "expected": "YYYY-MM-DD",
+        "actual": {
+          "violations": 0,
+          "rows_checked": 3
+        },
+        "affected_count": 0,
+        "sample_row_ids": [],
+        "message": "All selected data checked.",
+        "criterion_id": "PA-AC-006"
+      },
+      {
+        "schema_version": "1.1",
+        "check_id": "DQ-016",
+        "name": "DQ-016 deterministic check",
+        "status": "PASS",
+        "severity": "ERROR",
+        "target": {
+          "artifact": null,
+          "dataset_id": null,
+          "column": null,
+          "row_ids": []
+        },
+        "expected": "finite exact numeric types",
+        "actual": {},
+        "affected_count": 0,
+        "sample_row_ids": [],
+        "message": "All selected data checked.",
+        "criterion_id": null
+      },
+      {
+        "schema_version": "1.1",
+        "check_id": "DQ-017",
+        "name": "DQ-017 deterministic check",
+        "status": "PASS",
+        "severity": "ERROR",
+        "target": {
+          "artifact": null,
+          "dataset_id": "result",
+          "column": "revenue",
+          "row_ids": []
+        },
+        "expected": 0,
+        "actual": "0",
+        "affected_count": 0,
+        "sample_row_ids": [],
+        "message": "All selected data checked.",
+        "criterion_id": "PA-AC-007"
+      },
+      {
+        "schema_version": "1.1",
+        "check_id": "DQ-018",
+        "name": "DQ-018 deterministic check",
+        "status": "PASS",
+        "severity": "ERROR",
+        "target": {
+          "artifact": null,
+          "dataset_id": "result",
+          "column": null,
+          "row_ids": []
+        },
+        "expected": 3,
+        "actual": 3,
+        "affected_count": 0,
+        "sample_row_ids": [],
+        "message": "All selected data checked.",
+        "criterion_id": "PA-AC-003"
+      },
+      {
+        "schema_version": "1.1",
+        "check_id": "DQ-019",
+        "name": "DQ-019 deterministic check",
+        "status": "PASS",
+        "severity": "BLOCKER",
+        "target": {
+          "artifact": null,
+          "dataset_id": null,
+          "column": null,
+          "row_ids": []
+        },
+        "expected": false,
+        "actual": 3,
+        "affected_count": 0,
+        "sample_row_ids": [],
+        "message": "All selected data checked.",
+        "criterion_id": null
+      },
+      {
+        "schema_version": "1.1",
+        "check_id": "DQ-022",
+        "name": "DQ-022 deterministic check",
+        "status": "PASS",
+        "severity": "ERROR",
+        "target": {
+          "artifact": null,
+          "dataset_id": null,
+          "column": null,
+          "row_ids": []
+        },
+        "expected": {
+          "rows": 3,
+          "columns": 6
+        },
+        "actual": {
+          "rows": 3,
+          "columns": 6
+        },
+        "affected_count": 0,
+        "sample_row_ids": [],
+        "message": "All selected data checked.",
+        "criterion_id": null
+      },
+      {
+        "schema_version": "1.1",
+        "check_id": "DQ-023",
+        "name": "DQ-023 deterministic check",
+        "status": "SKIPPED",
+        "severity": "INFO",
+        "target": {
+          "artifact": null,
+          "dataset_id": null,
+          "column": null,
+          "row_ids": []
+        },
+        "expected": 0,
+        "actual": {
+          "source_formula_cells": 0,
+          "export_formula_cells": 0,
+          "export_errors": 0
+        },
+        "affected_count": 0,
+        "sample_row_ids": [],
+        "message": "Not applicable to the approved contract.",
+        "criterion_id": null
+      },
+      {
+        "schema_version": "1.1",
+        "check_id": "DQ-024",
+        "name": "DQ-024 deterministic check",
+        "status": "PASS",
+        "severity": "ERROR",
+        "target": {
+          "artifact": null,
+          "dataset_id": null,
+          "column": null,
+          "row_ids": []
+        },
+        "expected": {
+          "encoding": "UTF-8",
+          "delimiter": ","
+        },
+        "actual": {
+          "encoding": "UTF-8",
+          "delimiter": ","
+        },
+        "affected_count": 0,
+        "sample_row_ids": [],
+        "message": "All selected data checked.",
+        "criterion_id": null
+      },
+      {
+        "schema_version": "1.1",
+        "check_id": "DQ-025",
+        "name": "DQ-025 deterministic check",
+        "status": "PASS",
+        "severity": "ERROR",
+        "target": {
+          "artifact": null,
+          "dataset_id": null,
+          "column": null,
+          "row_ids": []
+        },
+        "expected": 3,
+        "actual": 3,
+        "affected_count": 0,
+        "sample_row_ids": [],
+        "message": "All selected data checked.",
+        "criterion_id": null
+      }
+    ],
+    "llm_review": {
+      "status": "NOT_APPLICABLE",
+      "reason": "PILOT_SLICE_V1_NO_LLM"
+    },
+    "blocking_issues": [],
+    "warnings": [],
+    "sampling_manifest": null,
+    "known_limitations": [
+      "Pilot Slice V1: deterministic checks only; no LLM review.",
+      "CSV lexical projection cannot distinguish a typed null from empty text; typed QA uses P4 originals.",
+      "Source XLSX formulas use previously cached values only; no recalculation.",
+      "Resource protection uses sampled RSS; arbitrary maximum-length data may fail closed.",
+      "Local single-process serialization is not distributed locking; no P6 delivery is performed."
+    ],
+    "artifacts": [
+      {
+        "artifact_type": "RESULT_CSV",
+        "path": "orders/order-pa/runs/3ddfb645-5b50-4803-9c89-4955d6ac2252/artifacts/p5-final-5d0aa4ffc8c8eb983581aea82c613637fe0d384d3a123c38a7e14a2d6b9a4b29/payload",
+        "checksum": "c3b4e1f9a885bcf969cd34a9041951c1bed1abcd6aaba4c4f1f2fcd414d86cc9"
+      }
+    ]
+  },
+  "P4_internal_unchanged": true,
+  "source_unchanged": true
+}

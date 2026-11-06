@@ -1,0 +1,25 @@
+{
+  "command": [
+    "/workspace/verified-data-extraction/.venv/bin/python",
+    "-m",
+    "p6.run_validation",
+    "--out",
+    "/workspace/p6-cr2-work/final-01",
+    "--stress-workspace",
+    "/workspace/p6-work/stress-source",
+    "--linux-smoke",
+    "/workspace/p6-cr2-work/docker-smoke/implementation-245b1ccf5d42-20261107/diagnostic-summary.json"
+  ],
+  "shell_command": "PYTHONPATH=src:tests PYTHONDONTWRITEBYTECODE=1 /workspace/verified-data-extraction/.venv/bin/python -m p6.run_validation --out /workspace/p6-cr2-work/final-01 --stress-workspace /workspace/p6-work/stress-source --linux-smoke /workspace/p6-cr2-work/docker-smoke/implementation-245b1ccf5d42-20261107/diagnostic-summary.json",
+  "cwd": "/workspace/p6-streamlit-e2e",
+  "explicit_environment_overrides": {
+    "PYTHONPATH": "src:tests",
+    "PYTHONDONTWRITEBYTECODE": "1"
+  },
+  "tested_commit": "245b1ccf5d4212d3f34973e526172f20a4928539",
+  "tested_tree": "0db696f5e14284849f969310fadf4ee585713045",
+  "started_at_utc": "2026-11-06T23:07:20.358433+00:00",
+  "finished_at_utc": "2026-11-06T23:35:28.367818+00:00",
+  "exit_code": 1,
+  "elapsed_seconds": 1688.009338392003
+}

@@ -1,0 +1,120 @@
+{
+  "tested_commit": "245b1ccf5d4212d3f34973e526172f20a4928539",
+  "tested_tree": "0db696f5e14284849f969310fadf4ee585713045",
+  "approved_start": "b93e0ef4ed69343968ff7ae4188d586c0d1485a5",
+  "main_baseline": "0af4a1ff49ccf8fa59c39780d749e15cb5042fc3",
+  "correction_start": "66c2b4f97e2b4dbe4e7a01696c89ae5fd0431981",
+  "scope_policy_format": "P6_SCOPE_POLICY_V2_CR_P6_002",
+  "approved_p5_qa_sha256": "8caee87fce7a0c748e2333b8fe3b1b3333fee3548ee78111516a8eac541d8a52",
+  "previous_failed_evidence": {
+    "path": "docs/p6/validation/runtime-20261107/final-run/p6-runtime/results.xml",
+    "sha256": "239f397d3430296fcc71b171527f2a5fe33edce2845a87551f56dadfa30d0060",
+    "tested_commit": "deddc2799464076227173bd2e4890f552ffe64bf",
+    "tested_tree": "afc4126ccddce4ca4615ac411b1dd6281a98a960",
+    "actual_failures": [
+      "test_T06_pb_explicit_v2_approval_and_typed_warning_oracle",
+      "test_T07_pb_xlsx_and_qa_independent_http_and_18_cells",
+      "test_T19_documented_linux_launch_restart_and_actual_mac_docker"
+    ],
+    "preserved_unchanged": true
+  },
+  "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+  "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+  "historical": {
+    "P1_P4": {
+      "path": "docs/p5/validation/runtime-20261106/historical-212/results.xml",
+      "sha256": "905a5c1527d85a28633e385434108d4e19b19398fe4595c47e2dd49a6abf3212",
+      "passed": 212,
+      "result": "PASS_ON_HISTORICAL_TREE_ONLY",
+      "commit": "fd39aa1bed480313504ae8b1f76e77e170cb72ba"
+    },
+    "P5": {
+      "path": "docs/p5/validation/runtime-20261106/final-run/p5-runtime/results.xml",
+      "sha256": "4c4e2be3c75b95878fedda703e2e3e9be917f906ec6cc519a4a90e6f5e2d5c2f",
+      "passed": 76,
+      "result": "PASS_ON_HISTORICAL_TREE_ONLY",
+      "commit": "801cc2ba5db46494eaa93e5b963c3bc2f936ddc2"
+    }
+  },
+  "legacy_p1_p4": {
+    "total": 212,
+    "passed": 205,
+    "expected_historical_scope_conflicts": 7,
+    "blocking_regressions": 0,
+    "nested_p2_scope_proven": true,
+    "nested_p0_p3_scope_proven": true
+  },
+  "legacy_p5": {
+    "total": 76,
+    "passed": 75,
+    "scope_conflicts": 1,
+    "blocking_regressions": 0,
+    "pytest_exit": 1
+  },
+  "p6": {
+    "total": 20,
+    "passed": 19,
+    "failed": 1,
+    "errors": 0,
+    "skipped": 0,
+    "pytest_exit": 1
+  },
+  "scope_before": {
+    "result": "PASS",
+    "policy_format": "P6_SCOPE_POLICY_V2_CR_P6_002",
+    "baseline": "0af4a1ff49ccf8fa59c39780d749e15cb5042fc3",
+    "implementation_start": "b93e0ef4ed69343968ff7ae4188d586c0d1485a5",
+    "correction_start": "66c2b4f97e2b4dbe4e7a01696c89ae5fd0431981",
+    "p5_qa_sha256": "8caee87fce7a0c748e2333b8fe3b1b3333fee3548ee78111516a8eac541d8a52",
+    "predecessor_policy_commit": "deddc2799464076227173bd2e4890f552ffe64bf",
+    "retired_policy_provenance": "PASS",
+    "protected_main_files": 1458,
+    "protected_start_files": 1461,
+    "protected_correction_files": 1914,
+    "authorized_amended_paths": [
+      "src/vde/p5/qa.py",
+      "tests/p6/test_acceptance.py",
+      "tests/p6/scope_audit.py",
+      "tests/p6/scope_policy_v1.json",
+      "tests/p6/run_validation.py",
+      "docs/p6/README_PILOT.md",
+      "docs/p6/RELEASE_CHECKLIST.md"
+    ],
+    "new_runtime_files": 4,
+    "exact_app_additions": 4,
+    "historical_tests_policies_governance_unchanged": true
+  },
+  "scope_after": {
+    "result": "PASS",
+    "policy_format": "P6_SCOPE_POLICY_V2_CR_P6_002",
+    "baseline": "0af4a1ff49ccf8fa59c39780d749e15cb5042fc3",
+    "implementation_start": "b93e0ef4ed69343968ff7ae4188d586c0d1485a5",
+    "correction_start": "66c2b4f97e2b4dbe4e7a01696c89ae5fd0431981",
+    "p5_qa_sha256": "8caee87fce7a0c748e2333b8fe3b1b3333fee3548ee78111516a8eac541d8a52",
+    "predecessor_policy_commit": "deddc2799464076227173bd2e4890f552ffe64bf",
+    "retired_policy_provenance": "PASS",
+    "protected_main_files": 1458,
+    "protected_start_files": 1461,
+    "protected_correction_files": 1914,
+    "authorized_amended_paths": [
+      "src/vde/p5/qa.py",
+      "tests/p6/test_acceptance.py",
+      "tests/p6/scope_audit.py",
+      "tests/p6/scope_policy_v1.json",
+      "tests/p6/run_validation.py",
+      "docs/p6/README_PILOT.md",
+      "docs/p6/RELEASE_CHECKLIST.md"
+    ],
+    "new_runtime_files": 4,
+    "exact_app_additions": 4,
+    "historical_tests_policies_governance_unchanged": true
+  },
+  "blocking_behavioral_regressions": 0,
+  "unexpected_pytest_exits": [],
+  "mac_docker_smoke": "NOT RUN: no macOS host provided",
+  "status": "BLOCKED",
+  "gate_b": "NOT CLOSED",
+  "merged": false,
+  "pilot_release": "NOT AUTHORIZED",
+  "completed_at_utc": "2026-11-06T23:35:28.314925+00:00"
+}

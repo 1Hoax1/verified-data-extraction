@@ -1,0 +1,17 @@
+{
+  "command": [
+    "git",
+    "-c",
+    "credential.helper=",
+    "-c",
+    "credential.helper=!gh auth git-credential",
+    "fetch",
+    "origin",
+    "refs/heads/feature/p6-streamlit-e2e:refs/remotes/origin/feature/p6-streamlit-e2e",
+    "refs/heads/main:refs/remotes/origin/main"
+  ],
+  "cwd": "/workspace/p6-streamlit-e2e",
+  "started_at_utc": "2026-11-06T22:53:20.598929+00:00",
+  "finished_at_utc": "2026-11-06T22:53:21.757648+00:00",
+  "exit_code": 0
+}

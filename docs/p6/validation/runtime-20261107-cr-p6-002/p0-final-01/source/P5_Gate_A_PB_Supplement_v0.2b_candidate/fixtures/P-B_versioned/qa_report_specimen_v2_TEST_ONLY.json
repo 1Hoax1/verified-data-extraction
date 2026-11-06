@@ -1,0 +1,645 @@
+{
+  "schema_version": "1.1",
+  "report_id": "p5-pb-v2-specimen-TEST-ONLY",
+  "run_id": "run-pb-v2-TEST-ONLY",
+  "brief_version_id": "brief-pb-v1",
+  "transformation_spec_version_id": "transform-pb-v2-cr-p5-001",
+  "generated_at": "2099-01-01T00:00:00Z",
+  "overall_status": "PASS_WITH_WARNINGS",
+  "dataset_summary": {
+    "dataset_id": "result",
+    "row_count": 3,
+    "column_count": 6,
+    "columns": [
+      "order_id",
+      "product",
+      "quantity",
+      "unit_price",
+      "order_date",
+      "line_total"
+    ],
+    "output_headers": [
+      "Номер заказа",
+      "Товар",
+      "Количество",
+      "Цена за единицу",
+      "Дата заказа",
+      "Сумма строки"
+    ],
+    "file_size_bytes": 3780,
+    "checksum": "52431d5a68c4002c22a26d78b13bdd3846d0cf1e81c89095bc3ff07a8c8e0082"
+  },
+  "deterministic_checks": [
+    {
+      "schema_version": "1.1",
+      "check_id": "DQ-001",
+      "name": "input_readable",
+      "status": "PASS",
+      "severity": "BLOCKER",
+      "target": {
+        "artifact": "RESULT_XLSX",
+        "dataset_id": "result",
+        "column": null,
+        "row_ids": []
+      },
+      "expected": {
+        "rule": "input_readable",
+        "applicable": true
+      },
+      "actual": {
+        "evaluation": "DESIGN_SPECIMEN_ONLY",
+        "status": "PASS"
+      },
+      "affected_count": 0,
+      "sample_row_ids": [],
+      "message": "Design specimen, not runtime P5 evaluation; see P0 golden file separately.",
+      "criterion_id": null
+    },
+    {
+      "schema_version": "1.1",
+      "check_id": "DQ-002",
+      "name": "input_sha256",
+      "status": "PASS",
+      "severity": "BLOCKER",
+      "target": {
+        "artifact": "RESULT_XLSX",
+        "dataset_id": "result",
+        "column": null,
+        "row_ids": []
+      },
+      "expected": {
+        "rule": "input_sha256",
+        "applicable": true
+      },
+      "actual": {
+        "evaluation": "DESIGN_SPECIMEN_ONLY",
+        "status": "PASS"
+      },
+      "affected_count": 0,
+      "sample_row_ids": [],
+      "message": "Design specimen, not runtime P5 evaluation; see P0 golden file separately.",
+      "criterion_id": null
+    },
+    {
+      "schema_version": "1.1",
+      "check_id": "DQ-003",
+      "name": "approval_integrity",
+      "status": "PASS",
+      "severity": "BLOCKER",
+      "target": {
+        "artifact": "RESULT_XLSX",
+        "dataset_id": "result",
+        "column": null,
+        "row_ids": []
+      },
+      "expected": {
+        "rule": "approval_integrity",
+        "applicable": true
+      },
+      "actual": {
+        "evaluation": "DESIGN_SPECIMEN_ONLY",
+        "status": "PASS"
+      },
+      "affected_count": 0,
+      "sample_row_ids": [],
+      "message": "Design specimen, not runtime P5 evaluation; see P0 golden file separately.",
+      "criterion_id": null
+    },
+    {
+      "schema_version": "1.1",
+      "check_id": "DQ-004",
+      "name": "pipeline_whitelist",
+      "status": "PASS",
+      "severity": "BLOCKER",
+      "target": {
+        "artifact": "RESULT_XLSX",
+        "dataset_id": "result",
+        "column": null,
+        "row_ids": []
+      },
+      "expected": {
+        "rule": "pipeline_whitelist",
+        "applicable": true
+      },
+      "actual": {
+        "evaluation": "DESIGN_SPECIMEN_ONLY",
+        "status": "PASS"
+      },
+      "affected_count": 0,
+      "sample_row_ids": [],
+      "message": "Design specimen, not runtime P5 evaluation; see P0 golden file separately.",
+      "criterion_id": null
+    },
+    {
+      "schema_version": "1.1",
+      "check_id": "DQ-005",
+      "name": "executed_operations",
+      "status": "PASS",
+      "severity": "BLOCKER",
+      "target": {
+        "artifact": "RESULT_XLSX",
+        "dataset_id": "result",
+        "column": null,
+        "row_ids": []
+      },
+      "expected": {
+        "rule": "executed_operations",
+        "applicable": true
+      },
+      "actual": {
+        "evaluation": "DESIGN_SPECIMEN_ONLY",
+        "status": "PASS"
+      },
+      "affected_count": 0,
+      "sample_row_ids": [],
+      "message": "Design specimen, not runtime P5 evaluation; see P0 golden file separately.",
+      "criterion_id": null
+    },
+    {
+      "schema_version": "1.1",
+      "check_id": "DQ-006",
+      "name": "export_readable",
+      "status": "PASS",
+      "severity": "BLOCKER",
+      "target": {
+        "artifact": "RESULT_XLSX",
+        "dataset_id": "result",
+        "column": null,
+        "row_ids": []
+      },
+      "expected": {
+        "rule": "export_readable",
+        "applicable": true
+      },
+      "actual": {
+        "evaluation": "DESIGN_SPECIMEN_ONLY",
+        "status": "PASS"
+      },
+      "affected_count": 0,
+      "sample_row_ids": [],
+      "message": "Design specimen, not runtime P5 evaluation; see P0 golden file separately.",
+      "criterion_id": null
+    },
+    {
+      "schema_version": "1.1",
+      "check_id": "DQ-007",
+      "name": "output_format",
+      "status": "PASS",
+      "severity": "ERROR",
+      "target": {
+        "artifact": "RESULT_XLSX",
+        "dataset_id": "result",
+        "column": null,
+        "row_ids": []
+      },
+      "expected": {
+        "rule": "output_format",
+        "applicable": true
+      },
+      "actual": {
+        "evaluation": "DESIGN_SPECIMEN_ONLY",
+        "status": "PASS"
+      },
+      "affected_count": 0,
+      "sample_row_ids": [],
+      "message": "Design specimen, not runtime P5 evaluation; see P0 golden file separately.",
+      "criterion_id": null
+    },
+    {
+      "schema_version": "1.1",
+      "check_id": "DQ-008",
+      "name": "required_columns",
+      "status": "PASS",
+      "severity": "BLOCKER",
+      "target": {
+        "artifact": "RESULT_XLSX",
+        "dataset_id": "result",
+        "column": null,
+        "row_ids": []
+      },
+      "expected": {
+        "rule": "required_columns",
+        "applicable": true
+      },
+      "actual": {
+        "evaluation": "DESIGN_SPECIMEN_ONLY",
+        "status": "PASS"
+      },
+      "affected_count": 0,
+      "sample_row_ids": [],
+      "message": "Design specimen, not runtime P5 evaluation; see P0 golden file separately.",
+      "criterion_id": null
+    },
+    {
+      "schema_version": "1.1",
+      "check_id": "DQ-009",
+      "name": "unexpected_columns",
+      "status": "PASS",
+      "severity": "ERROR",
+      "target": {
+        "artifact": "RESULT_XLSX",
+        "dataset_id": "result",
+        "column": null,
+        "row_ids": []
+      },
+      "expected": {
+        "rule": "unexpected_columns",
+        "applicable": true
+      },
+      "actual": {
+        "evaluation": "DESIGN_SPECIMEN_ONLY",
+        "status": "PASS"
+      },
+      "affected_count": 0,
+      "sample_row_ids": [],
+      "message": "Design specimen, not runtime P5 evaluation; see P0 golden file separately.",
+      "criterion_id": null
+    },
+    {
+      "schema_version": "1.1",
+      "check_id": "DQ-010",
+      "name": "column_order",
+      "status": "PASS",
+      "severity": "ERROR",
+      "target": {
+        "artifact": "RESULT_XLSX",
+        "dataset_id": "result",
+        "column": null,
+        "row_ids": []
+      },
+      "expected": {
+        "rule": "column_order",
+        "applicable": true
+      },
+      "actual": {
+        "evaluation": "DESIGN_SPECIMEN_ONLY",
+        "status": "PASS"
+      },
+      "affected_count": 0,
+      "sample_row_ids": [],
+      "message": "Design specimen, not runtime P5 evaluation; see P0 golden file separately.",
+      "criterion_id": null
+    },
+    {
+      "schema_version": "1.1",
+      "check_id": "DQ-011",
+      "name": "types",
+      "status": "PASS",
+      "severity": "ERROR",
+      "target": {
+        "artifact": "RESULT_XLSX",
+        "dataset_id": "result",
+        "column": null,
+        "row_ids": []
+      },
+      "expected": {
+        "rule": "types",
+        "applicable": true
+      },
+      "actual": {
+        "evaluation": "DESIGN_SPECIMEN_ONLY",
+        "status": "PASS"
+      },
+      "affected_count": 0,
+      "sample_row_ids": [],
+      "message": "Design specimen, not runtime P5 evaluation; see P0 golden file separately.",
+      "criterion_id": null
+    },
+    {
+      "schema_version": "1.1",
+      "check_id": "DQ-012",
+      "name": "required_nonnull",
+      "status": "PASS",
+      "severity": "BLOCKER",
+      "target": {
+        "artifact": "RESULT_XLSX",
+        "dataset_id": "result",
+        "column": null,
+        "row_ids": []
+      },
+      "expected": {
+        "rule": "required_nonnull",
+        "applicable": true
+      },
+      "actual": {
+        "evaluation": "DESIGN_SPECIMEN_ONLY",
+        "status": "PASS"
+      },
+      "affected_count": 0,
+      "sample_row_ids": [],
+      "message": "Design specimen, not runtime P5 evaluation; see P0 golden file separately.",
+      "criterion_id": null
+    },
+    {
+      "schema_version": "1.1",
+      "check_id": "DQ-013",
+      "name": "null_ratio",
+      "status": "SKIPPED",
+      "severity": "INFO",
+      "target": {
+        "artifact": "RESULT_XLSX",
+        "dataset_id": "result",
+        "column": null,
+        "row_ids": []
+      },
+      "expected": {
+        "rule": "null_ratio",
+        "applicable": false
+      },
+      "actual": {
+        "evaluation": "DESIGN_SPECIMEN_ONLY",
+        "status": "SKIPPED"
+      },
+      "affected_count": 0,
+      "sample_row_ids": [],
+      "message": "Design specimen, not runtime P5 evaluation; see P0 golden file separately.",
+      "criterion_id": null
+    },
+    {
+      "schema_version": "1.1",
+      "check_id": "DQ-014",
+      "name": "uniqueness",
+      "status": "PASS",
+      "severity": "BLOCKER",
+      "target": {
+        "artifact": "RESULT_XLSX",
+        "dataset_id": "result",
+        "column": null,
+        "row_ids": []
+      },
+      "expected": {
+        "rule": "uniqueness",
+        "applicable": true
+      },
+      "actual": {
+        "evaluation": "DESIGN_SPECIMEN_ONLY",
+        "status": "PASS"
+      },
+      "affected_count": 0,
+      "sample_row_ids": [],
+      "message": "Design specimen, not runtime P5 evaluation; see P0 golden file separately.",
+      "criterion_id": null
+    },
+    {
+      "schema_version": "1.1",
+      "check_id": "DQ-015",
+      "name": "date_format",
+      "status": "PASS",
+      "severity": "ERROR",
+      "target": {
+        "artifact": "RESULT_XLSX",
+        "dataset_id": "result",
+        "column": null,
+        "row_ids": []
+      },
+      "expected": {
+        "rule": "date_format",
+        "applicable": true
+      },
+      "actual": {
+        "evaluation": "DESIGN_SPECIMEN_ONLY",
+        "status": "PASS"
+      },
+      "affected_count": 0,
+      "sample_row_ids": [],
+      "message": "Design specimen, not runtime P5 evaluation; see P0 golden file separately.",
+      "criterion_id": null
+    },
+    {
+      "schema_version": "1.1",
+      "check_id": "DQ-016",
+      "name": "numeric_format",
+      "status": "PASS",
+      "severity": "ERROR",
+      "target": {
+        "artifact": "RESULT_XLSX",
+        "dataset_id": "result",
+        "column": null,
+        "row_ids": []
+      },
+      "expected": {
+        "rule": "numeric_format",
+        "applicable": true
+      },
+      "actual": {
+        "evaluation": "DESIGN_SPECIMEN_ONLY",
+        "status": "PASS"
+      },
+      "affected_count": 0,
+      "sample_row_ids": [],
+      "message": "Design specimen, not runtime P5 evaluation; see P0 golden file separately.",
+      "criterion_id": null
+    },
+    {
+      "schema_version": "1.1",
+      "check_id": "DQ-017",
+      "name": "Quantity range",
+      "status": "PASS",
+      "severity": "ERROR",
+      "target": {
+        "artifact": "RESULT_XLSX",
+        "dataset_id": "result",
+        "column": "quantity",
+        "row_ids": []
+      },
+      "expected": 1,
+      "actual": 1,
+      "affected_count": 0,
+      "sample_row_ids": [],
+      "message": "Design specimen, not runtime P5 evaluation; see P0 golden file separately.",
+      "criterion_id": "PB-AC-006"
+    },
+    {
+      "schema_version": "1.1",
+      "check_id": "DQ-017",
+      "name": "Line total range",
+      "status": "PASS",
+      "severity": "ERROR",
+      "target": {
+        "artifact": "RESULT_XLSX",
+        "dataset_id": "result",
+        "column": "line_total",
+        "row_ids": []
+      },
+      "expected": 0,
+      "actual": 20,
+      "affected_count": 0,
+      "sample_row_ids": [],
+      "message": "Design specimen, not runtime P5 evaluation; see P0 golden file separately.",
+      "criterion_id": "PB-AC-007"
+    },
+    {
+      "schema_version": "1.1",
+      "check_id": "DQ-018",
+      "name": "row_count",
+      "status": "PASS",
+      "severity": "ERROR",
+      "target": {
+        "artifact": "RESULT_XLSX",
+        "dataset_id": "result",
+        "column": null,
+        "row_ids": []
+      },
+      "expected": {
+        "rule": "row_count",
+        "applicable": true
+      },
+      "actual": {
+        "evaluation": "DESIGN_SPECIMEN_ONLY",
+        "status": "PASS"
+      },
+      "affected_count": 0,
+      "sample_row_ids": [],
+      "message": "Design specimen, not runtime P5 evaluation; see P0 golden file separately.",
+      "criterion_id": null
+    },
+    {
+      "schema_version": "1.1",
+      "check_id": "DQ-019",
+      "name": "nonempty_result",
+      "status": "PASS",
+      "severity": "BLOCKER",
+      "target": {
+        "artifact": "RESULT_XLSX",
+        "dataset_id": "result",
+        "column": null,
+        "row_ids": []
+      },
+      "expected": {
+        "rule": "nonempty_result",
+        "applicable": true
+      },
+      "actual": {
+        "evaluation": "DESIGN_SPECIMEN_ONLY",
+        "status": "PASS"
+      },
+      "affected_count": 0,
+      "sample_row_ids": [],
+      "message": "Design specimen, not runtime P5 evaluation; see P0 golden file separately.",
+      "criterion_id": null
+    },
+    {
+      "schema_version": "1.1",
+      "check_id": "DQ-022",
+      "name": "roundtrip_shape",
+      "status": "PASS",
+      "severity": "ERROR",
+      "target": {
+        "artifact": "RESULT_XLSX",
+        "dataset_id": "result",
+        "column": null,
+        "row_ids": []
+      },
+      "expected": {
+        "rows": 3,
+        "columns": 6
+      },
+      "actual": {
+        "rows": 3,
+        "columns": 6
+      },
+      "affected_count": 0,
+      "sample_row_ids": [],
+      "message": "PROPOSED: full XLSX 3x6 roundtrip plus six headers and 18 ordered typed cells; runtime not run",
+      "criterion_id": null
+    },
+    {
+      "schema_version": "1.1",
+      "check_id": "DQ-023",
+      "name": "xlsx_formulas",
+      "status": "WARN",
+      "severity": "WARNING",
+      "target": {
+        "artifact": "RESULT_XLSX",
+        "dataset_id": "result",
+        "column": null,
+        "row_ids": []
+      },
+      "expected": {
+        "rule": "xlsx_formulas",
+        "applicable": true
+      },
+      "actual": {
+        "evaluation": "DESIGN_SPECIMEN_ONLY",
+        "status": "WARN"
+      },
+      "affected_count": 4,
+      "sample_row_ids": [
+        "2"
+      ],
+      "message": "Design specimen, not runtime P5 evaluation; see P0 golden file separately.",
+      "criterion_id": null
+    },
+    {
+      "schema_version": "1.1",
+      "check_id": "DQ-024",
+      "name": "csv_hygiene",
+      "status": "SKIPPED",
+      "severity": "INFO",
+      "target": {
+        "artifact": "RESULT_XLSX",
+        "dataset_id": "result",
+        "column": null,
+        "row_ids": []
+      },
+      "expected": {
+        "rule": "csv_hygiene",
+        "applicable": false
+      },
+      "actual": {
+        "evaluation": "DESIGN_SPECIMEN_ONLY",
+        "status": "SKIPPED"
+      },
+      "affected_count": 0,
+      "sample_row_ids": [],
+      "message": "Design specimen, not runtime P5 evaluation; see P0 golden file separately.",
+      "criterion_id": null
+    },
+    {
+      "schema_version": "1.1",
+      "check_id": "DQ-025",
+      "name": "deletion_audit",
+      "status": "PASS",
+      "severity": "ERROR",
+      "target": {
+        "artifact": "RESULT_XLSX",
+        "dataset_id": "result",
+        "column": null,
+        "row_ids": []
+      },
+      "expected": {
+        "rule": "deletion_audit",
+        "applicable": true
+      },
+      "actual": {
+        "evaluation": "DESIGN_SPECIMEN_ONLY",
+        "status": "PASS"
+      },
+      "affected_count": 0,
+      "sample_row_ids": [],
+      "message": "Design specimen, not runtime P5 evaluation; see P0 golden file separately.",
+      "criterion_id": null
+    }
+  ],
+  "llm_review": {
+    "status": "NOT_APPLICABLE",
+    "reason": "PILOT_SLICE_V1_NO_LLM"
+  },
+  "blocking_issues": [],
+  "warnings": [
+    "XLSX_FORMULA_PRESENT"
+  ],
+  "sampling_manifest": null,
+  "known_limitations": [
+    "TEST_ONLY_PROPOSED_QA_REPORT; not the output of a real P5 runtime run.",
+    "CR-P5-001 owner-approved; PB-AC-007 positive effective only with exact real local P3 Approval; synthetic fixture is not approval authority.",
+    "Referenced XLSX checksum/size borrowed from immutable historical P-B golden for design shape only; no new result was exported."
+  ],
+  "artifacts": [
+    {
+      "artifact_type": "RESULT_XLSX",
+      "path": "orders/p-b/runs/run-pb-v2-TEST-ONLY/artifacts/final/payload",
+      "checksum": "52431d5a68c4002c22a26d78b13bdd3846d0cf1e81c89095bc3ff07a8c8e0082"
+    }
+  ]
+}

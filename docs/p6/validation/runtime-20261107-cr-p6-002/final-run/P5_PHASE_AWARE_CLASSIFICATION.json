@@ -1,0 +1,458 @@
+[
+  {
+    "test_id": "P5-T01",
+    "pytest_outcome": "pass",
+    "classification": "PASS",
+    "exact_assertion": null
+  },
+  {
+    "test_id": "P5-T02",
+    "pytest_outcome": "pass",
+    "classification": "PASS",
+    "exact_assertion": null
+  },
+  {
+    "test_id": "P5-T03",
+    "pytest_outcome": "pass",
+    "classification": "PASS",
+    "exact_assertion": null
+  },
+  {
+    "test_id": "P5-T04",
+    "pytest_outcome": "pass",
+    "classification": "PASS",
+    "exact_assertion": null
+  },
+  {
+    "test_id": "P5-T05",
+    "pytest_outcome": "pass",
+    "classification": "PASS",
+    "exact_assertion": null
+  },
+  {
+    "test_id": "P5-T06",
+    "pytest_outcome": "pass",
+    "classification": "PASS",
+    "exact_assertion": null
+  },
+  {
+    "test_id": "P5-T07",
+    "pytest_outcome": "pass",
+    "classification": "PASS",
+    "exact_assertion": null
+  },
+  {
+    "test_id": "P5-T08",
+    "pytest_outcome": "pass",
+    "classification": "PASS",
+    "exact_assertion": null
+  },
+  {
+    "test_id": "P5-T09",
+    "pytest_outcome": "pass",
+    "classification": "PASS",
+    "exact_assertion": null
+  },
+  {
+    "test_id": "P5-T10",
+    "pytest_outcome": "pass",
+    "classification": "PASS",
+    "exact_assertion": null
+  },
+  {
+    "test_id": "P5-T11",
+    "pytest_outcome": "pass",
+    "classification": "PASS",
+    "exact_assertion": null
+  },
+  {
+    "test_id": "P5-T12",
+    "pytest_outcome": "pass",
+    "classification": "PASS",
+    "exact_assertion": null
+  },
+  {
+    "test_id": "P5-T13",
+    "pytest_outcome": "pass",
+    "classification": "PASS",
+    "exact_assertion": null
+  },
+  {
+    "test_id": "P5-T14",
+    "pytest_outcome": "pass",
+    "classification": "PASS",
+    "exact_assertion": null
+  },
+  {
+    "test_id": "P5-T15",
+    "pytest_outcome": "pass",
+    "classification": "PASS",
+    "exact_assertion": null
+  },
+  {
+    "test_id": "P5-T16",
+    "pytest_outcome": "pass",
+    "classification": "PASS",
+    "exact_assertion": null
+  },
+  {
+    "test_id": "P5-T17",
+    "pytest_outcome": "pass",
+    "classification": "PASS",
+    "exact_assertion": null
+  },
+  {
+    "test_id": "P5-T18",
+    "pytest_outcome": "pass",
+    "classification": "PASS",
+    "exact_assertion": null
+  },
+  {
+    "test_id": "P5-T47",
+    "pytest_outcome": "pass",
+    "classification": "PASS",
+    "exact_assertion": null
+  },
+  {
+    "test_id": "P5-T19",
+    "pytest_outcome": "pass",
+    "classification": "PASS",
+    "exact_assertion": null
+  },
+  {
+    "test_id": "P5-T20",
+    "pytest_outcome": "pass",
+    "classification": "PASS",
+    "exact_assertion": null
+  },
+  {
+    "test_id": "P5-T48",
+    "pytest_outcome": "pass",
+    "classification": "PASS",
+    "exact_assertion": null
+  },
+  {
+    "test_id": "P5-T21",
+    "pytest_outcome": "pass",
+    "classification": "PASS",
+    "exact_assertion": null
+  },
+  {
+    "test_id": "P5-T22",
+    "pytest_outcome": "pass",
+    "classification": "PASS",
+    "exact_assertion": null
+  },
+  {
+    "test_id": "P5-T23",
+    "pytest_outcome": "pass",
+    "classification": "PASS",
+    "exact_assertion": null
+  },
+  {
+    "test_id": "P5-T24",
+    "pytest_outcome": "pass",
+    "classification": "PASS",
+    "exact_assertion": null
+  },
+  {
+    "test_id": "P5-T25",
+    "pytest_outcome": "pass",
+    "classification": "PASS",
+    "exact_assertion": null
+  },
+  {
+    "test_id": "P5-T26",
+    "pytest_outcome": "pass",
+    "classification": "PASS",
+    "exact_assertion": null
+  },
+  {
+    "test_id": "P5-T49",
+    "pytest_outcome": "pass",
+    "classification": "PASS",
+    "exact_assertion": null
+  },
+  {
+    "test_id": "P5-T27",
+    "pytest_outcome": "pass",
+    "classification": "PASS",
+    "exact_assertion": null
+  },
+  {
+    "test_id": "P5-T28",
+    "pytest_outcome": "pass",
+    "classification": "PASS",
+    "exact_assertion": null
+  },
+  {
+    "test_id": "P5-T29",
+    "pytest_outcome": "pass",
+    "classification": "PASS",
+    "exact_assertion": null
+  },
+  {
+    "test_id": "P5-T30",
+    "pytest_outcome": "pass",
+    "classification": "PASS",
+    "exact_assertion": null
+  },
+  {
+    "test_id": "P5-T50",
+    "pytest_outcome": "pass",
+    "classification": "PASS",
+    "exact_assertion": null
+  },
+  {
+    "test_id": "P5-T31",
+    "pytest_outcome": "pass",
+    "classification": "PASS",
+    "exact_assertion": null
+  },
+  {
+    "test_id": "P5-T32",
+    "pytest_outcome": "pass",
+    "classification": "PASS",
+    "exact_assertion": null
+  },
+  {
+    "test_id": "P5-T51",
+    "pytest_outcome": "pass",
+    "classification": "PASS",
+    "exact_assertion": null
+  },
+  {
+    "test_id": "P5-T33",
+    "pytest_outcome": "pass",
+    "classification": "PASS",
+    "exact_assertion": null
+  },
+  {
+    "test_id": "P5-T34",
+    "pytest_outcome": "pass",
+    "classification": "PASS",
+    "exact_assertion": null
+  },
+  {
+    "test_id": "P5-T52",
+    "pytest_outcome": "pass",
+    "classification": "PASS",
+    "exact_assertion": null
+  },
+  {
+    "test_id": "P5-T35",
+    "pytest_outcome": "pass",
+    "classification": "PASS",
+    "exact_assertion": null
+  },
+  {
+    "test_id": "P5-T36",
+    "pytest_outcome": "pass",
+    "classification": "PASS",
+    "exact_assertion": null
+  },
+  {
+    "test_id": "P5-T37",
+    "pytest_outcome": "pass",
+    "classification": "PASS",
+    "exact_assertion": null
+  },
+  {
+    "test_id": "P5-T38",
+    "pytest_outcome": "pass",
+    "classification": "PASS",
+    "exact_assertion": null
+  },
+  {
+    "test_id": "P5-T39",
+    "pytest_outcome": "pass",
+    "classification": "PASS",
+    "exact_assertion": null
+  },
+  {
+    "test_id": "P5-T40",
+    "pytest_outcome": "pass",
+    "classification": "PASS",
+    "exact_assertion": null
+  },
+  {
+    "test_id": "P5-T41",
+    "pytest_outcome": "pass",
+    "classification": "PASS",
+    "exact_assertion": null
+  },
+  {
+    "test_id": "P5-T42",
+    "pytest_outcome": "pass",
+    "classification": "PASS",
+    "exact_assertion": null
+  },
+  {
+    "test_id": "P5-T53",
+    "pytest_outcome": "pass",
+    "classification": "PASS",
+    "exact_assertion": null
+  },
+  {
+    "test_id": "P5-T43",
+    "pytest_outcome": "pass",
+    "classification": "PASS",
+    "exact_assertion": null
+  },
+  {
+    "test_id": "P5-T44",
+    "pytest_outcome": "pass",
+    "classification": "PASS",
+    "exact_assertion": null
+  },
+  {
+    "test_id": "P5-T54",
+    "pytest_outcome": "pass",
+    "classification": "PASS",
+    "exact_assertion": null
+  },
+  {
+    "test_id": "P5-T45",
+    "pytest_outcome": "pass",
+    "classification": "PASS",
+    "exact_assertion": null
+  },
+  {
+    "test_id": "P5-T46",
+    "pytest_outcome": "pass",
+    "classification": "PASS",
+    "exact_assertion": null
+  },
+  {
+    "test_id": "P5-T55",
+    "pytest_outcome": "pass",
+    "classification": "PASS",
+    "exact_assertion": null
+  },
+  {
+    "test_id": "P5-T56",
+    "pytest_outcome": "pass",
+    "classification": "PASS",
+    "exact_assertion": null
+  },
+  {
+    "test_id": "P5-T57",
+    "pytest_outcome": "pass",
+    "classification": "PASS",
+    "exact_assertion": null
+  },
+  {
+    "test_id": "P5-T58",
+    "pytest_outcome": "pass",
+    "classification": "PASS",
+    "exact_assertion": null
+  },
+  {
+    "test_id": "P5-T59",
+    "pytest_outcome": "pass",
+    "classification": "PASS",
+    "exact_assertion": null
+  },
+  {
+    "test_id": "P5-T60",
+    "pytest_outcome": "pass",
+    "classification": "PASS",
+    "exact_assertion": null
+  },
+  {
+    "test_id": "P5-T61",
+    "pytest_outcome": "pass",
+    "classification": "PASS",
+    "exact_assertion": null
+  },
+  {
+    "test_id": "P5-T62",
+    "pytest_outcome": "pass",
+    "classification": "PASS",
+    "exact_assertion": null
+  },
+  {
+    "test_id": "P5-T63",
+    "pytest_outcome": "pass",
+    "classification": "PASS",
+    "exact_assertion": null
+  },
+  {
+    "test_id": "P5-T64",
+    "pytest_outcome": "pass",
+    "classification": "PASS",
+    "exact_assertion": null
+  },
+  {
+    "test_id": "P5-T65",
+    "pytest_outcome": "pass",
+    "classification": "PASS",
+    "exact_assertion": null
+  },
+  {
+    "test_id": "P5-T66",
+    "pytest_outcome": "pass",
+    "classification": "PASS",
+    "exact_assertion": null
+  },
+  {
+    "test_id": "P5-T67",
+    "pytest_outcome": "pass",
+    "classification": "PASS",
+    "exact_assertion": null
+  },
+  {
+    "test_id": "P5-T68",
+    "pytest_outcome": "pass",
+    "classification": "PASS",
+    "exact_assertion": null
+  },
+  {
+    "test_id": "P5-T69",
+    "pytest_outcome": "pass",
+    "classification": "PASS",
+    "exact_assertion": null
+  },
+  {
+    "test_id": "P5-T70",
+    "pytest_outcome": "pass",
+    "classification": "PASS",
+    "exact_assertion": null
+  },
+  {
+    "test_id": "P5-T71",
+    "pytest_outcome": "pass",
+    "classification": "PASS",
+    "exact_assertion": null
+  },
+  {
+    "test_id": "P5-T72",
+    "pytest_outcome": "pass",
+    "classification": "PASS",
+    "exact_assertion": null
+  },
+  {
+    "test_id": "P5-T73",
+    "pytest_outcome": "pass",
+    "classification": "PASS",
+    "exact_assertion": null
+  },
+  {
+    "test_id": "P5-T74",
+    "pytest_outcome": "pass",
+    "classification": "PASS",
+    "exact_assertion": null
+  },
+  {
+    "test_id": "P5-T75",
+    "pytest_outcome": "pass",
+    "classification": "PASS",
+    "exact_assertion": null
+  },
+  {
+    "test_id": "P5-T76",
+    "pytest_outcome": "failure",
+    "classification": "EXPECTED_HISTORICAL_SCOPE_CONFLICT",
+    "exact_assertion": "tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-102/test_T76_successor_scope_negat0')\nmonkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7ff5875486b0>\n\n    def test_T76_successor_scope_negatives_and_ambiguous_result(tmp_path,monkeypatch):\n        from .scope_audit import audit,negative_probes\n>       audit(ROOT);probes=negative_probes(ROOT,tmp_path/'mutations')\n        ^^^^^^^^^^^\n\ntests/p5/test_acceptance.py:563: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n\nroot = PosixPath('/workspace/p6-streamlit-e2e')\n\n    def audit(root,*,authority_root=None):\n        root=Path(root).resolve();authority=root if authority_root is None else Path(authority_root).resolve()\n        assert json.loads(regular(root/'tests/p5/scope_policy_v1.json'))==POLICY,'P5 policy closed contents differ'\n        from scope_policy import verify_governance_document\n        verify_governance_document(root,authority_root=authority if root!=authority else None)\n        git(authority,'merge-base','--is-ancestor',BASELINE,'HEAD')\n        git(authority,'merge-base','--is-ancestor',ADDENDUM_COMMIT,'HEAD')\n        assert regular(root/P5_DOCS[0])==git(authority,'show',ADDENDUM_COMMIT+':'+P5_DOCS[0]),'Approved numeric addendum changed'\n        base=frozen(str(authority))\n        for path,(mode,blob,raw) in base.items():\n            actual=regular(root/path)\n            wanted=raw+APP_APPEND if path=='src/vde/app.py' else raw\n>           assert actual==wanted,'Protected file changed: '+path\n                   ^^^^^^^^^^^^^^\nE           AssertionError: Protected file changed: src/vde/app.py\n\ntests/p5/scope_audit.py:68: AssertionError"
+  }
+]

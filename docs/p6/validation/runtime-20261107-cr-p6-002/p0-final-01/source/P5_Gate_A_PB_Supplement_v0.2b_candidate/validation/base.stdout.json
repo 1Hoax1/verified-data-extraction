@@ -1,0 +1,20 @@
+{
+  "static": {
+    "dq_ids": 23,
+    "mandatory": 15,
+    "conditional": 8,
+    "dq_cases": 54,
+    "integration_cases": 22,
+    "unique_test_ids": 76,
+    "schema_specimens": 3
+  },
+  "manifest": "PASS 60/60",
+  "p0_contracts": "NOT_RUN",
+  "p5_runtime": "NOT_RUN",
+  "mutation_probes": {
+    "p0_golden_sha_mutation_rejected": true,
+    "missing_mandatory_id_rejected": true,
+    "duplicate_test_id_rejected": true,
+    "P-A_row_value_mutation_rejected": true
+  }
+}

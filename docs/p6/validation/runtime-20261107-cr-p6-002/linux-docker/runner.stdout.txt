@@ -1,0 +1,21 @@
+{"step": "source-commit", "returncode": 0, "elapsed_seconds": 0.0}
+{"step": "source-status", "returncode": 0, "elapsed_seconds": 0.01}
+{"step": "docker-version", "returncode": 0, "elapsed_seconds": 0.02}
+{"step": "docker-info", "returncode": 0, "elapsed_seconds": 0.05}
+{"step": "pull", "returncode": 0, "elapsed_seconds": 0.91}
+{"step": "image-inspect", "returncode": 0, "elapsed_seconds": 0.01}
+{"step": "first-launch", "returncode": 0, "elapsed_seconds": 1.61}
+{"step": "first-launch", "waiting_seconds": 0}
+{"step": "first-launch", "attempt": 10, "status": 200, "body": "ok"}
+{"step": "first-runtime-versions", "returncode": 0, "elapsed_seconds": 0.46}
+{"step": "first-workflow", "returncode": 0, "elapsed_seconds": 33.63}
+{"step": "first-server-logs", "returncode": 0, "elapsed_seconds": 0.02}
+{"step": "first-stop", "returncode": 0, "elapsed_seconds": 0.22}
+{"step": "second-launch", "returncode": 0, "elapsed_seconds": 2.38}
+{"step": "second-launch", "waiting_seconds": 0}
+{"step": "second-launch", "attempt": 10, "status": 200, "body": "ok"}
+{"step": "restart-inspection", "returncode": 0, "elapsed_seconds": 12.73}
+{"step": "second-server-logs", "returncode": 0, "elapsed_seconds": 0.01}
+{"step": "final-server-logs", "returncode": 0, "elapsed_seconds": 0.01}
+{"step": "final-stop", "returncode": 0, "elapsed_seconds": 0.16}
+LINUX_DOCKER_DIAGNOSTIC_PASSED

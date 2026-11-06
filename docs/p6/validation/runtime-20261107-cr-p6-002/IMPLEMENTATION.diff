@@ -1,0 +1,598 @@
+diff --git a/docs/p6/README_PILOT.md b/docs/p6/README_PILOT.md
+index 2aeefb8..9c9fac7 100644
+--- a/docs/p6/README_PILOT.md
++++ b/docs/p6/README_PILOT.md
+@@ -2,7 +2,9 @@
+ 
+ This manual covers the approved P6 workflow in [Design Pack v0.2](design/P6_DESIGN_PACK_v0.2.md), under [CR-P6-001](decisions/CR-P6-001_OWNER_DECISION_2026-11-06.md). Gate A is owner-closed in the [later direction decision](decisions/P6_DIRECTION_OWNER_DECISION_2026-11-06.md). Implementation validation, Gate B closure, merge and Pilot release are separate decisions. These instructions alone do not certify a release; use the [release checklist](RELEASE_CHECKLIST.md).
+ 
+-**Known integration blocker:** a newly published P-B Brief receives a UUID from the frozen P3 UI, while the frozen P5 PB-AC-002 exception recognizes only the literal ID `brief-pb-v1`. The legally identity-adapted six-column P-B path consequently produces `NEEDS_FIX / FAIL`, not its required `READY / PASS_WITH_WARNINGS`. Preserve that diagnostic result; do not force IDs, change criteria, or deliver it as accepted output. The proposed CR-P6-002 in new validation evidence requests a narrowly reviewed P5 correction. It is not approved or implemented; the existing P5 code remains unchanged.
++**CR-P6-002 correction:** the [owner decision](decisions/CR-P6-002_OWNER_DECISION_2026-11-07.md) approves the narrowly bounded P-B recognition correction. This candidate recognizes the certified P-B business contract independently of its generated Brief ID, using the exact XLSX checksum, selected Orders sheet, a separate P0 semantic-fingerprint copy with only the verified input asset binding substituted, and the exact five-criterion/six-output column sequences. Actual Brief/Spec hashes, two independent Approvals, source/Run admission and generic `sequence_equals` remain authoritative. Arbitrary or edited contracts do not acquire this exception. Never force fixture IDs or deliver a deterministic FAIL as accepted output.
++
++Earlier FAILED evidence remains immutable under `validation/runtime-20261107/`. Corrected exact-tree results belong only under `validation/runtime-20261107-cr-p6-002/`; use its report to determine actual outcomes. The active successor audit is explicitly `P6_SCOPE_POLICY_V2_CR_P6_002` (the historical filename remains `scope_policy_v1.json`). Original V1 policy/audit/runner remain accessible at commit `deddc2799464076227173bd2e4890f552ffe64bf` and are archived with new evidence; they are not the active policy for this correction. Actual Mac-host P6-T19 evidence remains independently required and is NOT RUN until executed.
+ 
+ The supported runtime is Linux, including Linux in Docker Desktop on an Apple Silicon or Intel Mac. Native macOS execution is unsupported: frozen P2 reads Linux `/proc` for resource checks. Use one person, one Streamlit process and one local persistent workspace. The workspace contains confidential input/result bytes and SQLite records; restrict its directory to the operator. SQLite is authoritative for metadata, exact versions, Approvals, Runs and QAReports; controlled workspace files are authoritative for payload bytes. Keep both together on a filesystem supporting SQLite WAL, hard links and file/directory `fsync`.
+ 
+@@ -75,6 +77,19 @@ Open `http://127.0.0.1:8501` on the Mac. The `0.0.0.0` address is inside the con
+ 
+ This is a local Docker Desktop recipe, with no managed-cloud credentials or proxy material. A site requiring an HTTPS proxy or private CA must configure Docker/package tooling with its approved local trust settings; do not disable TLS verification. Failure to pull the exact image or install the frozen lock leaves the container smoke check pending/failed until resolved without changing dependencies. Actual Mac-host execution is required for the Mac portion of P6-T19; Linux-host Docker evidence cannot replace it.
+ 
++### Required actual Mac P6-T19 record
++
++Run this on an actual Mac with Docker Desktop, using an isolated acceptance workspace, never the operator's existing workspace. Select the exact corrected implementation commit and tree from the new validation report; the owner-authority commit `66c2b4f...` alone is not an implementation. Keep evidence outside the checkout and workspace. Do not reuse earlier Linux output as Mac proof.
++
++1. Before launch, save the actual commands and outputs of `date -u`, `uname -s`, `uname -m`, `sw_vers`, `docker version`, `docker info --format '{{.OSType}} {{.Architecture}}'`, image RepoDigests, `git rev-parse HEAD`, `git rev-parse HEAD^{tree}`, `git status --porcelain`, and `shasum -a 256 pyproject.toml uv.lock`. The host must actually report Darwin; the container must report Linux. Record Docker Desktop version and the read-only source/read-write persistent workspace mounts (`docker inspect vde-pilot --format '{{json .Mounts}}'` while running). Retain installation/app stdout and stderr, all exit codes and frozen installed package versions.
++2. Launch the exact Mac recipe above and save `curl --fail --show-error --include http://127.0.0.1:8501/_stcore/health`; require HTTP 200 and `ok`. In the Mac browser perform the documented P-A and fresh P-B workflows with actual explicit test-operator clicks and two separately reviewed Approvals per isolated Order. Only adapt fixture Order/input/version bindings in the UI draft; preserve semantics and recompute actual hashes through normal P3 publication. P-B publishes v1 then approved v2 with PB-AC-007; do not import fixture Approvals or force IDs.
++3. Save the actual downloaded Result and QAReport, filenames/response metadata, `shasum -a 256` and byte sizes, Order/Brief/Spec/Approval/Run/Artifact/report identities and statuses. Independently check P-A's exact 277-byte golden. For P-B require READY/PASS_WITH_WARNINGS, 24 checks, DQ-017/PB-AC-006 and PB-AC-007 PASS, retained formula-cache warning, one XLSX, six ordered columns, three data rows/18 values and no exported formulas. Verify the actual saved QA JSON against the existing P0 schema and exact links; read-only verification through the installed container is permitted. No database or workspace edits may prepare a result.
++4. Stop and remove the container, retaining the complete host workspace. Restart the exact source/image with the **same** host data mount. Require health 200, unchanged persisted IDs/rows/payload hashes and no new Approvals/Runs/Artifacts/QAReports. A fresh browser session must have no prepared download; explicitly prepare again, save both files and compare their hashes to the first downloads. Save both launch logs and the before/after observations. Preserve failed attempts as well.
++5. Publish the raw Mac command log, environment, saved-file checksums, read-only state observations, test-operator action record and finite SHA-256 manifest for independent review. Only after actual execution produce the T19 input JSON: `host_system` from the host, `container_system` from the container, actual `launch_http_status`/`restart_http_status`, observed `workspace_persisted`/`explicit_ui_workflow_completed`, `commands`, `stdout`, `docker_info`, plus full tested commit/tree, image digest, evidence file paths/hashes and reviewer provenance. Those fields are a summary of real proof, not permission to fill successful values without execution.
++6. On the same corrected implementation source, rerun `PYTHONPATH=src:tests P6_MAC_DOCKER_EVIDENCE=/absolute/reviewed/mac-evidence.json P6_RESULTS_DIR=/absolute/new/t19-observations .venv/bin/python -m pytest tests/p6/test_acceptance.py::test_T19_documented_linux_launch_restart_and_actual_mac_docker -q --junitxml=/absolute/new/t19-results.xml` in the Linux validation environment. Save the new command, SHA/tree, stdout/stderr, exit and JUnit separately; never overwrite the earlier NOT RUN/FAIL. The original 20-ID run and subsequent T19 rerun remain distinct evidence. A JSON claim alone is not independent Mac verification or owner Gate B authority.
++
++If Mac hardware, Docker, the exact image/lock, real browser workflow, hashes or restart proof is unavailable, record the missing step **NOT RUN / BLOCKED**. Do not use skip/xfail, Linux-host substitution or a fabricated success receipt.
++
+ ## Explicit operator workflow
+ 
+ 1. Confirm fresh storage health is `ready`. In **Create Order**, enter a nonblank title and listing text and explicitly submit the form. Submission creates a DRAFT only. Listing text is retained verbatim; a listing URL is stored as text and is never fetched. Leave unused optional fields empty. A supplied budget must already be finite canonical Decimal text; a deadline must be exact UTC `YYYY-MM-DDTHH:MM:SSZ`. Failed submissions retain the form token; resubmitting identical fields with that token reuses the Order. An explicit new Order uses a new token. Browser loss before successful submission does not provide global content deduplication.
+diff --git a/docs/p6/RELEASE_CHECKLIST.md b/docs/p6/RELEASE_CHECKLIST.md
+index 94e9885..03dc405 100644
+--- a/docs/p6/RELEASE_CHECKLIST.md
++++ b/docs/p6/RELEASE_CHECKLIST.md
+@@ -4,7 +4,9 @@
+ 
+ Every unchecked item is pending. Enter actual results and evidence only after execution. `NOT RUN`, `FAIL` and a recorded limitation are not PASS. The current documentation-authoring environment is Linux; no Mac-host Docker smoke evidence has been supplied here. P6-T19's Mac requirement is **NOT RUN / PENDING**, and T19 cannot be closed until actual required evidence exists.
+ 
+-**Known P-B blocker:** frozen P5 binds PB-AC-002's approved exception to `brief-pb-v1`; a new P3 UI publication has a UUID and gets DQ-010 FAIL / NEEDS_FIX. P6-T06/T07 must retain their strict required READY/PASS_WITH_WARNINGS assertions. A proposed CR-P6-002 is recorded with the new runtime evidence; no protected P5 fix or fixture/ID workaround is permitted without owner approval. This is a behavioral integration failure, not a historical scope conflict.
++**Approved P-B correction:** [CR-P6-002](decisions/CR-P6-002_OWNER_DECISION_2026-11-07.md) authorizes only the certified source/semantic-fingerprint recognition rule in P5 `qa.py` and its finite successor-audit/test/manual amendment. T06/T07 retain their strict READY/PASS_WITH_WARNINGS expectations and need fresh exact-tree runtime results. The original 17 PASS/3 FAIL evidence remains unchanged. No arbitrary Brief, altered source/output or invalid real Approval/Spec/Run context receives the exception; generic five-versus-six `sequence_equals` remains FAIL.
++
++The active audit is explicitly `P6_SCOPE_POLICY_V2_CR_P6_002`, with correction authority `66c2b4f97e2b4dbe4e7a01696c89ae5fd0431981`, unchanged main/implementation baselines, exact corrected `qa.py` SHA-256 and only seven existing amended paths. Retired V1 policy/audit/runner remain immutable at `deddc2799464076227173bd2e4890f552ffe64bf` and in separately archived evidence. The new finite evidence root is `docs/p6/validation/runtime-20261107-cr-p6-002/`; no old report, manifest or FAILED JUnit is rewritten. Mac execution remains NOT RUN until independently performed.
+ 
+ ## Immutable identity and evidence record
+ 
+@@ -34,8 +36,8 @@ The new acceptance suite and successor audit live under `tests/p6/`; the outer `
+ ## Scope and dependency admission
+ 
+ - [ ] Verify both remote refs against the owner-authorized SHAs before implementation admission; preserve the ref-query response and time.
+-- [ ] Compare every baseline blob and mode against frozen main. Only the four exact added `app.py` lines and the finite 4 runtime + 6 test/audit + 5 documentation paths from CR-P6-001 are admitted; no deletion/reorder of existing app lines.
+-- [ ] Preserve approved design/decision bytes, all P0–P5 source/tests/policies/fixtures/evidence, `DECISIONS.md`, G3 pin, schema/migrations and dependency files. Run the P6 successor audit and retain its exact inventory.
++- [ ] Compare every baseline blob and mode against frozen main and the separately approved CR-P6-002 authority. CR-P6-001 still admits only its four exact `app.py` lines and finite P6 paths; CR-P6-002 additionally permits only its exact P5 QA guard/helper and named test/audit/manual amendment. No app change, new runtime path or broad P5 waiver.
++- [ ] Preserve approved design/decision bytes, every historical P0–P5 test/policy/fixture/evidence, all source outside the exact P5 QA exception, `DECISIONS.md`, G3 pin, schema/migrations and dependencies. Preserve the four P6 runtime files, conftest and original FAILED evidence against correction-start commit. Run V2 successor audit and keep all original mutation probes plus exact QA, retired-policy, owner-record and old-evidence negatives.
+ - [ ] On the exact tested tree, complete `uv sync --frozen --python 3.12.14 --extra test` without lock changes; record installed direct and transitive package versions. Direct runtime versions remain jsonschema 4.26.0, referencing 0.37.0, rfc8785 0.1.4, Streamlit 1.50.0 and openpyxl 3.1.5; pytest 8.4.2 is the existing test extra.
+ - [ ] Run at least one negative mutation per protected-file class plus forbidden extra paths; retain actual rejections and verify mutation workspace disposal/restoration. No old source/evidence is changed by these probes.
+ 
+diff --git a/src/vde/p5/qa.py b/src/vde/p5/qa.py
+index 5a457c1..4bbe65b 100644
+--- a/src/vde/p5/qa.py
++++ b/src/vde/p5/qa.py
+@@ -3,9 +3,10 @@ from datetime import date, datetime, time
+ from decimal import Decimal
+ from collections import Counter
+ from fractions import Fraction
++from copy import deepcopy
+ import hashlib
+ from jsonschema.exceptions import ValidationError
+-from vde.contracts import validate
++from vde.contracts import content_hash, validate
+ from vde.execution.wire import row_bytes
+ from vde.workflow.validation import OPERATIONS
+ from .errors import require
+@@ -221,6 +222,34 @@ def criterion_dq(c):
+     return 'DQ-017'
+ 
+ 
++def _certified_pb_columns(c, projection, context):
++    """CR-P6-002 recognition only; actual context admission remains mandatory.
++
++    Never alter persisted identities, hashes or Approvals. Only the verified
++    input binding in a separate recognition copy is replaced for the frozen
++    P0 semantic fingerprint. Generic sequence_equals remains exact.
++    """
++    five = ['order_id', 'product', 'quantity', 'unit_price', 'order_date']
++    six = five + ['line_total']
++    brief = context.brief.document_json
++    inputs = brief['inputs_expected']
++    source = context.spec.document_json['inputs']
++    output = dict(dataset_id='result', format='XLSX', file_name='orders_clean.xlsx',
++                  sheet_name='Data', encoding=None, delimiter=None, column_order=six)
++    if not (c['criterion_id'] == 'PB-AC-002' and c['target']['scope'] == 'COLUMNS'
++            and c['operator'] == 'sequence_equals' and c['expected'] == c['target']['columns'] == five
++            and c in brief['acceptance_criteria'] and list(projection.columns) == six
++            and projection.output == context.spec.document_json['output'] == output
++            and inputs == [dict(asset_id=context.asset.id, input_type='LOCAL_XLSX', sheet_name='Orders')]
++            and len(source) == 1 and source[0]['asset_id'] == context.asset.id
++            and source[0]['source_type'] == 'LOCAL_XLSX' and source[0]['sheet_name'] == 'Orders'
++            and context.asset.byte_sha256 == 'd275fa7393e73ef1be7815e83b31b1a710b3f345bb7138c72569b03f66edf80d'):
++        return False
++    recognition = deepcopy(brief)
++    recognition['inputs_expected'][0]['asset_id'] = 'asset-pb-xlsx'
++    return content_hash(recognition, 'brief_version') == '9b7c2b0111360714dfbc9cbdbc755b693b11e067f32771cb226126fdcd1ffb49'
++
++
+ def criterion_result(c, facts, export, context):
+     op, target, expected = c['operator'], c['target'], c['expected']
+     column, columns = target['column'], list(facts.projection.columns)
+@@ -242,9 +271,7 @@ def criterion_result(c, facts, export, context):
+                   any(n in columns for n in target['columns']) if op=='absent' else columns)
+         # The sole, explicitly approved exception. Generic sequence_equals is
+         # still exact for every other criterion and every other Brief.
+-        if (context.brief.id == 'brief-pb-v1' and c['criterion_id'] == 'PB-AC-002' and
+-                tuple(columns) == ('order_id','product','quantity','unit_price','order_date','line_total') and
+-                expected == target['columns'] == ['order_id','product','quantity','unit_price','order_date']):
++        if _certified_pb_columns(c, facts.projection, context):
+             actual = [n for n in columns if n in target['columns']]
+     elif target['metric'] in ('null_count', 'null_ratio'):
+         if column is None:
+diff --git a/tests/p6/run_validation.py b/tests/p6/run_validation.py
+index bac032e..d160f28 100644
+--- a/tests/p6/run_validation.py
++++ b/tests/p6/run_validation.py
+@@ -1,4 +1,8 @@
+-"""Exact-tree P6 validation; legacy pytest failures remain failures in raw evidence."""
++"""CR-P6-002 exact-tree validation; actual legacy/Mac failures stay failures.
++
++This version uses the explicit V2 successor audit. Frozen V1 scripts/policy
++are preserved at the predecessor ref and separately archived as evidence.
++"""
+ import argparse
+ from datetime import datetime, timezone
+ import hashlib
+@@ -11,7 +15,7 @@ import sys
+ import xml.etree.ElementTree as ET
+ 
+ from p5.run_validation import record_command
+-from .scope_audit import audit, BASELINE, START
++from .scope_audit import audit, BASELINE, START, CORRECTION_START, POLICY, P5_QA_SHA256
+ 
+ ROOT = Path(__file__).resolve().parents[2]
+ 
+@@ -90,6 +94,8 @@ def main():
+     if args.linux_smoke: env['P6_LINUX_SMOKE']=str(args.linux_smoke.resolve())
+     if args.mac_smoke: env['P6_MAC_DOCKER_EVIDENCE']=str(args.mac_smoke.resolve())
+     inputs=dict(command=sys.argv, cwd=str(ROOT), tested_commit=commit, tested_tree=tree,
++                correction_start=CORRECTION_START, scope_policy_format=POLICY['format'],
++                approved_p5_qa_sha256=P5_QA_SHA256,
+                 P6_STRESS_WORKSPACE=env['P6_STRESS_WORKSPACE'], P6_VALIDATION_DIR=env['P6_VALIDATION_DIR'],
+                 P6_RESULTS_DIR=str(out/'p6-runtime/observations'), external_platform_evidence={})
+     stress_db=args.stress_workspace.resolve()/'app.sqlite3'
+@@ -97,6 +103,17 @@ def main():
+     for label,path in (('linux_smoke',args.linux_smoke),('mac_smoke',args.mac_smoke)):
+         inputs['external_platform_evidence'][label]=None if path is None else dict(path=str(path.resolve()),sha256=hashlib.sha256(path.read_bytes()).hexdigest())
+     (out/'VALIDATION_INPUTS.json').write_text(json.dumps(inputs,indent=2)+'\n')
++    previous_path = 'docs/p6/validation/runtime-20261107/final-run/p6-runtime/results.xml'
++    previous = (ROOT / previous_path).read_bytes()
++    assert previous == subprocess.check_output(['git','show',CORRECTION_START+':'+previous_path],cwd=ROOT)
++    old_cases = list(ET.fromstring(previous).iter('testcase'))
++    old_failures = [c for c in old_cases if c.find('failure') is not None]
++    assert len(old_cases) == 20 and {c.get('name').split('_')[1] for c in old_failures} == {'T06','T07','T19'}
++    previous_record = dict(path=previous_path, sha256=hashlib.sha256(previous).hexdigest(),
++        tested_commit='deddc2799464076227173bd2e4890f552ffe64bf',
++        tested_tree='afc4126ccddce4ca4615ac411b1dd6281a98a960',
++        actual_failures=[c.get('name') for c in old_failures], preserved_unchanged=True)
++    (out/'PREVIOUS_FAILED_EVIDENCE_VERIFICATION.json').write_text(json.dumps(previous_record,indent=2)+'\n')
+     history = ROOT/'docs/p5/validation/runtime-20261106'
+     historical = {}
+     for label, path, expected in (
+@@ -146,6 +163,8 @@ def main():
+         if phase['exit_code']!=expected_exit:invalid_exits.append(dict(phase=label,actual=phase['exit_code'],expected=expected_exit))
+     blockers=legacy_class['blocking_regressions']+sum(r['classification']=='BLOCKING_BEHAVIORAL_REGRESSION' for r in p5_records)+len(invalid_exits)
+     result=dict(tested_commit=commit,tested_tree=tree,approved_start=START,main_baseline=BASELINE,
++        correction_start=CORRECTION_START,scope_policy_format=POLICY['format'],
++        approved_p5_qa_sha256=P5_QA_SHA256,previous_failed_evidence=previous_record,
+         platform=platform.platform(),python=sys.version,historical=historical,
+         legacy_p1_p4={k:v for k,v in legacy_class.items() if k!='records'},
+         legacy_p5=dict(total=76,passed=sum(r['classification']=='PASS' for r in p5_records),
+diff --git a/tests/p6/scope_audit.py b/tests/p6/scope_audit.py
+index cd3d24f..ca7db2c 100644
+--- a/tests/p6/scope_audit.py
++++ b/tests/p6/scope_audit.py
+@@ -1,4 +1,8 @@
+-"""CR-P6-001 successor audit; no historical policy or authority is rewritten."""
++"""Version 2: CR-P6-001 plus the exact CR-P6-002 QA/source exception.
++
++The original V1 policy/audit remain immutable at PREDECESSOR and in its
++published evidence. They are historical evidence, never this active policy.
++"""
+ import ast
+ from functools import lru_cache
+ import hashlib
+@@ -12,15 +16,32 @@ import tarfile
+ 
+ BASELINE = '0af4a1ff49ccf8fa59c39780d749e15cb5042fc3'
+ START = 'b93e0ef4ed69343968ff7ae4188d586c0d1485a5'
++CORRECTION_START = '66c2b4f97e2b4dbe4e7a01696c89ae5fd0431981'
++PREDECESSOR = 'deddc2799464076227173bd2e4890f552ffe64bf'
++OWNER_RECORD = 'docs/p6/decisions/CR-P6-002_OWNER_DECISION_2026-11-07.md'
++OWNER_SHA256 = 'ad91837ed5b9b45c6dfe24c9783089e19d7d2c14fc0f67fb766229e9be5d9339'
++P5_QA = 'src/vde/p5/qa.py'
++P5_QA_SHA256 = '8caee87fce7a0c748e2333b8fe3b1b3333fee3548ee78111516a8eac541d8a52'
++EVIDENCE_ROOT = 'docs/p6/validation/runtime-20261107-cr-p6-002/'
++RETIRED = {
++    'tests/p6/scope_policy_v1.json': '0b90083e30783bed6a5420dc7faed7127071b0c2d0023073bf8bb87bbad08207',
++    'tests/p6/scope_audit.py': 'a682ed6e27ea901495ca782d7ff7cb0ddb025f16b3f1da20914a717b39d1d050',
++    'tests/p6/run_validation.py': '3c74becbb6090a1c59844fe25d047bf4194a25368cd2975d0e3a4553b9d484ad',
++}
+ SOURCES = tuple('src/vde/p6/' + p for p in ('__init__.py', 'orders.py', 'delivery.py', 'ui.py'))
+ TESTS = tuple('tests/p6/' + p for p in ('__init__.py', 'conftest.py', 'test_acceptance.py', 'scope_audit.py', 'scope_policy_v1.json', 'run_validation.py'))
+ DOCS = ('docs/p6/README_PILOT.md', 'docs/p6/RELEASE_CHECKLIST.md')
+ BEFORE = b'from vde.p6.ui import order_panel\norder_panel(result)\n'
+ AFTER = b'from vde.p6.ui import delivery_panel\ndelivery_panel(result)\n'
+-POLICY = dict(format='P6_SCOPE_POLICY_V1', baseline=BASELINE, implementation_start=START,
++AMENDED = (P5_QA, 'tests/p6/test_acceptance.py', 'tests/p6/scope_audit.py',
++           'tests/p6/scope_policy_v1.json', 'tests/p6/run_validation.py', *DOCS)
++POLICY = dict(format='P6_SCOPE_POLICY_V2_CR_P6_002', baseline=BASELINE, implementation_start=START,
+               source_paths=list(SOURCES), test_paths=list(TESTS), release_paths=list(DOCS),
+               app_insert_before_ingestion=BEFORE.decode(), app_append=AFTER.decode(),
+-              evidence_parent='docs/p6/validation/', evidence_directory_prefix='runtime-')
++              correction_start=CORRECTION_START, owner_record=OWNER_RECORD, owner_sha256=OWNER_SHA256,
++              amended_paths=list(AMENDED), p5_qa_path=P5_QA, p5_qa_sha256=P5_QA_SHA256,
++              predecessor_commit=PREDECESSOR, retired_policy_audit_sha256=RETIRED,
++              evidence_root=EVIDENCE_ROOT)
+ 
+ 
+ def git(root, *args):
+@@ -57,19 +78,39 @@ def audit(root, *, authority_root=None):
+     assert json.loads(regular(root / 'tests/p6/scope_policy_v1.json')) == POLICY, 'P6 policy changed'
+     git(authority, 'merge-base', '--is-ancestor', BASELINE, 'HEAD')
+     git(authority, 'merge-base', '--is-ancestor', START, 'HEAD')
++    git(authority, 'merge-base', '--is-ancestor', CORRECTION_START, 'HEAD')
++    git(authority, 'merge-base', '--is-ancestor', PREDECESSOR, CORRECTION_START)
+     base = frozen(str(authority), START)
+     main = frozen(str(authority), BASELINE)
++    correction = frozen(str(authority), CORRECTION_START)
++    predecessor = frozen(str(authority), PREDECESSOR)
++    for path, digest in RETIRED.items():
++        assert hashlib.sha256(predecessor[path][2]).hexdigest() == digest, 'Retired policy provenance differs'
++    assert hashlib.sha256(regular(root / OWNER_RECORD)).hexdigest() == OWNER_SHA256, 'CR-P6-002 owner decision differs'
+     assert all(path in base and base[path] == record for path, record in main.items()), 'Start differs from approved main'
+     from scope_policy import verify_governance_document
+     verify_governance_document(root, authority_root=authority if authority != root else None)
+     owned = set(SOURCES) | set(TESTS) | set(DOCS)
+     for path, (mode, blob, raw) in base.items():
+         wanted = expected_app(raw) if path == 'src/vde/app.py' else raw
++        if path == P5_QA:
++            wanted = regular(root / path, mode)
++            assert hashlib.sha256(wanted).hexdigest() == P5_QA_SHA256, 'Unapproved P5 QA bytes'
+         assert regular(root / path, mode) == wanted, 'Protected file changed: ' + path
+         if root == authority:
+             expected = hashlib.sha1(b'blob ' + str(len(wanted)).encode() + b'\0' + wanted).hexdigest()
+             assert git(root, 'ls-tree', 'HEAD', '--', path) == f'{mode} blob {expected}\t{path}\n'.encode(), 'HEAD differs: ' + path
+             assert git(root, 'ls-files', '--stage', '--', path) == f'{mode} {expected} 0\t{path}\n'.encode(), 'Index differs: ' + path
++    # CR-P6-002 adds a separately named authority; it never changes the old
++    # implementation baseline. Preserve every already-published P6 runtime,
++    # test helper, authority record and FAILED evidence outside seven paths.
++    for path, (mode, blob, raw) in correction.items():
++        if path in AMENDED:
++            continue
++        assert regular(root / path, mode) == raw, 'Correction protected file changed: ' + path
++        if root == authority:
++            assert git(root, 'ls-tree', 'HEAD', '--', path) == f'{mode} blob {blob}\t{path}\n'.encode(), 'Correction HEAD differs: ' + path
++            assert git(root, 'ls-files', '--stage', '--', path) == f'{mode} {blob} 0\t{path}\n'.encode(), 'Correction index differs: ' + path
+     for path in owned:
+         raw = regular(root / path)
+         assert raw == git(authority, 'show', 'HEAD:' + path), 'Owned file differs from committed tree: ' + path
+@@ -98,8 +139,8 @@ def audit(root, *, authority_root=None):
+         inventory = set(git(root, 'ls-files', '--cached', '--others', '--exclude-standard', '-z').decode().rstrip('\0').split('\0'))
+     else:
+         inventory = {p.relative_to(root).as_posix() for p in root.rglob('*') if p.is_file() and '__pycache__' not in p.parts}
+-    allowed = set(base) | owned
+-    evidence = {p for p in inventory if p.startswith('docs/p6/validation/runtime-')}
++    allowed = set(correction) | owned
++    evidence = {p for p in inventory if p.startswith(EVIDENCE_ROOT)}
+     groups = {p.split('/')[3] for p in evidence}
+     for group in groups:
+         prefix = 'docs/p6/validation/' + group + '/'
+@@ -112,8 +153,11 @@ def audit(root, *, authority_root=None):
+         assert {p for p in evidence if p.startswith(prefix)} == set(entries) | {manifest}, 'Evidence inventory differs'
+     allowed |= evidence
+     assert inventory <= allowed, 'Unapproved files: ' + str(sorted(inventory - allowed))
+-    return dict(result='PASS', baseline=BASELINE, implementation_start=START,
++    return dict(result='PASS', policy_format=POLICY['format'], baseline=BASELINE, implementation_start=START,
++                correction_start=CORRECTION_START, p5_qa_sha256=P5_QA_SHA256,
++                predecessor_policy_commit=PREDECESSOR, retired_policy_provenance='PASS',
+                 protected_main_files=len(main), protected_start_files=len(base),
++                protected_correction_files=len(correction), authorized_amended_paths=list(AMENDED),
+                 new_runtime_files=len(SOURCES), exact_app_additions=4,
+                 historical_tests_policies_governance_unchanged=True)
+ 
+@@ -142,6 +186,12 @@ def negative_probes(root, directory):
+         ('file_mode', 'src/vde/storage.py'),
+         ('unknown_file', 'p6-unapproved.txt'), ('owned_source', 'src/vde/p6/delivery.py'),
+         ('new_policy', 'tests/p6/scope_policy_v1.json'),
++        ('retired_policy', 'tests/p6/scope_policy_v1.json'),
++        ('qa_guard_relaxation', P5_QA), ('qa_other_function', P5_QA),
++        ('qa_file_mode', P5_QA),
++        ('correction_owner_record', OWNER_RECORD),
++        ('old_failed_evidence', 'docs/p6/validation/runtime-20261107/final-run/p6-runtime/results.xml'),
++        ('unapproved_evidence_root', 'docs/p6/validation/runtime-unapproved/extra.txt'),
+     ]
+     results = []
+     for label, path in probes:
+@@ -149,8 +199,15 @@ def negative_probes(root, directory):
+         with tarfile.open(fileobj=io.BytesIO(archive)) as tar:
+             tar.extractall(scratch, filter='data')
+         target = scratch / path; target.parent.mkdir(parents=True, exist_ok=True)
+-        if label == 'file_mode':
++        if label in ('file_mode', 'qa_file_mode'):
+             target.chmod(0o755)
++        elif label == 'retired_policy':
++            target.write_bytes(git(root, 'show', PREDECESSOR + ':' + path))
++        elif label == 'qa_guard_relaxation':
++            raw = target.read_bytes()
++            mutant = raw.replace(b"c['operator'] == 'sequence_equals'", b"c['operator'] == 'not_equals'")
++            assert mutant != raw
++            target.write_bytes(mutant)
+         else:
+             target.write_bytes((target.read_bytes() if target.exists() else b'') + b'\n# unapproved mutation\n')
+         try:
+diff --git a/tests/p6/scope_policy_v1.json b/tests/p6/scope_policy_v1.json
+index 43a27fe..9a9d70a 100644
+--- a/tests/p6/scope_policy_v1.json
++++ b/tests/p6/scope_policy_v1.json
+@@ -1,15 +1,34 @@
+ {
++  "amended_paths": [
++    "src/vde/p5/qa.py",
++    "tests/p6/test_acceptance.py",
++    "tests/p6/scope_audit.py",
++    "tests/p6/scope_policy_v1.json",
++    "tests/p6/run_validation.py",
++    "docs/p6/README_PILOT.md",
++    "docs/p6/RELEASE_CHECKLIST.md"
++  ],
+   "app_append": "from vde.p6.ui import delivery_panel\ndelivery_panel(result)\n",
+   "app_insert_before_ingestion": "from vde.p6.ui import order_panel\norder_panel(result)\n",
+   "baseline": "0af4a1ff49ccf8fa59c39780d749e15cb5042fc3",
+-  "evidence_directory_prefix": "runtime-",
+-  "evidence_parent": "docs/p6/validation/",
+-  "format": "P6_SCOPE_POLICY_V1",
++  "correction_start": "66c2b4f97e2b4dbe4e7a01696c89ae5fd0431981",
++  "evidence_root": "docs/p6/validation/runtime-20261107-cr-p6-002/",
++  "format": "P6_SCOPE_POLICY_V2_CR_P6_002",
+   "implementation_start": "b93e0ef4ed69343968ff7ae4188d586c0d1485a5",
++  "owner_record": "docs/p6/decisions/CR-P6-002_OWNER_DECISION_2026-11-07.md",
++  "owner_sha256": "ad91837ed5b9b45c6dfe24c9783089e19d7d2c14fc0f67fb766229e9be5d9339",
++  "p5_qa_path": "src/vde/p5/qa.py",
++  "p5_qa_sha256": "8caee87fce7a0c748e2333b8fe3b1b3333fee3548ee78111516a8eac541d8a52",
++  "predecessor_commit": "deddc2799464076227173bd2e4890f552ffe64bf",
+   "release_paths": [
+     "docs/p6/README_PILOT.md",
+     "docs/p6/RELEASE_CHECKLIST.md"
+   ],
++  "retired_policy_audit_sha256": {
++    "tests/p6/run_validation.py": "3c74becbb6090a1c59844fe25d047bf4194a25368cd2975d0e3a4553b9d484ad",
++    "tests/p6/scope_audit.py": "a682ed6e27ea901495ca782d7ff7cb0ddb025f16b3f1da20914a717b39d1d050",
++    "tests/p6/scope_policy_v1.json": "0b90083e30783bed6a5420dc7faed7127071b0c2d0023073bf8bb87bbad08207"
++  },
+   "source_paths": [
+     "src/vde/p6/__init__.py",
+     "src/vde/p6/orders.py",
+diff --git a/tests/p6/test_acceptance.py b/tests/p6/test_acceptance.py
+index 0691e62..07f78c0 100644
+--- a/tests/p6/test_acceptance.py
++++ b/tests/p6/test_acceptance.py
+@@ -1,6 +1,7 @@
+ """Twenty P6 runtime oracles. A blocked platform check remains a real FAIL."""
+ from concurrent.futures import ThreadPoolExecutor
+-from dataclasses import asdict
++from dataclasses import asdict, replace
++from copy import deepcopy
+ import io
+ import json
+ import os
+@@ -14,6 +15,7 @@ import sys
+ import time
+ from urllib.request import urlopen
+ from uuid import uuid4
++from types import SimpleNamespace
+ 
+ from openpyxl import load_workbook
+ import pytest
+@@ -196,7 +198,141 @@ def test_T05_pa_csv_result_and_qa_actual_http_transfer(pa, download_http):
+     record('T05', {'http_transfers': observations, 'golden_sha256': sha(golden), 'snapshot_key': prepared.key})
+ 
+ 
+-def test_T06_pb_explicit_v2_approval_and_typed_warning_oracle(pb):
++def _cr_p6_002_guard_cases(pb):
++    """Recognition-only mutations never grant or persist Approval authority."""
++    from vde.p5.service import P5Service
++    from vde.p5.qa import _certified_pb_columns, criterion_result, predicate
++    context = P5Service(pb.env).inspect(pb.run_id, pb.order())
++    before, files = pb.snapshot(), payload_hashes(pb.directory)
++    original = deepcopy(context.brief.document_json)
++    criterion = next(c for c in original['acceptance_criteria'] if c['criterion_id'] == 'PB-AC-002')
++    projection = context.projection
++    assert _certified_pb_columns(criterion, projection, context)
++    assert criterion_result(criterion, SimpleNamespace(projection=projection), {}, context)['status'] == 'PASS'
++    assert not predicate('sequence_equals', list(projection.columns), criterion['expected'])
++    matrix = []
++
++    def reject(label, *, changes=(), asset_changes=None, output_changes=None, columns=None, spec_inputs=None):
++        doc = deepcopy(original)
++        for path, value in changes:
++            parent = doc
++            for key in path[:-1]:
++                parent = parent[key]
++            parent[path[-1]] = deepcopy(value)
++        # An altered contract cannot acquire the exception even if it has its
++        # own correct semantic hash. These are pure unit copies, not live or
++        # admitted replacement versions and never substitute for Approvals.
++        doc['content_hash'] = content_hash(doc, 'brief_version')
++        brief = replace(context.brief, document_json=doc, content_hash=doc['content_hash'])
++        asset = replace(context.asset, **(asset_changes or {}))
++        output = {**projection.output, **(output_changes or {})}
++        spec_doc = deepcopy(context.spec.document_json); spec_doc['output'] = output
++        if spec_inputs is not None:
++            spec_doc['inputs'] = deepcopy(spec_inputs)
++        copied = replace(context, brief=brief, asset=asset,
++                         spec=replace(context.spec, document_json=spec_doc))
++        projected = replace(projection, output=output, columns=tuple(columns or projection.columns))
++        c = doc['acceptance_criteria'][1]
++        assert not _certified_pb_columns(c, projected, copied), label
++        result = criterion_result(c, SimpleNamespace(projection=projected), {}, copied)
++        assert result['status'] == 'FAIL', (label, result)
++        matrix.append(dict(case=label, outcome='REJECTED', qa_status=result['status'],
++                           semantic_hash=doc['content_hash'], recognition_only=True))
++
++    edits = [
++        ('objective', ('objective',), original['objective'] + ' Different contract.'),
++        ('record_definition', ('record_definition',), 'A different record.'),
++        ('scope', ('scope', 'included'), ['Different scope']),
++        ('field_description', ('fields', 0, 'description'), 'Changed field meaning'),
++        ('field_type', ('fields', 0, 'data_type'), 'integer'),
++        ('field_required', ('fields', 0, 'required'), False),
++        ('volume', ('volume_expectation', 'exact_count'), 4),
++        ('quality', ('data_quality_expectations', 'unexpected_columns_allowed'), True),
++        ('risk', ('risks', 0, 'description'), 'Different risk'),
++        ('assumption', ('assumptions', 0, 'text'), 'Different assumption'),
++        ('criterion_severity', ('acceptance_criteria', 1, 'severity'), 'INFO'),
++        ('criterion_id', ('acceptance_criteria', 1, 'criterion_id'), 'OTHER-AC-002'),
++        ('operator', ('acceptance_criteria', 1, 'operator'), 'set_equals'),
++        ('target_scope', ('acceptance_criteria', 1, 'target', 'scope'), 'METRIC'),
++        ('expected_order', ('acceptance_criteria', 1, 'expected'), list(reversed(criterion['expected']))),
++        ('target_order', ('acceptance_criteria', 1, 'target', 'columns'), list(reversed(criterion['expected']))),
++        ('input_type', ('inputs_expected', 0, 'input_type'), 'LOCAL_CSV'),
++        ('sheet', ('inputs_expected', 0, 'sheet_name'), 'Notes'),
++        ('input_binding', ('inputs_expected', 0, 'asset_id'), 'wrong-asset'),
++        ('no_input', ('inputs_expected',), []),
++        ('multiple_inputs', ('inputs_expected',), original['inputs_expected'] * 2),
++    ]
++    for label, path, value in edits:
++        reject(label, changes=[(path, value)])
++    reject('source_checksum', asset_changes={'byte_sha256': '0' * 64})
++    reject('actual_asset_id', asset_changes={'id': 'different-asset'})
++    for key, value in [('format', 'CSV'), ('file_name', 'different.xlsx'), ('sheet_name', 'Different'),
++                       ('dataset_id', 'different'), ('column_order', list(reversed(projection.columns)))]:
++        reject('output_' + key, output_changes={key: value})
++    reject('projected_column_order', columns=list(reversed(projection.columns)))
++    source = context.spec.document_json['inputs'][0]
++    for key, value in [('asset_id', 'wrong-source'), ('sheet_name', 'Notes'), ('source_type', 'LOCAL_CSV')]:
++        reject('selected_source_' + key, spec_inputs=[{**source, key: value}])
++    reject('no_selected_source', spec_inputs=[])
++    reject('multiple_selected_sources', spec_inputs=[source, source])
++    generic = deepcopy(criterion); generic['criterion_id'] = 'GENERIC-AC-002'
++    assert criterion_result(generic, SimpleNamespace(projection=projection), {}, context)['status'] == 'FAIL'
++    assert pb.snapshot() == before and payload_hashes(pb.directory) == files
++    assert context.brief.document_json == original
++    return dict(fresh_uuid_brief_id=context.brief.id, real_semantic_hash=context.brief.content_hash,
++                positive_status='PASS', generic_five_vs_six='FAIL', negatives=matrix,
++                immutable_context_and_payloads=True, approval_authority='Unchanged actual P5 admission; unit copies are not authority')
++
++
++def _canonical_pb_oracle(directory):
++    # Reuse the approved historical isolated P1/P3/P4 procedure. Its two
++    # explicit simulated API actions create real test-local Approvals; no
++    # imported fixture Approval, direct approval INSERT or owner claim exists.
++    from p5.support import Scenario, pb_v2
++    case = Scenario(directory, 'P-B_xlsx_sheet', change=pb_v2)
++    with case.uow() as u:
++        brief = u.briefs.get(case.handoff.brief_version_id)
++        spec = u.specs.get(case.handoff.transformation_spec_version_id)
++        approvals = u.approvals.list_for_order(case.order_id)
++    internal_hashes = payload_hashes(case.env.workspace.root)
++    decision = case.complete()
++    assert brief.id == 'brief-pb-v1' and brief.content_hash == '9b7c2b0111360714dfbc9cbdbc755b693b11e067f32771cb226126fdcd1ffb49'
++    assert spec.id == 'transform-pb-v2-cr-p5-001' and spec.version_number == 2
++    assert case.order().status == decision.order_status == 'READY'
++    assert decision.report['overall_status'] == 'PASS_WITH_WARNINGS'
++    assert decision.artifact.artifact_type == 'RESULT_XLSX' and len(approvals) == 2
++    checks = decision.report['deterministic_checks']
++    assert len(checks) == 24 and not any(c['status'] == 'FAIL' for c in checks)
++    assert {c['criterion_id']: c['status'] for c in checks if c['check_id'] == 'DQ-017'} == {'PB-AC-006': 'PASS', 'PB-AC-007': 'PASS'}
++    assert 'XLSX_FORMULA_PRESENT' in decision.report['warnings']
++    path = case.env.workspace.path(decision.artifact.workspace_relpath)
++    actual = load_workbook(path.open('rb'), read_only=True, data_only=False)
++    golden = load_workbook(case.source / 'expected_result.xlsx', read_only=True, data_only=False)
++    try:
++        cells = list(actual['Data'].rows)
++        values = [[c.value for c in row] for row in cells]
++        assert values == [[c.value for c in row] for row in golden.active.rows]
++        assert len(cells) == 4 and all(len(row) == 6 for row in cells)
++        assert all(c.data_type != 'f' for row in cells for c in row)
++    finally:
++        actual.close(); golden.close()
++    after = payload_hashes(case.env.workspace.root)
++    assert all(after[name] == digest for name, digest in internal_hashes.items())
++    assert sha(path.read_bytes()) == decision.artifact.checksum
++    from vde.p5.service import P5Service
++    from vde.p5.qa import _certified_pb_columns, criterion_result
++    context = P5Service(case.env).inspect(case.run_id, case.order())
++    criterion = next(c for c in brief.document_json['acceptance_criteria'] if c['criterion_id'] == 'PB-AC-002')
++    wrong_source = replace(context, asset=replace(context.asset, byte_sha256='0' * 64))
++    assert not _certified_pb_columns(criterion, context.projection, wrong_source)
++    assert criterion_result(criterion, SimpleNamespace(projection=context.projection), {}, wrong_source)['status'] == 'FAIL'
++    return dict(brief=asdict(brief), spec=asdict(spec), approvals=[asdict(a) for a in approvals],
++                report=decision.report, data_cells=18, decoded_cells=values, result_sha256=decision.artifact.checksum,
++                isolated_simulated_API_actions_only=True, original_source_and_P4_unchanged=True,
++                original_id_with_wrong_source='FAIL in recognition-only negative; no original-ID bypass')
++
++
++def test_T06_pb_explicit_v2_approval_and_typed_warning_oracle(pb, tmp_path):
+     assert pb.spec.version_number == 2
+     with pb.uow() as u:
+         versions = u.specs.list_for_order(pb.order_id)
+@@ -212,7 +348,10 @@ def test_T06_pb_explicit_v2_approval_and_typed_warning_oracle(pb):
+     assert pb.decision.report['warnings']
+     assert any('FORMULA' in json.dumps(w).upper() for w in pb.decision.report['warnings'])
+     assert [a.artifact_type for a in artifacts if a.artifact_type.startswith('RESULT_')] == ['RESULT_XLSX']
++    guards = _cr_p6_002_guard_cases(pb)
++    canonical_pb = _canonical_pb_oracle(tmp_path / 'canonical-pb')
+     record('T06', {'versions': [asdict(v) for v in versions], 'approvals': [asdict(a) for a in approvals],
++                   'CR_P6_002_guards': guards, 'canonical_pb': canonical_pb,
+                    'DQ017': dq17, 'checks': len(checks), 'warnings': pb.decision.report['warnings'],
+                    'adaptations': pb.adaptations, 'observed_order_status': pb.order().status,
+                    'observed_qa_status': pb.decision.report['overall_status'],
+@@ -220,7 +359,7 @@ def test_T06_pb_explicit_v2_approval_and_typed_warning_oracle(pb):
+                    'blocking_issues': pb.decision.report['blocking_issues'],
+                    'failed_checks': [c for c in checks if c['status'] == 'FAIL']})
+     assert pb.order().status == 'READY' and pb.decision.report['overall_status'] == 'PASS_WITH_WARNINGS', (
+-        'Real P3 UI allocates a UUID Brief ID; frozen P5 PB-AC-002 special handling requires brief-pb-v1.',
++        'Certified P-B must pass with its actual approved UUID Brief and unchanged acceptance contract.',
+         pb.decision.report['blocking_issues'])
+ 
+ 
+@@ -348,7 +487,7 @@ def test_T12_corrupt_internal_final_and_snapshot_boundary(pa, copy_workspace):
+     record('T12', observations)
+ 
+ 
+-def test_T13_cross_order_and_context_guards_before_artifact_access(pa, copy_workspace, monkeypatch):
++def test_T13_cross_order_and_context_guards_before_artifact_access(pa, pb, copy_workspace, monkeypatch):
+     directory, env = copy_workspace(pa)
+     other = CreateOrderService(env).create(str(uuid4()), title='Other', listing_text='Other isolated Order')
+     from vde.p5.service import P5Service
+@@ -368,6 +507,37 @@ def test_T13_cross_order_and_context_guards_before_artifact_access(pa, copy_work
+         directory, copied = copy_workspace(pa)
+         mutate_sql(directory, sql, args)
+         observations[label] = refused(copied, pa.order_id, pa.run_id)
++    pb_mutations = [
++        ('brief_approval_hash', 'UPDATE approvals SET target_content_hash=? WHERE target_type=?', ('0'*64, 'BRIEF')),
++        ('spec_approval_hash', 'UPDATE approvals SET target_content_hash=? WHERE target_type=?', ('0'*64, 'TRANSFORMATION_SPEC')),
++        ('spec_approval_context', 'UPDATE approvals SET context_brief_content_hash=? WHERE target_type=?', ('0'*64, 'TRANSFORMATION_SPEC')),
++        ('missing_brief_approval', 'DELETE FROM approvals WHERE target_type=?', ('BRIEF',)),
++        ('fake_approver', 'UPDATE approvals SET approved_by=?', ('TEST_ONLY',)),
++        ('future_approval', 'UPDATE approvals SET approved_at=?', ('2099-01-01T00:00:00Z',)),
++        ('run_approval', 'UPDATE execution_runs SET transformation_approval_id=?', (str(uuid4()),)),
++        ('failed_run', 'UPDATE execution_runs SET status=?', ('failed',)),
++        ('selected_spec', 'UPDATE orders SET selected_transformation_spec_version_id=?', (str(uuid4()),)),
++        ('asset_checksum', 'UPDATE input_assets SET byte_sha256=?', ('0'*64,)),
++    ]
++    pb_denials = {}
++    for label, sql, args in pb_mutations:
++        directory, copied = copy_workspace(pb)
++        if label == 'fake_approver':
++            before = snapshot(directory); files = payload_hashes(directory)
++            with pytest.raises(sqlite3.IntegrityError, match="approved_by='local_user'"):
++                mutate_sql(directory, sql, args)
++            assert snapshot(directory) == before and payload_hashes(directory) == files
++            pb_denials[label] = 'REJECTED by existing SQLite CHECK before forged authority can persist'
++            continue
++        mutate_sql(directory, sql, args)
++        pb_denials[label] = refused(copied, pb.order_id, pb.run_id)
++    for label, key, value in [('spec_output', 'output', {**pb.spec.document_json['output'], 'format': 'CSV'}),
++                              ('spec_source_sheet', 'inputs', [{**pb.spec.document_json['inputs'][0], 'sheet_name': 'Notes'}])]:
++        directory, copied = copy_workspace(pb)
++        document = deepcopy(pb.spec.document_json); document[key] = value
++        mutate_sql(directory, 'UPDATE transformation_spec_versions SET document_json=?', (json.dumps(document),))
++        pb_denials[label] = refused(copied, pb.order_id, pb.run_id)
++    observations['CR_P6_002_PB_real_context_denials'] = pb_denials
+     record('T13', observations)
+ 
+ 

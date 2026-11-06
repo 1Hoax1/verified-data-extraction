@@ -1,0 +1,23 @@
+{
+  "cross_order": {
+    "code": "P6_CROSS_ORDER",
+    "p5_artifact_reads": 0
+  },
+  "approval_hash": "STORAGE_ERROR",
+  "spec_context": "STORAGE_ERROR",
+  "run_context": "STORAGE_ERROR",
+  "CR_P6_002_PB_real_context_denials": {
+    "brief_approval_hash": "STORAGE_ERROR",
+    "spec_approval_hash": "STORAGE_ERROR",
+    "spec_approval_context": "STORAGE_ERROR",
+    "missing_brief_approval": "STORAGE_ERROR",
+    "fake_approver": "REJECTED by existing SQLite CHECK before forged authority can persist",
+    "future_approval": "P6_INTEGRITY_FAILED",
+    "run_approval": "STORAGE_ERROR",
+    "failed_run": "P6_NOT_READY",
+    "selected_spec": "STORAGE_ERROR",
+    "asset_checksum": "STORAGE_ERROR",
+    "spec_output": "STORAGE_ERROR",
+    "spec_source_sheet": "STORAGE_ERROR"
+  }
+}

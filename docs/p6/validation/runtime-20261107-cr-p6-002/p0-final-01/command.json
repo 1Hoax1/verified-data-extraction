@@ -1,0 +1,20 @@
+{
+  "command": [
+    "/workspace/verified-data-extraction/.venv/bin/python",
+    "/workspace/p6-streamlit-e2e/docs/p5/validation/implementation-admission-20261106/validate_available_p0.py",
+    "--p0-root",
+    "/workspace/p6-streamlit-e2e/pecs/pilot_slice_v1",
+    "--out",
+    "/workspace/p6-cr2-work/p0-final-01/P0_SCHEMA_RESULTS.json",
+    "--supplement",
+    "/workspace/p6-cr2-work/p0-final-01/source/P5_Gate_A_PB_Supplement_v0.2b_candidate"
+  ],
+  "cwd": "/workspace/p6-streamlit-e2e",
+  "tested_commit": "245b1ccf5d4212d3f34973e526172f20a4928539",
+  "tested_tree": "0db696f5e14284849f969310fadf4ee585713045",
+  "started_at_utc": "2026-11-06T23:06:03.990965+00:00",
+  "finished_at_utc": "2026-11-06T23:06:04.305902+00:00",
+  "exit_code": 0,
+  "handoff_sha256": "3e3a2f6a8e65f500fe5bd281ef805d9229d50b96c50433cdda52cbb4fd6d63e4",
+  "supplement_sha256": "4e08285b00344f2d00a7af89a723a835f931f4bceb768b11ec1aaf637fd0ae18"
+}

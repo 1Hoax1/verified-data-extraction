@@ -1,0 +1,62 @@
+diff --git a/src/vde/p5/qa.py b/src/vde/p5/qa.py
+index 5a457c1..4bbe65b 100644
+--- a/src/vde/p5/qa.py
++++ b/src/vde/p5/qa.py
+@@ -3,9 +3,10 @@ from datetime import date, datetime, time
+ from decimal import Decimal
+ from collections import Counter
+ from fractions import Fraction
++from copy import deepcopy
+ import hashlib
+ from jsonschema.exceptions import ValidationError
+-from vde.contracts import validate
++from vde.contracts import content_hash, validate
+ from vde.execution.wire import row_bytes
+ from vde.workflow.validation import OPERATIONS
+ from .errors import require
+@@ -221,6 +222,34 @@ def criterion_dq(c):
+     return 'DQ-017'
+ 
+ 
++def _certified_pb_columns(c, projection, context):
++    """CR-P6-002 recognition only; actual context admission remains mandatory.
++
++    Never alter persisted identities, hashes or Approvals. Only the verified
++    input binding in a separate recognition copy is replaced for the frozen
++    P0 semantic fingerprint. Generic sequence_equals remains exact.
++    """
++    five = ['order_id', 'product', 'quantity', 'unit_price', 'order_date']
++    six = five + ['line_total']
++    brief = context.brief.document_json
++    inputs = brief['inputs_expected']
++    source = context.spec.document_json['inputs']
++    output = dict(dataset_id='result', format='XLSX', file_name='orders_clean.xlsx',
++                  sheet_name='Data', encoding=None, delimiter=None, column_order=six)
++    if not (c['criterion_id'] == 'PB-AC-002' and c['target']['scope'] == 'COLUMNS'
++            and c['operator'] == 'sequence_equals' and c['expected'] == c['target']['columns'] == five
++            and c in brief['acceptance_criteria'] and list(projection.columns) == six
++            and projection.output == context.spec.document_json['output'] == output
++            and inputs == [dict(asset_id=context.asset.id, input_type='LOCAL_XLSX', sheet_name='Orders')]
++            and len(source) == 1 and source[0]['asset_id'] == context.asset.id
++            and source[0]['source_type'] == 'LOCAL_XLSX' and source[0]['sheet_name'] == 'Orders'
++            and context.asset.byte_sha256 == 'd275fa7393e73ef1be7815e83b31b1a710b3f345bb7138c72569b03f66edf80d'):
++        return False
++    recognition = deepcopy(brief)
++    recognition['inputs_expected'][0]['asset_id'] = 'asset-pb-xlsx'
++    return content_hash(recognition, 'brief_version') == '9b7c2b0111360714dfbc9cbdbc755b693b11e067f32771cb226126fdcd1ffb49'
++
++
+ def criterion_result(c, facts, export, context):
+     op, target, expected = c['operator'], c['target'], c['expected']
+     column, columns = target['column'], list(facts.projection.columns)
+@@ -242,9 +271,7 @@ def criterion_result(c, facts, export, context):
+                   any(n in columns for n in target['columns']) if op=='absent' else columns)
+         # The sole, explicitly approved exception. Generic sequence_equals is
+         # still exact for every other criterion and every other Brief.
+-        if (context.brief.id == 'brief-pb-v1' and c['criterion_id'] == 'PB-AC-002' and
+-                tuple(columns) == ('order_id','product','quantity','unit_price','order_date','line_total') and
+-                expected == target['columns'] == ['order_id','product','quantity','unit_price','order_date']):
++        if _certified_pb_columns(c, facts.projection, context):
+             actual = [n for n in columns if n in target['columns']]
+     elif target['metric'] in ('null_count', 'null_ratio'):
+         if column is None:

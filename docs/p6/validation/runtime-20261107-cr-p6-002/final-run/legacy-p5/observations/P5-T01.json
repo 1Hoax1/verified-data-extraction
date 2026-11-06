@@ -1,0 +1,27 @@
+{
+  "fixture": "P5-DQ-001-POS",
+  "result": "PASS",
+  "observed_check": {
+    "schema_version": "1.1",
+    "check_id": "DQ-001",
+    "name": "DQ-001 deterministic check",
+    "status": "PASS",
+    "severity": "BLOCKER",
+    "target": {
+      "artifact": null,
+      "dataset_id": null,
+      "column": null,
+      "row_ids": []
+    },
+    "expected": true,
+    "actual": {
+      "input": "exists, readable, 369 bytes",
+      "result": true
+    },
+    "affected_count": 0,
+    "sample_row_ids": [],
+    "message": "All selected data checked.",
+    "criterion_id": null
+  },
+  "supplemental": []
+}

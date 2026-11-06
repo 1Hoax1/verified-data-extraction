@@ -1,0 +1,12 @@
+{
+  "nodeid": "tests/p6/test_acceptance.py::test_T14_missing_report_artifact_metadata_and_health_fail_closed",
+  "outcome": "passed",
+  "duration_seconds": 5.509681750001619,
+  "properties": [
+    [
+      "p6_id",
+      "P6-T14"
+    ]
+  ],
+  "failure": null
+}

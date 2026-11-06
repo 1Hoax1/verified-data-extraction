@@ -1,0 +1,12 @@
+{
+  "nodeid": "tests/p6/test_acceptance.py::test_T20_exact_twenty_id_inventory_and_pending_release_gate",
+  "outcome": "passed",
+  "duration_seconds": 0.005010717999539338,
+  "properties": [
+    [
+      "p6_id",
+      "P6-T20"
+    ]
+  ],
+  "failure": null
+}

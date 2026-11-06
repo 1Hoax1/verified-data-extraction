@@ -1,0 +1,15 @@
+{
+  "command": [
+    "/workspace/verified-data-extraction/.venv/bin/python",
+    "/workspace/p6-cr2-work/docker-smoke/run.py"
+  ],
+  "cwd": "/workspace/p6-streamlit-e2e",
+  "environment_overrides": {
+    "P6_SMOKE_FORMAL": "1",
+    "P6_DOCKER_SMOKE_LABEL": "implementation-245b1ccf5d42-20261107",
+    "PYTHONDONTWRITEBYTECODE": "1"
+  },
+  "started_at_utc": "2026-11-06T23:05:36.339219+00:00",
+  "finished_at_utc": "2026-11-06T23:06:49.369610+00:00",
+  "exit_code": 0
+}

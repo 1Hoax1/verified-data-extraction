@@ -1,0 +1,13 @@
+{
+  "argv": [
+    "docker",
+    "--host=unix:///var/run/docker.sock",
+    "exec",
+    "vde-p6-cr2-smoke",
+    "/tmp/vde-venv/bin/python",
+    "/smoke/driver.py",
+    "create"
+  ],
+  "cwd": "/workspace/p6-streamlit-e2e",
+  "utc": "2026-11-06T23:05:49.657124+00:00"
+}

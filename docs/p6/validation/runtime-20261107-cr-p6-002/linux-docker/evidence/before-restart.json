@@ -1,0 +1,249 @@
+{
+  "rows": {
+    "orders": [
+      {
+        "id": "124fb8f3-ca38-4eee-b3a4-d3902fa5fbd4",
+        "title": "P6 isolated simulated test user \u2014 P-A_dirty_csv",
+        "listing_text": "Fixture exercise only. No live customer approval or delivery.",
+        "listing_url": null,
+        "status": "READY",
+        "approval_stage": "COMPLETE",
+        "selected_brief_version_id": "76567b91-7587-45de-8ad5-df7d4038135c",
+        "selected_transformation_spec_version_id": "b2391b6c-6085-473d-8251-3c4d0de54fd7",
+        "budget": null,
+        "deadline": null,
+        "notes": null,
+        "created_at": "2026-11-06T23:05:51Z",
+        "updated_at": "2026-11-06T23:06:01Z"
+      }
+    ],
+    "input_assets": [
+      {
+        "id": "b45fc6a8-adcf-4fb9-812d-3a58fbe74e9d",
+        "order_id": "124fb8f3-ca38-4eee-b3a4-d3902fa5fbd4",
+        "original_filename": "input_dirty.csv",
+        "workspace_relpath": "orders/124fb8f3-ca38-4eee-b3a4-d3902fa5fbd4/input/b45fc6a8-adcf-4fb9-812d-3a58fbe74e9d/payload",
+        "media_type": null,
+        "size_bytes": 369,
+        "byte_sha256": "c0e3f84d189e0ed177d5e64a183142fe1b923ddb79c6617ebb26edd139658fcb",
+        "created_at": "2026-11-06T23:05:51Z"
+      }
+    ],
+    "brief_versions": [
+      {
+        "id": "76567b91-7587-45de-8ad5-df7d4038135c",
+        "order_id": "124fb8f3-ca38-4eee-b3a4-d3902fa5fbd4",
+        "version_number": 1,
+        "schema_version": "1.1",
+        "content_hash": "fb1f8069929a335d2403d70aaa07ca7a3f03d552f05f74985c60cf979bd5e60f",
+        "document_json": "{\"schema_version\":\"1.1\",\"version_id\":\"76567b91-7587-45de-8ad5-df7d4038135c\",\"order_id\":\"124fb8f3-ca38-4eee-b3a4-d3902fa5fbd4\",\"version_number\":1,\"created_at\":\"2026-11-06T23:05:51Z\",\"source_refs\":[\"b45fc6a8-adcf-4fb9-812d-3a58fbe74e9d\"],\"content_hash\":\"fb1f8069929a335d2403d70aaa07ca7a3f03d552f05f74985c60cf979bd5e60f\",\"objective\":\"Produce a clean UTF-8 CSV of unique customers from an explicitly selected CP1251 source file.\",\"record_definition\":\"One row represents one unique customer identified by normalized email.\",\"scope\":{\"included\":[\"All rows decoded from input_dirty.csv using explicitly selected CP1251\"],\"excluded\":[\"Rows with missing customer_name\"],\"geography\":null,\"time_range\":null},\"inputs_expected\":[{\"asset_id\":\"b45fc6a8-adcf-4fb9-812d-3a58fbe74e9d\",\"input_type\":\"LOCAL_CSV\",\"sheet_name\":null}],\"output_contract\":{\"format\":\"CSV\",\"file_name\":\"customers_clean.csv\",\"sheet_name\":null,\"encoding\":\"UTF-8\",\"delimiter\":\",\",\"include_header\":true,\"column_order\":[\"customer_name\",\"country\",\"signup_date\",\"revenue\",\"status\",\"email\"]},\"fields\":[{\"name\":\"customer_name\",\"output_name\":\"\u0418\u043c\u044f \u043a\u043b\u0438\u0435\u043d\u0442\u0430\",\"label\":\"Customer name\",\"data_type\":\"string\",\"required\":true,\"nullable\":false,\"format\":null,\"allowed_values\":null,\"min_value\":null,\"max_value\":null,\"unique\":false,\"description\":\"Normalized customer name.\"},{\"name\":\"country\",\"output_name\":\"\u0421\u0442\u0440\u0430\u043d\u0430\",\"label\":\"Country code\",\"data_type\":\"string\",\"required\":true,\"nullable\":false,\"format\":null,\"allowed_values\":[\"RU\",\"US\",\"ES\",\"DE\"],\"min_value\":null,\"max_value\":null,\"unique\":false,\"description\":\"Uppercase country code.\"},{\"name\":\"signup_date\",\"output_name\":\"\u0414\u0430\u0442\u0430 \u0440\u0435\u0433\u0438\u0441\u0442\u0440\u0430\u0446\u0438\u0438\",\"label\":\"Signup date\",\"data_type\":\"date\",\"required\":true,\"nullable\":false,\"format\":\"YYYY-MM-DD\",\"allowed_values\":null,\"min_value\":null,\"max_value\":null,\"unique\":false,\"description\":\"ISO date.\"},{\"name\":\"revenue\",\"output_name\":\"\u0412\u044b\u0440\u0443\u0447\u043a\u0430\",\"label\":\"Revenue\",\"data_type\":\"decimal\",\"required\":true,\"nullable\":false,\"format\":\"DECIMAL_DOT\",\"allowed_values\":null,\"min_value\":0,\"max_value\":null,\"unique\":false,\"description\":\"Non-negative revenue.\"},{\"name\":\"status\",\"output_name\":\"\u0421\u0442\u0430\u0442\u0443\u0441\",\"label\":\"Status\",\"data_type\":\"string\",\"required\":true,\"nullable\":false,\"format\":null,\"allowed_values\":[\"active\",\"inactive\"],\"min_value\":null,\"max_value\":null,\"unique\":false,\"description\":\"Lowercase status.\"},{\"name\":\"email\",\"output_name\":\"Email\",\"label\":\"Email\",\"data_type\":\"string\",\"required\":true,\"nullable\":false,\"format\":null,\"allowed_values\":null,\"min_value\":null,\"max_value\":null,\"unique\":true,\"description\":\"Lowercase unique email.\"}],\"volume_expectation\":{\"mode\":\"EXACT\",\"exact_count\":3,\"min_count\":null,\"max_count\":null},\"data_quality_expectations\":{\"empty_result_allowed\":false,\"unexpected_columns_allowed\":false,\"column_order_required\":true,\"duplicate_key\":[\"email\"]},\"acceptance_criteria\":[{\"schema_version\":\"1.1\",\"criterion_id\":\"PA-AC-001\",\"name\":\"Readable CSV\",\"description\":\"Result CSV is readable.\",\"category\":\"output\",\"check_mode\":\"DETERMINISTIC\",\"severity\":\"BLOCKER\",\"target\":{\"scope\":\"ARTIFACT\",\"dataset_id\":null,\"column\":null,\"columns\":null,\"artifact_type\":\"RESULT_CSV\",\"metric\":null},\"operator\":\"readable\",\"expected\":true,\"tolerance\":null,\"source\":\"client_answer\",\"requirement_status\":\"CONFIRMED\"},{\"schema_version\":\"1.1\",\"criterion_id\":\"PA-AC-002\",\"name\":\"Exact columns\",\"description\":\"Internal schema has exactly the agreed ordered technical columns; export headers are the corresponding output_name values.\",\"category\":\"schema\",\"check_mode\":\"DETERMINISTIC\",\"severity\":\"BLOCKER\",\"target\":{\"scope\":\"COLUMNS\",\"dataset_id\":\"result\",\"column\":null,\"columns\":[\"customer_name\",\"country\",\"signup_date\",\"revenue\",\"status\",\"email\"],\"artifact_type\":null,\"metric\":null},\"operator\":\"sequence_equals\",\"expected\":[\"customer_name\",\"country\",\"signup_date\",\"revenue\",\"status\",\"email\"],\"tolerance\":null,\"source\":\"client_answer\",\"requirement_status\":\"CONFIRMED\"},{\"schema_version\":\"1.1\",\"criterion_id\":\"PA-AC-003\",\"name\":\"Exact rows\",\"description\":\"Exactly three rows.\",\"category\":\"volume\",\"check_mode\":\"DETERMINISTIC\",\"severity\":\"ERROR\",\"target\":{\"scope\":\"METRIC\",\"dataset_id\":\"result\",\"column\":null,\"columns\":null,\"artifact_type\":null,\"metric\":\"row_count\"},\"operator\":\"exact_count\",\"expected\":3,\"tolerance\":null,\"source\":\"client_answer\",\"requirement_status\":\"CONFIRMED\"},{\"schema_version\":\"1.1\",\"criterion_id\":\"PA-AC-004\",\"name\":\"Required names\",\"description\":\"No missing customer_name.\",\"category\":\"completeness\",\"check_mode\":\"DETERMINISTIC\",\"severity\":\"BLOCKER\",\"target\":{\"scope\":\"COLUMN\",\"dataset_id\":\"result\",\"column\":\"customer_name\",\"columns\":null,\"artifact_type\":null,\"metric\":null},\"operator\":\"all_non_null\",\"expected\":true,\"tolerance\":null,\"source\":\"client_answer\",\"requirement_status\":\"CONFIRMED\"},{\"schema_version\":\"1.1\",\"criterion_id\":\"PA-AC-005\",\"name\":\"Unique email\",\"description\":\"Email is unique.\",\"category\":\"uniqueness\",\"check_mode\":\"DETERMINISTIC\",\"severity\":\"BLOCKER\",\"target\":{\"scope\":\"COLUMN\",\"dataset_id\":\"result\",\"column\":\"email\",\"columns\":null,\"artifact_type\":null,\"metric\":null},\"operator\":\"unique\",\"expected\":true,\"tolerance\":null,\"source\":\"client_answer\",\"requirement_status\":\"CONFIRMED\"},{\"schema_version\":\"1.1\",\"criterion_id\":\"PA-AC-006\",\"name\":\"Date format\",\"description\":\"Date is YYYY-MM-DD.\",\"category\":\"format\",\"check_mode\":\"DETERMINISTIC\",\"severity\":\"ERROR\",\"target\":{\"scope\":\"COLUMN\",\"dataset_id\":\"result\",\"column\":\"signup_date\",\"columns\":null,\"artifact_type\":null,\"metric\":null},\"operator\":\"matches_format\",\"expected\":\"YYYY-MM-DD\",\"tolerance\":null,\"source\":\"client_answer\",\"requirement_status\":\"CONFIRMED\"},{\"schema_version\":\"1.1\",\"criterion_id\":\"PA-AC-007\",\"name\":\"Revenue range\",\"description\":\"Revenue is non-negative.\",\"category\":\"range\",\"check_mode\":\"DETERMINISTIC\",\"severity\":\"ERROR\",\"target\":{\"scope\":\"COLUMN\",\"dataset_id\":\"result\",\"column\":\"revenue\",\"columns\":null,\"artifact_type\":null,\"metric\":null},\"operator\":\"min_value\",\"expected\":0,\"tolerance\":null,\"source\":\"client_answer\",\"requirement_status\":\"CONFIRMED\"}],\"assumptions\":[{\"assumption_id\":\"pa-assumption-1\",\"text\":\"Blank revenue is filled with numeric zero.\",\"status\":\"ASSUMED\"}],\"open_questions\":[],\"risks\":[{\"risk_id\":\"pa-risk-1\",\"category\":\"QUALITY\",\"severity\":\"LOW\",\"description\":\"Mixed source date and number formats require explicit parsing rules.\"}]}",
+        "created_at": "2026-11-06T23:05:51Z"
+      }
+    ],
+    "transformation_spec_versions": [
+      {
+        "id": "b2391b6c-6085-473d-8251-3c4d0de54fd7",
+        "order_id": "124fb8f3-ca38-4eee-b3a4-d3902fa5fbd4",
+        "version_number": 1,
+        "schema_version": "1.1",
+        "content_hash": "315dce2d611117819093ebe1bedc96030ca4d03ae72c84f53c7c0fe1a6b019c4",
+        "document_json": "{\"schema_version\":\"1.1\",\"version_id\":\"b2391b6c-6085-473d-8251-3c4d0de54fd7\",\"order_id\":\"124fb8f3-ca38-4eee-b3a4-d3902fa5fbd4\",\"version_number\":1,\"brief_version_id\":\"76567b91-7587-45de-8ad5-df7d4038135c\",\"brief_content_hash\":\"fb1f8069929a335d2403d70aaa07ca7a3f03d552f05f74985c60cf979bd5e60f\",\"created_at\":\"2026-11-06T23:05:52Z\",\"content_hash\":\"315dce2d611117819093ebe1bedc96030ca4d03ae72c84f53c7c0fe1a6b019c4\",\"inputs\":[{\"dataset_id\":\"raw\",\"asset_id\":\"b45fc6a8-adcf-4fb9-812d-3a58fbe74e9d\",\"source_type\":\"LOCAL_CSV\",\"sheet_name\":null,\"csv_options\":{\"encoding\":\"CP1251\",\"delimiter\":\",\",\"header_row\":0}}],\"pipeline\":[{\"schema_version\":\"1.1\",\"operation_id\":\"pa-op-01\",\"type\":\"rename\",\"input_dataset\":\"raw\",\"output_dataset\":\"s01\",\"params\":{\"mapping\":{\"Customer Name\":\"customer_name\",\"Country\":\"country\",\"Signup Date\":\"signup_date\",\"Revenue\":\"revenue\",\"Status\":\"status\",\"Email\":\"email\"}}},{\"schema_version\":\"1.1\",\"operation_id\":\"pa-op-02\",\"type\":\"trim\",\"input_dataset\":\"s01\",\"output_dataset\":\"s02\",\"params\":{\"columns\":[\"customer_name\",\"country\",\"revenue\",\"status\",\"email\"],\"mode\":\"both\"}},{\"schema_version\":\"1.1\",\"operation_id\":\"pa-op-03\",\"type\":\"change_case\",\"input_dataset\":\"s02\",\"output_dataset\":\"s03\",\"params\":{\"columns\":[\"customer_name\"],\"mode\":\"title\"}},{\"schema_version\":\"1.1\",\"operation_id\":\"pa-op-04\",\"type\":\"change_case\",\"input_dataset\":\"s03\",\"output_dataset\":\"s04\",\"params\":{\"columns\":[\"country\"],\"mode\":\"upper\"}},{\"schema_version\":\"1.1\",\"operation_id\":\"pa-op-05\",\"type\":\"change_case\",\"input_dataset\":\"s04\",\"output_dataset\":\"s05\",\"params\":{\"columns\":[\"status\",\"email\"],\"mode\":\"lower\"}},{\"schema_version\":\"1.1\",\"operation_id\":\"pa-op-06\",\"type\":\"replace\",\"input_dataset\":\"s05\",\"output_dataset\":\"s06\",\"params\":{\"columns\":[\"country\"],\"mapping\":{\"UNITED STATES\":\"US\"},\"regex\":false}},{\"schema_version\":\"1.1\",\"operation_id\":\"pa-op-07\",\"type\":\"replace\",\"input_dataset\":\"s06\",\"output_dataset\":\"s07\",\"params\":{\"columns\":[\"revenue\"],\"mapping\":{\"1 234,50\":\"1234.50\",\"2,000.00\":\"2000.00\",\"900,00\":\"900.00\"},\"regex\":false}},{\"schema_version\":\"1.1\",\"operation_id\":\"pa-op-08\",\"type\":\"parse_date\",\"input_dataset\":\"s07\",\"output_dataset\":\"s08\",\"params\":{\"column\":\"signup_date\",\"formats\":[\"DD/MM/YYYY\",\"YYYY-MM-DD\",\"DD.MM.YYYY\"],\"output_format\":\"YYYY-MM-DD\",\"errors\":\"FAIL\"}},{\"schema_version\":\"1.1\",\"operation_id\":\"pa-op-09\",\"type\":\"parse_number\",\"input_dataset\":\"s08\",\"output_dataset\":\"s09\",\"params\":{\"column\":\"revenue\",\"decimal_separator\":\".\",\"thousands_separator\":null,\"target_type\":\"decimal\",\"errors\":\"FAIL\"}},{\"schema_version\":\"1.1\",\"operation_id\":\"pa-op-10\",\"type\":\"fill_missing\",\"input_dataset\":\"s09\",\"output_dataset\":\"s10\",\"params\":{\"columns\":[\"revenue\"],\"strategy\":\"constant\",\"value\":0}},{\"schema_version\":\"1.1\",\"operation_id\":\"pa-op-11\",\"type\":\"drop_missing\",\"input_dataset\":\"s10\",\"output_dataset\":\"s11\",\"params\":{\"subset\":[\"customer_name\"],\"how\":\"any\"}},{\"schema_version\":\"1.1\",\"operation_id\":\"pa-op-12\",\"type\":\"deduplicate\",\"input_dataset\":\"s11\",\"output_dataset\":\"s12\",\"params\":{\"subset\":[\"email\"],\"keep\":\"FIRST\"}},{\"schema_version\":\"1.1\",\"operation_id\":\"pa-op-13\",\"type\":\"sort\",\"input_dataset\":\"s12\",\"output_dataset\":\"s13\",\"params\":{\"by\":[\"signup_date\"],\"ascending\":[true],\"nulls\":\"LAST\"}},{\"schema_version\":\"1.1\",\"operation_id\":\"pa-op-14\",\"type\":\"select_columns\",\"input_dataset\":\"s13\",\"output_dataset\":\"result\",\"params\":{\"columns\":[\"customer_name\",\"country\",\"signup_date\",\"revenue\",\"status\",\"email\"]}}],\"output\":{\"dataset_id\":\"result\",\"format\":\"CSV\",\"file_name\":\"customers_clean.csv\",\"sheet_name\":null,\"encoding\":\"UTF-8\",\"delimiter\":\",\",\"column_order\":[\"customer_name\",\"country\",\"signup_date\",\"revenue\",\"status\",\"email\"]},\"execution_policy\":{\"fail_fast\":true,\"allow_partial_output\":false,\"max_rows\":100000,\"max_columns\":200},\"provenance_policy\":{\"record_input_checksum\":true,\"preserve_source_row_number\":false},\"expected_schema\":[{\"name\":\"customer_name\",\"output_name\":\"\u0418\u043c\u044f \u043a\u043b\u0438\u0435\u043d\u0442\u0430\",\"label\":\"Customer name\",\"data_type\":\"string\",\"required\":true,\"nullable\":false,\"format\":null,\"allowed_values\":null,\"min_value\":null,\"max_value\":null,\"unique\":false,\"description\":\"Normalized customer name.\"},{\"name\":\"country\",\"output_name\":\"\u0421\u0442\u0440\u0430\u043d\u0430\",\"label\":\"Country code\",\"data_type\":\"string\",\"required\":true,\"nullable\":false,\"format\":null,\"allowed_values\":[\"RU\",\"US\",\"ES\",\"DE\"],\"min_value\":null,\"max_value\":null,\"unique\":false,\"description\":\"Uppercase country code.\"},{\"name\":\"signup_date\",\"output_name\":\"\u0414\u0430\u0442\u0430 \u0440\u0435\u0433\u0438\u0441\u0442\u0440\u0430\u0446\u0438\u0438\",\"label\":\"Signup date\",\"data_type\":\"date\",\"required\":true,\"nullable\":false,\"format\":\"YYYY-MM-DD\",\"allowed_values\":null,\"min_value\":null,\"max_value\":null,\"unique\":false,\"description\":\"ISO date.\"},{\"name\":\"revenue\",\"output_name\":\"\u0412\u044b\u0440\u0443\u0447\u043a\u0430\",\"label\":\"Revenue\",\"data_type\":\"decimal\",\"required\":true,\"nullable\":false,\"format\":\"DECIMAL_DOT\",\"allowed_values\":null,\"min_value\":0,\"max_value\":null,\"unique\":false,\"description\":\"Non-negative revenue.\"},{\"name\":\"status\",\"output_name\":\"\u0421\u0442\u0430\u0442\u0443\u0441\",\"label\":\"Status\",\"data_type\":\"string\",\"required\":true,\"nullable\":false,\"format\":null,\"allowed_values\":[\"active\",\"inactive\"],\"min_value\":null,\"max_value\":null,\"unique\":false,\"description\":\"Lowercase status.\"},{\"name\":\"email\",\"output_name\":\"Email\",\"label\":\"Email\",\"data_type\":\"string\",\"required\":true,\"nullable\":false,\"format\":null,\"allowed_values\":null,\"min_value\":null,\"max_value\":null,\"unique\":true,\"description\":\"Lowercase unique email.\"}],\"acceptance_criteria_ref\":[\"PA-AC-001\",\"PA-AC-002\",\"PA-AC-003\",\"PA-AC-004\",\"PA-AC-005\",\"PA-AC-006\",\"PA-AC-007\"]}",
+        "created_at": "2026-11-06T23:05:52Z",
+        "brief_version_id": "76567b91-7587-45de-8ad5-df7d4038135c",
+        "brief_content_hash": "fb1f8069929a335d2403d70aaa07ca7a3f03d552f05f74985c60cf979bd5e60f"
+      }
+    ],
+    "approvals": [
+      {
+        "id": "98ea3bb7-f73f-4dad-b3a7-c537d21739b7",
+        "order_id": "124fb8f3-ca38-4eee-b3a4-d3902fa5fbd4",
+        "target_type": "BRIEF",
+        "target_version_id": "76567b91-7587-45de-8ad5-df7d4038135c",
+        "target_content_hash": "fb1f8069929a335d2403d70aaa07ca7a3f03d552f05f74985c60cf979bd5e60f",
+        "context_brief_version_id": null,
+        "context_brief_content_hash": null,
+        "approved_by": "local_user",
+        "approved_at": "2026-11-06T23:05:51Z"
+      },
+      {
+        "id": "f86fb7df-cd24-4f5d-9647-9528f522f446",
+        "order_id": "124fb8f3-ca38-4eee-b3a4-d3902fa5fbd4",
+        "target_type": "TRANSFORMATION_SPEC",
+        "target_version_id": "b2391b6c-6085-473d-8251-3c4d0de54fd7",
+        "target_content_hash": "315dce2d611117819093ebe1bedc96030ca4d03ae72c84f53c7c0fe1a6b019c4",
+        "context_brief_version_id": "76567b91-7587-45de-8ad5-df7d4038135c",
+        "context_brief_content_hash": "fb1f8069929a335d2403d70aaa07ca7a3f03d552f05f74985c60cf979bd5e60f",
+        "approved_by": "local_user",
+        "approved_at": "2026-11-06T23:05:53Z"
+      }
+    ],
+    "execution_runs": [
+      {
+        "id": "50d880c6-85d9-4250-b4dc-6cfee332b384",
+        "order_id": "124fb8f3-ca38-4eee-b3a4-d3902fa5fbd4",
+        "brief_version_id": "76567b91-7587-45de-8ad5-df7d4038135c",
+        "brief_approval_id": "98ea3bb7-f73f-4dad-b3a7-c537d21739b7",
+        "transformation_spec_version_id": "b2391b6c-6085-473d-8251-3c4d0de54fd7",
+        "transformation_approval_id": "f86fb7df-cd24-4f5d-9647-9528f522f446",
+        "status": "succeeded",
+        "started_at": "2026-11-06T23:05:55Z",
+        "finished_at": "2026-11-06T23:05:56Z",
+        "input_snapshot_json": "{\"asset_id\":\"b45fc6a8-adcf-4fb9-812d-3a58fbe74e9d\",\"source_byte_sha256\":\"c0e3f84d189e0ed177d5e64a183142fe1b923ddb79c6617ebb26edd139658fcb\",\"input_selection\":{\"source_type\":\"LOCAL_CSV\",\"sheet_name\":null,\"csv_options\":{\"encoding\":\"CP1251\",\"delimiter\":\",\",\"header_row\":0}},\"brief_content_hash\":\"fb1f8069929a335d2403d70aaa07ca7a3f03d552f05f74985c60cf979bd5e60f\",\"transformation_content_hash\":\"315dce2d611117819093ebe1bedc96030ca4d03ae72c84f53c7c0fe1a6b019c4\"}",
+        "metrics_json": "{\"format_revision\":\"P4_INTERNAL_V2\",\"dataset_id\":\"result\",\"columns\":[\"customer_name\",\"country\",\"signup_date\",\"revenue\",\"status\",\"email\"],\"row_count\":3,\"logical_result_checksum\":\"2e02a70bbb96712640966117fbc724de3fe8a27a8db4c049037599bbd6ec3500\",\"operation_audit\":[{\"operation_id\":\"pa-op-01\",\"type\":\"rename\",\"input_dataset\":\"raw\",\"output_dataset\":\"s01\",\"input_rows\":5,\"output_rows\":5,\"deleted_rows\":0,\"deleted_row_sample\":[],\"parse_failed_count\":0,\"parse_failed_sample\":[]},{\"operation_id\":\"pa-op-02\",\"type\":\"trim\",\"input_dataset\":\"s01\",\"output_dataset\":\"s02\",\"input_rows\":5,\"output_rows\":5,\"deleted_rows\":0,\"deleted_row_sample\":[],\"parse_failed_count\":0,\"parse_failed_sample\":[]},{\"operation_id\":\"pa-op-03\",\"type\":\"change_case\",\"input_dataset\":\"s02\",\"output_dataset\":\"s03\",\"input_rows\":5,\"output_rows\":5,\"deleted_rows\":0,\"deleted_row_sample\":[],\"parse_failed_count\":0,\"parse_failed_sample\":[]},{\"operation_id\":\"pa-op-04\",\"type\":\"change_case\",\"input_dataset\":\"s03\",\"output_dataset\":\"s04\",\"input_rows\":5,\"output_rows\":5,\"deleted_rows\":0,\"deleted_row_sample\":[],\"parse_failed_count\":0,\"parse_failed_sample\":[]},{\"operation_id\":\"pa-op-05\",\"type\":\"change_case\",\"input_dataset\":\"s04\",\"output_dataset\":\"s05\",\"input_rows\":5,\"output_rows\":5,\"deleted_rows\":0,\"deleted_row_sample\":[],\"parse_failed_count\":0,\"parse_failed_sample\":[]},{\"operation_id\":\"pa-op-06\",\"type\":\"replace\",\"input_dataset\":\"s05\",\"output_dataset\":\"s06\",\"input_rows\":5,\"output_rows\":5,\"deleted_rows\":0,\"deleted_row_sample\":[],\"parse_failed_count\":0,\"parse_failed_sample\":[]},{\"operation_id\":\"pa-op-07\",\"type\":\"replace\",\"input_dataset\":\"s06\",\"output_dataset\":\"s07\",\"input_rows\":5,\"output_rows\":5,\"deleted_rows\":0,\"deleted_row_sample\":[],\"parse_failed_count\":0,\"parse_failed_sample\":[]},{\"operation_id\":\"pa-op-08\",\"type\":\"parse_date\",\"input_dataset\":\"s07\",\"output_dataset\":\"s08\",\"input_rows\":5,\"output_rows\":5,\"deleted_rows\":0,\"deleted_row_sample\":[],\"parse_failed_count\":0,\"parse_failed_sample\":[]},{\"operation_id\":\"pa-op-09\",\"type\":\"parse_number\",\"input_dataset\":\"s08\",\"output_dataset\":\"s09\",\"input_rows\":5,\"output_rows\":5,\"deleted_rows\":0,\"deleted_row_sample\":[],\"parse_failed_count\":0,\"parse_failed_sample\":[]},{\"operation_id\":\"pa-op-10\",\"type\":\"fill_missing\",\"input_dataset\":\"s09\",\"output_dataset\":\"s10\",\"input_rows\":5,\"output_rows\":5,\"deleted_rows\":0,\"deleted_row_sample\":[],\"parse_failed_count\":0,\"parse_failed_sample\":[]},{\"operation_id\":\"pa-op-11\",\"type\":\"drop_missing\",\"input_dataset\":\"s10\",\"output_dataset\":\"s11\",\"input_rows\":5,\"output_rows\":4,\"deleted_rows\":1,\"deleted_row_sample\":[5],\"parse_failed_count\":0,\"parse_failed_sample\":[]},{\"operation_id\":\"pa-op-12\",\"type\":\"deduplicate\",\"input_dataset\":\"s11\",\"output_dataset\":\"s12\",\"input_rows\":4,\"output_rows\":3,\"deleted_rows\":1,\"deleted_row_sample\":[3],\"parse_failed_count\":0,\"parse_failed_sample\":[]},{\"operation_id\":\"pa-op-13\",\"type\":\"sort\",\"input_dataset\":\"s12\",\"output_dataset\":\"s13\",\"input_rows\":3,\"output_rows\":3,\"deleted_rows\":0,\"deleted_row_sample\":[],\"parse_failed_count\":0,\"parse_failed_sample\":[]},{\"operation_id\":\"pa-op-14\",\"type\":\"select_columns\",\"input_dataset\":\"s13\",\"output_dataset\":\"result\",\"input_rows\":3,\"output_rows\":3,\"deleted_rows\":0,\"deleted_row_sample\":[],\"parse_failed_count\":0,\"parse_failed_sample\":[]}],\"source\":{\"asset_id\":\"b45fc6a8-adcf-4fb9-812d-3a58fbe74e9d\",\"source_byte_sha256\":\"c0e3f84d189e0ed177d5e64a183142fe1b923ddb79c6617ebb26edd139658fcb\",\"input_selection\":{\"source_type\":\"LOCAL_CSV\",\"sheet_name\":null,\"csv_options\":{\"encoding\":\"CP1251\",\"delimiter\":\",\",\"header_row\":0}},\"brief_content_hash\":\"fb1f8069929a335d2403d70aaa07ca7a3f03d552f05f74985c60cf979bd5e60f\",\"transformation_content_hash\":\"315dce2d611117819093ebe1bedc96030ca4d03ae72c84f53c7c0fe1a6b019c4\"},\"resources\":{\"incremental_peak_rss\":253952,\"elapsed_seconds\":0.6466660020087147,\"scratch_peak_bytes\":513,\"merge_fan_in\":0,\"rss_samples\":9},\"warnings\":[]}",
+        "error_json": null
+      }
+    ],
+    "artifacts": [
+      {
+        "id": "24aebeee-42f4-4d89-bc97-886541d15a41",
+        "run_id": "50d880c6-85d9-4250-b4dc-6cfee332b384",
+        "artifact_type": "P4_INTERNAL",
+        "format": "P4_INTERNAL_V2",
+        "workspace_relpath": "orders/124fb8f3-ca38-4eee-b3a4-d3902fa5fbd4/runs/50d880c6-85d9-4250-b4dc-6cfee332b384/artifacts/24aebeee-42f4-4d89-bc97-886541d15a41/payload",
+        "checksum": "2e02a70bbb96712640966117fbc724de3fe8a27a8db4c049037599bbd6ec3500",
+        "created_at": "2026-11-06T23:05:55Z"
+      },
+      {
+        "id": "p5-final-7bcd63e6d951118d6bcca97037279803f2a0ff386a911456fa1cebb42c17ac93",
+        "run_id": "50d880c6-85d9-4250-b4dc-6cfee332b384",
+        "artifact_type": "RESULT_CSV",
+        "format": "CSV",
+        "workspace_relpath": "orders/124fb8f3-ca38-4eee-b3a4-d3902fa5fbd4/runs/50d880c6-85d9-4250-b4dc-6cfee332b384/artifacts/p5-final-7bcd63e6d951118d6bcca97037279803f2a0ff386a911456fa1cebb42c17ac93/payload",
+        "checksum": "c3b4e1f9a885bcf969cd34a9041951c1bed1abcd6aaba4c4f1f2fcd414d86cc9",
+        "created_at": "2026-11-06T23:06:00Z"
+      }
+    ],
+    "qa_reports": [
+      {
+        "report_id": "p5-qa-d66119bd-a051-44ba-bfac-ec5c281ffe04",
+        "run_id": "50d880c6-85d9-4250-b4dc-6cfee332b384",
+        "brief_version_id": "76567b91-7587-45de-8ad5-df7d4038135c",
+        "transformation_spec_version_id": "b2391b6c-6085-473d-8251-3c4d0de54fd7",
+        "generated_at": "2026-11-06T23:06:00Z",
+        "overall_status": "PASS",
+        "report_json": "{\"schema_version\":\"1.1\",\"report_id\":\"p5-qa-d66119bd-a051-44ba-bfac-ec5c281ffe04\",\"run_id\":\"50d880c6-85d9-4250-b4dc-6cfee332b384\",\"brief_version_id\":\"76567b91-7587-45de-8ad5-df7d4038135c\",\"transformation_spec_version_id\":\"b2391b6c-6085-473d-8251-3c4d0de54fd7\",\"generated_at\":\"2026-11-06T23:06:00Z\",\"overall_status\":\"PASS\",\"dataset_summary\":{\"dataset_id\":\"result\",\"row_count\":3,\"column_count\":6,\"columns\":[\"customer_name\",\"country\",\"signup_date\",\"revenue\",\"status\",\"email\"],\"output_headers\":[\"\u0418\u043c\u044f \u043a\u043b\u0438\u0435\u043d\u0442\u0430\",\"\u0421\u0442\u0440\u0430\u043d\u0430\",\"\u0414\u0430\u0442\u0430 \u0440\u0435\u0433\u0438\u0441\u0442\u0440\u0430\u0446\u0438\u0438\",\"\u0412\u044b\u0440\u0443\u0447\u043a\u0430\",\"\u0421\u0442\u0430\u0442\u0443\u0441\",\"Email\"],\"file_size_bytes\":277,\"checksum\":\"c3b4e1f9a885bcf969cd34a9041951c1bed1abcd6aaba4c4f1f2fcd414d86cc9\"},\"deterministic_checks\":[{\"schema_version\":\"1.1\",\"check_id\":\"DQ-001\",\"name\":\"DQ-001 deterministic check\",\"status\":\"PASS\",\"severity\":\"BLOCKER\",\"target\":{\"artifact\":null,\"dataset_id\":null,\"column\":null,\"row_ids\":[]},\"expected\":true,\"actual\":369,\"affected_count\":0,\"sample_row_ids\":[],\"message\":\"All selected data checked.\",\"criterion_id\":null},{\"schema_version\":\"1.1\",\"check_id\":\"DQ-002\",\"name\":\"DQ-002 deterministic check\",\"status\":\"PASS\",\"severity\":\"BLOCKER\",\"target\":{\"artifact\":null,\"dataset_id\":null,\"column\":null,\"row_ids\":[]},\"expected\":\"c0e3f84d189e0ed177d5e64a183142fe1b923ddb79c6617ebb26edd139658fcb\",\"actual\":\"c0e3f84d189e0ed177d5e64a183142fe1b923ddb79c6617ebb26edd139658fcb\",\"affected_count\":0,\"sample_row_ids\":[],\"message\":\"All selected data checked.\",\"criterion_id\":null},{\"schema_version\":\"1.1\",\"check_id\":\"DQ-003\",\"name\":\"DQ-003 deterministic check\",\"status\":\"PASS\",\"severity\":\"BLOCKER\",\"target\":{\"artifact\":null,\"dataset_id\":null,\"column\":null,\"row_ids\":[]},\"expected\":[\"fb1f8069929a335d2403d70aaa07ca7a3f03d552f05f74985c60cf979bd5e60f\",\"315dce2d611117819093ebe1bedc96030ca4d03ae72c84f53c7c0fe1a6b019c4\"],\"actual\":[\"fb1f8069929a335d2403d70aaa07ca7a3f03d552f05f74985c60cf979bd5e60f\",\"315dce2d611117819093ebe1bedc96030ca4d03ae72c84f53c7c0fe1a6b019c4\"],\"affected_count\":0,\"sample_row_ids\":[],\"message\":\"All selected data checked.\",\"criterion_id\":null},{\"schema_version\":\"1.1\",\"check_id\":\"DQ-004\",\"name\":\"DQ-004 deterministic check\",\"status\":\"PASS\",\"severity\":\"BLOCKER\",\"target\":{\"artifact\":null,\"dataset_id\":null,\"column\":null,\"row_ids\":[]},\"expected\":[\"change_case\",\"deduplicate\",\"drop_columns\",\"drop_missing\",\"fill_missing\",\"parse_date\",\"parse_number\",\"rename\",\"replace\",\"select_columns\",\"sort\",\"trim\"],\"actual\":[\"rename\",\"trim\",\"change_case\",\"change_case\",\"change_case\",\"replace\",\"replace\",\"parse_date\",\"parse_number\",\"fill_missing\",\"drop_missing\",\"deduplicate\",\"sort\",\"select_columns\"],\"affected_count\":0,\"sample_row_ids\":[],\"message\":\"All selected data checked.\",\"criterion_id\":null},{\"schema_version\":\"1.1\",\"check_id\":\"DQ-005\",\"name\":\"DQ-005 deterministic check\",\"status\":\"PASS\",\"severity\":\"BLOCKER\",\"target\":{\"artifact\":null,\"dataset_id\":null,\"column\":null,\"row_ids\":[]},\"expected\":[\"pa-op-01\",\"pa-op-02\",\"pa-op-03\",\"pa-op-04\",\"pa-op-05\",\"pa-op-06\",\"pa-op-07\",\"pa-op-08\",\"pa-op-09\",\"pa-op-10\",\"pa-op-11\",\"pa-op-12\",\"pa-op-13\",\"pa-op-14\"],\"actual\":[\"pa-op-01\",\"pa-op-02\",\"pa-op-03\",\"pa-op-04\",\"pa-op-05\",\"pa-op-06\",\"pa-op-07\",\"pa-op-08\",\"pa-op-09\",\"pa-op-10\",\"pa-op-11\",\"pa-op-12\",\"pa-op-13\",\"pa-op-14\"],\"affected_count\":0,\"sample_row_ids\":[],\"message\":\"All selected data checked.\",\"criterion_id\":null},{\"schema_version\":\"1.1\",\"check_id\":\"DQ-006\",\"name\":\"DQ-006 deterministic check\",\"status\":\"PASS\",\"severity\":\"BLOCKER\",\"target\":{\"artifact\":\"RESULT_CSV\",\"dataset_id\":null,\"column\":null,\"row_ids\":[]},\"expected\":true,\"actual\":true,\"affected_count\":0,\"sample_row_ids\":[],\"message\":\"All selected data checked.\",\"criterion_id\":\"PA-AC-001\"},{\"schema_version\":\"1.1\",\"check_id\":\"DQ-007\",\"name\":\"DQ-007 deterministic check\",\"status\":\"PASS\",\"severity\":\"ERROR\",\"target\":{\"artifact\":null,\"dataset_id\":null,\"column\":null,\"row_ids\":[]},\"expected\":\"CSV\",\"actual\":\"CSV\",\"affected_count\":0,\"sample_row_ids\":[],\"message\":\"All selected data checked.\",\"criterion_id\":null},{\"schema_version\":\"1.1\",\"check_id\":\"DQ-008\",\"name\":\"DQ-008 deterministic check\",\"status\":\"PASS\",\"severity\":\"BLOCKER\",\"target\":{\"artifact\":null,\"dataset_id\":null,\"column\":null,\"row_ids\":[]},\"expected\":[\"customer_name\",\"country\",\"signup_date\",\"revenue\",\"status\",\"email\"],\"actual\":[\"customer_name\",\"country\",\"signup_date\",\"revenue\",\"status\",\"email\"],\"affected_count\":0,\"sample_row_ids\":[],\"message\":\"All selected data checked.\",\"criterion_id\":null},{\"schema_version\":\"1.1\",\"check_id\":\"DQ-009\",\"name\":\"DQ-009 deterministic check\",\"status\":\"PASS\",\"severity\":\"ERROR\",\"target\":{\"artifact\":null,\"dataset_id\":null,\"column\":null,\"row_ids\":[]},\"expected\":[\"customer_name\",\"country\",\"signup_date\",\"revenue\",\"status\",\"email\"],\"actual\":[\"customer_name\",\"country\",\"signup_date\",\"revenue\",\"status\",\"email\"],\"affected_count\":0,\"sample_row_ids\":[],\"message\":\"All selected data checked.\",\"criterion_id\":null},{\"schema_version\":\"1.1\",\"check_id\":\"DQ-010\",\"name\":\"DQ-010 deterministic check\",\"status\":\"PASS\",\"severity\":\"BLOCKER\",\"target\":{\"artifact\":null,\"dataset_id\":\"result\",\"column\":null,\"row_ids\":[]},\"expected\":[\"customer_name\",\"country\",\"signup_date\",\"revenue\",\"status\",\"email\"],\"actual\":[\"customer_name\",\"country\",\"signup_date\",\"revenue\",\"status\",\"email\"],\"affected_count\":0,\"sample_row_ids\":[],\"message\":\"All selected data checked.\",\"criterion_id\":\"PA-AC-002\"},{\"schema_version\":\"1.1\",\"check_id\":\"DQ-011\",\"name\":\"DQ-011 deterministic check\",\"status\":\"PASS\",\"severity\":\"ERROR\",\"target\":{\"artifact\":null,\"dataset_id\":null,\"column\":null,\"row_ids\":[]},\"expected\":\"approved typed schema\",\"actual\":{},\"affected_count\":0,\"sample_row_ids\":[],\"message\":\"All selected data checked.\",\"criterion_id\":null},{\"schema_version\":\"1.1\",\"check_id\":\"DQ-012\",\"name\":\"DQ-012 deterministic check\",\"status\":\"PASS\",\"severity\":\"BLOCKER\",\"target\":{\"artifact\":null,\"dataset_id\":\"result\",\"column\":\"customer_name\",\"row_ids\":[]},\"expected\":true,\"actual\":true,\"affected_count\":0,\"sample_row_ids\":[],\"message\":\"All selected data checked.\",\"criterion_id\":\"PA-AC-004\"},{\"schema_version\":\"1.1\",\"check_id\":\"DQ-013\",\"name\":\"DQ-013 deterministic check\",\"status\":\"SKIPPED\",\"severity\":\"INFO\",\"target\":{\"artifact\":null,\"dataset_id\":null,\"column\":null,\"row_ids\":[]},\"expected\":null,\"actual\":null,\"affected_count\":0,\"sample_row_ids\":[],\"message\":\"Not applicable to the approved contract.\",\"criterion_id\":null},{\"schema_version\":\"1.1\",\"check_id\":\"DQ-014\",\"name\":\"DQ-014 deterministic check\",\"status\":\"PASS\",\"severity\":\"BLOCKER\",\"target\":{\"artifact\":null,\"dataset_id\":\"result\",\"column\":\"email\",\"row_ids\":[]},\"expected\":true,\"actual\":true,\"affected_count\":0,\"sample_row_ids\":[],\"message\":\"All selected data checked.\",\"criterion_id\":\"PA-AC-005\"},{\"schema_version\":\"1.1\",\"check_id\":\"DQ-015\",\"name\":\"DQ-015 deterministic check\",\"status\":\"PASS\",\"severity\":\"ERROR\",\"target\":{\"artifact\":null,\"dataset_id\":\"result\",\"column\":\"signup_date\",\"row_ids\":[]},\"expected\":\"YYYY-MM-DD\",\"actual\":{\"violations\":0,\"rows_checked\":3},\"affected_count\":0,\"sample_row_ids\":[],\"message\":\"All selected data checked.\",\"criterion_id\":\"PA-AC-006\"},{\"schema_version\":\"1.1\",\"check_id\":\"DQ-016\",\"name\":\"DQ-016 deterministic check\",\"status\":\"PASS\",\"severity\":\"ERROR\",\"target\":{\"artifact\":null,\"dataset_id\":null,\"column\":null,\"row_ids\":[]},\"expected\":\"finite exact numeric types\",\"actual\":{},\"affected_count\":0,\"sample_row_ids\":[],\"message\":\"All selected data checked.\",\"criterion_id\":null},{\"schema_version\":\"1.1\",\"check_id\":\"DQ-017\",\"name\":\"DQ-017 deterministic check\",\"status\":\"PASS\",\"severity\":\"ERROR\",\"target\":{\"artifact\":null,\"dataset_id\":\"result\",\"column\":\"revenue\",\"row_ids\":[]},\"expected\":0,\"actual\":\"0\",\"affected_count\":0,\"sample_row_ids\":[],\"message\":\"All selected data checked.\",\"criterion_id\":\"PA-AC-007\"},{\"schema_version\":\"1.1\",\"check_id\":\"DQ-018\",\"name\":\"DQ-018 deterministic check\",\"status\":\"PASS\",\"severity\":\"ERROR\",\"target\":{\"artifact\":null,\"dataset_id\":\"result\",\"column\":null,\"row_ids\":[]},\"expected\":3,\"actual\":3,\"affected_count\":0,\"sample_row_ids\":[],\"message\":\"All selected data checked.\",\"criterion_id\":\"PA-AC-003\"},{\"schema_version\":\"1.1\",\"check_id\":\"DQ-019\",\"name\":\"DQ-019 deterministic check\",\"status\":\"PASS\",\"severity\":\"BLOCKER\",\"target\":{\"artifact\":null,\"dataset_id\":null,\"column\":null,\"row_ids\":[]},\"expected\":false,\"actual\":3,\"affected_count\":0,\"sample_row_ids\":[],\"message\":\"All selected data checked.\",\"criterion_id\":null},{\"schema_version\":\"1.1\",\"check_id\":\"DQ-022\",\"name\":\"DQ-022 deterministic check\",\"status\":\"PASS\",\"severity\":\"ERROR\",\"target\":{\"artifact\":null,\"dataset_id\":null,\"column\":null,\"row_ids\":[]},\"expected\":{\"rows\":3,\"columns\":6},\"actual\":{\"rows\":3,\"columns\":6},\"affected_count\":0,\"sample_row_ids\":[],\"message\":\"All selected data checked.\",\"criterion_id\":null},{\"schema_version\":\"1.1\",\"check_id\":\"DQ-023\",\"name\":\"DQ-023 deterministic check\",\"status\":\"SKIPPED\",\"severity\":\"INFO\",\"target\":{\"artifact\":null,\"dataset_id\":null,\"column\":null,\"row_ids\":[]},\"expected\":0,\"actual\":{\"source_formula_cells\":0,\"export_formula_cells\":0,\"export_errors\":0},\"affected_count\":0,\"sample_row_ids\":[],\"message\":\"Not applicable to the approved contract.\",\"criterion_id\":null},{\"schema_version\":\"1.1\",\"check_id\":\"DQ-024\",\"name\":\"DQ-024 deterministic check\",\"status\":\"PASS\",\"severity\":\"ERROR\",\"target\":{\"artifact\":null,\"dataset_id\":null,\"column\":null,\"row_ids\":[]},\"expected\":{\"encoding\":\"UTF-8\",\"delimiter\":\",\"},\"actual\":{\"encoding\":\"UTF-8\",\"delimiter\":\",\"},\"affected_count\":0,\"sample_row_ids\":[],\"message\":\"All selected data checked.\",\"criterion_id\":null},{\"schema_version\":\"1.1\",\"check_id\":\"DQ-025\",\"name\":\"DQ-025 deterministic check\",\"status\":\"PASS\",\"severity\":\"ERROR\",\"target\":{\"artifact\":null,\"dataset_id\":null,\"column\":null,\"row_ids\":[]},\"expected\":3,\"actual\":3,\"affected_count\":0,\"sample_row_ids\":[],\"message\":\"All selected data checked.\",\"criterion_id\":null}],\"llm_review\":{\"status\":\"NOT_APPLICABLE\",\"reason\":\"PILOT_SLICE_V1_NO_LLM\"},\"blocking_issues\":[],\"warnings\":[],\"sampling_manifest\":null,\"known_limitations\":[\"Pilot Slice V1: deterministic checks only; no LLM review.\",\"CSV lexical projection cannot distinguish a typed null from empty text; typed QA uses P4 originals.\",\"Source XLSX formulas use previously cached values only; no recalculation.\",\"Resource protection uses sampled RSS; arbitrary maximum-length data may fail closed.\",\"Local single-process serialization is not distributed locking; no P6 delivery is performed.\"],\"artifacts\":[{\"artifact_type\":\"RESULT_CSV\",\"path\":\"orders/124fb8f3-ca38-4eee-b3a4-d3902fa5fbd4/runs/50d880c6-85d9-4250-b4dc-6cfee332b384/artifacts/p5-final-7bcd63e6d951118d6bcca97037279803f2a0ff386a911456fa1cebb42c17ac93/payload\",\"checksum\":\"c3b4e1f9a885bcf969cd34a9041951c1bed1abcd6aaba4c4f1f2fcd414d86cc9\"}]}"
+      }
+    ],
+    "event_log": [
+      {
+        "id": "07aa0b4d-54dc-4768-8248-3248a0058dad",
+        "order_id": "124fb8f3-ca38-4eee-b3a4-d3902fa5fbd4",
+        "run_id": "50d880c6-85d9-4250-b4dc-6cfee332b384",
+        "event_type": "RUN_STARTED",
+        "payload_json": "{\"source\":{\"asset_id\":\"b45fc6a8-adcf-4fb9-812d-3a58fbe74e9d\",\"source_byte_sha256\":\"c0e3f84d189e0ed177d5e64a183142fe1b923ddb79c6617ebb26edd139658fcb\",\"input_selection\":{\"source_type\":\"LOCAL_CSV\",\"sheet_name\":null,\"csv_options\":{\"encoding\":\"CP1251\",\"delimiter\":\",\",\"header_row\":0}},\"brief_content_hash\":\"fb1f8069929a335d2403d70aaa07ca7a3f03d552f05f74985c60cf979bd5e60f\",\"transformation_content_hash\":\"315dce2d611117819093ebe1bedc96030ca4d03ae72c84f53c7c0fe1a6b019c4\"}}",
+        "created_at": "2026-11-06T23:05:55Z"
+      },
+      {
+        "id": "1b21bf4a-c13b-44ba-b1c9-7bb75c784108",
+        "order_id": "124fb8f3-ca38-4eee-b3a4-d3902fa5fbd4",
+        "run_id": "50d880c6-85d9-4250-b4dc-6cfee332b384",
+        "event_type": "ARTIFACT_REGISTERED",
+        "payload_json": "{\"artifact_id\":\"p5-final-7bcd63e6d951118d6bcca97037279803f2a0ff386a911456fa1cebb42c17ac93\"}",
+        "created_at": "2026-11-06T23:06:00Z"
+      },
+      {
+        "id": "32f457e7-5a2f-4b57-a35e-d878bff08c65",
+        "order_id": "124fb8f3-ca38-4eee-b3a4-d3902fa5fbd4",
+        "run_id": null,
+        "event_type": "MANUAL_REVIEW_STARTED",
+        "payload_json": "{\"status\":\"ANALYZING\",\"approval_stage\":null,\"brief_id\":null,\"spec_id\":null}",
+        "created_at": "2026-11-06T23:05:51Z"
+      },
+      {
+        "id": "3920f6b2-dd13-416c-ad01-da4e872b55cc",
+        "order_id": "124fb8f3-ca38-4eee-b3a4-d3902fa5fbd4",
+        "run_id": null,
+        "event_type": "BRIEF_VERSION_PUBLISHED",
+        "payload_json": "{\"status\":\"READY_FOR_APPROVAL\",\"approval_stage\":\"BRIEF_PENDING\",\"brief_id\":\"76567b91-7587-45de-8ad5-df7d4038135c\",\"spec_id\":null}",
+        "created_at": "2026-11-06T23:05:51Z"
+      },
+      {
+        "id": "3ec9682f-5cf0-44fa-92e9-04b6d6013e3c",
+        "order_id": "124fb8f3-ca38-4eee-b3a4-d3902fa5fbd4",
+        "run_id": null,
+        "event_type": "TRANSFORMATION_SPEC_APPROVED",
+        "payload_json": "{\"status\":\"APPROVED\",\"approval_stage\":\"COMPLETE\",\"brief_id\":\"76567b91-7587-45de-8ad5-df7d4038135c\",\"spec_id\":\"b2391b6c-6085-473d-8251-3c4d0de54fd7\"}",
+        "created_at": "2026-11-06T23:05:53Z"
+      },
+      {
+        "id": "64429543-157e-4293-a3b2-050caadaf59b",
+        "order_id": "124fb8f3-ca38-4eee-b3a4-d3902fa5fbd4",
+        "run_id": null,
+        "event_type": "BRIEF_APPROVED",
+        "payload_json": "{\"status\":\"READY_FOR_APPROVAL\",\"approval_stage\":\"TRANSFORMATION_PENDING\",\"brief_id\":\"76567b91-7587-45de-8ad5-df7d4038135c\",\"spec_id\":null}",
+        "created_at": "2026-11-06T23:05:51Z"
+      },
+      {
+        "id": "79d9061c-8af2-46b4-925f-d6d13462649b",
+        "order_id": "124fb8f3-ca38-4eee-b3a4-d3902fa5fbd4",
+        "run_id": "50d880c6-85d9-4250-b4dc-6cfee332b384",
+        "event_type": "ARTIFACT_REGISTERED",
+        "payload_json": "{\"artifact_id\":\"24aebeee-42f4-4d89-bc97-886541d15a41\"}",
+        "created_at": "2026-11-06T23:05:55Z"
+      },
+      {
+        "id": "bef89cc3-298f-4a6e-bab5-f7f1f87a43c3",
+        "order_id": "124fb8f3-ca38-4eee-b3a4-d3902fa5fbd4",
+        "run_id": "50d880c6-85d9-4250-b4dc-6cfee332b384",
+        "event_type": "P5_QA_COMPLETED",
+        "payload_json": "{\"report_id\":\"p5-qa-d66119bd-a051-44ba-bfac-ec5c281ffe04\",\"overall_status\":\"PASS\",\"error\":null}",
+        "created_at": "2026-11-06T23:06:01Z"
+      },
+      {
+        "id": "f063fbc4-c9a5-4318-9256-1ecf68e4b40f",
+        "order_id": "124fb8f3-ca38-4eee-b3a4-d3902fa5fbd4",
+        "run_id": "50d880c6-85d9-4250-b4dc-6cfee332b384",
+        "event_type": "RUN_SUCCEEDED",
+        "payload_json": "{\"artifact_id\":\"24aebeee-42f4-4d89-bc97-886541d15a41\",\"checksum\":\"2e02a70bbb96712640966117fbc724de3fe8a27a8db4c049037599bbd6ec3500\"}",
+        "created_at": "2026-11-06T23:05:56Z"
+      },
+      {
+        "id": "f0cfc8a6-bbed-47c8-b437-9842e6deb7d6",
+        "order_id": "124fb8f3-ca38-4eee-b3a4-d3902fa5fbd4",
+        "run_id": null,
+        "event_type": "TRANSFORMATION_SPEC_PUBLISHED",
+        "payload_json": "{\"status\":\"READY_FOR_APPROVAL\",\"approval_stage\":\"TRANSFORMATION_PENDING\",\"brief_id\":\"76567b91-7587-45de-8ad5-df7d4038135c\",\"spec_id\":\"b2391b6c-6085-473d-8251-3c4d0de54fd7\"}",
+        "created_at": "2026-11-06T23:05:52Z"
+      },
+      {
+        "id": "f3a34776-7ad0-4f78-8dea-ed39137abc44",
+        "order_id": "124fb8f3-ca38-4eee-b3a4-d3902fa5fbd4",
+        "run_id": null,
+        "event_type": "INPUT_ASSET_REGISTERED",
+        "payload_json": "{\"asset_id\":\"b45fc6a8-adcf-4fb9-812d-3a58fbe74e9d\"}",
+        "created_at": "2026-11-06T23:05:51Z"
+      }
+    ]
+  },
+  "payload_hashes": {
+    "orders/124fb8f3-ca38-4eee-b3a4-d3902fa5fbd4/input/b45fc6a8-adcf-4fb9-812d-3a58fbe74e9d/payload": "c0e3f84d189e0ed177d5e64a183142fe1b923ddb79c6617ebb26edd139658fcb",
+    "orders/124fb8f3-ca38-4eee-b3a4-d3902fa5fbd4/runs/50d880c6-85d9-4250-b4dc-6cfee332b384/artifacts/24aebeee-42f4-4d89-bc97-886541d15a41/payload": "2e02a70bbb96712640966117fbc724de3fe8a27a8db4c049037599bbd6ec3500",
+    "orders/124fb8f3-ca38-4eee-b3a4-d3902fa5fbd4/runs/50d880c6-85d9-4250-b4dc-6cfee332b384/artifacts/p5-final-7bcd63e6d951118d6bcca97037279803f2a0ff386a911456fa1cebb42c17ac93/payload": "c3b4e1f9a885bcf969cd34a9041951c1bed1abcd6aaba4c4f1f2fcd414d86cc9"
+  },
+  "order_id": "124fb8f3-ca38-4eee-b3a4-d3902fa5fbd4",
+  "run_id": "50d880c6-85d9-4250-b4dc-6cfee332b384",
+  "result_sha256": "c3b4e1f9a885bcf969cd34a9041951c1bed1abcd6aaba4c4f1f2fcd414d86cc9",
+  "result_size": 277,
+  "result_headers": {
+    "Server": "TornadoServer/6.5.10",
+    "Content-Type": "text/csv",
+    "Date": "Fri, 06 Nov 2026 23:06:23 GMT",
+    "Accept-Ranges": "bytes",
+    "Etag": "\"d4e84fbb0b49f64b55ef4e4237b5787d25f7a38fe34d76f8777b816697fc8ccde2dc031cadd9667caaae83da7fb36ce92bd3404411605626b3146dec0c19e9d2\"",
+    "Content-Disposition": "attachment; filename=\"customers_clean.csv\"",
+    "Content-Length": "277",
+    "Connection": "close"
+  },
+  "report_headers": {
+    "Server": "TornadoServer/6.5.10",
+    "Content-Type": "application/json; charset=utf-8",
+    "Date": "Fri, 06 Nov 2026 23:06:23 GMT",
+    "Accept-Ranges": "bytes",
+    "Etag": "\"9f00779faa0c0bc474d1761593c2e7f72beadcaa7b3233234fc44e211988e9499cd2034308ca61ee0b2e4be7f9b030f1155f2e26fa174ff6f350fd43a1c8a875\"",
+    "Content-Disposition": "attachment; filename=\"qa_report_p5-qa-d66119bd-a051-44ba-bfac-ec5c281ffe04.json\"",
+    "Content-Length": "10658",
+    "Connection": "close"
+  },
+  "platform": "linux",
+  "simulated_explicit_test_user_approvals_only": true
+}

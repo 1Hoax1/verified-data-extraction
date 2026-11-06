@@ -1,0 +1,13 @@
+{
+  "command": [
+    "git",
+    "merge-base",
+    "--is-ancestor",
+    "419730bc9a86af298caa94dabd4911a84b41f5f5",
+    "66c2b4f97e2b4dbe4e7a01696c89ae5fd0431981"
+  ],
+  "cwd": "/workspace/p6-streamlit-e2e",
+  "started_at_utc": "2026-11-06T22:53:21.759573+00:00",
+  "finished_at_utc": "2026-11-06T22:53:21.761736+00:00",
+  "exit_code": 0
+}

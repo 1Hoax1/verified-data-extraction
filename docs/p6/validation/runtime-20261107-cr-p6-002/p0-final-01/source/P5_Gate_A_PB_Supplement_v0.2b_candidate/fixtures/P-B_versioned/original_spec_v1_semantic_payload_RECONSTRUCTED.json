@@ -1,0 +1,244 @@
+{
+  "schema_version": "1.1",
+  "brief_version_id": "brief-pb-v1",
+  "brief_content_hash": "9b7c2b0111360714dfbc9cbdbc755b693b11e067f32771cb226126fdcd1ffb49",
+  "inputs": [
+    {
+      "dataset_id": "raw",
+      "asset_id": "asset-pb-xlsx",
+      "source_type": "LOCAL_XLSX",
+      "sheet_name": "Orders",
+      "csv_options": null
+    }
+  ],
+  "pipeline": [
+    {
+      "schema_version": "1.1",
+      "operation_id": "pb-op-01",
+      "type": "rename",
+      "input_dataset": "raw",
+      "output_dataset": "s01",
+      "params": {
+        "mapping": {
+          "Order ID": "order_id",
+          "Product": "product",
+          "Quantity": "quantity",
+          "Unit Price": "unit_price",
+          "Order Date": "order_date",
+          "Line Total": "line_total"
+        }
+      }
+    },
+    {
+      "schema_version": "1.1",
+      "operation_id": "pb-op-02",
+      "type": "trim",
+      "input_dataset": "s01",
+      "output_dataset": "s02",
+      "params": {
+        "columns": [
+          "order_id",
+          "product",
+          "order_date"
+        ],
+        "mode": "both"
+      }
+    },
+    {
+      "schema_version": "1.1",
+      "operation_id": "pb-op-03",
+      "type": "change_case",
+      "input_dataset": "s02",
+      "output_dataset": "s03",
+      "params": {
+        "columns": [
+          "product"
+        ],
+        "mode": "title"
+      }
+    },
+    {
+      "schema_version": "1.1",
+      "operation_id": "pb-op-04",
+      "type": "parse_date",
+      "input_dataset": "s03",
+      "output_dataset": "s04",
+      "params": {
+        "column": "order_date",
+        "formats": [
+          "DD.MM.YYYY",
+          "YYYY-MM-DD",
+          "DD/MM/YYYY"
+        ],
+        "output_format": "YYYY-MM-DD",
+        "errors": "FAIL"
+      }
+    },
+    {
+      "schema_version": "1.1",
+      "operation_id": "pb-op-05",
+      "type": "deduplicate",
+      "input_dataset": "s04",
+      "output_dataset": "s05",
+      "params": {
+        "subset": [
+          "order_id"
+        ],
+        "keep": "FIRST"
+      }
+    },
+    {
+      "schema_version": "1.1",
+      "operation_id": "pb-op-06",
+      "type": "sort",
+      "input_dataset": "s05",
+      "output_dataset": "s06",
+      "params": {
+        "by": [
+          "order_date"
+        ],
+        "ascending": [
+          true
+        ],
+        "nulls": "LAST"
+      }
+    },
+    {
+      "schema_version": "1.1",
+      "operation_id": "pb-op-07",
+      "type": "select_columns",
+      "input_dataset": "s06",
+      "output_dataset": "result",
+      "params": {
+        "columns": [
+          "order_id",
+          "product",
+          "quantity",
+          "unit_price",
+          "order_date",
+          "line_total"
+        ]
+      }
+    }
+  ],
+  "output": {
+    "dataset_id": "result",
+    "format": "XLSX",
+    "file_name": "orders_clean.xlsx",
+    "sheet_name": "Data",
+    "encoding": null,
+    "delimiter": null,
+    "column_order": [
+      "order_id",
+      "product",
+      "quantity",
+      "unit_price",
+      "order_date",
+      "line_total"
+    ]
+  },
+  "execution_policy": {
+    "fail_fast": true,
+    "allow_partial_output": false,
+    "max_rows": 100000,
+    "max_columns": 200
+  },
+  "provenance_policy": {
+    "record_input_checksum": true,
+    "preserve_source_row_number": false
+  },
+  "expected_schema": [
+    {
+      "name": "order_id",
+      "output_name": "Номер заказа",
+      "label": "Order ID",
+      "data_type": "string",
+      "required": true,
+      "nullable": false,
+      "format": null,
+      "allowed_values": null,
+      "min_value": null,
+      "max_value": null,
+      "unique": true,
+      "description": "Unique order ID."
+    },
+    {
+      "name": "product",
+      "output_name": "Товар",
+      "label": "Product",
+      "data_type": "string",
+      "required": true,
+      "nullable": false,
+      "format": null,
+      "allowed_values": null,
+      "min_value": null,
+      "max_value": null,
+      "unique": false,
+      "description": "Normalized title."
+    },
+    {
+      "name": "quantity",
+      "output_name": "Количество",
+      "label": "Quantity",
+      "data_type": "integer",
+      "required": true,
+      "nullable": false,
+      "format": "INTEGER",
+      "allowed_values": null,
+      "min_value": 1,
+      "max_value": null,
+      "unique": false,
+      "description": "Positive quantity."
+    },
+    {
+      "name": "unit_price",
+      "output_name": "Цена за единицу",
+      "label": "Unit price",
+      "data_type": "decimal",
+      "required": true,
+      "nullable": false,
+      "format": "DECIMAL_DOT",
+      "allowed_values": null,
+      "min_value": 0,
+      "max_value": null,
+      "unique": false,
+      "description": "Unit price."
+    },
+    {
+      "name": "order_date",
+      "output_name": "Дата заказа",
+      "label": "Order date",
+      "data_type": "date",
+      "required": true,
+      "nullable": false,
+      "format": "YYYY-MM-DD",
+      "allowed_values": null,
+      "min_value": null,
+      "max_value": null,
+      "unique": false,
+      "description": "ISO date."
+    },
+    {
+      "name": "line_total",
+      "output_name": "Сумма строки",
+      "label": "Line total",
+      "data_type": "decimal",
+      "required": true,
+      "nullable": false,
+      "format": "DECIMAL_DOT",
+      "allowed_values": null,
+      "min_value": 0,
+      "max_value": null,
+      "unique": false,
+      "description": "Cached value of the source XLSX formula; no formula is exported."
+    }
+  ],
+  "acceptance_criteria_ref": [
+    "PB-AC-001",
+    "PB-AC-002",
+    "PB-AC-003",
+    "PB-AC-004",
+    "PB-AC-005",
+    "PB-AC-006"
+  ]
+}

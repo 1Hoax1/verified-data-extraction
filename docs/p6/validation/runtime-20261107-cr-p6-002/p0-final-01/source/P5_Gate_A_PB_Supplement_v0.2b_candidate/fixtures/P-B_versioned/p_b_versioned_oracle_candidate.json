@@ -1,0 +1,74 @@
+{
+  "status": "TEST_ONLY_PROPOSED_FOR_GATE_A",
+  "authoritative_main_sha": "fd39aa1bed480313504ae8b1f76e77e170cb72ba",
+  "p0_original_spec_v1_hash": "d7c30e08e6d03054d4a15daeb741f64c1f4fef64c225208d98c1659f8e82f2aa",
+  "p0_old_spec_payload_reconstruction_sha256": "d7c30e08e6d03054d4a15daeb741f64c1f4fef64c225208d98c1659f8e82f2aa",
+  "brief_version_id": "brief-pb-v1",
+  "brief_content_hash": "9b7c2b0111360714dfbc9cbdbc755b693b11e067f32771cb226126fdcd1ffb49",
+  "new_version_id": "transform-pb-v2-cr-p5-001",
+  "new_version_number": 2,
+  "new_content_hash": "c4f9aa33b341cf703b8edacbe60ba1b8070814dde461b4412407d8535188c9a3",
+  "full_order": [
+    "order_id",
+    "product",
+    "quantity",
+    "unit_price",
+    "order_date",
+    "line_total"
+  ],
+  "one_production_result": "RESULT_XLSX",
+  "test_only_csv": true,
+  "pb_ac002": {
+    "scope": "P_B_ONLY",
+    "interpretation": "ORDERED_SUBSEQUENCE_OF_FULL_SIX",
+    "five_targets": [
+      "order_id",
+      "product",
+      "quantity",
+      "unit_price",
+      "order_date"
+    ],
+    "global_sequence_equals_unchanged": true
+  },
+  "dq022": {
+    "expected": {
+      "rows": 3,
+      "columns": 6
+    },
+    "headers": [
+      "Номер заказа",
+      "Товар",
+      "Количество",
+      "Цена за единицу",
+      "Дата заказа",
+      "Сумма строки"
+    ],
+    "cells": 18,
+    "requires_actual_export_re_read": true
+  },
+  "dq017": [
+    {
+      "check_id": "DQ-017",
+      "criterion_id": "PB-AC-006",
+      "column": "quantity",
+      "operator": "min_value",
+      "expected": 1,
+      "actual": 1,
+      "status": "PASS",
+      "source": "Brief.acceptance_criteria AND v2.acceptance_criteria_ref"
+    },
+    {
+      "check_id": "DQ-017",
+      "criterion_id": "PB-AC-007",
+      "column": "line_total",
+      "operator": "min_value",
+      "expected": 0,
+      "actual": 20,
+      "status": "PASS",
+      "source": "Brief.acceptance_criteria AND v2.acceptance_criteria_ref"
+    }
+  ],
+  "approved_spec_version_exists_in_runtime": false,
+  "real_approval_issued": false,
+  "original_p0_unchanged": true
+}

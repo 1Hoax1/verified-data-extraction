@@ -1,0 +1,12 @@
+{
+  "nodeid": "tests/p6/test_acceptance.py::test_T01_fresh_linux_bootstrap_and_passive_ui",
+  "outcome": "passed",
+  "duration_seconds": 0.0963659480039496,
+  "properties": [
+    [
+      "p6_id",
+      "P6-T01"
+    ]
+  ],
+  "failure": null
+}

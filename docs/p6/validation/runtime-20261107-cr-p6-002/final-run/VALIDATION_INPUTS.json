@@ -1,0 +1,28 @@
+{
+  "command": [
+    "/workspace/p6-streamlit-e2e/tests/p6/run_validation.py",
+    "--out",
+    "/workspace/p6-cr2-work/final-01",
+    "--stress-workspace",
+    "/workspace/p6-work/stress-source",
+    "--linux-smoke",
+    "/workspace/p6-cr2-work/docker-smoke/implementation-245b1ccf5d42-20261107/diagnostic-summary.json"
+  ],
+  "cwd": "/workspace/p6-streamlit-e2e",
+  "tested_commit": "245b1ccf5d4212d3f34973e526172f20a4928539",
+  "tested_tree": "0db696f5e14284849f969310fadf4ee585713045",
+  "correction_start": "66c2b4f97e2b4dbe4e7a01696c89ae5fd0431981",
+  "scope_policy_format": "P6_SCOPE_POLICY_V2_CR_P6_002",
+  "approved_p5_qa_sha256": "8caee87fce7a0c748e2333b8fe3b1b3333fee3548ee78111516a8eac541d8a52",
+  "P6_STRESS_WORKSPACE": "/workspace/p6-work/stress-source",
+  "P6_VALIDATION_DIR": "/workspace/p6-cr2-work/final-01",
+  "P6_RESULTS_DIR": "/workspace/p6-cr2-work/final-01/p6-runtime/observations",
+  "external_platform_evidence": {
+    "linux_smoke": {
+      "path": "/workspace/p6-cr2-work/docker-smoke/implementation-245b1ccf5d42-20261107/diagnostic-summary.json",
+      "sha256": "a663e718faadbc218b3ed288bf08021faa43df442b39fbc02a541dfeea2d0e43"
+    },
+    "mac_smoke": null
+  },
+  "stress_database_sha256": "72381920bb07102a71a5206790ca7d34841dd0671c8c8f5664acc49dc3f4bc2c"
+}

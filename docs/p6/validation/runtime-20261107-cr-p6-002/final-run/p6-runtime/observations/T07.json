@@ -1,0 +1,57 @@
+{
+  "http_transfers": {
+    "result": {
+      "bytes": 5095,
+      "sha256": "069f6a4eb21a5eea4a71549eeae1c84b8a2ff014cac31e49cbf4d2c758cfed33",
+      "url": "/mock/media/8bd0bec4e87fc7fe7a8a50dfbc64ae75ad6ef429570773d131567de2.xlsx",
+      "status": 200,
+      "content_type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+      "content_disposition": "attachment; filename=\"orders_clean.xlsx\""
+    },
+    "report": {
+      "bytes": 10886,
+      "sha256": "61319a3275a0947b577848b52966acf10b6840affa80dbbe8ea5dee9c7009d4c",
+      "url": "/mock/media/6b90a74393f41307329611fbcf751aee7431ca12d3c962de53365fbf.vde-qa-json",
+      "status": 200,
+      "content_type": "application/json; charset=utf-8",
+      "content_disposition": "attachment; filename=\"qa_report_p5-qa-16ab4e89-d4d9-40f8-ba20-4cb5134e3d7f.json\""
+    }
+  },
+  "decoded_cells": [
+    [
+      "Номер заказа",
+      "Товар",
+      "Количество",
+      "Цена за единицу",
+      "Дата заказа",
+      "Сумма строки"
+    ],
+    [
+      "O-001",
+      "Widget A",
+      2,
+      10,
+      "2026-02-01",
+      20
+    ],
+    [
+      "O-002",
+      "Widget B",
+      1,
+      20,
+      "2026-02-05",
+      20
+    ],
+    [
+      "O-003",
+      "Widget C",
+      3,
+      15.5,
+      "2026-02-15",
+      46.5
+    ]
+  ],
+  "data_cells": 18,
+  "observed_qa_status": "PASS_WITH_WARNINGS",
+  "result_name": "orders_clean.xlsx"
+}

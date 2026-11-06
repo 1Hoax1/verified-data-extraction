@@ -1,0 +1,10 @@
+{
+  "result": "PASS",
+  "tested_commit": "245b1ccf5d4212d3f34973e526172f20a4928539",
+  "tested_tree": "0db696f5e14284849f969310fadf4ee585713045",
+  "baseline": "66c2b4f97e2b4dbe4e7a01696c89ae5fd0431981",
+  "sha256_before": "4b15c0990685df55a44330d66275481b421eb95707527232e964aea3e000816c",
+  "sha256_after": "8caee87fce7a0c748e2333b8fe3b1b3333fee3548ee78111516a8eac541d8a52",
+  "unchanged_AST_after_reversing_only_guard_helper_imports": true,
+  "reproducible_verifier": "assemble_evidence.py"
+}
