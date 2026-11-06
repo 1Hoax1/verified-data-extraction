@@ -35,7 +35,7 @@ def main():
             base_change(b,s)
             s['pipeline']=[dict(schema_version='1.1',operation_id='expand-approved-text',type='replace',
                 input_dataset='raw',output_dataset='expanded',
-                params=dict(columns=[f'c{i:03d}' for i in range(1,200)],old='x',new='x'*12)),
+                params=dict(columns=[f'c{i:03d}' for i in range(1,200)],old='x',new='x'*12,regex=False)),
                 dict(schema_version='1.1',operation_id='select-expanded',type='select_columns',
                 input_dataset='expanded',output_dataset='result',params={'columns':['id']+[f'c{i:03d}' for i in range(1,200)]})]
     scenario=Scenario(a.directory/'approved-test-order',raw=source.read_bytes(),change=change)
