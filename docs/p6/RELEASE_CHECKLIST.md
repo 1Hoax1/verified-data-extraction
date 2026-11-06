@@ -4,7 +4,9 @@
 
 Every unchecked item is pending. Enter actual results and evidence only after execution. `NOT RUN`, `FAIL` and a recorded limitation are not PASS. The current documentation-authoring environment is Linux; no Mac-host Docker smoke evidence has been supplied here. P6-T19's Mac requirement is **NOT RUN / PENDING**, and T19 cannot be closed until actual required evidence exists.
 
-**Known P-B blocker:** frozen P5 binds PB-AC-002's approved exception to `brief-pb-v1`; a new P3 UI publication has a UUID and gets DQ-010 FAIL / NEEDS_FIX. P6-T06/T07 must retain their strict required READY/PASS_WITH_WARNINGS assertions. A proposed CR-P6-002 is recorded with the new runtime evidence; no protected P5 fix or fixture/ID workaround is permitted without owner approval. This is a behavioral integration failure, not a historical scope conflict.
+**Approved P-B correction:** [CR-P6-002](decisions/CR-P6-002_OWNER_DECISION_2026-11-07.md) authorizes only the certified source/semantic-fingerprint recognition rule in P5 `qa.py` and its finite successor-audit/test/manual amendment. T06/T07 retain their strict READY/PASS_WITH_WARNINGS expectations and need fresh exact-tree runtime results. The original 17 PASS/3 FAIL evidence remains unchanged. No arbitrary Brief, altered source/output or invalid real Approval/Spec/Run context receives the exception; generic five-versus-six `sequence_equals` remains FAIL.
+
+The active audit is explicitly `P6_SCOPE_POLICY_V2_CR_P6_002`, with correction authority `66c2b4f97e2b4dbe4e7a01696c89ae5fd0431981`, unchanged main/implementation baselines, exact corrected `qa.py` SHA-256 and only seven existing amended paths. Retired V1 policy/audit/runner remain immutable at `deddc2799464076227173bd2e4890f552ffe64bf` and in separately archived evidence. The new finite evidence root is `docs/p6/validation/runtime-20261107-cr-p6-002/`; no old report, manifest or FAILED JUnit is rewritten. Mac execution remains NOT RUN until independently performed.
 
 ## Immutable identity and evidence record
 
@@ -34,8 +36,8 @@ The new acceptance suite and successor audit live under `tests/p6/`; the outer `
 ## Scope and dependency admission
 
 - [ ] Verify both remote refs against the owner-authorized SHAs before implementation admission; preserve the ref-query response and time.
-- [ ] Compare every baseline blob and mode against frozen main. Only the four exact added `app.py` lines and the finite 4 runtime + 6 test/audit + 5 documentation paths from CR-P6-001 are admitted; no deletion/reorder of existing app lines.
-- [ ] Preserve approved design/decision bytes, all P0–P5 source/tests/policies/fixtures/evidence, `DECISIONS.md`, G3 pin, schema/migrations and dependency files. Run the P6 successor audit and retain its exact inventory.
+- [ ] Compare every baseline blob and mode against frozen main and the separately approved CR-P6-002 authority. CR-P6-001 still admits only its four exact `app.py` lines and finite P6 paths; CR-P6-002 additionally permits only its exact P5 QA guard/helper and named test/audit/manual amendment. No app change, new runtime path or broad P5 waiver.
+- [ ] Preserve approved design/decision bytes, every historical P0–P5 test/policy/fixture/evidence, all source outside the exact P5 QA exception, `DECISIONS.md`, G3 pin, schema/migrations and dependencies. Preserve the four P6 runtime files, conftest and original FAILED evidence against correction-start commit. Run V2 successor audit and keep all original mutation probes plus exact QA, retired-policy, owner-record and old-evidence negatives.
 - [ ] On the exact tested tree, complete `uv sync --frozen --python 3.12.14 --extra test` without lock changes; record installed direct and transitive package versions. Direct runtime versions remain jsonschema 4.26.0, referencing 0.37.0, rfc8785 0.1.4, Streamlit 1.50.0 and openpyxl 3.1.5; pytest 8.4.2 is the existing test extra.
 - [ ] Run at least one negative mutation per protected-file class plus forbidden extra paths; retain actual rejections and verify mutation workspace disposal/restoration. No old source/evidence is changed by these probes.
 

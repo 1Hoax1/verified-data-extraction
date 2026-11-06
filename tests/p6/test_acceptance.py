@@ -1,6 +1,7 @@
 """Twenty P6 runtime oracles. A blocked platform check remains a real FAIL."""
 from concurrent.futures import ThreadPoolExecutor
-from dataclasses import asdict
+from dataclasses import asdict, replace
+from copy import deepcopy
 import io
 import json
 import os
@@ -14,6 +15,7 @@ import sys
 import time
 from urllib.request import urlopen
 from uuid import uuid4
+from types import SimpleNamespace
 
 from openpyxl import load_workbook
 import pytest
@@ -196,7 +198,141 @@ def test_T05_pa_csv_result_and_qa_actual_http_transfer(pa, download_http):
     record('T05', {'http_transfers': observations, 'golden_sha256': sha(golden), 'snapshot_key': prepared.key})
 
 
-def test_T06_pb_explicit_v2_approval_and_typed_warning_oracle(pb):
+def _cr_p6_002_guard_cases(pb):
+    """Recognition-only mutations never grant or persist Approval authority."""
+    from vde.p5.service import P5Service
+    from vde.p5.qa import _certified_pb_columns, criterion_result, predicate
+    context = P5Service(pb.env).inspect(pb.run_id, pb.order())
+    before, files = pb.snapshot(), payload_hashes(pb.directory)
+    original = deepcopy(context.brief.document_json)
+    criterion = next(c for c in original['acceptance_criteria'] if c['criterion_id'] == 'PB-AC-002')
+    projection = context.projection
+    assert _certified_pb_columns(criterion, projection, context)
+    assert criterion_result(criterion, SimpleNamespace(projection=projection), {}, context)['status'] == 'PASS'
+    assert not predicate('sequence_equals', list(projection.columns), criterion['expected'])
+    matrix = []
+
+    def reject(label, *, changes=(), asset_changes=None, output_changes=None, columns=None, spec_inputs=None):
+        doc = deepcopy(original)
+        for path, value in changes:
+            parent = doc
+            for key in path[:-1]:
+                parent = parent[key]
+            parent[path[-1]] = deepcopy(value)
+        # An altered contract cannot acquire the exception even if it has its
+        # own correct semantic hash. These are pure unit copies, not live or
+        # admitted replacement versions and never substitute for Approvals.
+        doc['content_hash'] = content_hash(doc, 'brief_version')
+        brief = replace(context.brief, document_json=doc, content_hash=doc['content_hash'])
+        asset = replace(context.asset, **(asset_changes or {}))
+        output = {**projection.output, **(output_changes or {})}
+        spec_doc = deepcopy(context.spec.document_json); spec_doc['output'] = output
+        if spec_inputs is not None:
+            spec_doc['inputs'] = deepcopy(spec_inputs)
+        copied = replace(context, brief=brief, asset=asset,
+                         spec=replace(context.spec, document_json=spec_doc))
+        projected = replace(projection, output=output, columns=tuple(columns or projection.columns))
+        c = doc['acceptance_criteria'][1]
+        assert not _certified_pb_columns(c, projected, copied), label
+        result = criterion_result(c, SimpleNamespace(projection=projected), {}, copied)
+        assert result['status'] == 'FAIL', (label, result)
+        matrix.append(dict(case=label, outcome='REJECTED', qa_status=result['status'],
+                           semantic_hash=doc['content_hash'], recognition_only=True))
+
+    edits = [
+        ('objective', ('objective',), original['objective'] + ' Different contract.'),
+        ('record_definition', ('record_definition',), 'A different record.'),
+        ('scope', ('scope', 'included'), ['Different scope']),
+        ('field_description', ('fields', 0, 'description'), 'Changed field meaning'),
+        ('field_type', ('fields', 0, 'data_type'), 'integer'),
+        ('field_required', ('fields', 0, 'required'), False),
+        ('volume', ('volume_expectation', 'exact_count'), 4),
+        ('quality', ('data_quality_expectations', 'unexpected_columns_allowed'), True),
+        ('risk', ('risks', 0, 'description'), 'Different risk'),
+        ('assumption', ('assumptions', 0, 'text'), 'Different assumption'),
+        ('criterion_severity', ('acceptance_criteria', 1, 'severity'), 'INFO'),
+        ('criterion_id', ('acceptance_criteria', 1, 'criterion_id'), 'OTHER-AC-002'),
+        ('operator', ('acceptance_criteria', 1, 'operator'), 'set_equals'),
+        ('target_scope', ('acceptance_criteria', 1, 'target', 'scope'), 'METRIC'),
+        ('expected_order', ('acceptance_criteria', 1, 'expected'), list(reversed(criterion['expected']))),
+        ('target_order', ('acceptance_criteria', 1, 'target', 'columns'), list(reversed(criterion['expected']))),
+        ('input_type', ('inputs_expected', 0, 'input_type'), 'LOCAL_CSV'),
+        ('sheet', ('inputs_expected', 0, 'sheet_name'), 'Notes'),
+        ('input_binding', ('inputs_expected', 0, 'asset_id'), 'wrong-asset'),
+        ('no_input', ('inputs_expected',), []),
+        ('multiple_inputs', ('inputs_expected',), original['inputs_expected'] * 2),
+    ]
+    for label, path, value in edits:
+        reject(label, changes=[(path, value)])
+    reject('source_checksum', asset_changes={'byte_sha256': '0' * 64})
+    reject('actual_asset_id', asset_changes={'id': 'different-asset'})
+    for key, value in [('format', 'CSV'), ('file_name', 'different.xlsx'), ('sheet_name', 'Different'),
+                       ('dataset_id', 'different'), ('column_order', list(reversed(projection.columns)))]:
+        reject('output_' + key, output_changes={key: value})
+    reject('projected_column_order', columns=list(reversed(projection.columns)))
+    source = context.spec.document_json['inputs'][0]
+    for key, value in [('asset_id', 'wrong-source'), ('sheet_name', 'Notes'), ('source_type', 'LOCAL_CSV')]:
+        reject('selected_source_' + key, spec_inputs=[{**source, key: value}])
+    reject('no_selected_source', spec_inputs=[])
+    reject('multiple_selected_sources', spec_inputs=[source, source])
+    generic = deepcopy(criterion); generic['criterion_id'] = 'GENERIC-AC-002'
+    assert criterion_result(generic, SimpleNamespace(projection=projection), {}, context)['status'] == 'FAIL'
+    assert pb.snapshot() == before and payload_hashes(pb.directory) == files
+    assert context.brief.document_json == original
+    return dict(fresh_uuid_brief_id=context.brief.id, real_semantic_hash=context.brief.content_hash,
+                positive_status='PASS', generic_five_vs_six='FAIL', negatives=matrix,
+                immutable_context_and_payloads=True, approval_authority='Unchanged actual P5 admission; unit copies are not authority')
+
+
+def _canonical_pb_oracle(directory):
+    # Reuse the approved historical isolated P1/P3/P4 procedure. Its two
+    # explicit simulated API actions create real test-local Approvals; no
+    # imported fixture Approval, direct approval INSERT or owner claim exists.
+    from p5.support import Scenario, pb_v2
+    case = Scenario(directory, 'P-B_xlsx_sheet', change=pb_v2)
+    with case.uow() as u:
+        brief = u.briefs.get(case.handoff.brief_version_id)
+        spec = u.specs.get(case.handoff.transformation_spec_version_id)
+        approvals = u.approvals.list_for_order(case.order_id)
+    internal_hashes = payload_hashes(case.env.workspace.root)
+    decision = case.complete()
+    assert brief.id == 'brief-pb-v1' and brief.content_hash == '9b7c2b0111360714dfbc9cbdbc755b693b11e067f32771cb226126fdcd1ffb49'
+    assert spec.id == 'transform-pb-v2-cr-p5-001' and spec.version_number == 2
+    assert case.order().status == decision.order_status == 'READY'
+    assert decision.report['overall_status'] == 'PASS_WITH_WARNINGS'
+    assert decision.artifact.artifact_type == 'RESULT_XLSX' and len(approvals) == 2
+    checks = decision.report['deterministic_checks']
+    assert len(checks) == 24 and not any(c['status'] == 'FAIL' for c in checks)
+    assert {c['criterion_id']: c['status'] for c in checks if c['check_id'] == 'DQ-017'} == {'PB-AC-006': 'PASS', 'PB-AC-007': 'PASS'}
+    assert 'XLSX_FORMULA_PRESENT' in decision.report['warnings']
+    path = case.env.workspace.path(decision.artifact.workspace_relpath)
+    actual = load_workbook(path.open('rb'), read_only=True, data_only=False)
+    golden = load_workbook(case.source / 'expected_result.xlsx', read_only=True, data_only=False)
+    try:
+        cells = list(actual['Data'].rows)
+        values = [[c.value for c in row] for row in cells]
+        assert values == [[c.value for c in row] for row in golden.active.rows]
+        assert len(cells) == 4 and all(len(row) == 6 for row in cells)
+        assert all(c.data_type != 'f' for row in cells for c in row)
+    finally:
+        actual.close(); golden.close()
+    after = payload_hashes(case.env.workspace.root)
+    assert all(after[name] == digest for name, digest in internal_hashes.items())
+    assert sha(path.read_bytes()) == decision.artifact.checksum
+    from vde.p5.service import P5Service
+    from vde.p5.qa import _certified_pb_columns, criterion_result
+    context = P5Service(case.env).inspect(case.run_id, case.order())
+    criterion = next(c for c in brief.document_json['acceptance_criteria'] if c['criterion_id'] == 'PB-AC-002')
+    wrong_source = replace(context, asset=replace(context.asset, byte_sha256='0' * 64))
+    assert not _certified_pb_columns(criterion, context.projection, wrong_source)
+    assert criterion_result(criterion, SimpleNamespace(projection=context.projection), {}, wrong_source)['status'] == 'FAIL'
+    return dict(brief=asdict(brief), spec=asdict(spec), approvals=[asdict(a) for a in approvals],
+                report=decision.report, data_cells=18, decoded_cells=values, result_sha256=decision.artifact.checksum,
+                isolated_simulated_API_actions_only=True, original_source_and_P4_unchanged=True,
+                original_id_with_wrong_source='FAIL in recognition-only negative; no original-ID bypass')
+
+
+def test_T06_pb_explicit_v2_approval_and_typed_warning_oracle(pb, tmp_path):
     assert pb.spec.version_number == 2
     with pb.uow() as u:
         versions = u.specs.list_for_order(pb.order_id)
@@ -212,7 +348,10 @@ def test_T06_pb_explicit_v2_approval_and_typed_warning_oracle(pb):
     assert pb.decision.report['warnings']
     assert any('FORMULA' in json.dumps(w).upper() for w in pb.decision.report['warnings'])
     assert [a.artifact_type for a in artifacts if a.artifact_type.startswith('RESULT_')] == ['RESULT_XLSX']
+    guards = _cr_p6_002_guard_cases(pb)
+    canonical_pb = _canonical_pb_oracle(tmp_path / 'canonical-pb')
     record('T06', {'versions': [asdict(v) for v in versions], 'approvals': [asdict(a) for a in approvals],
+                   'CR_P6_002_guards': guards, 'canonical_pb': canonical_pb,
                    'DQ017': dq17, 'checks': len(checks), 'warnings': pb.decision.report['warnings'],
                    'adaptations': pb.adaptations, 'observed_order_status': pb.order().status,
                    'observed_qa_status': pb.decision.report['overall_status'],
@@ -220,7 +359,7 @@ def test_T06_pb_explicit_v2_approval_and_typed_warning_oracle(pb):
                    'blocking_issues': pb.decision.report['blocking_issues'],
                    'failed_checks': [c for c in checks if c['status'] == 'FAIL']})
     assert pb.order().status == 'READY' and pb.decision.report['overall_status'] == 'PASS_WITH_WARNINGS', (
-        'Real P3 UI allocates a UUID Brief ID; frozen P5 PB-AC-002 special handling requires brief-pb-v1.',
+        'Certified P-B must pass with its actual approved UUID Brief and unchanged acceptance contract.',
         pb.decision.report['blocking_issues'])
 
 
@@ -348,7 +487,7 @@ def test_T12_corrupt_internal_final_and_snapshot_boundary(pa, copy_workspace):
     record('T12', observations)
 
 
-def test_T13_cross_order_and_context_guards_before_artifact_access(pa, copy_workspace, monkeypatch):
+def test_T13_cross_order_and_context_guards_before_artifact_access(pa, pb, copy_workspace, monkeypatch):
     directory, env = copy_workspace(pa)
     other = CreateOrderService(env).create(str(uuid4()), title='Other', listing_text='Other isolated Order')
     from vde.p5.service import P5Service
@@ -368,6 +507,37 @@ def test_T13_cross_order_and_context_guards_before_artifact_access(pa, copy_work
         directory, copied = copy_workspace(pa)
         mutate_sql(directory, sql, args)
         observations[label] = refused(copied, pa.order_id, pa.run_id)
+    pb_mutations = [
+        ('brief_approval_hash', 'UPDATE approvals SET target_content_hash=? WHERE target_type=?', ('0'*64, 'BRIEF')),
+        ('spec_approval_hash', 'UPDATE approvals SET target_content_hash=? WHERE target_type=?', ('0'*64, 'TRANSFORMATION_SPEC')),
+        ('spec_approval_context', 'UPDATE approvals SET context_brief_content_hash=? WHERE target_type=?', ('0'*64, 'TRANSFORMATION_SPEC')),
+        ('missing_brief_approval', 'DELETE FROM approvals WHERE target_type=?', ('BRIEF',)),
+        ('fake_approver', 'UPDATE approvals SET approved_by=?', ('TEST_ONLY',)),
+        ('future_approval', 'UPDATE approvals SET approved_at=?', ('2099-01-01T00:00:00Z',)),
+        ('run_approval', 'UPDATE execution_runs SET transformation_approval_id=?', (str(uuid4()),)),
+        ('failed_run', 'UPDATE execution_runs SET status=?', ('failed',)),
+        ('selected_spec', 'UPDATE orders SET selected_transformation_spec_version_id=?', (str(uuid4()),)),
+        ('asset_checksum', 'UPDATE input_assets SET byte_sha256=?', ('0'*64,)),
+    ]
+    pb_denials = {}
+    for label, sql, args in pb_mutations:
+        directory, copied = copy_workspace(pb)
+        if label == 'fake_approver':
+            before = snapshot(directory); files = payload_hashes(directory)
+            with pytest.raises(sqlite3.IntegrityError, match="approved_by='local_user'"):
+                mutate_sql(directory, sql, args)
+            assert snapshot(directory) == before and payload_hashes(directory) == files
+            pb_denials[label] = 'REJECTED by existing SQLite CHECK before forged authority can persist'
+            continue
+        mutate_sql(directory, sql, args)
+        pb_denials[label] = refused(copied, pb.order_id, pb.run_id)
+    for label, key, value in [('spec_output', 'output', {**pb.spec.document_json['output'], 'format': 'CSV'}),
+                              ('spec_source_sheet', 'inputs', [{**pb.spec.document_json['inputs'][0], 'sheet_name': 'Notes'}])]:
+        directory, copied = copy_workspace(pb)
+        document = deepcopy(pb.spec.document_json); document[key] = value
+        mutate_sql(directory, 'UPDATE transformation_spec_versions SET document_json=?', (json.dumps(document),))
+        pb_denials[label] = refused(copied, pb.order_id, pb.run_id)
+    observations['CR_P6_002_PB_real_context_denials'] = pb_denials
     record('T13', observations)
 
 

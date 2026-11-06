@@ -1,15 +1,34 @@
 {
+  "amended_paths": [
+    "src/vde/p5/qa.py",
+    "tests/p6/test_acceptance.py",
+    "tests/p6/scope_audit.py",
+    "tests/p6/scope_policy_v1.json",
+    "tests/p6/run_validation.py",
+    "docs/p6/README_PILOT.md",
+    "docs/p6/RELEASE_CHECKLIST.md"
+  ],
   "app_append": "from vde.p6.ui import delivery_panel\ndelivery_panel(result)\n",
   "app_insert_before_ingestion": "from vde.p6.ui import order_panel\norder_panel(result)\n",
   "baseline": "0af4a1ff49ccf8fa59c39780d749e15cb5042fc3",
-  "evidence_directory_prefix": "runtime-",
-  "evidence_parent": "docs/p6/validation/",
-  "format": "P6_SCOPE_POLICY_V1",
+  "correction_start": "66c2b4f97e2b4dbe4e7a01696c89ae5fd0431981",
+  "evidence_root": "docs/p6/validation/runtime-20261107-cr-p6-002/",
+  "format": "P6_SCOPE_POLICY_V2_CR_P6_002",
   "implementation_start": "b93e0ef4ed69343968ff7ae4188d586c0d1485a5",
+  "owner_record": "docs/p6/decisions/CR-P6-002_OWNER_DECISION_2026-11-07.md",
+  "owner_sha256": "ad91837ed5b9b45c6dfe24c9783089e19d7d2c14fc0f67fb766229e9be5d9339",
+  "p5_qa_path": "src/vde/p5/qa.py",
+  "p5_qa_sha256": "8caee87fce7a0c748e2333b8fe3b1b3333fee3548ee78111516a8eac541d8a52",
+  "predecessor_commit": "deddc2799464076227173bd2e4890f552ffe64bf",
   "release_paths": [
     "docs/p6/README_PILOT.md",
     "docs/p6/RELEASE_CHECKLIST.md"
   ],
+  "retired_policy_audit_sha256": {
+    "tests/p6/run_validation.py": "3c74becbb6090a1c59844fe25d047bf4194a25368cd2975d0e3a4553b9d484ad",
+    "tests/p6/scope_audit.py": "a682ed6e27ea901495ca782d7ff7cb0ddb025f16b3f1da20914a717b39d1d050",
+    "tests/p6/scope_policy_v1.json": "0b90083e30783bed6a5420dc7faed7127071b0c2d0023073bf8bb87bbad08207"
+  },
   "source_paths": [
     "src/vde/p6/__init__.py",
     "src/vde/p6/orders.py",

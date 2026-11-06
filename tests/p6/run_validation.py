@@ -1,4 +1,8 @@
-"""Exact-tree P6 validation; legacy pytest failures remain failures in raw evidence."""
+"""CR-P6-002 exact-tree validation; actual legacy/Mac failures stay failures.
+
+This version uses the explicit V2 successor audit. Frozen V1 scripts/policy
+are preserved at the predecessor ref and separately archived as evidence.
+"""
 import argparse
 from datetime import datetime, timezone
 import hashlib
@@ -11,7 +15,7 @@ import sys
 import xml.etree.ElementTree as ET
 
 from p5.run_validation import record_command
-from .scope_audit import audit, BASELINE, START
+from .scope_audit import audit, BASELINE, START, CORRECTION_START, POLICY, P5_QA_SHA256
 
 ROOT = Path(__file__).resolve().parents[2]
 
@@ -90,6 +94,8 @@ def main():
     if args.linux_smoke: env['P6_LINUX_SMOKE']=str(args.linux_smoke.resolve())
     if args.mac_smoke: env['P6_MAC_DOCKER_EVIDENCE']=str(args.mac_smoke.resolve())
     inputs=dict(command=sys.argv, cwd=str(ROOT), tested_commit=commit, tested_tree=tree,
+                correction_start=CORRECTION_START, scope_policy_format=POLICY['format'],
+                approved_p5_qa_sha256=P5_QA_SHA256,
                 P6_STRESS_WORKSPACE=env['P6_STRESS_WORKSPACE'], P6_VALIDATION_DIR=env['P6_VALIDATION_DIR'],
                 P6_RESULTS_DIR=str(out/'p6-runtime/observations'), external_platform_evidence={})
     stress_db=args.stress_workspace.resolve()/'app.sqlite3'
@@ -97,6 +103,17 @@ def main():
     for label,path in (('linux_smoke',args.linux_smoke),('mac_smoke',args.mac_smoke)):
         inputs['external_platform_evidence'][label]=None if path is None else dict(path=str(path.resolve()),sha256=hashlib.sha256(path.read_bytes()).hexdigest())
     (out/'VALIDATION_INPUTS.json').write_text(json.dumps(inputs,indent=2)+'\n')
+    previous_path = 'docs/p6/validation/runtime-20261107/final-run/p6-runtime/results.xml'
+    previous = (ROOT / previous_path).read_bytes()
+    assert previous == subprocess.check_output(['git','show',CORRECTION_START+':'+previous_path],cwd=ROOT)
+    old_cases = list(ET.fromstring(previous).iter('testcase'))
+    old_failures = [c for c in old_cases if c.find('failure') is not None]
+    assert len(old_cases) == 20 and {c.get('name').split('_')[1] for c in old_failures} == {'T06','T07','T19'}
+    previous_record = dict(path=previous_path, sha256=hashlib.sha256(previous).hexdigest(),
+        tested_commit='deddc2799464076227173bd2e4890f552ffe64bf',
+        tested_tree='afc4126ccddce4ca4615ac411b1dd6281a98a960',
+        actual_failures=[c.get('name') for c in old_failures], preserved_unchanged=True)
+    (out/'PREVIOUS_FAILED_EVIDENCE_VERIFICATION.json').write_text(json.dumps(previous_record,indent=2)+'\n')
     history = ROOT/'docs/p5/validation/runtime-20261106'
     historical = {}
     for label, path, expected in (
@@ -146,6 +163,8 @@ def main():
         if phase['exit_code']!=expected_exit:invalid_exits.append(dict(phase=label,actual=phase['exit_code'],expected=expected_exit))
     blockers=legacy_class['blocking_regressions']+sum(r['classification']=='BLOCKING_BEHAVIORAL_REGRESSION' for r in p5_records)+len(invalid_exits)
     result=dict(tested_commit=commit,tested_tree=tree,approved_start=START,main_baseline=BASELINE,
+        correction_start=CORRECTION_START,scope_policy_format=POLICY['format'],
+        approved_p5_qa_sha256=P5_QA_SHA256,previous_failed_evidence=previous_record,
         platform=platform.platform(),python=sys.version,historical=historical,
         legacy_p1_p4={k:v for k,v in legacy_class.items() if k!='records'},
         legacy_p5=dict(total=76,passed=sum(r['classification']=='PASS' for r in p5_records),
