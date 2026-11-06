@@ -10,7 +10,7 @@ import subprocess
 import sys
 import xml.etree.ElementTree as ET
 
-from p5.run_validation import record_command, classify_legacy, legacy_id
+from p5.run_validation import record_command
 from .scope_audit import audit, BASELINE, START
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -18,6 +18,60 @@ ROOT = Path(__file__).resolve().parents[2]
 
 def git(*args):
     return subprocess.check_output(['git', *args], cwd=ROOT, text=True).strip()
+
+
+
+def classify_legacy(meta, out):
+    """Keep actual failures and prove only the owner-approved P6 scope effects."""
+    from p5.run_validation import junit, legacy_id, validate_inventory
+    cases = meta['testcases']; validate_inventory(cases)
+    known = {'P2-T01', 'P2-T40', 'P3-T50', 'P3-T51', 'P4-T61', 'P4-T62', 'P4-T63'}
+
+    def direct(case):
+        identity = legacy_id(case); reason = case['assertion'] or ''
+        if case['outcome'] != 'failure':
+            return False
+        if identity == 'P2-T01':
+            return ("assert all('create' not in b.label.lower() for b in app.button)" in reason
+                    and 'assert False' in reason and 'test_T01_existing_order_ui' in reason)
+        phrase = ('AssertionError: Unapproved full application paths' if identity == 'P4-T61'
+                  else 'AssertionError: Unapproved application source/module/migration')
+        return identity in {'P2-T40', 'P3-T51', 'P4-T61', 'P4-T62'} and phrase in reason
+
+    child_p2 = out / 'generated/docs/p3/validation/p2-results.xml'
+    nested = junit(child_p2) if child_p2.is_file() else []
+    bad_p2 = [c for c in nested if c['outcome'] != 'pass']
+    p2_proven = (len(nested) == 54 and {legacy_id(c) for c in bad_p2} == {'P2-T01', 'P2-T40'}
+                 and all(direct(c) for c in bad_p2))
+
+    def p3_cascade(case):
+        reason = case['assertion'] or ''
+        return (case['outcome'] == 'failure' and p2_proven and 'assert 1 == 0' in reason
+                and 'test_T01_existing_order_ui' in reason and 'test_T40_scope_dependencies' in reason)
+
+    child_p0_p3 = out / 'nested-P0-P3.junit.xml'
+    nested_all = junit(child_p0_p3) if child_p0_p3.is_file() else []
+    bad_all = [c for c in nested_all if c['outcome'] != 'pass']
+    p0_p3_proven = (len(nested_all) == 148 and {legacy_id(c) for c in bad_all} ==
+                   {'P2-T01', 'P2-T40', 'P3-T50', 'P3-T51'} and all(
+                       p3_cascade(c) if legacy_id(c) == 'P3-T50' else direct(c) for c in bad_all))
+    records = []
+    for case in cases:
+        identity = legacy_id(case); outcome = case['outcome']; proven = direct(case)
+        if identity == 'P3-T50':
+            proven = p3_cascade(case)
+        elif identity == 'P4-T63':
+            proven = outcome == 'failure' and p0_p3_proven and 'assert 1 == 0' in (case['assertion'] or '')
+        category = ('PASS' if outcome == 'pass' else 'EXPECTED_HISTORICAL_SCOPE_CONFLICT'
+                    if identity in known and proven else 'BLOCKING_BEHAVIORAL_REGRESSION')
+        records.append(dict(test_id=identity, pytest_outcome=outcome, classification=category,
+                            exact_assertion=case['assertion']))
+    result = dict(total=len(cases), passed=sum(c['classification'] == 'PASS' for c in records),
+        expected_historical_scope_conflicts=sum(c['classification'] == 'EXPECTED_HISTORICAL_SCOPE_CONFLICT' for c in records),
+        blocking_regressions=sum(c['classification'] == 'BLOCKING_BEHAVIORAL_REGRESSION' for c in records),
+        nested_p2_scope_proven=p2_proven, nested_p0_p3_scope_proven=p0_p3_proven, records=records)
+    (out / 'PHASE_AWARE_CLASSIFICATION.json').write_text(json.dumps(result, indent=2) + '\n')
+    return result
 
 
 def main():
