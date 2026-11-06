@@ -1,0 +1,43 @@
+{
+  "status": "STATIC_DESIGN_SUPPLEMENT_PASS",
+  "base_v02a_manifest_checked": 60,
+  "historical_spec_semantic_hash_reproduced": "d7c30e08e6d03054d4a15daeb741f64c1f4fef64c225208d98c1659f8e82f2aa",
+  "new_spec_v2_hash": "c4f9aa33b341cf703b8edacbe60ba1b8070814dde461b4412407d8535188c9a3",
+  "new_spec_refs": 7,
+  "full_output_columns": 6,
+  "production_format": "XLSX",
+  "DQ022_cells_to_check_at_runtime": 18,
+  "DQ017_criterion_pairs": [
+    [
+      "DQ-017",
+      "PB-AC-006"
+    ],
+    [
+      "DQ-017",
+      "PB-AC-007"
+    ]
+  ],
+  "QAReport_TEST_ONLY_check_rows": 24,
+  "test_only_synthetic_approval_valid_binding": "YES",
+  "real_owner_approval": "NOT_ISSUED",
+  "p0_schema_full_checkout": "NOT_RUN",
+  "P5_runtime": "NOT_RUN",
+  "gate_a": "NOT_PASSED",
+  "mutations_rejected": [
+    "wrong_v2_hash",
+    "reintroduce_missing_007",
+    "forbidden_second_format",
+    "silent_sixth_drop",
+    "forged_approval_target",
+    "forged_approval_hash",
+    "wrong_brief_context",
+    "fake_real_approval",
+    "wrong_DQ022",
+    "wrong_DQ017_duplicate",
+    "generic_sequence_equals_modification",
+    "second_registered_csv",
+    "wrong_QAReport_spec_version",
+    "missing_QAReport_DQ017",
+    "extra_QAReport_CSV_artifact"
+  ]
+}

@@ -1,0 +1,138 @@
+{
+  "classification": "BLOCKING_P4_P5_NUMERIC_CONTRACT_CONFLICT",
+  "runtime_commit": "fd39aa1bed480313504ae8b1f76e77e170cb72ba",
+  "runtime_tree": "9d9f492491792a75b76954b3a17d1a376bc333e9",
+  "test_only_approval_notice": "Existing P4 helper simulates P3 approval in disposable fixture DBs; no real business Approval is represented.",
+  "p5_runtime_tests_executed": false,
+  "cases": [
+    {
+      "fixture": "P-A",
+      "source_fixture": "P-A_dirty_csv",
+      "internal_checksum": "2e02a70bbb96712640966117fbc724de3fe8a27a8db4c049037599bbd6ec3500",
+      "rows": 3,
+      "columns": [
+        "customer_name",
+        "country",
+        "signup_date",
+        "revenue",
+        "status",
+        "email"
+      ],
+      "mismatched_cells": [
+        {
+          "row": 3,
+          "column": "revenue",
+          "declared_type": "decimal",
+          "actual_runtime_type": "int",
+          "actual_wire_tag": {
+            "type": "integer",
+            "value": "0"
+          },
+          "q03_actual_csv": "0",
+          "frozen_golden_required_csv": "0.0"
+        }
+      ],
+      "projected_csv_sha256": "90295d6f974a564dd389de463912c4a0878c8ee000894e0553b5ae4c38d78d20",
+      "projected_csv_size": 275,
+      "frozen_golden_sha256": "c3b4e1f9a885bcf969cd34a9041951c1bed1abcd6aaba4c4f1f2fcd414d86cc9",
+      "frozen_golden_size": 277,
+      "full_csv_equality": "FAIL",
+      "strict_declared_decimal_type": "FAIL",
+      "p4_run_status": "succeeded",
+      "order_status": "EXECUTING",
+      "source_input_unchanged": true,
+      "frozen_spec_refs": [
+        "PA-AC-001",
+        "PA-AC-002",
+        "PA-AC-003",
+        "PA-AC-004",
+        "PA-AC-005",
+        "PA-AC-006",
+        "PA-AC-007"
+      ],
+      "production_export_performed": false
+    },
+    {
+      "fixture": "P-B",
+      "source_fixture": "P-B_xlsx_sheet",
+      "internal_checksum": "3ebed54a3c2d5a62ef971c0ce1d604c32efd77d38c1b93b59496ad2d92156578",
+      "rows": 3,
+      "columns": [
+        "order_id",
+        "product",
+        "quantity",
+        "unit_price",
+        "order_date",
+        "line_total"
+      ],
+      "mismatched_cells": [
+        {
+          "row": 1,
+          "column": "unit_price",
+          "declared_type": "decimal",
+          "actual_runtime_type": "int",
+          "actual_wire_tag": {
+            "type": "integer",
+            "value": "10"
+          },
+          "q03_actual_csv": "10",
+          "frozen_golden_required_csv": "10.0"
+        },
+        {
+          "row": 1,
+          "column": "line_total",
+          "declared_type": "decimal",
+          "actual_runtime_type": "int",
+          "actual_wire_tag": {
+            "type": "integer",
+            "value": "20"
+          },
+          "q03_actual_csv": "20",
+          "frozen_golden_required_csv": "20.0"
+        },
+        {
+          "row": 2,
+          "column": "unit_price",
+          "declared_type": "decimal",
+          "actual_runtime_type": "int",
+          "actual_wire_tag": {
+            "type": "integer",
+            "value": "20"
+          },
+          "q03_actual_csv": "20",
+          "frozen_golden_required_csv": "20.0"
+        },
+        {
+          "row": 2,
+          "column": "line_total",
+          "declared_type": "decimal",
+          "actual_runtime_type": "int",
+          "actual_wire_tag": {
+            "type": "integer",
+            "value": "20"
+          },
+          "q03_actual_csv": "20",
+          "frozen_golden_required_csv": "20.0"
+        }
+      ],
+      "projected_csv_sha256": "cd660986eddd4f1977ace62f9762dd94399111e2150bb3bdb6f40b6b142b94d9",
+      "projected_csv_size": 237,
+      "frozen_golden_sha256": "1e9449a8ff90f0cac9d62ba94b3d6e812dd565f85e9dd91fb2b48b6cbbf4d3c6",
+      "frozen_golden_size": 245,
+      "full_csv_equality": "FAIL",
+      "strict_declared_decimal_type": "FAIL",
+      "p4_run_status": "succeeded",
+      "order_status": "EXECUTING",
+      "source_input_unchanged": true,
+      "frozen_spec_refs": [
+        "PB-AC-001",
+        "PB-AC-002",
+        "PB-AC-003",
+        "PB-AC-004",
+        "PB-AC-005",
+        "PB-AC-006"
+      ],
+      "production_export_performed": false
+    }
+  ]
+}

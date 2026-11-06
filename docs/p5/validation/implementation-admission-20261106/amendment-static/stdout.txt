@@ -1,0 +1,26 @@
+{
+  "status": "STATIC_V02_PASS",
+  "proposal_status": "PROPOSED",
+  "pb_columns": 6,
+  "pb_rows": 3,
+  "pb_schema_specimen_entries": 24,
+  "pb_dq017_multiplicity": 2,
+  "original_spec_ac007": "MISSING",
+  "p_c_available_files": 10,
+  "p_c_missing_files": 13,
+  "v02_decision_cases": 20,
+  "preserved_test_ids": 76,
+  "p5_runtime": "NOT_RUN",
+  "p0_schema_full_checkout": "NOT_RUN",
+  "mutations_rejected": [
+    "PB DQ022 3x5",
+    "fabricated Spec approved criterion",
+    "silent secondary production CSV",
+    "missing second DQ017",
+    "duplicate DQ017 criterion_id",
+    "P-D false FAILED",
+    "duplicate retry registered Artifact",
+    "stress success relaxed to failed",
+    "P-C synthetic recovery/missing count"
+  ]
+}

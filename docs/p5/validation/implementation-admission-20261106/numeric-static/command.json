@@ -1,0 +1,23 @@
+{
+  "command": [
+    "/workspace/verified-data-extraction/.venv/bin/python",
+    "tools/verify_p5_v02a_precision.py",
+    "--mutation-probes"
+  ],
+  "cwd": "/workspace/p5-handoff-source/P5_Implementation_Design_Pack_v0.2a_candidate/P5_Implementation_Design_Pack_v0.2a_candidate",
+  "started_at_moscow": "2026-11-06T15:38:06.120164+03:00",
+  "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+  "executable": "/workspace/verified-data-extraction/.venv/bin/python",
+  "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+  "packages": {
+    "pytest": "8.4.2",
+    "jsonschema": "4.26.0",
+    "referencing": "0.37.0",
+    "rfc8785": "0.1.4",
+    "openpyxl": "3.1.5",
+    "streamlit": "1.50.0"
+  },
+  "exit_code": 0,
+  "elapsed_seconds": 0.23562478399981046,
+  "finished_at_moscow": "2026-11-06T15:38:06.364371+03:00"
+}
